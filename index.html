@@ -234,6 +234,223 @@ tr:hover td{background:#FFFBF7}
 .w-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
 .w-back{font-size:12px;color:var(--red);cursor:pointer;margin-bottom:1.25rem;display:inline-flex;align-items:center;gap:4px;font-weight:500}
 .w-back:hover{text-decoration:underline}
+
+
+/* ── IMMORTAL PATH STYLE (worker side unified) ── */
+#page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard{
+  position:relative;
+  min-height:calc(100vh - 120px);
+  padding:1.1rem;
+  border-radius:var(--r-lg);
+  background:
+    radial-gradient(circle at 18% 12%,rgba(255,255,255,.38),transparent 22%),
+    radial-gradient(circle at 84% 18%,rgba(107,162,170,.18),transparent 20%),
+    radial-gradient(circle at 50% 100%,rgba(197,151,79,.16),transparent 30%),
+    linear-gradient(180deg,rgba(252,248,236,.95),rgba(244,236,216,.98));
+  overflow:hidden;
+}
+#page-w-login::before,#page-w-home::before,#page-w-records::before,#page-w-leaderboard::before{
+  content:"";
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 20% 12%,rgba(80,101,98,.18),transparent 18%),
+    radial-gradient(circle at 76% 24%,rgba(80,101,98,.12),transparent 16%),
+    radial-gradient(circle at 60% 70%,rgba(230,199,120,.10),transparent 22%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%239a8258' stroke-width='1.3' opacity='.18'%3E%3Cpath d='M18 318c58-74 95-112 154-112 39 0 67 10 106 30'/%3E%3Cpath d='M213 64c25 13 38 35 38 61 0 23-9 37-28 57-20 20-30 33-30 54 0 20 11 35 31 48'/%3E%3Cpath d='M58 112c18-22 44-37 75-37 40 0 65 16 84 49'/%3E%3C/g%3E%3Cg fill='%23817762' opacity='.12'%3E%3Ccircle cx='302' cy='93' r='3'/%3E%3Ccircle cx='276' cy='118' r='2'/%3E%3Ccircle cx='144' cy='61' r='2.5'/%3E%3C/g%3E%3C/svg%3E") center/cover no-repeat;
+  opacity:.95;pointer-events:none;
+}
+#page-w-login::after,#page-w-home::after,#page-w-records::after,#page-w-leaderboard::after{
+  content:"";
+  position:absolute;left:16px;right:16px;top:16px;bottom:16px;
+  border:1.5px solid rgba(131,103,62,.2);
+  border-radius:20px;
+  box-shadow:inset 0 0 0 3px rgba(255,248,231,.55);
+  pointer-events:none;
+}
+#page-w-login > *,#page-w-home > *,#page-w-records > *,#page-w-leaderboard > *{position:relative;z-index:1}
+.immortal-panel{
+  background:linear-gradient(180deg,rgba(255,251,241,.92),rgba(245,236,215,.94));
+  border:2px solid #8D7348;
+  border-radius:22px;
+  box-shadow:0 14px 30px rgba(80,62,30,.12), inset 0 0 0 4px rgba(255,248,233,.72);
+}
+.immortal-panel.soft{
+  border-color:#A08A63;
+  box-shadow:0 10px 22px rgba(80,62,30,.10), inset 0 0 0 3px rgba(255,249,238,.72);
+}
+.immortal-title{
+  display:inline-flex;align-items:center;gap:8px;
+  color:#4B3620;font-weight:700;letter-spacing:.08em;
+  padding:.45rem 1rem;
+  border-radius:999px;
+  background:linear-gradient(180deg,#FFF8E7,#E6D0A7);
+  border:1.5px solid #B99762;
+  box-shadow:0 4px 10px rgba(101,73,35,.12);
+}
+.immortal-subline{color:#6C5B44;font-size:13px;line-height:1.8}
+.immortal-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 10px;border-radius:999px;
+  background:rgba(255,249,238,.84);border:1px solid rgba(141,115,72,.28);
+  color:#6E5738;font-size:11px;font-weight:700;letter-spacing:.04em;
+}
+.worker-login.immortal-entry{
+  min-height:560px;
+  display:grid;grid-template-columns:minmax(230px,360px) minmax(340px,520px);
+  align-items:center;justify-content:center;gap:28px;
+  text-align:left;padding:1.5rem;
+}
+.immortal-visual{
+  min-height:470px;padding:1.6rem 1.5rem;
+  background:
+    radial-gradient(circle at 50% 34%,rgba(255,231,166,.52),transparent 24%),
+    linear-gradient(180deg,rgba(34,44,49,.94),rgba(87,57,24,.94));
+  color:#fff;position:relative;overflow:hidden;
+}
+.immortal-visual::before{
+  content:"";position:absolute;inset:20px;
+  border:1px solid rgba(244,211,128,.24);border-radius:20px;
+  box-shadow:inset 0 0 0 2px rgba(255,245,210,.08);
+}
+.immortal-visual::after{
+  content:"";position:absolute;left:50%;top:48%;width:250px;height:250px;transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,222,123,.52),rgba(255,199,70,.14) 42%,transparent 70%);
+  filter:blur(1px);
+}
+.immortal-orbit,.immortal-seat,.immortal-core,.immortal-avatar-art,.immortal-orb{position:absolute}
+.immortal-orbit{
+  width:260px;height:260px;left:50%;top:48%;transform:translate(-50%,-50%);
+  border:2px solid rgba(255,214,118,.35);border-radius:50%;
+  box-shadow:0 0 0 10px rgba(255,214,118,.06),0 0 40px rgba(255,176,66,.15);
+}
+.immortal-seat{
+  width:190px;height:26px;left:50%;top:62%;transform:translateX(-50%);
+  border-radius:50%;background:radial-gradient(circle,rgba(255,224,136,.68),rgba(255,181,55,.12) 72%,transparent 100%);
+}
+.immortal-core{
+  left:50%;top:48%;transform:translate(-50%,-50%);
+  width:124px;height:164px;border-radius:60px 60px 42px 42px/72px 72px 52px 52px;
+  background:linear-gradient(180deg,#FFF7E7 0%,#F5E5CA 40%,#E3D2B1 100%);
+  box-shadow:0 0 0 3px rgba(255,244,214,.42),0 12px 34px rgba(0,0,0,.25);
+}
+.immortal-core::before{
+  content:"";position:absolute;left:50%;top:-26px;transform:translateX(-50%);
+  width:82px;height:74px;border-radius:50% 50% 42% 42%;
+  background:linear-gradient(180deg,#2C2528,#54424A 70%,#6D575E 100%);
+}
+.immortal-core::after{
+  content:"";position:absolute;left:16px;right:16px;top:56px;height:74px;border-radius:50px 50px 24px 24px;
+  background:linear-gradient(180deg,#F9FBFE 0%,#DCC5AC 100%);
+}
+.immortal-avatar-art{
+  left:50%;top:51%;transform:translate(-50%,-50%);
+  width:90px;height:115px;border-radius:48px 48px 24px 24px;
+  background:linear-gradient(180deg,#F4E9D9 0 26px,#FBF8F2 26px 62px,#DFC8A7 62px 100%);
+  box-shadow:0 0 22px rgba(255,216,119,.15);
+}
+.immortal-avatar-art::before,.immortal-avatar-art::after{
+  content:"";position:absolute;border-radius:999px;background:rgba(62,39,36,.92);
+}
+.immortal-avatar-art::before{width:52px;height:54px;left:19px;top:-14px;box-shadow:-24px 28px 0 -14px rgba(62,39,36,.88),24px 28px 0 -14px rgba(62,39,36,.88)}
+.immortal-avatar-art::after{width:16px;height:54px;left:37px;top:-36px;background:linear-gradient(180deg,#752F2C,#C8705E)}
+.immortal-orb{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle,#FFFBEF 0%,#FFE39A 34%,#C98721 100%);color:#5E3B02;font-size:24px;font-weight:700;
+  box-shadow:0 0 18px rgba(255,183,63,.35),0 0 0 4px rgba(255,240,200,.16)
+}
+.immortal-o1{left:18%;top:27%}.immortal-o2{left:29%;top:67%}.immortal-o3{right:18%;top:26%}.immortal-o4{right:12%;top:58%}
+.immortal-brand{
+  position:absolute;left:1.4rem;top:1.2rem;
+  font-size:34px;font-weight:800;letter-spacing:.12em;
+  color:#E8F4FF;text-shadow:0 3px 0 rgba(28,73,99,.85),0 0 18px rgba(80,175,255,.26);
+}
+.immortal-brand small{display:block;font-size:11px;font-weight:500;letter-spacing:.18em;color:#D8EFFF;margin-top:4px}
+.immortal-visual-caption{position:absolute;left:1.6rem;right:1.6rem;bottom:1.35rem;color:rgba(255,247,234,.92);font-size:12px;line-height:1.8;text-align:center}
+.immortal-form{padding:1.9rem 1.7rem 1.7rem;position:relative}
+.immortal-form::before{content:"";position:absolute;left:18px;right:18px;top:16px;height:18px;border-top:3px solid rgba(164,130,77,.28);border-radius:999px}
+.immortal-form .worker-login-title{font-size:28px;color:#4B3620;letter-spacing:.14em;margin:.85rem 0 .5rem;font-weight:800}
+.immortal-form .worker-login-sub{font-size:13px;color:#6C5B44;line-height:1.85}
+.immortal-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(160,138,99,.55),transparent);margin:1rem 0 1.15rem}
+.immortal-form .worker-search-box{max-width:none;display:grid;grid-template-columns:1fr auto}
+.immortal-form .worker-search-box input{
+  min-height:48px;border-radius:14px;border:1.5px solid #B39B74;background:rgba(255,252,246,.92);padding:0 14px;font-size:15px;
+  box-shadow:inset 0 1px 6px rgba(120,95,48,.06)
+}
+.immortal-form .worker-search-box input:focus{border-color:#3F7F83;box-shadow:0 0 0 3px rgba(63,127,131,.12)}
+.btn-immortal{
+  min-width:132px;min-height:48px;border-radius:14px;border:1.5px solid #8E6C2E;color:#fff;
+  background:linear-gradient(180deg,#5BA19E,#2F6468);font-weight:700;letter-spacing:.08em;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 8px 16px rgba(47,100,104,.18)
+}
+.btn-immortal:hover{filter:brightness(1.03)}
+.immortal-entry-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:1rem}
+#page-w-home .w-back,#page-w-records .w-back,#page-w-leaderboard .w-back{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 14px;border-radius:999px;border:1.5px solid rgba(135,106,63,.32);
+  background:rgba(255,251,242,.82);color:#75552A;font-size:12px;font-weight:700;box-shadow:0 4px 10px rgba(81,58,26,.08)
+}
+#page-w-home .w-back:hover,#page-w-records .w-back:hover,#page-w-leaderboard .w-back:hover{text-decoration:none;background:rgba(255,248,236,.95)}
+#page-w-home #w-hero-box .cult-hero{
+  background:
+    radial-gradient(circle at 78% 18%,rgba(255,213,118,.24),transparent 18%),
+    linear-gradient(135deg,#1E2428 0%,#3B2D1F 48%,#645031 100%);
+  border:1.5px solid rgba(250,221,151,.28);
+  box-shadow:0 18px 30px rgba(46,31,11,.22)
+}
+#page-w-home #w-hero-box .cult-glow{opacity:.75}
+#page-w-home #w-stats .w-stat,
+#page-w-records .card,
+#page-w-home .card,
+#page-w-leaderboard .card{
+  background:linear-gradient(180deg,rgba(255,251,243,.95),rgba(244,236,214,.96));
+  border:2px solid #91764A;border-radius:20px;
+  box-shadow:0 12px 24px rgba(92,68,33,.10), inset 0 0 0 3px rgba(255,250,241,.68)
+}
+#page-w-home #w-stats .w-stat{padding:1.1rem 1rem}
+#page-w-home #w-stats .w-stat-label{color:#7A6140;font-size:11px;letter-spacing:.08em}
+#page-w-home #w-stats .w-stat-value{color:#3B2E20;font-size:22px}
+#page-w-home .card-head,#page-w-records .card-head,#page-w-leaderboard .card-head{
+  background:linear-gradient(180deg,rgba(255,247,228,.96),rgba(236,218,184,.95));
+  border-bottom:1.5px solid rgba(145,118,74,.28)
+}
+#page-w-home .card-head-title,#page-w-records .card-head-title,#page-w-leaderboard .card-head-title{color:#4B3620;letter-spacing:.05em}
+#page-w-records table th,#page-w-leaderboard table th{color:#846947}
+#page-w-records table td,#page-w-leaderboard table td,#page-w-home .card-body{background:transparent}
+#page-w-records table tr:hover td,#page-w-leaderboard table tr:hover td{background:rgba(255,248,235,.82)}
+#page-w-leaderboard .race-tabs .race-tab,#page-w-leaderboard .metric-tab{
+  border-color:#B59A72;background:rgba(255,251,244,.86);color:#6A5334
+}
+#page-w-leaderboard .race-tabs .race-tab.active{
+  background:linear-gradient(180deg,#7FB6BB,#3D7478);color:#fff;border-color:#3D7478
+}
+#page-w-leaderboard .metric-tab.active{
+  background:linear-gradient(180deg,#6C5033,#3F2F1B);color:#fff;border-color:#4C3820
+}
+#page-w-leaderboard .champion{
+  background:linear-gradient(135deg,#FFF6DC,#F4DFC0);
+  border:1.5px solid #D0AF6E;box-shadow:0 10px 18px rgba(123,90,35,.10)
+}
+#page-w-leaderboard .lb-summary .lb-sum-item,#page-w-leaderboard #w-lb-self{
+  background:rgba(255,250,241,.86);border-color:rgba(151,124,82,.24)
+}
+#page-w-leaderboard .race-track{background:rgba(123,94,53,.06);border-color:rgba(151,124,82,.18)}
+#page-w-leaderboard .lb-note{color:#7B6542}
+.immortal-empty{padding:1.3rem 1rem;border-radius:16px;border:1.5px dashed rgba(145,118,74,.32);background:rgba(255,251,244,.65);color:#7A6140;text-align:center}
+@media (max-width:980px){
+  .worker-login.immortal-entry{grid-template-columns:1fr;max-width:660px;margin:0 auto;padding:1rem}
+  .immortal-visual{min-height:320px}
+  .immortal-orbit{width:220px;height:220px}
+  .immortal-seat{top:67%}
+}
+@media (max-width:680px){
+  #page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard{padding:.65rem}
+  .immortal-form .worker-search-box{grid-template-columns:1fr}
+  .btn-immortal{width:100%}
+  .immortal-form{padding:1.4rem 1.1rem}
+  .immortal-form .worker-login-title{font-size:24px}
+  .immortal-entry-meta{gap:6px}
+}
+
 </style>
 </head>
 <body>
@@ -364,15 +581,35 @@ tr:hover td{background:#FFFBF7}
 
       <!-- Worker Pages -->
       <div class="page" id="page-w-login">
-        <div class="worker-login">
-          <div class="worker-login-icon">⛩️</div>
-          <div class="worker-login-title">報上道號，查詢仙緣</div>
-          <div class="worker-login-sub">輸入你的道號（姓名），查看修為境界與解脫金幣</div>
-          <div class="worker-search-box">
-            <input id="w-name-input" placeholder="請輸入道號（姓名）" onkeydown="if(event.key==='Enter')workerLogin()">
-            <button class="btn btn-primary" onclick="workerLogin()">踏入仙途</button>
+        <div class="worker-login immortal-entry">
+          <div class="immortal-visual immortal-panel">
+            <div class="immortal-brand">仙途<small>IMMORTAL PATH</small></div>
+            <div class="immortal-orbit"></div>
+            <div class="immortal-seat"></div>
+            <div class="immortal-core"></div>
+            <div class="immortal-avatar-art"></div>
+            <div class="immortal-orb immortal-o1">丹</div>
+            <div class="immortal-orb immortal-o2">火</div>
+            <div class="immortal-orb immortal-o3">道</div>
+            <div class="immortal-orb immortal-o4">靈</div>
+            <div class="immortal-visual-caption">以道號入世，以修為問鼎。登入後可查看個人修為、修行紀錄與煉丹天榜。</div>
           </div>
-          <div id="w-login-err" style="font-size:12px;color:var(--red);display:none">查無此道號，請確認後再試</div>
+          <div class="immortal-form immortal-panel soft">
+            <div class="immortal-title">⛩️ 踏入仙途</div>
+            <div class="worker-login-title">報上道號，查詢仙緣</div>
+            <div class="worker-login-sub">整體風格已統一成修仙遊戲介面。輸入你的道號（姓名或暱稱），即可進入個人洞府，查看修為境界、解脫金幣與煉丹天榜。</div>
+            <div class="immortal-divider"></div>
+            <div class="worker-search-box">
+              <input id="w-name-input" placeholder="請輸入道號（姓名 / 暱稱）" onkeydown="if(event.key==='Enter')workerLogin()">
+              <button class="btn btn-immortal" onclick="workerLogin()">踏入仙途</button>
+            </div>
+            <div class="immortal-entry-meta">
+              <span class="immortal-pill">⚗️ 修為總覽</span>
+              <span class="immortal-pill">📜 修行紀錄</span>
+              <span class="immortal-pill">🏆 煉丹天榜</span>
+            </div>
+            <div id="w-login-err" style="font-size:12px;color:#B4472F;display:none;margin-top:12px">查無此道號，請確認後再試</div>
+          </div>
         </div>
       </div>
 
@@ -1224,7 +1461,7 @@ function showWorkerPage(name){
   const wOrder=['w-home','w-records','w-leaderboard'];
   const idx=wOrder.indexOf(name);
   if(idx>=0) document.querySelectorAll('#worker-nav .nav-item')[idx].classList.add('active');
-  const titles={'w-login':'踏入仙途','w-home':'我的修為','w-records':'修行紀錄','w-leaderboard':'煉丹天榜'};
+  const titles={'w-login':'踏入仙途','w-home':'洞府修為','w-records':'修行紀錄','w-leaderboard':'煉丹天榜'};
   document.getElementById('page-title').textContent=titles[name]||name;
   if(name==='w-leaderboard') renderWorkerLeaderboard();
 }
