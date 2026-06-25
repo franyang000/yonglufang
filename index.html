@@ -219,7 +219,20 @@ tr:hover td{background:#FFFBF7}
     </div>
     <div class="content">
 
-      <div class="page active" id="page-dashboard">
+      <div class="page active" id="page-admin-login">
+        <div class="worker-login">
+          <div class="worker-login-icon">🔐</div>
+          <div class="worker-login-title">後台管理登入</div>
+          <div class="worker-login-sub">請輸入管理者密碼後，再進入總覽、代工人員、品項與結算中心</div>
+          <div class="worker-search-box">
+            <input id="admin-password-input" type="password" placeholder="請輸入後台密碼" onkeydown="if(event.key==='Enter')adminLogin()">
+            <button class="btn btn-primary" onclick="adminLogin()">登入後台</button>
+          </div>
+          <div id="admin-login-err" style="font-size:12px;color:var(--red);display:none">密碼錯誤，請重新輸入</div>
+        </div>
+      </div>
+
+      <div class="page" id="page-dashboard">
         <div class="stat-grid" id="dash-stats"></div>
         <div class="card">
           <div class="card-head"><span class="card-head-title">最近交件紀錄</span></div>
@@ -713,6 +726,11 @@ function renderWorkerLeaderboard(){
   }
 }
 
+// 後台管理密碼：請在這裡修改。
+// 注意：GitHub Pages / 純前端網頁無法做到真正保密；此密碼只能防止一般訪客誤入後台。
+const ADMIN_PASSWORD='8888';
+const ADMIN_AUTH_KEY='yonglufang_admin_auth';
+
 let db={
   workers:[
     {id:1,name:'阿美',nick:'阿美姐',phone:'0912-345-678',status:'active',note:'擅長折紙'},
@@ -746,6 +764,53 @@ function saveDB(){try{localStorage.setItem('yonglufang_v2',JSON.stringify(db));}
 let currentRole='admin';
 let currentWorkerId=null;
 
+function isAdminLoggedIn(){return sessionStorage.getItem(ADMIN_AUTH_KEY)==='1';}
+function showAdminLogin(){
+  currentRole='admin';
+  cancelAnimationFrame(animFrame);
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-admin-login').classList.add('active');
+  document.querySelectorAll('.role-pill').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.getElementById('admin-nav').style.display='none';
+  document.getElementById('worker-nav').style.display='none';
+  document.getElementById('page-title').textContent='後台登入';
+  document.getElementById('topbar-right').innerHTML='';
+  setTimeout(()=>{const input=document.getElementById('admin-password-input');if(input)input.focus();},0);
+}
+function adminLogin(){
+  const input=document.getElementById('admin-password-input');
+  const pw=(input?.value||'').trim();
+  if(pw!==ADMIN_PASSWORD){
+    document.getElementById('admin-login-err').style.display='block';
+    if(input){input.value='';input.focus();}
+    return;
+  }
+  document.getElementById('admin-login-err').style.display='none';
+  sessionStorage.setItem(ADMIN_AUTH_KEY,'1');
+  renderDashboard();renderWorkers();renderItems();renderRecords();
+  document.getElementById('week-range').textContent=getWeekRange();
+  switchRole('admin');
+  toast('後台登入成功 ✅');
+}
+function adminLogout(){
+  sessionStorage.removeItem(ADMIN_AUTH_KEY);
+  const input=document.getElementById('admin-password-input');
+  if(input)input.value='';
+  showAdminLogin();
+  toast('已登出後台');
+}
+function requireAdmin(){
+  if(!isAdminLoggedIn()){
+    showAdminLogin();
+    toast('請先輸入後台密碼');
+    return false;
+  }
+  return true;
+}
+function setAdminTopbar(){
+  document.getElementById('topbar-right').innerHTML='<button class="btn btn-sm" onclick="adminLogout()">登出後台</button>';
+}
+
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
 function gw(id){return db.workers.find(w=>w.id===id);}
 function gi(id){return db.items.find(i=>i.id===id);}
@@ -758,6 +823,7 @@ function statusBadge(s){
 }
 
 function openModal(id){
+  if(id==='record-modal'&&!requireAdmin())return;
   if(id==='record-modal'){
     document.getElementById('rf-date').value=new Date().toISOString().slice(0,10);
     const ws=db.workers.filter(w=>w.status==='active');
@@ -779,6 +845,7 @@ function calcPreview(){
 
 let editingWorkerId=null;
 function openWorkerModal(){
+  if(!requireAdmin())return;
   editingWorkerId=null;
   document.getElementById('worker-modal-title').textContent='新增代工人員';
   ['wf-name','wf-nick','wf-phone','wf-note'].forEach(id=>document.getElementById(id).value='');
@@ -786,6 +853,7 @@ function openWorkerModal(){
   document.getElementById('worker-modal').classList.add('open');
 }
 function editWorker(id){
+  if(!requireAdmin())return;
   const w=gw(id);if(!w)return;
   editingWorkerId=id;
   document.getElementById('worker-modal-title').textContent='編輯代工人員';
@@ -797,6 +865,7 @@ function editWorker(id){
   document.getElementById('worker-modal').classList.add('open');
 }
 function saveWorker(){
+  if(!requireAdmin())return;
   const name=document.getElementById('wf-name').value.trim();
   if(!name)return toast('請填寫姓名');
   const nick=document.getElementById('wf-nick').value||name;
@@ -816,12 +885,14 @@ function saveWorker(){
 }
 let editingItemId=null;
 function openItemModal(){
+  if(!requireAdmin())return;
   editingItemId=null;
   document.getElementById('item-modal-title').textContent='新增品項';
   ['if-name','if-unit','if-qty','if-price','if-note'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('item-modal').classList.add('open');
 }
 function editItem(id){
+  if(!requireAdmin())return;
   const it=gi(id);if(!it)return;
   editingItemId=id;
   document.getElementById('item-modal-title').textContent='編輯品項';
@@ -833,6 +904,7 @@ function editItem(id){
   document.getElementById('item-modal').classList.add('open');
 }
 function saveItem(){
+  if(!requireAdmin())return;
   const name=document.getElementById('if-name').value.trim();
   const price=+document.getElementById('if-price').value;
   const qty=+document.getElementById('if-qty').value||1;
@@ -851,6 +923,7 @@ function saveItem(){
   ['if-name','if-unit','if-qty','if-price','if-note'].forEach(id=>document.getElementById(id).value='');
 }
 function addRecord(){
+  if(!requireAdmin())return;
   const wid=+document.getElementById('rf-worker').value;
   const iid=+document.getElementById('rf-item').value;
   const total=+document.getElementById('rf-total').value||0;
@@ -872,12 +945,14 @@ function closeConfirm(){document.getElementById('confirm-modal').classList.remov
 function doConfirm(){const cb=_confirmCb;closeConfirm();if(cb)cb();}
 
 function deleteItem(id){
+  if(!requireAdmin())return;
   askConfirm('確定要刪除這個品項嗎？<br>（已登記的交件紀錄不受影響）',()=>{
     db.items=db.items.filter(i=>i.id!==id);saveDB();renderItems();toast('已刪除');
   },'刪除');
 }
-function verifyRecord(id){const r=db.records.find(r=>r.id===id);if(r){r.status='verified';saveDB();renderRecords();renderDashboard();toast('驗收完成 ✅');}}
+function verifyRecord(id){if(!requireAdmin())return;const r=db.records.find(r=>r.id===id);if(r){r.status='verified';saveDB();renderRecords();renderDashboard();toast('驗收完成 ✅');}}
 function unverifyRecord(id){
+  if(!requireAdmin())return;
   askConfirm('要把這筆改回「待驗收」嗎？<br>（會一併從排行與結算中移除這筆已驗收金額）',()=>{
     const r=db.records.find(r=>r.id===id);if(r){r.status='pending';saveDB();renderRecords();renderDashboard();toast('已改回待驗收 ↩');}
   },'取消驗收');
@@ -932,6 +1007,7 @@ function renderRecords(){
   `).join('')||'<tr><td colspan="7" class="empty-state">尚無紀錄</td></tr>';
 }
 function generateSettlement(){
+  if(!requireAdmin())return;
   const wRecs=db.records.filter(r=>isThisWeek(r.date)&&r.status==='verified');
   const byW={};
   wRecs.forEach(r=>{byW[r.workerId]=(byW[r.workerId]||0)+r.amount;});
@@ -949,11 +1025,13 @@ function generateSettlement(){
   `).join(''):'<tr><td colspan="7" class="empty-state">尚無資料，請按「重新計算」</td></tr>';
 }
 function markPaid(wid,week){
+  if(!requireAdmin())return;
   askConfirm('確定要標記為「已付款」嗎？<br>若按錯，可在同一列按「改回未付款」還原。',()=>{
     const s=db.settlements.find(s=>s.workerId===+wid&&s.week===week);if(s){s.status='paid';saveDB();generateSettlement();toast('已付款 ✅');}
   },'確認付款');
 }
 function markUnpaid(wid,week){
+  if(!requireAdmin())return;
   askConfirm('要把這筆改回「未付款」嗎？',()=>{
     const s=db.settlements.find(s=>s.workerId===+wid&&s.week===week);if(s){s.status='unpaid';saveDB();generateSettlement();toast('已改回未付款 ↩');}
   },'改回未付款');
@@ -1017,6 +1095,8 @@ function renderWorkerPages(wid){
 }
 
 function showPage(name){
+  if(!requireAdmin())return;
+  setAdminTopbar();
   cancelAnimationFrame(animFrame);
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
@@ -1030,6 +1110,7 @@ function showPage(name){
   if(name==='leaderboard') renderLeaderboard();
 }
 function showWorkerPage(name){
+  document.getElementById('topbar-right').innerHTML='';
   // 未登入時，個人頁面導回登入（封神榜可公開瀏覽）
   if((name==='w-home'||name==='w-records')&&!currentWorkerId) name='w-login';
   cancelAnimationFrame(animFrame);
@@ -1047,15 +1128,26 @@ function switchRole(role){
   currentRole=role;
   cancelAnimationFrame(animFrame);
   document.querySelectorAll('.role-pill').forEach((b,i)=>b.classList.toggle('active',(i===0&&role==='admin')||(i===1&&role==='worker')));
-  document.getElementById('admin-nav').style.display=role==='admin'?'block':'none';
-  document.getElementById('worker-nav').style.display=role==='worker'?'block':'none';
-  if(role==='admin') showPage('dashboard');
-  else{if(currentWorkerId){renderWorkerPages(currentWorkerId);showWorkerPage('w-home');}else showWorkerPage('w-login');}
+  if(role==='admin'){
+    if(!isAdminLoggedIn()){
+      showAdminLogin();
+      return;
+    }
+    document.getElementById('admin-nav').style.display='block';
+    document.getElementById('worker-nav').style.display='none';
+    showPage('dashboard');
+  }else{
+    document.getElementById('admin-nav').style.display='none';
+    document.getElementById('worker-nav').style.display='block';
+    document.getElementById('topbar-right').innerHTML='';
+    if(currentWorkerId){renderWorkerPages(currentWorkerId);showWorkerPage('w-home');}else showWorkerPage('w-login');
+  }
 }
 
 loadDB();
 renderDashboard();renderWorkers();renderItems();renderRecords();
 document.getElementById('week-range').textContent=getWeekRange();
+if(isAdminLoggedIn())switchRole('admin');else showAdminLogin();
 </script>
 </body>
 </html>
