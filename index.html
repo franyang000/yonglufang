@@ -82,105 +82,50 @@ tr:hover td{background:#FFFBF7}
 .toast-el.show{opacity:1}
 .empty-state{text-align:center;padding:2.5rem;color:var(--muted);font-size:13px}
 
+/* ── LEADERBOARD RACETRACK ── */
+.race-wrap{padding:1.125rem 1.125rem .5rem}
+.race-row{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.race-rank{width:28px;flex-shrink:0;text-align:center}
+.rank-medal{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.race-name{font-size:13px;font-weight:500;min-width:56px;flex-shrink:0;color:var(--ink)}
+.race-track{flex:1;background:var(--bg);border-radius:30px;height:36px;border:1.5px solid var(--border);position:relative;overflow:hidden}
+.race-lane{height:100%;border-radius:30px 0 0 30px;display:flex;align-items:center;position:relative;min-width:40px;transition:width 1s cubic-bezier(.34,1.4,.64,1)}
+.boat-anim{position:absolute;right:-4px;top:50%;transform:translateY(-50%)}
+.race-score{font-size:14px;font-weight:700;color:var(--ink);min-width:76px;text-align:right;flex-shrink:0}
+.race-tabs{display:flex;gap:6px}
+.race-tab{padding:5px 16px;font-size:12px;border:1.5px solid var(--border);border-radius:20px;background:none;cursor:pointer;color:var(--muted);font-family:inherit;font-weight:500;transition:all .12s}
+.race-tab.active{background:var(--red);color:#fff;border-color:var(--red)}
+.race-tabs.dim{opacity:.4;pointer-events:none}
 
-/* ── LEADERBOARD · ALCHEMY GAME STYLE ── */
-#page-leaderboard .card,
-#page-w-leaderboard .card{
-  background:linear-gradient(180deg,#1A1621 0%,#221C2C 42%,#17131D 100%);
-  border:1.5px solid #56466F;
-  box-shadow:0 18px 40px rgba(22,16,31,.28), inset 0 0 0 1px rgba(255,220,160,.05);
-}
-#page-leaderboard .card-head,
-#page-w-leaderboard .card-head{
-  border-bottom:1.5px solid rgba(241,198,108,.16);
-  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0));
-}
-#page-leaderboard .card-head-title,
-#page-w-leaderboard .card-head-title{
-  color:#F4D48A;
-  letter-spacing:.06em;
-  text-shadow:0 0 14px rgba(244,212,138,.12);
-}
-.race-wrap{padding:1rem 1.125rem .75rem}
-.race-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.race-rank{width:40px;flex-shrink:0;text-align:center}
-.rank-medal{
-  width:32px;height:32px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;
-  font-size:12px;font-weight:700;border:1px solid rgba(247,219,154,.22);
-  box-shadow:0 4px 12px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.18);
-}
-.race-name{font-size:13px;font-weight:700;min-width:74px;flex-shrink:0;color:#F7E6BD;letter-spacing:.04em}
-.race-track{
-  flex:1;background:linear-gradient(180deg,#120F18,#211A2A);border-radius:999px;height:44px;
-  border:1.5px solid rgba(117,92,154,.45);position:relative;overflow:hidden;
-  box-shadow:inset 0 0 18px rgba(0,0,0,.36), 0 6px 16px rgba(8,6,12,.18);
-}
-.race-track::before{
-  content:"";position:absolute;inset:5px;border-radius:999px;
-  background:linear-gradient(90deg,rgba(255,255,255,.04),rgba(255,255,255,0));pointer-events:none;
-}
-.race-lane{
-  height:100%;border-radius:999px;display:flex;align-items:center;position:relative;min-width:56px;
-  transition:width 1s cubic-bezier(.34,1.4,.64,1);overflow:visible;
-  box-shadow:inset 0 0 18px rgba(255,255,255,.12), 0 0 18px rgba(255,168,82,.12);
-}
-.race-lane::after{
-  content:"";position:absolute;inset:0;border-radius:999px;
-  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,0));pointer-events:none;
-}
-.boat-anim{position:absolute;right:6px;top:50%;transform:translateY(-50%);filter:drop-shadow(0 4px 8px rgba(0,0,0,.28))}
-.race-score{font-size:15px;font-weight:700;color:#F6D78C;min-width:92px;text-align:right;flex-shrink:0}
-.race-tabs{display:flex;gap:8px;flex-wrap:wrap}
-.race-tab,.metric-tab{
-  padding:6px 16px;font-size:12px;border:1px solid rgba(239,197,109,.22);border-radius:999px;
-  background:rgba(255,255,255,.04);cursor:pointer;color:#CBB69C;font-family:inherit;font-weight:600;
-  transition:all .16s;backdrop-filter:blur(4px)
-}
-.race-tab:hover,.metric-tab:hover{background:rgba(255,255,255,.08);color:#F5DEAE}
-.race-tab.active,.metric-tab.active{
-  background:linear-gradient(180deg,#F1C774 0%,#CC8738 100%);color:#24170E;border-color:#F6D28D;
-  box-shadow:0 6px 14px rgba(201,120,35,.26), inset 0 1px 0 rgba(255,255,255,.35)
-}
-.race-tabs.dim{opacity:.42;pointer-events:none}
-.lb-metric-bar{display:flex;gap:8px;padding:.875rem 1.125rem 0;flex-wrap:wrap}
-.champion{
-  display:flex;align-items:center;gap:14px;margin:1rem 1.125rem .35rem;padding:1rem 1.125rem;
-  background:linear-gradient(135deg,#3B2B1E 0%,#5B3B25 24%,#2D2235 100%);
-  border:1.5px solid #D0A056;border-radius:18px;position:relative;overflow:hidden;
-  box-shadow:0 14px 28px rgba(15,10,21,.25), inset 0 0 0 1px rgba(255,240,197,.06)
-}
-.champion::before{content:"";position:absolute;left:-30px;top:-26px;width:110px;height:110px;background:radial-gradient(circle,rgba(249,199,103,.22),transparent 68%);pointer-events:none}
-.champion::after{content:"";position:absolute;right:-28px;bottom:-20px;width:130px;height:130px;background:radial-gradient(circle,rgba(128,97,190,.18),transparent 70%);pointer-events:none}
-.champion-crown{font-size:32px;line-height:1;animation:crownBob 2.8s ease-in-out infinite;filter:drop-shadow(0 0 12px rgba(249,199,103,.28))}
-@keyframes crownBob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-4px) scale(1.03)}}
+/* ── LEADERBOARD EXTRAS ── */
+.lb-metric-bar{display:flex;gap:6px;padding:.875rem 1.125rem 0;flex-wrap:wrap}
+.metric-tab{padding:6px 14px;font-size:12px;border:1.5px solid var(--border);border-radius:20px;background:none;cursor:pointer;color:var(--muted);font-family:inherit;font-weight:500;transition:all .12s}
+.metric-tab:hover{background:var(--bg)}
+.metric-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.champion{display:flex;align-items:center;gap:14px;margin:1rem 1.125rem .25rem;padding:.875rem 1.125rem;background:linear-gradient(135deg,#FFF6E6,#FFF0E8);border:1.5px solid #F5D58A;border-radius:var(--r-md);position:relative;overflow:hidden}
+.champion::after{content:"";position:absolute;right:-24px;top:-24px;width:96px;height:96px;background:radial-gradient(circle,#F5A62326,transparent 70%);pointer-events:none}
+.champion-crown{font-size:30px;line-height:1;animation:crownBob 2.4s ease-in-out infinite}
+@keyframes crownBob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-3px) rotate(4deg)}}
 .champion-info{flex:1;min-width:0}
-.champion-label{font-size:11px;color:#EECF91;font-weight:600;letter-spacing:.05em}
-.champion-name{font-size:20px;font-weight:700;color:#FFF3D2;margin-top:4px}
-.champion-score{font-size:20px;font-weight:700;color:#FFD57F;white-space:nowrap;text-shadow:0 0 12px rgba(255,197,83,.18)}
-.lb-summary{display:flex;gap:10px;margin:.8rem 1.125rem .35rem}
-.lb-sum-item{
-  flex:1;background:linear-gradient(180deg,#241D2F,#18141F);border:1.5px solid #514066;border-radius:14px;
-  padding:.75rem;text-align:center;box-shadow:inset 0 0 0 1px rgba(255,255,255,.03)
-}
-.lb-sum-num{display:block;font-size:16px;font-weight:700;color:#F7E2A9}
-.lb-sum-lbl{display:block;font-size:10px;color:#B9A78B;margin-top:3px;letter-spacing:.05em}
-.lb-note{font-size:11px;color:#BFAF91;padding:.25rem 1.125rem 1rem;line-height:1.7}
-.delta{display:block;font-size:9px;font-weight:700;margin-top:4px;line-height:1}
-.delta-up{color:#74E2B1}
-.delta-down{color:#FF9D86}
-.delta-same{color:#B9A78B}
-.delta-new{color:#F4C96B}
-.race-self .race-track{box-shadow:0 0 0 2px rgba(243,174,78,.42) inset, inset 0 0 18px rgba(0,0,0,.36), 0 0 18px rgba(243,174,78,.12)}
-.race-self .race-name{color:#FFD88D}
-.self-tag{display:inline-block;margin-left:6px;font-size:9px;font-weight:700;color:#28180E;background:linear-gradient(180deg,#FFD68A,#E58B41);border-radius:10px;padding:2px 7px;vertical-align:middle;box-shadow:0 2px 6px rgba(0,0,0,.18)}
-.w-lb-self{
-  font-size:13px;color:#E8D5A5;background:linear-gradient(180deg,#261F31,#191520);border:1.5px solid #5A496F;
-  border-radius:14px;padding:.75rem .9rem;margin:.8rem 1.125rem .25rem;line-height:1.6
-}
-.w-lb-self strong{color:#FFD57F}
-.coin-chip{display:inline-block;margin-left:6px;font-size:10px;font-weight:700;color:#3A2408;background:linear-gradient(180deg,#FCE6A8,#EBAF46);border:1px solid #F2D28C;border-radius:10px;padding:2px 7px;vertical-align:middle;box-shadow:0 2px 6px rgba(0,0,0,.16)}
-#page-leaderboard .empty-state,
-#page-w-leaderboard .empty-state{color:#B9A78B;padding:2.8rem 1rem}
+.champion-label{font-size:11px;color:#9A6A14;font-weight:500;letter-spacing:.03em}
+.champion-name{font-size:18px;font-weight:700;color:var(--ink);margin-top:2px}
+.champion-score{font-size:18px;font-weight:700;color:var(--red);white-space:nowrap}
+.lb-summary{display:flex;gap:10px;margin:.75rem 1.125rem .25rem}
+.lb-sum-item{flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:.625rem;text-align:center}
+.lb-sum-num{display:block;font-size:16px;font-weight:700;color:var(--ink)}
+.lb-sum-lbl{display:block;font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.03em}
+.lb-note{font-size:11px;color:var(--muted);padding:.25rem 1.125rem 1rem;line-height:1.6}
+.delta{display:block;font-size:9px;font-weight:700;margin-top:3px;line-height:1}
+.delta-up{color:var(--teal)}
+.delta-down{color:var(--red)}
+.delta-same{color:var(--muted)}
+.delta-new{color:var(--gold)}
+.race-self .race-track{box-shadow:0 0 0 2px var(--red) inset}
+.race-self .race-name{color:var(--red)}
+.self-tag{display:inline-block;margin-left:5px;font-size:9px;font-weight:700;color:#fff;background:var(--red);border-radius:8px;padding:1px 6px;vertical-align:middle}
+.w-lb-self{font-size:13px;color:var(--ink);background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:.625rem .875rem;margin:.75rem 1.125rem .25rem;line-height:1.5}
+.w-lb-self strong{color:var(--red)}
+.coin-chip{display:inline-block;margin-left:6px;font-size:10px;font-weight:700;color:#7A4E07;background:#FCEBC0;border:1px solid #F0CE7E;border-radius:10px;padding:1px 7px;vertical-align:middle}
 
 /* ── 解脫金幣 ── */
 .coin-card{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#FBE6A8,#F7C948);border:1.5px solid #E3A92B;border-radius:var(--r-lg);padding:1.1rem 1.4rem;margin-bottom:1.25rem;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(245,166,35,.22)}
@@ -236,219 +181,220 @@ tr:hover td{background:#FFFBF7}
 .w-back:hover{text-decoration:underline}
 
 
-/* ── IMMORTAL PATH STYLE (worker side unified) ── */
+/* ── IMMORTAL PATH THEME: worker side visual unification ── */
 #page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard{
-  position:relative;
-  min-height:calc(100vh - 120px);
-  padding:1.1rem;
-  border-radius:var(--r-lg);
+  position:relative;min-height:calc(100vh - 120px);padding:1.1rem;border-radius:22px;overflow:hidden;
   background:
-    radial-gradient(circle at 18% 12%,rgba(255,255,255,.38),transparent 22%),
+    radial-gradient(circle at 18% 12%,rgba(255,255,255,.40),transparent 22%),
     radial-gradient(circle at 84% 18%,rgba(107,162,170,.18),transparent 20%),
-    radial-gradient(circle at 50% 100%,rgba(197,151,79,.16),transparent 30%),
     linear-gradient(180deg,rgba(252,248,236,.95),rgba(244,236,216,.98));
-  overflow:hidden;
 }
 #page-w-login::before,#page-w-home::before,#page-w-records::before,#page-w-leaderboard::before{
-  content:"";
-  position:absolute;inset:0;
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.9;
   background:
-    radial-gradient(circle at 20% 12%,rgba(80,101,98,.18),transparent 18%),
-    radial-gradient(circle at 76% 24%,rgba(80,101,98,.12),transparent 16%),
-    radial-gradient(circle at 60% 70%,rgba(230,199,120,.10),transparent 22%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%239a8258' stroke-width='1.3' opacity='.18'%3E%3Cpath d='M18 318c58-74 95-112 154-112 39 0 67 10 106 30'/%3E%3Cpath d='M213 64c25 13 38 35 38 61 0 23-9 37-28 57-20 20-30 33-30 54 0 20 11 35 31 48'/%3E%3Cpath d='M58 112c18-22 44-37 75-37 40 0 65 16 84 49'/%3E%3C/g%3E%3Cg fill='%23817762' opacity='.12'%3E%3Ccircle cx='302' cy='93' r='3'/%3E%3Ccircle cx='276' cy='118' r='2'/%3E%3Ccircle cx='144' cy='61' r='2.5'/%3E%3C/g%3E%3C/svg%3E") center/cover no-repeat;
-  opacity:.95;pointer-events:none;
+    radial-gradient(circle at 20% 12%,rgba(80,101,98,.16),transparent 18%),
+    radial-gradient(circle at 76% 24%,rgba(80,101,98,.10),transparent 16%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%239a8258' stroke-width='1.3' opacity='.18'%3E%3Cpath d='M18 318c58-74 95-112 154-112 39 0 67 10 106 30'/%3E%3Cpath d='M213 64c25 13 38 35 38 61 0 23-9 37-28 57-20 20-30 33-30 54 0 20 11 35 31 48'/%3E%3Cpath d='M58 112c18-22 44-37 75-37 40 0 65 16 84 49'/%3E%3C/g%3E%3C/svg%3E") center/cover no-repeat;
 }
-#page-w-login::after,#page-w-home::after,#page-w-records::after,#page-w-leaderboard::after{
-  content:"";
-  position:absolute;left:16px;right:16px;top:16px;bottom:16px;
-  border:1.5px solid rgba(131,103,62,.2);
-  border-radius:20px;
-  box-shadow:inset 0 0 0 3px rgba(255,248,231,.55);
-  pointer-events:none;
-}
-#page-w-login > *,#page-w-home > *,#page-w-records > *,#page-w-leaderboard > *{position:relative;z-index:1}
+#page-w-login>* ,#page-w-home>* ,#page-w-records>* ,#page-w-leaderboard>*{position:relative;z-index:1}
 .immortal-panel{
-  background:linear-gradient(180deg,rgba(255,251,241,.92),rgba(245,236,215,.94));
-  border:2px solid #8D7348;
-  border-radius:22px;
+  background:linear-gradient(180deg,rgba(255,251,241,.94),rgba(245,236,215,.96));
+  border:2px solid #8D7348;border-radius:22px;
   box-shadow:0 14px 30px rgba(80,62,30,.12), inset 0 0 0 4px rgba(255,248,233,.72);
 }
-.immortal-panel.soft{
-  border-color:#A08A63;
-  box-shadow:0 10px 22px rgba(80,62,30,.10), inset 0 0 0 3px rgba(255,249,238,.72);
-}
-.immortal-title{
-  display:inline-flex;align-items:center;gap:8px;
-  color:#4B3620;font-weight:700;letter-spacing:.08em;
-  padding:.45rem 1rem;
-  border-radius:999px;
-  background:linear-gradient(180deg,#FFF8E7,#E6D0A7);
-  border:1.5px solid #B99762;
-  box-shadow:0 4px 10px rgba(101,73,35,.12);
-}
-.immortal-subline{color:#6C5B44;font-size:13px;line-height:1.8}
-.immortal-pill{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:4px 10px;border-radius:999px;
-  background:rgba(255,249,238,.84);border:1px solid rgba(141,115,72,.28);
-  color:#6E5738;font-size:11px;font-weight:700;letter-spacing:.04em;
-}
+.immortal-panel.soft{border-color:#A08A63;box-shadow:0 10px 22px rgba(80,62,30,.10), inset 0 0 0 3px rgba(255,249,238,.72)}
 .worker-login.immortal-entry{
-  min-height:560px;
-  display:grid;grid-template-columns:minmax(230px,360px) minmax(340px,520px);
-  align-items:center;justify-content:center;gap:28px;
-  text-align:left;padding:1.5rem;
+  min-height:560px;display:grid;grid-template-columns:minmax(230px,360px) minmax(340px,520px);
+  align-items:center;justify-content:center;gap:28px;text-align:left;padding:1.5rem;
 }
 .immortal-visual{
-  min-height:470px;padding:1.6rem 1.5rem;
+  min-height:470px;padding:1.6rem 1.5rem;color:#fff;position:relative;overflow:hidden;
   background:
-    radial-gradient(circle at 50% 34%,rgba(255,231,166,.52),transparent 24%),
+    radial-gradient(circle at 50% 40%,rgba(255,231,166,.52),transparent 25%),
     linear-gradient(180deg,rgba(34,44,49,.94),rgba(87,57,24,.94));
-  color:#fff;position:relative;overflow:hidden;
 }
-.immortal-visual::before{
-  content:"";position:absolute;inset:20px;
-  border:1px solid rgba(244,211,128,.24);border-radius:20px;
-  box-shadow:inset 0 0 0 2px rgba(255,245,210,.08);
-}
-.immortal-visual::after{
-  content:"";position:absolute;left:50%;top:48%;width:250px;height:250px;transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(255,222,123,.52),rgba(255,199,70,.14) 42%,transparent 70%);
-  filter:blur(1px);
-}
-.immortal-orbit,.immortal-seat,.immortal-core,.immortal-avatar-art,.immortal-orb{position:absolute}
-.immortal-orbit{
-  width:260px;height:260px;left:50%;top:48%;transform:translate(-50%,-50%);
-  border:2px solid rgba(255,214,118,.35);border-radius:50%;
-  box-shadow:0 0 0 10px rgba(255,214,118,.06),0 0 40px rgba(255,176,66,.15);
-}
-.immortal-seat{
-  width:190px;height:26px;left:50%;top:62%;transform:translateX(-50%);
-  border-radius:50%;background:radial-gradient(circle,rgba(255,224,136,.68),rgba(255,181,55,.12) 72%,transparent 100%);
-}
-.immortal-core{
-  left:50%;top:48%;transform:translate(-50%,-50%);
-  width:124px;height:164px;border-radius:60px 60px 42px 42px/72px 72px 52px 52px;
-  background:linear-gradient(180deg,#FFF7E7 0%,#F5E5CA 40%,#E3D2B1 100%);
-  box-shadow:0 0 0 3px rgba(255,244,214,.42),0 12px 34px rgba(0,0,0,.25);
-}
-.immortal-core::before{
-  content:"";position:absolute;left:50%;top:-26px;transform:translateX(-50%);
-  width:82px;height:74px;border-radius:50% 50% 42% 42%;
-  background:linear-gradient(180deg,#2C2528,#54424A 70%,#6D575E 100%);
-}
-.immortal-core::after{
-  content:"";position:absolute;left:16px;right:16px;top:56px;height:74px;border-radius:50px 50px 24px 24px;
-  background:linear-gradient(180deg,#F9FBFE 0%,#DCC5AC 100%);
-}
-.immortal-avatar-art{
-  left:50%;top:51%;transform:translate(-50%,-50%);
-  width:90px;height:115px;border-radius:48px 48px 24px 24px;
-  background:linear-gradient(180deg,#F4E9D9 0 26px,#FBF8F2 26px 62px,#DFC8A7 62px 100%);
-  box-shadow:0 0 22px rgba(255,216,119,.15);
-}
-.immortal-avatar-art::before,.immortal-avatar-art::after{
-  content:"";position:absolute;border-radius:999px;background:rgba(62,39,36,.92);
-}
-.immortal-avatar-art::before{width:52px;height:54px;left:19px;top:-14px;box-shadow:-24px 28px 0 -14px rgba(62,39,36,.88),24px 28px 0 -14px rgba(62,39,36,.88)}
-.immortal-avatar-art::after{width:16px;height:54px;left:37px;top:-36px;background:linear-gradient(180deg,#752F2C,#C8705E)}
-.immortal-orb{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(circle,#FFFBEF 0%,#FFE39A 34%,#C98721 100%);color:#5E3B02;font-size:24px;font-weight:700;
-  box-shadow:0 0 18px rgba(255,183,63,.35),0 0 0 4px rgba(255,240,200,.16)
-}
-.immortal-o1{left:18%;top:27%}.immortal-o2{left:29%;top:67%}.immortal-o3{right:18%;top:26%}.immortal-o4{right:12%;top:58%}
 .immortal-brand{
-  position:absolute;left:1.4rem;top:1.2rem;
-  font-size:34px;font-weight:800;letter-spacing:.12em;
+  position:absolute;left:1.4rem;top:1.2rem;font-size:34px;font-weight:800;letter-spacing:.12em;
   color:#E8F4FF;text-shadow:0 3px 0 rgba(28,73,99,.85),0 0 18px rgba(80,175,255,.26);
 }
 .immortal-brand small{display:block;font-size:11px;font-weight:500;letter-spacing:.18em;color:#D8EFFF;margin-top:4px}
+.immortal-orbit{position:absolute;width:260px;height:260px;left:50%;top:48%;transform:translate(-50%,-50%);border:2px solid rgba(255,214,118,.35);border-radius:50%;box-shadow:0 0 0 10px rgba(255,214,118,.06),0 0 40px rgba(255,176,66,.15)}
+.immortal-seat{position:absolute;width:190px;height:26px;left:50%;top:62%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,224,136,.68),rgba(255,181,55,.12) 72%,transparent 100%)}
+.immortal-avatar-art{position:absolute;left:50%;top:51%;transform:translate(-50%,-50%);width:90px;height:115px;border-radius:48px 48px 24px 24px;background:linear-gradient(180deg,#F4E9D9 0 26px,#FBF8F2 26px 62px,#DFC8A7 62px 100%);box-shadow:0 0 22px rgba(255,216,119,.15)}
+.immortal-avatar-art::before{content:"";position:absolute;width:52px;height:54px;left:19px;top:-14px;border-radius:999px;background:rgba(62,39,36,.92);box-shadow:-24px 28px 0 -14px rgba(62,39,36,.88),24px 28px 0 -14px rgba(62,39,36,.88)}
+.immortal-avatar-art::after{content:"";position:absolute;width:16px;height:54px;left:37px;top:-36px;border-radius:999px;background:linear-gradient(180deg,#752F2C,#C8705E)}
+.immortal-orb{position:absolute;width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#FFFBEF 0%,#FFE39A 34%,#C98721 100%);color:#5E3B02;font-size:24px;font-weight:700;box-shadow:0 0 18px rgba(255,183,63,.35),0 0 0 4px rgba(255,240,200,.16)}
+.immortal-o1{left:18%;top:27%}.immortal-o2{left:29%;top:67%}.immortal-o3{right:18%;top:26%}.immortal-o4{right:12%;top:58%}
 .immortal-visual-caption{position:absolute;left:1.6rem;right:1.6rem;bottom:1.35rem;color:rgba(255,247,234,.92);font-size:12px;line-height:1.8;text-align:center}
 .immortal-form{padding:1.9rem 1.7rem 1.7rem;position:relative}
-.immortal-form::before{content:"";position:absolute;left:18px;right:18px;top:16px;height:18px;border-top:3px solid rgba(164,130,77,.28);border-radius:999px}
+.immortal-title{display:inline-flex;align-items:center;gap:8px;color:#4B3620;font-weight:700;letter-spacing:.08em;padding:.45rem 1rem;border-radius:999px;background:linear-gradient(180deg,#FFF8E7,#E6D0A7);border:1.5px solid #B99762;box-shadow:0 4px 10px rgba(101,73,35,.12)}
 .immortal-form .worker-login-title{font-size:28px;color:#4B3620;letter-spacing:.14em;margin:.85rem 0 .5rem;font-weight:800}
 .immortal-form .worker-login-sub{font-size:13px;color:#6C5B44;line-height:1.85}
 .immortal-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(160,138,99,.55),transparent);margin:1rem 0 1.15rem}
 .immortal-form .worker-search-box{max-width:none;display:grid;grid-template-columns:1fr auto}
-.immortal-form .worker-search-box input{
-  min-height:48px;border-radius:14px;border:1.5px solid #B39B74;background:rgba(255,252,246,.92);padding:0 14px;font-size:15px;
-  box-shadow:inset 0 1px 6px rgba(120,95,48,.06)
-}
+.immortal-form .worker-search-box input{min-height:48px;border-radius:14px;border:1.5px solid #B39B74;background:rgba(255,252,246,.92);padding:0 14px;font-size:15px;box-shadow:inset 0 1px 6px rgba(120,95,48,.06)}
 .immortal-form .worker-search-box input:focus{border-color:#3F7F83;box-shadow:0 0 0 3px rgba(63,127,131,.12)}
-.btn-immortal{
-  min-width:132px;min-height:48px;border-radius:14px;border:1.5px solid #8E6C2E;color:#fff;
-  background:linear-gradient(180deg,#5BA19E,#2F6468);font-weight:700;letter-spacing:.08em;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 8px 16px rgba(47,100,104,.18)
-}
-.btn-immortal:hover{filter:brightness(1.03)}
+.btn-immortal{min-width:132px;min-height:48px;border-radius:14px;border:1.5px solid #8E6C2E;color:#fff;background:linear-gradient(180deg,#5BA19E,#2F6468);font-weight:700;letter-spacing:.08em;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 8px 16px rgba(47,100,104,.18)}
 .immortal-entry-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:1rem}
-#page-w-home .w-back,#page-w-records .w-back,#page-w-leaderboard .w-back{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:9px 14px;border-radius:999px;border:1.5px solid rgba(135,106,63,.32);
-  background:rgba(255,251,242,.82);color:#75552A;font-size:12px;font-weight:700;box-shadow:0 4px 10px rgba(81,58,26,.08)
-}
+.immortal-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(255,249,238,.84);border:1px solid rgba(141,115,72,.28);color:#6E5738;font-size:11px;font-weight:700;letter-spacing:.04em}
+#page-w-home .w-back,#page-w-records .w-back,#page-w-leaderboard .w-back{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;border:1.5px solid rgba(135,106,63,.32);background:rgba(255,251,242,.82);color:#75552A;font-size:12px;font-weight:700;box-shadow:0 4px 10px rgba(81,58,26,.08)}
 #page-w-home .w-back:hover,#page-w-records .w-back:hover,#page-w-leaderboard .w-back:hover{text-decoration:none;background:rgba(255,248,236,.95)}
-#page-w-home #w-hero-box .cult-hero{
-  background:
-    radial-gradient(circle at 78% 18%,rgba(255,213,118,.24),transparent 18%),
-    linear-gradient(135deg,#1E2428 0%,#3B2D1F 48%,#645031 100%);
-  border:1.5px solid rgba(250,221,151,.28);
-  box-shadow:0 18px 30px rgba(46,31,11,.22)
-}
-#page-w-home #w-hero-box .cult-glow{opacity:.75}
-#page-w-home #w-stats .w-stat,
-#page-w-records .card,
-#page-w-home .card,
-#page-w-leaderboard .card{
-  background:linear-gradient(180deg,rgba(255,251,243,.95),rgba(244,236,214,.96));
-  border:2px solid #91764A;border-radius:20px;
-  box-shadow:0 12px 24px rgba(92,68,33,.10), inset 0 0 0 3px rgba(255,250,241,.68)
-}
-#page-w-home #w-stats .w-stat{padding:1.1rem 1rem}
-#page-w-home #w-stats .w-stat-label{color:#7A6140;font-size:11px;letter-spacing:.08em}
-#page-w-home #w-stats .w-stat-value{color:#3B2E20;font-size:22px}
-#page-w-home .card-head,#page-w-records .card-head,#page-w-leaderboard .card-head{
-  background:linear-gradient(180deg,rgba(255,247,228,.96),rgba(236,218,184,.95));
-  border-bottom:1.5px solid rgba(145,118,74,.28)
-}
+#page-w-home .card,#page-w-records .card,#page-w-leaderboard .card,#page-w-home .w-stat{background:linear-gradient(180deg,rgba(255,251,243,.95),rgba(244,236,214,.96));border:2px solid #91764A;border-radius:20px;box-shadow:0 12px 24px rgba(92,68,33,.10), inset 0 0 0 3px rgba(255,250,241,.68)}
+#page-w-home .card-head,#page-w-records .card-head,#page-w-leaderboard .card-head{background:linear-gradient(180deg,rgba(255,247,228,.96),rgba(236,218,184,.95));border-bottom:1.5px solid rgba(145,118,74,.28)}
 #page-w-home .card-head-title,#page-w-records .card-head-title,#page-w-leaderboard .card-head-title{color:#4B3620;letter-spacing:.05em}
-#page-w-records table th,#page-w-leaderboard table th{color:#846947}
-#page-w-records table td,#page-w-leaderboard table td,#page-w-home .card-body{background:transparent}
-#page-w-records table tr:hover td,#page-w-leaderboard table tr:hover td{background:rgba(255,248,235,.82)}
-#page-w-leaderboard .race-tabs .race-tab,#page-w-leaderboard .metric-tab{
-  border-color:#B59A72;background:rgba(255,251,244,.86);color:#6A5334
-}
-#page-w-leaderboard .race-tabs .race-tab.active{
-  background:linear-gradient(180deg,#7FB6BB,#3D7478);color:#fff;border-color:#3D7478
-}
-#page-w-leaderboard .metric-tab.active{
-  background:linear-gradient(180deg,#6C5033,#3F2F1B);color:#fff;border-color:#4C3820
-}
-#page-w-leaderboard .champion{
-  background:linear-gradient(135deg,#FFF6DC,#F4DFC0);
-  border:1.5px solid #D0AF6E;box-shadow:0 10px 18px rgba(123,90,35,.10)
-}
-#page-w-leaderboard .lb-summary .lb-sum-item,#page-w-leaderboard #w-lb-self{
-  background:rgba(255,250,241,.86);border-color:rgba(151,124,82,.24)
-}
-#page-w-leaderboard .race-track{background:rgba(123,94,53,.06);border-color:rgba(151,124,82,.18)}
-#page-w-leaderboard .lb-note{color:#7B6542}
 .immortal-empty{padding:1.3rem 1rem;border-radius:16px;border:1.5px dashed rgba(145,118,74,.32);background:rgba(255,251,244,.65);color:#7A6140;text-align:center}
 @media (max-width:980px){
   .worker-login.immortal-entry{grid-template-columns:1fr;max-width:660px;margin:0 auto;padding:1rem}
   .immortal-visual{min-height:320px}
   .immortal-orbit{width:220px;height:220px}
-  .immortal-seat{top:67%}
 }
-@media (max-width:680px){
-  #page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard{padding:.65rem}
+@media (max-width:640px){
+  #page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard{padding:.65rem;border-radius:16px}
   .immortal-form .worker-search-box{grid-template-columns:1fr}
   .btn-immortal{width:100%}
   .immortal-form{padding:1.4rem 1.1rem}
   .immortal-form .worker-login-title{font-size:24px}
-  .immortal-entry-meta{gap:6px}
+  .immortal-visual{min-height:260px}
+  .immortal-orb{width:50px;height:50px;font-size:18px}
+  .immortal-brand{font-size:28px}
+}
+
+/* ── MOBILE RESPONSIVE OPTIMIZATION ── */
+.mobile-only{display:none}
+.table-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.table-scroll table{min-width:680px}
+#page-records .table-scroll table{min-width:760px}
+#page-workers .table-scroll table{min-width:760px}
+#page-settlement .table-scroll table{min-width:720px}
+.mobile-action-row{display:flex;justify-content:flex-end;margin-bottom:1.25rem}
+.action-cell{white-space:nowrap}
+@media (max-width: 920px){
+  body{background:#fbf4e8}
+  .app{display:block;min-height:100vh}
+  .sidebar{
+    width:100%;height:auto;position:sticky;top:0;z-index:50;
+    border-right:none;border-bottom:1.5px solid var(--border);
+    box-shadow:0 6px 18px rgba(44,44,42,.06)
+  }
+  .logo-block{padding:.75rem .9rem;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+  .logo-zh{font-size:17px}
+  .logo-en{font-size:9px}
+  .nav-group-label{display:none}
+  #admin-nav,#worker-nav{
+    overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;
+    padding:0 .75rem .55rem;scrollbar-width:none
+  }
+  #admin-nav::-webkit-scrollbar,#worker-nav::-webkit-scrollbar{display:none}
+  #admin-nav .nav-item,#worker-nav .nav-item{
+    display:inline-flex;margin-right:6px;padding:8px 12px;border:1px solid var(--border);
+    border-radius:999px;background:#fff;font-size:12px;vertical-align:middle
+  }
+  #admin-nav .nav-item.active,#worker-nav .nav-item.active{background:#FFF0E8;border-color:#FFD7C5}
+  .nav-dot{display:none}
+  .role-switcher{
+    padding:.55rem .75rem .75rem;border-top:1px solid var(--border);
+    background:#fff
+  }
+  .role-switcher label{display:none}
+  .role-pills{max-width:360px;margin:0 auto}
+  .role-pill{min-height:36px;font-size:13px}
+  .main{min-height:auto}
+  .topbar{
+    position:sticky;top:0;z-index:40;padding:.8rem .95rem;
+    box-shadow:0 4px 14px rgba(44,44,42,.04)
+  }
+  .topbar-title{font-size:15px}
+  #topbar-right .btn{padding:6px 12px;font-size:12px}
+  .content{padding:.9rem}
+  .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:1rem}
+  .stat-card{padding:.9rem;border-radius:14px}
+  .stat-value{font-size:20px}
+  .card{border-radius:16px;margin-bottom:1rem;overflow:hidden}
+  .card-head{padding:.85rem .9rem;gap:10px;align-items:flex-start}
+  .card-head-title{line-height:1.4}
+  .card-body{padding:.9rem}
+  .lb-metric-bar{padding:.8rem .9rem 0;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
+  .metric-tab,.race-tab{flex:0 0 auto;min-height:34px}
+  .race-tabs{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+  .champion{margin:.9rem .9rem .25rem;padding:.85rem .9rem;gap:10px}
+  .champion-name,.champion-score{font-size:16px}
+  .lb-summary{margin:.75rem .9rem .25rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .race-wrap{padding:.95rem .9rem .4rem}
+  .race-row{
+    display:grid;grid-template-columns:34px 1fr auto;gap:8px 8px;
+    align-items:center;margin-bottom:14px
+  }
+  .race-name{min-width:0;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .race-track{grid-column:2 / 4;height:32px}
+  .race-score{font-size:12px;min-width:64px;text-align:right}
+  .rank-medal{width:28px;height:28px}
+  .boat-anim{transform:translateY(-50%) scale(.86);transform-origin:center}
+  .coin-card{flex-wrap:wrap;padding:1rem;margin-bottom:1rem}
+  .coin-icon{font-size:34px}
+  .coin-count{font-size:26px}
+  .coin-side{flex-basis:100%}
+  .cult-hero{padding:1.05rem;margin-bottom:1rem}
+  .cult-avatar{width:48px;height:48px;font-size:19px}
+  .cult-name{font-size:17px}
+  .cult-coin-num{font-size:28px}
+  .w-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .w-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .w-tab{flex:0 0 auto}
+  .worker-login{min-height:calc(100vh - 210px);padding:2rem .75rem}
+  .worker-login-icon{font-size:46px}
+  .worker-login-title{font-size:19px}
+  .worker-search-box{max-width:420px}
+  .form-row,.form-row-3{grid-template-columns:1fr;gap:10px}
+  .form-group input,.form-group select,.worker-search-box input{font-size:16px;min-height:42px}
+  .btn{min-height:38px}
+  .modal-bg{align-items:flex-end;padding:0}
+  .modal{
+    width:100%;max-width:100vw;max-height:88vh;overflow:auto;
+    border-radius:22px 22px 0 0;padding:1.15rem
+  }
+  .modal-head{margin-bottom:1rem}
+  .modal-foot{position:sticky;bottom:-1.15rem;background:var(--card);padding:.8rem 0 .1rem}
+  .toast-el{bottom:1rem;max-width:calc(100vw - 32px);white-space:normal;text-align:center}
+}
+@media (max-width: 640px){
+  .content{padding:.7rem}
+  .stat-grid{grid-template-columns:1fr}
+  .stat-card{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .stat-label{margin-bottom:0}
+  .stat-value{font-size:18px;text-align:right}
+  .mobile-action-row{display:block}
+  .mobile-action-row .btn{width:100%}
+  .card-head{flex-direction:column}
+  .card-head .race-tabs{width:100%}
+  .card-head .race-tab{flex:1;text-align:center}
+  .lb-summary{grid-template-columns:1fr}
+  .lb-sum-item{padding:.75rem}
+  .race-row{grid-template-columns:32px 1fr;gap:7px}
+  .race-score{grid-column:2;text-align:left;min-width:0}
+  .race-track{grid-column:1 / 3;height:30px}
+  .w-stat-grid{grid-template-columns:1fr}
+  .coin-card{display:block;text-align:left}
+  .coin-main{margin-top:.45rem}
+  .coin-side{margin-top:.75rem}
+  .worker-search-box{display:grid;grid-template-columns:1fr;max-width:100%}
+  .worker-search-box .btn,.worker-search-box button{width:100%}
+  .admin-login-mobile{min-height:calc(100vh - 180px)}
+  .modal-foot{display:grid;grid-template-columns:1fr 1fr}
+  .modal-foot .btn{width:100%}
+  .empty-state{padding:1.5rem .75rem}
+  th,td{padding:9px 8px}
+  .btn-sm{padding:5px 9px;min-height:32px}
+}
+@media (max-width: 420px){
+  .logo-block{align-items:center}
+  .logo-en{display:none}
+  .topbar{padding:.72rem .75rem}
+  .content{padding:.55rem}
+  .card,.stat-card{border-radius:14px}
+  .metric-tab{padding:6px 10px;font-size:11px}
+  .race-tab{padding:5px 12px;font-size:11px}
+  .champion-crown{font-size:24px}
+  .champion-name,.champion-score{font-size:15px}
 }
 
 </style>
@@ -469,13 +415,13 @@ tr:hover td{background:#FFFBF7}
       <div class="nav-item" onclick="showPage('records')"><div class="nav-dot"></div>交件驗收</div>
       <div class="nav-item" onclick="showPage('settlement')"><div class="nav-dot"></div>結算中心</div>
       <div class="nav-group-label">排行</div>
-      <div class="nav-item" onclick="showPage('leaderboard')"><div class="nav-dot"></div>丹道排行榜</div>
+      <div class="nav-item" onclick="showPage('leaderboard')"><div class="nav-dot"></div>榮譽排行榜</div>
     </div>
     <div id="worker-nav" style="display:none">
       <div class="nav-group-label">修仙洞府</div>
       <div class="nav-item" onclick="showWorkerPage('w-home')"><div class="nav-dot"></div>我的修為</div>
       <div class="nav-item" onclick="showWorkerPage('w-records')"><div class="nav-dot"></div>修行紀錄</div>
-      <div class="nav-item" onclick="showWorkerPage('w-leaderboard')"><div class="nav-dot"></div>煉丹天榜</div>
+      <div class="nav-item" onclick="showWorkerPage('w-leaderboard')"><div class="nav-dot"></div>封神榜</div>
     </div>
     <div class="role-switcher">
       <label>身份切換</label>
@@ -494,7 +440,7 @@ tr:hover td{background:#FFFBF7}
     <div class="content">
 
       <div class="page active" id="page-admin-login">
-        <div class="worker-login">
+        <div class="worker-login admin-login-mobile">
           <div class="worker-login-icon">🔐</div>
           <div class="worker-login-title">後台管理登入</div>
           <div class="worker-login-sub">請輸入管理者密碼後，再進入總覽、代工人員、品項與結算中心</div>
@@ -510,36 +456,36 @@ tr:hover td{background:#FFFBF7}
         <div class="stat-grid" id="dash-stats"></div>
         <div class="card">
           <div class="card-head"><span class="card-head-title">最近交件紀錄</span></div>
-          <table><thead><tr><th>人員</th><th>品項</th><th>合格數</th><th>金額</th><th>狀態</th></tr></thead>
-          <tbody id="dash-recent"></tbody></table>
+          <div class="table-scroll"><table><thead><tr><th>人員</th><th>品項</th><th>合格數</th><th>金額</th><th>狀態</th></tr></thead>
+          <tbody id="dash-recent"></tbody></table></div>
         </div>
       </div>
 
       <div class="page" id="page-workers">
-        <div style="display:flex;justify-content:flex-end;margin-bottom:1.25rem">
+        <div class="mobile-action-row">
           <button class="btn btn-primary" onclick="openWorkerModal()">＋ 新增人員</button>
         </div>
-        <div class="card">
-          <table><thead><tr><th>姓名</th><th>暱稱</th><th>手機</th><th>狀態</th><th>已收獲累積</th><th>解脫金幣</th><th></th></tr></thead>
+        <div class="card table-scroll">
+          <table><thead><tr><th>姓名</th><th>暱稱</th><th>手機</th><th>狀態</th><th>已收獲累積</th><th>解脫金幣</th><th>操作</th></tr></thead>
           <tbody id="workers-table"></tbody></table>
         </div>
       </div>
 
       <div class="page" id="page-items">
-        <div style="display:flex;justify-content:flex-end;margin-bottom:1.25rem">
+        <div class="mobile-action-row">
           <button class="btn btn-primary" onclick="openItemModal()">＋ 新增品項</button>
         </div>
-        <div class="card">
-          <table><thead><tr><th>品項名稱</th><th>計算單位</th><th>單位數量</th><th>單價</th><th>備註</th><th></th></tr></thead>
+        <div class="card table-scroll">
+          <table><thead><tr><th>品項名稱</th><th>計算單位</th><th>單位數量</th><th>單價</th><th>備註</th><th>操作</th></tr></thead>
           <tbody id="items-table"></tbody></table>
         </div>
       </div>
 
       <div class="page" id="page-records">
-        <div style="display:flex;justify-content:flex-end;margin-bottom:1.25rem">
+        <div class="mobile-action-row">
           <button class="btn btn-primary" onclick="openModal('record-modal')">＋ 登記交件</button>
         </div>
-        <div class="card">
+        <div class="card table-scroll">
           <table><thead><tr><th>日期</th><th>人員</th><th>品項</th><th>交回</th><th>合格</th><th>金額</th><th>狀態</th><th>操作</th></tr></thead>
           <tbody id="records-table"></tbody></table>
         </div>
@@ -551,15 +497,15 @@ tr:hover td{background:#FFFBF7}
             <span class="card-head-title">本週結算（<span id="week-range"></span>）</span>
             <button class="btn btn-sm" onclick="generateSettlement()">重新計算</button>
           </div>
-          <table><thead><tr><th>人員</th><th>完成金額</th><th>加給</th><th>扣款</th><th>應付金額</th><th>狀態</th><th></th></tr></thead>
-          <tbody id="settlement-table"></tbody></table>
+          <div class="table-scroll"><table><thead><tr><th>人員</th><th>完成金額</th><th>加給</th><th>扣款</th><th>應付金額</th><th>狀態</th><th>操作</th></tr></thead>
+          <tbody id="settlement-table"></tbody></table></div>
         </div>
       </div>
 
       <div class="page" id="page-leaderboard">
         <div class="card">
           <div class="card-head">
-            <span class="card-head-title">丹道風雲榜 ⚗️</span>
+            <span class="card-head-title">榮譽排行榜 ⛵</span>
             <div class="race-tabs">
               <button class="race-tab active" onclick="switchLbPeriod('this',this)">本週</button>
               <button class="race-tab" onclick="switchLbPeriod('last',this)">上週</button>
@@ -567,10 +513,10 @@ tr:hover td{background:#FFFBF7}
             </div>
           </div>
           <div class="lb-metric-bar">
-            <button class="metric-tab active" onclick="switchLbTab('earn',this)">🔥 產值丹榜</button>
-            <button class="metric-tab" onclick="switchLbTab('combined',this)">⚗️ 綜合丹榜</button>
-            <button class="metric-tab" onclick="switchLbTab('quality',this)">💎 成丹品質榜</button>
-            <button class="metric-tab" onclick="switchLbTab('coin',this)">🪙 靈幣榜</button>
+            <button class="metric-tab active" onclick="switchLbTab('earn',this)">💰 產值榜</button>
+            <button class="metric-tab" onclick="switchLbTab('combined',this)">⭐ 綜合榜</button>
+            <button class="metric-tab" onclick="switchLbTab('quality',this)">✨ 品質榜</button>
+            <button class="metric-tab" onclick="switchLbTab('coin',this)">🪙 金幣榜</button>
           </div>
           <div id="lb-champion"></div>
           <div id="lb-summary"></div>
@@ -586,7 +532,6 @@ tr:hover td{background:#FFFBF7}
             <div class="immortal-brand">仙途<small>IMMORTAL PATH</small></div>
             <div class="immortal-orbit"></div>
             <div class="immortal-seat"></div>
-            <div class="immortal-core"></div>
             <div class="immortal-avatar-art"></div>
             <div class="immortal-orb immortal-o1">丹</div>
             <div class="immortal-orb immortal-o2">火</div>
@@ -597,7 +542,7 @@ tr:hover td{background:#FFFBF7}
           <div class="immortal-form immortal-panel soft">
             <div class="immortal-title">⛩️ 踏入仙途</div>
             <div class="worker-login-title">報上道號，查詢仙緣</div>
-            <div class="worker-login-sub">整體風格已統一成修仙遊戲介面。輸入你的道號（姓名或暱稱），即可進入個人洞府，查看修為境界、解脫金幣與煉丹天榜。</div>
+            <div class="worker-login-sub">輸入你的道號（姓名或暱稱），即可進入個人洞府，查看修為境界、解脫金幣與煉丹天榜。</div>
             <div class="immortal-divider"></div>
             <div class="worker-search-box">
               <input id="w-name-input" placeholder="請輸入道號（姓名 / 暱稱）" onkeydown="if(event.key==='Enter')workerLogin()">
@@ -627,8 +572,8 @@ tr:hover td{background:#FFFBF7}
         <div class="w-back" onclick="workerLogout()">← 重返山門</div>
         <div class="card">
           <div class="card-head"><span class="card-head-title">我的修行紀錄</span></div>
-          <table><thead><tr><th>日期</th><th>品項</th><th>合格數</th><th>單價</th><th>金額</th><th>狀態</th></tr></thead>
-          <tbody id="w-records-table"></tbody></table>
+          <div class="table-scroll"><table><thead><tr><th>日期</th><th>品項</th><th>合格數</th><th>單價</th><th>金額</th><th>狀態</th></tr></thead>
+          <tbody id="w-records-table"></tbody></table></div>
         </div>
       </div>
 
@@ -636,7 +581,7 @@ tr:hover td{background:#FFFBF7}
         <div class="w-back" onclick="workerLogout()">← 重返山門</div>
         <div class="card">
           <div class="card-head">
-            <span class="card-head-title">煉丹天榜 ✨</span>
+            <span class="card-head-title">封神榜 ⚔️</span>
             <div class="race-tabs" id="w-period-tabs">
               <button class="race-tab active" onclick="switchWLbPeriod('this',this)">本週</button>
               <button class="race-tab" onclick="switchWLbPeriod('last',this)">上週</button>
@@ -644,10 +589,10 @@ tr:hover td{background:#FFFBF7}
             </div>
           </div>
           <div class="lb-metric-bar" id="w-metric-bar">
-            <button class="metric-tab active" onclick="switchWLbTab('earn',this)">🔥 產值丹榜</button>
-            <button class="metric-tab" onclick="switchWLbTab('combined',this)">⚗️ 綜合丹榜</button>
-            <button class="metric-tab" onclick="switchWLbTab('quality',this)">💎 成丹品質榜</button>
-            <button class="metric-tab" onclick="switchWLbTab('coin',this)">🪙 靈幣榜</button>
+            <button class="metric-tab active" onclick="switchWLbTab('earn',this)">💰 產值榜</button>
+            <button class="metric-tab" onclick="switchWLbTab('combined',this)">⭐ 綜合榜</button>
+            <button class="metric-tab" onclick="switchWLbTab('quality',this)">✨ 品質榜</button>
+            <button class="metric-tab" onclick="switchWLbTab('coin',this)">🪙 金幣榜</button>
           </div>
           <div id="w-lb-champion"></div>
           <div id="w-lb-self"></div>
@@ -740,29 +685,23 @@ const MEDAL_FG=['#633806','#444441','#712B13','#888780','#888780'];
 
 function boatSVG(ci,phase){
   const [body,acc]=BOAT_COLORS[ci%BOAT_COLORS.length];
-  const lift=Math.sin(phase)*2.6;
-  const drift=Math.cos(phase)*1.8;
-  return `<svg width="42" height="42" viewBox="0 0 42 42" style="display:block;overflow:visible">
-    <defs>
-      <radialGradient id="glow-${ci}" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="${acc}" stop-opacity=".95"/>
-        <stop offset="55%" stop-color="${body}" stop-opacity=".45"/>
-        <stop offset="100%" stop-color="${body}" stop-opacity="0"/>
-      </radialGradient>
-      <linearGradient id="cauld-${ci}" x1="0" x2="1">
-        <stop offset="0%" stop-color="${body}"/>
-        <stop offset="100%" stop-color="${acc}"/>
-      </linearGradient>
-    </defs>
-    <ellipse cx="21" cy="31" rx="13" ry="4.5" fill="#0F0C15" opacity=".42"/>
-    <circle cx="21" cy="15" r="10.5" fill="url(#glow-${ci})" opacity=".95" transform="translate(0 ${lift*0.35})"/>
-    <circle cx="21" cy="14" r="6.2" fill="#FFF6D8" opacity=".96" transform="translate(0 ${lift*0.28})"/>
-    <path d="M12 22 Q21 17 30 22 L28 31 Q21 35 14 31 Z" fill="url(#cauld-${ci})"/>
-    <path d="M11.5 21.5 Q21 26 30.5 21.5" fill="none" stroke="#FFF6D8" stroke-opacity=".72" stroke-width="1.2"/>
-    <path d="M14.5 18.8 Q21 14.5 27.5 18.8" fill="none" stroke="${acc}" stroke-width="1.7" stroke-linecap="round" opacity=".9" transform="translate(${drift*0.35} ${lift*0.18})"/>
-    <circle cx="16.3" cy="11.7" r="1.3" fill="#FFF6D8" transform="translate(${drift*0.45} ${lift*0.55})"/>
-    <circle cx="26.2" cy="9.2" r="1.1" fill="#FFF6D8" transform="translate(${drift*-0.38} ${lift*0.5})"/>
-    <circle cx="22" cy="7.5" r="1.5" fill="${acc}" opacity=".9" transform="translate(${drift*0.25} ${lift*0.75})"/>
+  const p1=Math.sin(phase)*3.5;
+  const p2=Math.sin(phase+Math.PI)*3.5;
+  return `<svg width="40" height="40" viewBox="0 0 40 40" style="display:block;overflow:visible">
+    <path d="M6 23 Q20 15 34 23 L32 28 Q20 20 8 28Z" fill="${body}"/>
+    <path d="M6 23 Q5 20 3 19 Q7 19 8 22Z" fill="${body}"/>
+    <path d="M34 23 Q36 20 37 19 Q34 20 32 22Z" fill="${body}"/>
+    <rect x="19" y="8" width="2.5" height="13" rx="1.2" fill="${acc}" opacity=".9"/>
+    <path d="M21.5 8 L29 12 L21.5 16Z" fill="${acc}"/>
+    <circle cx="10" cy="23" r="2.3" fill="white" opacity=".9"/>
+    <circle cx="15.5" cy="20" r="2.3" fill="white" opacity=".9"/>
+    <circle cx="20.5" cy="19" r="2.3" fill="white" opacity=".9"/>
+    <circle cx="25.5" cy="20" r="2.3" fill="white" opacity=".9"/>
+    <circle cx="31" cy="23" r="2.3" fill="white" opacity=".9"/>
+    <line x1="10" y1="23" x2="${7+p1}" y2="${30+p1}" stroke="${acc}" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="15.5" y1="20" x2="${12.5+p2}" y2="${27+p2}" stroke="${acc}" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="25.5" y1="20" x2="${22.5+p1}" y2="${27+p1}" stroke="${acc}" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="31" y1="23" x2="${28+p2}" y2="${30+p2}" stroke="${acc}" stroke-width="1.8" stroke-linecap="round"/>
   </svg>`;
 }
 
@@ -881,10 +820,9 @@ function renderChampion(id,rows,metric,label){
   const el=document.getElementById(id);if(!el)return;
   if(!rows.length){el.innerHTML='';return;}
   const top=rows[0];
-  const title={earn:'丹火產值魁首',combined:'丹道宗師',quality:'無瑕成丹王',coin:'靈幣尊者'}[metric];
-  const icon={earn:'🔥',combined:'⚗️',quality:'💎',coin:'🪙'}[metric]||'✨';
+  const title={earn:'產值船長',combined:'總船長',quality:'品質船長',coin:'解脫金幣王'}[metric];
   el.innerHTML=`<div class="champion">
-    <div class="champion-crown">${icon}</div>
+    <div class="champion-crown">👑</div>
     <div class="champion-info">
       <div class="champion-label">${label} · ${title}</div>
       <div class="champion-name">${top.nick}</div>
@@ -901,9 +839,9 @@ function renderLbSummary(id,recs){
   const totP=recs.reduce((a,r)=>a+r.pass,0);
   const rate=totT?(totP/totT*100).toFixed(1):'0.0';
   el.innerHTML=`<div class="lb-summary">
-    <div class="lb-sum-item"><span class="lb-sum-num">${ppl}</span><span class="lb-sum-lbl">煉丹弟子</span></div>
-    <div class="lb-sum-item"><span class="lb-sum-num">$${out.toLocaleString()}</span><span class="lb-sum-lbl">本期丹值</span></div>
-    <div class="lb-sum-item"><span class="lb-sum-num">${rate}%</span><span class="lb-sum-lbl">平均成丹率</span></div>
+    <div class="lb-sum-item"><span class="lb-sum-num">${ppl}</span><span class="lb-sum-lbl">上工人數</span></div>
+    <div class="lb-sum-item"><span class="lb-sum-num">$${out.toLocaleString()}</span><span class="lb-sum-lbl">總產值</span></div>
+    <div class="lb-sum-item"><span class="lb-sum-num">${rate}%</span><span class="lb-sum-lbl">平均合格率</span></div>
   </div>`;
 }
 
@@ -965,12 +903,12 @@ function renderLeaderboard(){
   const rows=computeStandings(recs,currentLbTab);
   renderChampion('lb-champion',rows,currentLbTab,label);
   renderLbSummary('lb-summary',recs);
-  renderRaceRanked('lb-race',rows,currentLbTab,prevRank,null,'本期丹爐尚未開火',{showDelta});
+  renderRaceRanked('lb-race',rows,currentLbTab,prevRank,null,'尚無已驗收的交件',{showDelta});
   const note=document.getElementById('lb-note');
-  if(isCoin) note.innerHTML=`<div class="lb-note">＊靈幣榜 = 每位代工歷來累計的解脫金幣（已驗收產值，NT$1 ＝ 1 枚），視為靈幣修為，各自累積、永不歸零、不分期間。</div>`;
-  else if(currentLbTab==='quality') note.innerHTML=`<div class="lb-note">＊成丹品質榜 = 合格率（合格數 ÷ 交回數）；需本期交件量達 ${QUALITY_MIN} 件以上才列入評比，避免少量高分灌水。</div>`;
-  else if(currentLbTab==='combined') note.innerHTML=`<div class="lb-note">＊綜合丹榜 = 產值 × 品質加權（成丹率越高越接近滿分），兼顧火力與穩定度。</div>`;
-  else note.innerHTML=`<div class="lb-note">＊產值丹榜 = 本期已驗收交件的金額合計；▲▼ 為相較上一期的名次變化。</div>`;
+  if(isCoin) note.innerHTML=`<div class="lb-note">＊金幣榜 = 每位代工歷來累計的解脫金幣（已驗收產值，NT$1 ＝ 1 枚），各自累積、永不歸零、不分期間。</div>`;
+  else if(currentLbTab==='quality') note.innerHTML=`<div class="lb-note">＊品質榜 = 合格率（合格數 ÷ 交回數）；需本期交件量達 ${QUALITY_MIN} 件以上才列入評比，避免少量滿分灌水。</div>`;
+  else if(currentLbTab==='combined') note.innerHTML=`<div class="lb-note">＊綜合分 = 產值 × 品質加權（合格率越高越接近滿分），兼顧產量與良率。</div>`;
+  else note.innerHTML=`<div class="lb-note">＊產值榜 = 本期已驗收交件的金額合計；▲▼ 為相較上一期的名次變化。</div>`;
 }
 let currentWLbTab='earn';
 let currentWLbPeriod='this';
@@ -1012,17 +950,17 @@ function renderWorkerLeaderboard(){
         :currentWLbTab==='combined'?me.score.toLocaleString()+' 綜合分'
         :isCoin?'🪙 '+me.score.toLocaleString()+' 枚解脫金幣'
         :'$'+me.earn.toLocaleString();
-      self.innerHTML=`<div class="w-lb-self">你目前位居 <strong>第 ${myIdx+1} 名</strong>　${val}</div>`;
+      self.innerHTML=`<div class="w-lb-self">你目前排名 <strong>第 ${myIdx+1} 名</strong>　${val}</div>`;
     }else{
-      self.innerHTML=`<div class="w-lb-self">這個榜單你還沒入列，快去開爐煉丹衝榜吧！⚗️</div>`;
+      self.innerHTML=`<div class="w-lb-self">這個榜單你還沒上榜，趕快上船一起划！⛵</div>`;
     }
   }
-  renderRaceRanked('w-lb-race',rows,currentWLbTab,prevRank,currentWorkerId,'本期丹榜尚未有人入列',{showDelta});
+  renderRaceRanked('w-lb-race',rows,currentWLbTab,prevRank,currentWorkerId,'本期還沒有人完成驗收',{showDelta});
   const note=document.getElementById('w-lb-note');
   if(note){
-    if(isCoin) note.innerHTML=`<div class="lb-note">＊靈幣榜為歷來累計的解脫金幣，NT$1 ＝ 1 枚，視為靈幣修為，各自累積、永不歸零。</div>`;
-    else if(currentWLbTab==='quality') note.innerHTML=`<div class="lb-note">＊成丹品質榜需本期交件達 ${QUALITY_MIN} 件以上才列入。</div>`;
-    else if(currentWLbTab==='combined') note.innerHTML=`<div class="lb-note">＊綜合丹榜 = 產值 × 品質加權，火力與成丹率並重。</div>`;
+    if(isCoin) note.innerHTML=`<div class="lb-note">＊金幣榜為歷來累計的解脫金幣，NT$1 ＝ 1 枚，各自累積、永不歸零。</div>`;
+    else if(currentWLbTab==='quality') note.innerHTML=`<div class="lb-note">＊品質榜需本期交件達 ${QUALITY_MIN} 件以上才列入。</div>`;
+    else if(currentWLbTab==='combined') note.innerHTML=`<div class="lb-note">＊綜合分 = 產值 × 品質加權，量與良率並重。</div>`;
     else note.innerHTML='';
   }
 }
@@ -1289,7 +1227,7 @@ function deleteItem(id){
     db.items=db.items.filter(i=>i.id!==id);saveDB();refreshAfterDataChange();toast('已刪除');
   },'刪除');
 }
-function verifyRecord(id){if(!requireAdmin())return;const r=db.records.find(r=>r.id===id);if(r){r.status='verified';saveDB();renderRecords();renderDashboard();toast('驗收完成 ✅');}}
+function verifyRecord(id){if(!requireAdmin())return;const r=db.records.find(r=>r.id===id);if(r){r.status='verified';saveDB();refreshAfterDataChange();toast('驗收完成 ✅');}}
 function unverifyRecord(id){
   if(!requireAdmin())return;
   askConfirm('要把這筆改回「待驗收」嗎？<br>（會一併從排行與結算中移除這筆已驗收金額）',()=>{
@@ -1331,18 +1269,18 @@ function renderWorkers(){
   const totals={};
   db.records.forEach(r=>{if(r.status==='verified')totals[r.workerId]=(totals[r.workerId]||0)+r.amount;});
   document.getElementById('workers-table').innerHTML=db.workers.map(w=>`
-    <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar">${w.name.slice(0,1)}</div>${w.name}</div></td><td>${w.nick}</td><td>${w.phone}</td><td>${statusBadge(w.status)}</td><td>$${(totals[w.id]||0).toLocaleString()}</td><td><span class="coin-chip">🪙${coinsOf(totals[w.id]||0)}</span></td><td><button class="btn btn-sm" onclick="editWorker(${w.id})">編輯</button> <button class="btn btn-sm" onclick="previewWorker(${w.id})">前台預覽</button> <button class="btn btn-sm btn-danger" onclick="deleteWorker(${w.id})">刪除</button></td></tr>
+    <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar">${w.name.slice(0,1)}</div>${w.name}</div></td><td>${w.nick}</td><td>${w.phone}</td><td>${statusBadge(w.status)}</td><td>$${(totals[w.id]||0).toLocaleString()}</td><td><span class="coin-chip">🪙${coinsOf(totals[w.id]||0)}</span></td><td class="action-cell"><button class="btn btn-sm" onclick="editWorker(${w.id})">編輯</button> <button class="btn btn-sm" onclick="previewWorker(${w.id})">前台預覽</button> <button class="btn btn-sm btn-danger" onclick="deleteWorker(${w.id})">刪除</button></td></tr>
   `).join('')||'<tr><td colspan="7" class="empty-state">尚未新增人員</td></tr>';
 }
 function renderItems(){
   document.getElementById('items-table').innerHTML=db.items.map(i=>`
-    <tr><td>${i.name}</td><td>${i.unit}</td><td>${i.qty}</td><td>$${i.price}</td><td style="color:var(--muted);font-size:12px">${i.note}</td><td><button class="btn btn-sm" onclick="editItem(${i.id})">編輯</button> <button class="btn btn-sm" onclick="deleteItem(${i.id})">刪除</button></td></tr>
+    <tr><td>${i.name}</td><td>${i.unit}</td><td>${i.qty}</td><td>$${i.price}</td><td style="color:var(--muted);font-size:12px">${i.note}</td><td class="action-cell"><button class="btn btn-sm" onclick="editItem(${i.id})">編輯</button> <button class="btn btn-sm btn-danger" onclick="deleteItem(${i.id})">刪除</button></td></tr>
   `).join('')||'<tr><td colspan="6" class="empty-state">尚未新增品項</td></tr>';
 }
 function renderRecords(){
   const sorted=db.records.slice().sort((a,b)=>b.date.localeCompare(a.date));
   document.getElementById('records-table').innerHTML=sorted.map(r=>`
-    <tr><td>${r.date}</td><td>${gwn(r.workerId)}</td><td>${gin(r.itemId)}</td><td>${r.total.toLocaleString()}</td><td>${r.pass.toLocaleString()}</td><td>$${r.amount.toLocaleString()}</td><td>${statusBadge(r.status)}${r.status==='pending'?` <button class="btn btn-sm" style="margin-left:6px" onclick="verifyRecord(${r.id})">驗收</button>`:` <button class="btn btn-sm" style="margin-left:6px" onclick="unverifyRecord(${r.id})">取消驗收</button>`}</td><td><button class="btn btn-sm btn-danger" onclick="deleteRecord(${r.id})">刪除</button></td></tr>
+    <tr><td>${r.date}</td><td>${gwn(r.workerId)}</td><td>${gin(r.itemId)}</td><td>${r.total.toLocaleString()}</td><td>${r.pass.toLocaleString()}</td><td>$${r.amount.toLocaleString()}</td><td>${statusBadge(r.status)}${r.status==='pending'?` <button class="btn btn-sm" style="margin-left:6px" onclick="verifyRecord(${r.id})">驗收</button>`:` <button class="btn btn-sm" style="margin-left:6px" onclick="unverifyRecord(${r.id})">取消驗收</button>`}</td><td class="action-cell"><button class="btn btn-sm btn-danger" onclick="deleteRecord(${r.id})">刪除</button></td></tr>
   `).join('')||'<tr><td colspan="8" class="empty-state">尚無紀錄</td></tr>';
 }
 function generateSettlement(){
@@ -1351,7 +1289,6 @@ function generateSettlement(){
   const byW={};
   wRecs.forEach(r=>{byW[r.workerId]=(byW[r.workerId]||0)+r.amount;});
   const week=getWeekRange();
-  // 重新計算時同步清掉本週已被刪除或取消驗收後留下的舊結算列
   db.settlements=db.settlements.filter(s=>s.week!==week||Object.prototype.hasOwnProperty.call(byW,s.workerId));
   Object.entries(byW).forEach(([wid,earned])=>{
     let s=db.settlements.find(s=>s.workerId===+wid&&s.week===week);
@@ -1445,14 +1382,14 @@ function showPage(name){
   const order=['dashboard','workers','items','records','settlement','leaderboard'];
   const idx=order.indexOf(name);
   if(idx>=0) document.querySelectorAll('#admin-nav .nav-item')[idx].classList.add('active');
-  const titles={dashboard:'總覽',workers:'代工人員',items:'品項單價',records:'交件驗收',settlement:'結算中心',leaderboard:'丹道排行榜'};
+  const titles={dashboard:'總覽',workers:'代工人員',items:'品項單價',records:'交件驗收',settlement:'結算中心',leaderboard:'榮譽排行榜'};
   document.getElementById('page-title').textContent=titles[name]||name;
   if(name==='settlement'){document.getElementById('week-range').textContent=getWeekRange();generateSettlement();}
   if(name==='leaderboard') renderLeaderboard();
 }
 function showWorkerPage(name){
   document.getElementById('topbar-right').innerHTML='';
-  // 未登入時，個人頁面導回登入（煉丹天榜可公開瀏覽）
+  // 未登入時，個人頁面導回登入（封神榜可公開瀏覽）
   if((name==='w-home'||name==='w-records')&&!currentWorkerId) name='w-login';
   cancelAnimationFrame(animFrame);
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -1461,7 +1398,7 @@ function showWorkerPage(name){
   const wOrder=['w-home','w-records','w-leaderboard'];
   const idx=wOrder.indexOf(name);
   if(idx>=0) document.querySelectorAll('#worker-nav .nav-item')[idx].classList.add('active');
-  const titles={'w-login':'踏入仙途','w-home':'洞府修為','w-records':'修行紀錄','w-leaderboard':'煉丹天榜'};
+  const titles={'w-login':'踏入仙途','w-home':'洞府修為','w-records':'修行紀錄','w-leaderboard':'封神榜'};
   document.getElementById('page-title').textContent=titles[name]||name;
   if(name==='w-leaderboard') renderWorkerLeaderboard();
 }
