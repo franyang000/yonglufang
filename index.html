@@ -2,521 +2,1419 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>永祿坊代工結算系統</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --red:#E8472A;--gold:#F5A623;--teal:#1DB87A;--blue:#3A7BD5;--ink:#2C2C2A;
-  --bg:#FFF8F0;--card:#FFFFFF;--muted:#888780;--border:#F0EBE3;
-  --r-sm:10px;--r-md:16px;--r-lg:22px;
+  --blue-grey: #223E50; /* 永祿坊 logo06-03.jpg 經典深藍灰色 */
+  --peach-gold: #F5B682; /* 永祿坊 logo06-03.jpg 經典桃金/杏桃色 */
+  --red: #B22222; /* 硃砂紅 */
+  --red-hover: #8B0000;
+  --gold: #D4AF37; /* 古典金 */
+  --teal: #1D5B5E; /* 墨綠 */
+  --blue: #1A365D; /* 靛藍 */
+  --ink: #000000; /* 極致黑，完全清晰 */
+  --bg: #F7F4EB; /* 宣紙古籍色，營造修真畫風 */
+  --card: #FFFFFF;
+  --muted: #000000; /* 太淡的字全改為純黑 */
+  --muted-dark: #1A1A1A; /* 次要文字也用深炭黑 */
+  --border: #C3B59B; /* 古風竹藤色邊框 */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --shadow-sm: 0 2px 4px rgba(34,62,80,0.08);
+  --shadow-md: 0 6px 12px rgba(34,62,80,0.12);
+  --shadow-lg: 0 15px 30px rgba(0,0,0,0.18);
 }
-body{font-family:'Noto Sans TC',sans-serif;background:var(--bg);min-height:100vh}
-.app{display:flex;min-height:100vh}
-.sidebar{width:200px;flex-shrink:0;background:var(--card);border-right:1.5px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
-.logo-block{padding:1.25rem 1rem 1rem;border-bottom:1.5px solid var(--border)}
-.logo-zh{font-size:18px;font-weight:700;color:var(--red);letter-spacing:.05em}
-.logo-en{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.08em}
-.nav-group-label{font-size:10px;color:var(--muted);padding:.75rem 1rem .25rem;letter-spacing:.07em;text-transform:uppercase}
-.nav-item{display:flex;align-items:center;gap:9px;padding:10px 1rem;font-size:13px;color:var(--ink);cursor:pointer;transition:background .12s}
-.nav-item:hover{background:#FFF0E8}
-.nav-item.active{background:#FFF0E8;color:var(--red);font-weight:500}
-.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--border);flex-shrink:0;transition:background .12s}
-.nav-item.active .nav-dot{background:var(--red)}
-.role-switcher{margin:auto 0 0;padding:.875rem 1rem;border-top:1.5px solid var(--border)}
-.role-switcher label{font-size:11px;color:var(--muted);display:block;margin-bottom:6px}
-.role-pills{display:flex;background:var(--bg);border-radius:8px;padding:3px;gap:2px}
-.role-pill{flex:1;padding:5px 0;font-size:12px;text-align:center;border:none;background:none;cursor:pointer;border-radius:6px;color:var(--muted);font-family:inherit;transition:background .12s}
-.role-pill.active{background:var(--red);color:#fff;font-weight:500}
-.main{flex:1;display:flex;flex-direction:column;min-height:100vh}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.5rem;border-bottom:1.5px solid var(--border);background:var(--card);position:sticky;top:0;z-index:10}
-.topbar-title{font-size:16px;font-weight:700;color:var(--ink)}
-.content{flex:1;padding:1.5rem}
-.page{display:none}
+
+body{
+  font-family:'Noto Sans TC', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* 確保所有常規字體為高對比黑色 */
+p, span, label, td, th, option, select, input, textarea {
+  color: #000000;
+}
+
+.app{
+  display: flex;
+  min-height: 100vh;
+}
+
+/* 側邊導覽列：採用 logo06-03 經典藍灰色背景，搭配桃金字體 */
+.sidebar{
+  width: 250px;
+  flex-shrink: 0;
+  background: var(--blue-grey);
+  border-right: 2px solid #162935;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+.logo-block{
+  padding: 1.5rem 1.25rem;
+  border-bottom: 2px solid #162935;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-icon{
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-zh{
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--peach-gold);
+  letter-spacing: .12em;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+.logo-en{
+  font-size: 11px;
+  color: #FFFFFF;
+  margin-top: 2px;
+  letter-spacing: .08em;
+  opacity: 0.85;
+}
+
+.nav-group{
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem 0;
+}
+.nav-group-label{
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--peach-gold);
+  padding: 0.75rem 1.25rem 0.25rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+.nav-item{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 1.25rem;
+  font-size: 14px;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
+}
+.nav-item:hover{
+  background: rgba(245, 182, 130, 0.15);
+  color: var(--peach-gold);
+}
+.nav-item.active{
+  background: rgba(245, 182, 130, 0.25);
+  color: var(--peach-gold);
+  font-weight: 900;
+  border-left-color: var(--peach-gold);
+}
+.nav-dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+.nav-item.active .nav-dot{
+  background: var(--peach-gold);
+  box-shadow: 0 0 10px var(--peach-gold);
+}
+
+.role-switcher{
+  padding: 1.25rem;
+  border-top: 2px solid #162935;
+  background: #1B313F;
+}
+.role-switcher label{
+  font-size: 11px;
+  color: var(--peach-gold);
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 900;
+}
+.role-pills{
+  display: flex;
+  background: #111E27;
+  border-radius: 8px;
+  padding: 4px;
+  gap: 4px;
+}
+.role-pill{
+  flex: 1;
+  padding: 8px 0;
+  font-size: 12px;
+  text-align: center;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 6px;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.role-pill.active{
+  background: var(--peach-gold);
+  color: var(--blue-grey);
+  font-weight: 900;
+  box-shadow: var(--shadow-sm);
+}
+
+.main{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-width: 0;
+}
+
+/* 頂部選單列：藍灰深沉高雅風 */
+.topbar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 3px solid var(--border);
+  background: var(--blue-grey);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  box-shadow: var(--shadow-sm);
+}
+.topbar-left{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.menu-toggle{
+  display: none;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #FFFFFF;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.menu-toggle:hover{
+  background: rgba(255,255,255,0.1);
+}
+.topbar-title{
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--peach-gold);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.05em;
+}
+
+.content{
+  flex: 1;
+  padding: 1.5rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.page{
+  display: none;
+  animation: fadeIn 0.3s ease-out;
+}
 .page.active{display:block}
-.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.5rem}
-.stat-card{background:var(--card);border-radius:var(--r-md);padding:1rem 1.125rem;border:1.5px solid var(--border)}
-.stat-label{font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
-.stat-value{font-size:22px;font-weight:700;color:var(--ink)}
-.stat-accent{color:var(--red)}
-.card{background:var(--card);border-radius:var(--r-md);border:1.5px solid var(--border);margin-bottom:1.25rem;overflow:hidden}
-.card-head{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.125rem;border-bottom:1.5px solid var(--border)}
-.card-head-title{font-size:14px;font-weight:700;color:var(--ink)}
-.card-body{padding:1rem 1.125rem}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{text-align:left;padding:7px 10px;color:var(--muted);font-weight:500;font-size:11px;border-bottom:1.5px solid var(--border);text-transform:uppercase;letter-spacing:.04em}
-td{padding:10px 10px;color:var(--ink);border-bottom:1px solid var(--border)}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:#FFFBF7}
-.badge{display:inline-flex;align-items:center;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:500}
-.badge-ok{background:#E1F5EE;color:#085041}
-.badge-wait{background:#FAEEDA;color:#633806}
-.badge-paid{background:#E6F1FB;color:#0C447C}
-.badge-unpaid{background:#FCEBEB;color:#791F1F}
-.badge-gray{background:var(--bg);color:var(--muted)}
-.btn{padding:7px 16px;font-size:13px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:none;cursor:pointer;color:var(--ink);font-family:inherit;font-weight:500;transition:background .12s}
-.btn:hover{background:var(--bg)}
-.btn-primary{background:var(--red);color:#fff;border-color:var(--red)}
-.btn-primary:hover{opacity:.88}
-.btn-danger{color:#B42318;border-color:#F2B8B5}
-.btn-danger:hover{background:#FFF0EF}
-.btn-sm{padding:3px 10px;font-size:11px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
-.form-group{display:flex;flex-direction:column;gap:5px}
-.form-group label{font-size:11px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
-.form-group input,.form-group select{font-size:13px;font-family:inherit;border-radius:var(--r-sm);border:1.5px solid var(--border);padding:8px 12px;background:var(--card);transition:border-color .12s;outline:none}
-.form-group input:focus,.form-group select:focus{border-color:var(--red)}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(44,44,42,.5);z-index:100;align-items:center;justify-content:center}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 數據卡片 */
+.stat-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 1.5rem;
+}
+.stat-card{
+  background: var(--card);
+  border-radius: var(--r-md);
+  padding: 1.25rem;
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-image: radial-gradient(circle at 100% 150%, rgba(195,181,155,0.15) 24%, transparent 24%);
+}
+.stat-card:hover{
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--blue-grey);
+}
+.stat-info{
+  display: flex;
+  flex-direction: column;
+}
+.stat-label{
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 900;
+}
+.stat-value{
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--blue-grey);
+  line-height: 1.2;
+}
+.stat-accent{color: var(--red)}
+.stat-icon{
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #F4EFE6;
+  color: var(--blue-grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  border: 1.5px solid var(--border);
+}
+
+/* 列表包裝元件 */
+.card{
+  background: var(--card);
+  border-radius: var(--r-md);
+  border: 2px solid var(--border);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.card-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 2px solid var(--border);
+  background: #FDFBF7;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.card-head-title{
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--blue-grey);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.card-body{
+  padding: 1.25rem 1.5rem;
+}
+
+/* 搜尋過濾工具列 */
+.table-filter-bar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.search-wrapper{
+  position: relative;
+  flex: 1;
+  max-width: 360px;
+  min-width: 240px;
+}
+.search-wrapper input{
+  width: 100%;
+  padding: 10px 12px 10px 38px;
+  font-size: 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--r-sm);
+  outline: none;
+  background: var(--card);
+  color: #000000;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.search-wrapper input:focus{
+  border-color: var(--blue-grey);
+  box-shadow: 0 0 0 3px rgba(34,62,80,0.15);
+}
+.search-icon-svg{
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--blue-grey);
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+/* 確保所有 Input 的 placeholder 顏色足夠深 (黑色/深灰) */
+input::placeholder, select::placeholder, textarea::placeholder {
+  color: #333333 !important;
+  opacity: 1 !important;
+  font-weight: 500;
+}
+
+/* 精緻化表格設計 */
+.table-responsive{
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  text-align: left;
+}
+th{
+  padding: 14px 16px;
+  color: #000000;
+  font-weight: 900;
+  font-size: 13px;
+  border-bottom: 3px solid var(--border);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  background: #F5EFE1;
+  white-space: nowrap;
+}
+td{
+  padding: 14px 16px;
+  color: #000000;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+tr:last-child td{border-bottom: none}
+tr:hover td{background:#FAF4E8}
+
+/* 徽章 Badge */
+.badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500; /* 已改為精緻正常粗細，不顯得笨重 */
+}
+.badge-ok{background:#DCFCE7;color:#15803D;border:1px solid #86EFAC}
+.badge-wait{background:#FEF3C7;color:#B45309;border:1px solid #FDE68A}
+.badge-paid{background:#DBEAFE;color:#1D4ED8;border:1px solid #BFDBFE}
+.badge-unpaid{background:#FEE2E2;color:#B91C1C;border:1px solid #FCA5A5}
+.badge-gray{background:#E5E7EB;color:#1F2937;border:1px solid #D1D5DB}
+
+/* 按鈕 Button */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 20px;
+  font-size: 13px;
+  border: 2px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--card);
+  cursor: pointer;
+  color: #000000;
+  font-family: inherit;
+  font-weight: 500; /* 已改為精緻正常粗細 */
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.btn:hover{
+  background: #F4EFE6;
+  border-color: var(--blue-grey);
+}
+.btn-primary{
+  background: linear-gradient(135deg, var(--blue-grey) 0%, #172B38 100%);
+  color: #FFFFFF;
+  border-color: var(--blue-grey);
+}
+.btn-primary:hover{
+  background: var(--blue-grey);
+  border-color: var(--blue-grey);
+  box-shadow: 0 4px 12px rgba(34,62,80,0.25);
+  color: var(--peach-gold);
+}
+.btn-danger{
+  color: #B91C1C;
+  border-color: #FCA5A5;
+  background: #FEF2F2;
+}
+.btn-danger:hover{
+  background: #FEE2E2;
+  border-color: #EF4444;
+}
+.btn-sm{
+  padding: 6px 12px;
+  font-size: 12px;
+}
+.btn-icon-only{
+  padding: 8px;
+  border-radius: var(--r-sm);
+}
+
+/* 表單 Form */
+.form-row{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.form-row-3{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.form-group{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-group label{
+  font-size: 13px;
+  color: #000000;
+  font-weight: 900;
+  letter-spacing: .02em;
+}
+.form-group input, .form-group select, .form-group textarea{
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 700;
+  border-radius: var(--r-sm);
+  border: 2px solid var(--border);
+  padding: 10px 12px;
+  background: var(--card);
+  transition: border-color .15s, box-shadow .15s;
+  outline: none;
+  color: #000000;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus{
+  border-color: var(--blue-grey);
+  box-shadow: 0 0 0 3px rgba(34,62,80,0.15);
+}
+
+/* 預覽區塊 */
+.preview-box{
+  background: #FDFBF7;
+  border-radius: var(--r-sm);
+  padding: 14px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #000000;
+  border: 2px solid var(--border);
+}
+
+/* 大頭貼與元件 */
+.avatar{
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #EAF2F6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--blue-grey);
+  flex-shrink: 0;
+  border: 1.5px solid var(--border);
+}
+.toast-el{
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--blue-grey);
+  color: #FFFFFF;
+  border: 1.5px solid var(--peach-gold);
+  padding: 14px 28px;
+  border-radius: var(--r-md);
+  font-size: 14px;
+  font-weight: 900;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: var(--shadow-lg);
+  transition: opacity .3s, transform .3s;
+}
+.toast-el.show{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.empty-state{
+  text-align: center;
+  padding: 3.5rem 1rem;
+  color: #000000;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.empty-icon{
+  font-size: 36px;
+  opacity: 0.8;
+}
+
+/* 對話框 Modal */
+.modal-bg{
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(17,31,40,0.75);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
 .modal-bg.open{display:flex}
-.modal{background:var(--card);border-radius:var(--r-lg);border:1.5px solid var(--border);padding:1.75rem;width:480px;max-width:95vw}
-.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-.modal-title{font-size:16px;font-weight:700;color:var(--ink)}
-.modal-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:20px;line-height:1;padding:2px 6px}
-.modal-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:1.5rem}
-.preview-box{background:var(--bg);border-radius:var(--r-sm);padding:.875rem;margin-bottom:12px;font-size:13px;color:var(--ink);border:1.5px solid var(--border)}
-.avatar{width:30px;height:30px;border-radius:50%;background:#FFF0E8;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--red);flex-shrink:0}
-.toast-el{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:var(--r-md);font-size:13px;z-index:200;opacity:0;transition:opacity .2s;pointer-events:none;font-family:inherit;white-space:nowrap}
-.toast-el.show{opacity:1}
-.empty-state{text-align:center;padding:2.5rem;color:var(--muted);font-size:13px}
+.modal{
+  background: #FAF7F0; /* 古色香 parchment */
+  border-radius: var(--r-lg);
+  border: 3px solid var(--border);
+  padding: 1.85rem;
+  width: 500px;
+  max-width: 100%;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.modal-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px dashed var(--border);
+  padding-bottom: 0.75rem;
+}
+.modal-title{
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--blue-grey);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.modal-close{
+  background: #EADFC9;
+  border: none;
+  cursor: pointer;
+  color: #000000;
+  font-size: 14px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.modal-close:hover{
+  background: var(--border);
+}
+.modal-foot{
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+  border-top: 1px dashed var(--border);
+  padding-top: 1rem;
+}
 
-/* ── LEADERBOARD RACETRACK ── */
-.race-wrap{padding:1.125rem 1.125rem .5rem}
-.race-row{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.race-rank{width:28px;flex-shrink:0;text-align:center}
-.rank-medal{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
-.race-name{font-size:13px;font-weight:500;min-width:56px;flex-shrink:0;color:var(--ink)}
-.race-track{flex:1;background:var(--bg);border-radius:30px;height:36px;border:1.5px solid var(--border);position:relative;overflow:hidden}
-.race-lane{height:100%;border-radius:30px 0 0 30px;display:flex;align-items:center;position:relative;min-width:40px;transition:width 1s cubic-bezier(.34,1.4,.64,1)}
-.boat-anim{position:absolute;right:-4px;top:50%;transform:translateY(-50%)}
-.race-score{font-size:14px;font-weight:700;color:var(--ink);min-width:76px;text-align:right;flex-shrink:0}
-.race-tabs{display:flex;gap:6px}
-.race-tab{padding:5px 16px;font-size:12px;border:1.5px solid var(--border);border-radius:20px;background:none;cursor:pointer;color:var(--muted);font-family:inherit;font-weight:500;transition:all .12s}
-.race-tab.active{background:var(--red);color:#fff;border-color:var(--red)}
+/* ─────────────────────────────────────────────────────────────
+   🏆 LEADERBOARD & RPG GAME STYLE (煉丹風雲榜風格升級)
+   ───────────────────────────────────────────────────────────── */
+#page-leaderboard .card,
+#page-w-leaderboard .card{
+  background: linear-gradient(180deg, #15222D 0%, #1E2E3B 50%, #0F1A22 100%);
+  border: 3px solid var(--peach-gold);
+  box-shadow: 0 15px 35px rgba(10, 15, 20, 0.5), inset 0 0 0 1px rgba(245, 182, 130, 0.15);
+}
+#page-leaderboard .card-head,
+#page-w-leaderboard .card-head{
+  border-bottom: 2px solid rgba(245, 182, 130, 0.25);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+}
+#page-leaderboard .card-head-title,
+#page-w-leaderboard .card-head-title{
+  color: var(--peach-gold);
+  letter-spacing: .08em;
+  text-shadow: 0 0 12px rgba(245, 182, 130, 0.3);
+}
+
+/* 確保後台深色排行榜內部文字足夠明亮高對比 */
+#page-leaderboard * {
+  color: #FFF2D1;
+}
+
+/* 確保修行洞府前台淺色排行榜字體為高對比黑色 */
+#page-w-leaderboard {
+  color: #000000;
+}
+#page-w-leaderboard .race-name {
+  color: #000000 !important;
+}
+#page-w-leaderboard .race-score {
+  color: var(--blue-grey) !important;
+}
+#page-w-leaderboard .lb-note {
+  color: #000000 !important;
+}
+#page-w-leaderboard .delta-up { color: #047857 !important; }
+#page-w-leaderboard .delta-down { color: #B91C1C !important; }
+#page-w-leaderboard .delta-same { color: #4B5563 !important; }
+#page-w-leaderboard .delta-new { color: #B45309 !important; }
+
+/* 前台排行榜深色區塊（如魁首卡片與自查卡片）文字保持明亮 */
+#page-w-leaderboard .champion *,
+#page-w-leaderboard .w-lb-self,
+#page-w-leaderboard .w-lb-self * {
+  color: #FFF2D1 !important;
+}
+#page-w-leaderboard .champion .champion-label,
+#page-w-leaderboard .w-lb-self strong {
+  color: var(--peach-gold) !important;
+}
+
+/* 確保前台淺色背景的未選中頁籤字體為高對比黑色，選中時維持鵝黃金色 */
+#page-w-leaderboard .race-tab,
+#page-w-leaderboard .metric-tab {
+  color: #000000 !important;
+  border: 1.5px solid var(--border) !important;
+  background: #FAF6ED !important;
+}
+#page-w-leaderboard .race-tab:hover,
+#page-w-leaderboard .metric-tab:hover {
+  background: #EADFC9 !important;
+  color: #000000 !important;
+}
+#page-w-leaderboard .race-tab.active,
+#page-w-leaderboard .metric-tab.active {
+  background: linear-gradient(180deg, var(--peach-gold) 0%, #D48855 100%) !important;
+  color: #111E27 !important;
+  border-color: #FFFFFF !important;
+  box-shadow: 0 4px 12px rgba(245,182,130,0.4) !important;
+  font-weight: 900 !important;
+}
+
+.race-wrap{padding: 1.25rem}
+.race-row{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.race-rank{
+  width: 44px;
+  flex-shrink: 0;
+  text-align: center;
+}
+.rank-medal{
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 900;
+  border: 1.5px solid rgba(245, 182, 130, 0.3);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+.race-name{
+  font-size: 15px;
+  font-weight: 900;
+  min-width: 90px;
+  flex-shrink: 0;
+  color: #FFF2D1;
+  letter-spacing: .05em;
+  display: flex;
+  flex-direction: column;
+}
+.race-track{
+  flex: 1;
+  background: linear-gradient(180deg, #091015, #111D25);
+  border-radius: 999px;
+  height: 48px;
+  border: 1.5px solid rgba(245, 182, 130, 0.35);
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+}
+.race-lane{
+  height: 100%;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  min-width: 60px;
+  transition: width 1.2s cubic-bezier(0.1, 1, 0.1, 1);
+}
+.boat-anim{
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+}
+.race-score{
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--peach-gold);
+  min-width: 100px;
+  text-align: right;
+  flex-shrink: 0;
+  font-family: monospace, sans-serif;
+}
+.race-tabs{display: flex; gap: 8px;}
+.race-tab, .metric-tab{
+  padding: 8px 16px;
+  font-size: 13px;
+  border: 1.5px solid rgba(245, 182, 130, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  color: #E2E8F0;
+  font-weight: 700;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.race-tab:hover, .metric-tab:hover{
+  background: rgba(255,255,255,0.12);
+  color: #FFFFFF;
+}
+.race-tab.active, .metric-tab.active{
+  background: linear-gradient(180deg, var(--peach-gold) 0%, #D48855 100%);
+  color: #111E27;
+  border-color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(245,182,130,0.4);
+  font-weight: 900;
+}
 .race-tabs.dim{opacity:.4;pointer-events:none}
-
-/* ── LEADERBOARD EXTRAS ── */
-.lb-metric-bar{display:flex;gap:6px;padding:.875rem 1.125rem 0;flex-wrap:wrap}
-.metric-tab{padding:6px 14px;font-size:12px;border:1.5px solid var(--border);border-radius:20px;background:none;cursor:pointer;color:var(--muted);font-family:inherit;font-weight:500;transition:all .12s}
-.metric-tab:hover{background:var(--bg)}
-.metric-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-.champion{display:flex;align-items:center;gap:14px;margin:1rem 1.125rem .25rem;padding:.875rem 1.125rem;background:linear-gradient(135deg,#FFF6E6,#FFF0E8);border:1.5px solid #F5D58A;border-radius:var(--r-md);position:relative;overflow:hidden}
-.champion::after{content:"";position:absolute;right:-24px;top:-24px;width:96px;height:96px;background:radial-gradient(circle,#F5A62326,transparent 70%);pointer-events:none}
-.champion-crown{font-size:30px;line-height:1;animation:crownBob 2.4s ease-in-out infinite}
-@keyframes crownBob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-3px) rotate(4deg)}}
+.lb-metric-bar{
+  display: flex;
+  gap: 8px;
+  padding: 1.125rem 1.25rem 0.25rem;
+  flex-wrap: wrap;
+}
+.champion{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 1.25rem 1.25rem 0.5rem;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #1C2D3A 0%, #293F4F 35%, #0E181F 100%);
+  border: 2px solid var(--peach-gold);
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+.champion::before{
+  content: ""; position: absolute; left: -20px; top: -20px; width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(245,182,130,0.25) 0%, transparent 70%);
+}
+.champion-crown{
+  font-size: 36px;
+  animation: crownBob 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(245,182,130,0.4));
+}
+@keyframes crownBob{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-5px) scale(1.05)}
+}
 .champion-info{flex:1;min-width:0}
-.champion-label{font-size:11px;color:#9A6A14;font-weight:500;letter-spacing:.03em}
-.champion-name{font-size:18px;font-weight:700;color:var(--ink);margin-top:2px}
-.champion-score{font-size:18px;font-weight:700;color:var(--red);white-space:nowrap}
-.lb-summary{display:flex;gap:10px;margin:.75rem 1.125rem .25rem}
-.lb-sum-item{flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:.625rem;text-align:center}
-.lb-sum-num{display:block;font-size:16px;font-weight:700;color:var(--ink)}
-.lb-sum-lbl{display:block;font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.03em}
-.lb-note{font-size:11px;color:var(--muted);padding:.25rem 1.125rem 1rem;line-height:1.6}
-.delta{display:block;font-size:9px;font-weight:700;margin-top:3px;line-height:1}
-.delta-up{color:var(--teal)}
-.delta-down{color:var(--red)}
-.delta-same{color:var(--muted)}
-.delta-new{color:var(--gold)}
-.race-self .race-track{box-shadow:0 0 0 2px var(--red) inset}
-.race-self .race-name{color:var(--red)}
-.self-tag{display:inline-block;margin-left:5px;font-size:9px;font-weight:700;color:#fff;background:var(--red);border-radius:8px;padding:1px 6px;vertical-align:middle}
-.w-lb-self{font-size:13px;color:var(--ink);background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:.625rem .875rem;margin:.75rem 1.125rem .25rem;line-height:1.5}
-.w-lb-self strong{color:var(--red)}
-.coin-chip{display:inline-block;margin-left:6px;font-size:10px;font-weight:700;color:#7A4E07;background:#FCEBC0;border:1px solid #F0CE7E;border-radius:10px;padding:1px 7px;vertical-align:middle}
+.champion-label{font-size:12px;color:var(--peach-gold);font-weight:900;letter-spacing:.08em}
+.champion-name{font-size:22px;font-weight:900;color:#FFF3D2;margin-top:3px}
+.champion-score{font-size:22px;font-weight:900;color:var(--peach-gold);white-space:nowrap}
 
-/* ── 解脫金幣 ── */
-.coin-card{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#FBE6A8,#F7C948);border:1.5px solid #E3A92B;border-radius:var(--r-lg);padding:1.1rem 1.4rem;margin-bottom:1.25rem;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(245,166,35,.22)}
-.coin-icon{font-size:40px;line-height:1;filter:drop-shadow(0 2px 3px rgba(0,0,0,.18));flex-shrink:0;animation:coinSpin 4s ease-in-out infinite}
-@keyframes coinSpin{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
-.coin-main{flex-shrink:0}
-.coin-label{font-size:12px;color:#7A4E07;font-weight:500}
-.coin-count{font-size:30px;font-weight:700;color:#5A3A05;line-height:1.1}
-.coin-count span{font-size:14px;font-weight:500}
-.coin-side{flex:1;min-width:0}
-.coin-cum{font-size:13px;color:#6B4607;font-weight:700;margin-bottom:6px}
-.coin-bar{height:8px;background:rgba(255,255,255,.55);border-radius:6px;overflow:hidden;border:1px solid rgba(227,169,43,.5)}
-.coin-bar-fill{height:100%;background:linear-gradient(90deg,#E8472A,#F5A623);border-radius:6px;transition:width .8s cubic-bezier(.34,1.4,.64,1)}
-.coin-next{font-size:11px;color:#7A4E07;margin-top:5px}
-
-/* ── 修仙境界卡 ── */
-.cult-hero{position:relative;border-radius:var(--r-lg);padding:1.35rem 1.5rem;margin-bottom:1.25rem;overflow:hidden;color:#fff;background:linear-gradient(135deg,#26261F,#3A3A33)}
-.cult-glow{position:absolute;inset:0;opacity:.55;background:radial-gradient(150px 130px at 88% -10%,var(--realm),transparent 70%);pointer-events:none}
-.cult-spark{position:absolute;right:14px;bottom:10px;font-size:60px;opacity:.12;pointer-events:none}
-.cult-top{display:flex;align-items:center;gap:14px;position:relative}
-.cult-avatar{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;border:2px solid var(--realm);background:rgba(255,255,255,.07);box-shadow:0 0 14px -2px var(--realm);flex-shrink:0}
-.cult-name{font-size:18px;font-weight:700;letter-spacing:.02em}
-.cult-realm-badge{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:12px;font-weight:700;color:#1c1c19;background:var(--realm);border-radius:20px;padding:3px 12px;box-shadow:0 2px 8px -1px var(--realm)}
-.cult-coin{position:relative;margin-top:1.05rem;display:flex;align-items:baseline;gap:8px}
-.cult-coin-num{font-size:32px;font-weight:700;color:#F5C84B;text-shadow:0 1px 0 rgba(0,0,0,.3)}
-.cult-coin-lbl{font-size:12px;color:rgba(255,255,255,.68)}
-.cult-prog-wrap{position:relative;margin-top:.85rem}
-.cult-prog{height:9px;background:rgba(255,255,255,.14);border-radius:6px;overflow:hidden}
-.cult-prog-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--realm),#F5C84B);transition:width .9s cubic-bezier(.34,1.4,.64,1)}
-.cult-prog-txt{font-size:11px;color:rgba(255,255,255,.78);margin-top:6px}
-.cult-prog-txt b{color:#F5C84B}
-
-/* ── WORKER FRONT ── */
-.worker-login{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;padding:2.5rem 1rem;gap:1rem;text-align:center}
-.worker-login-icon{font-size:56px;line-height:1;margin-bottom:.5rem}
-.worker-login-title{font-size:20px;font-weight:700;color:var(--ink)}
-.worker-login-sub{font-size:13px;color:var(--muted)}
-.worker-search-box{display:flex;gap:8px;width:100%;max-width:320px}
-.worker-search-box input{flex:1;font-size:14px;font-family:inherit;border-radius:var(--r-sm);border:1.5px solid var(--border);padding:9px 14px;outline:none;transition:border-color .12s}
-.worker-search-box input:focus{border-color:var(--red)}
-.w-hero{background:linear-gradient(135deg,#FFF0E8,#FFF8F0);border-radius:var(--r-lg);padding:1.25rem 1.5rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:16px;border:1.5px solid #F5D5C0}
-.w-hero-avatar{width:52px;height:52px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;flex-shrink:0}
-.w-hero-name{font-size:18px;font-weight:700;color:var(--ink)}
-.w-hero-sub{font-size:12px;color:var(--muted);margin-top:3px}
-.w-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem}
-.w-stat{background:var(--card);border-radius:var(--r-md);padding:1rem;border:1.5px solid var(--border);text-align:center}
-.w-stat-label{font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
-.w-stat-value{font-size:20px;font-weight:700;color:var(--ink)}
-.w-tabs{display:flex;gap:6px;margin-bottom:1.25rem}
-.w-tab{padding:6px 16px;font-size:12px;border:1.5px solid var(--border);border-radius:20px;background:none;cursor:pointer;color:var(--muted);font-family:inherit;font-weight:500;transition:all .12s}
-.w-tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-.w-back{font-size:12px;color:var(--red);cursor:pointer;margin-bottom:1.25rem;display:inline-flex;align-items:center;gap:4px;font-weight:500}
-.w-back:hover{text-decoration:underline}
-
-
-/* ── IMMORTAL PATH THEME: worker side visual unification ── */
-#page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard{
-  position:relative;min-height:calc(100vh - 120px);padding:1.1rem;border-radius:22px;overflow:hidden;
-  background:
-    radial-gradient(circle at 18% 12%,rgba(255,255,255,.40),transparent 22%),
-    radial-gradient(circle at 84% 18%,rgba(107,162,170,.18),transparent 20%),
-    linear-gradient(180deg,rgba(252,248,236,.95),rgba(244,236,216,.98));
+.lb-summary{display:flex;gap:12px;margin:0.5rem 1.25rem 0.5rem}
+.lb-sum-item{
+  flex: 1; background: #0E161C; border: 1.5px solid rgba(245,182,130,0.2);
+  border-radius: 12px; padding: 12px; text-align: center;
 }
-#page-w-login::before,#page-w-home::before,#page-w-records::before,#page-w-leaderboard::before{
-  content:"";position:absolute;inset:0;pointer-events:none;opacity:.9;
-  background:
-    radial-gradient(circle at 20% 12%,rgba(80,101,98,.16),transparent 18%),
-    radial-gradient(circle at 76% 24%,rgba(80,101,98,.10),transparent 16%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%239a8258' stroke-width='1.3' opacity='.18'%3E%3Cpath d='M18 318c58-74 95-112 154-112 39 0 67 10 106 30'/%3E%3Cpath d='M213 64c25 13 38 35 38 61 0 23-9 37-28 57-20 20-30 33-30 54 0 20 11 35 31 48'/%3E%3Cpath d='M58 112c18-22 44-37 75-37 40 0 65 16 84 49'/%3E%3C/g%3E%3C/svg%3E") center/cover no-repeat;
+.lb-sum-num{display:block;font-size:18px;font-weight:900;color:var(--peach-gold)}
+.lb-sum-lbl{display:block;font-size:11px;color:#A8B9C4;margin-top:2px}
+.lb-note{font-size:12px;color:#ECE3D1;padding: 0 1.25rem 1.25rem;line-height:1.6}
+.delta{display:block;font-size:10px;font-weight:900;margin-top:2px}
+.delta-up{color:#10B981}
+.delta-down{color:#EF4444}
+.delta-same{color:#A8B9C4}
+.delta-new{color:var(--peach-gold)}
+
+.w-lb-self strong{color:var(--peach-gold) !important;}
+.coin-chip{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px; /* 已放大字體 */
+  font-weight: 700;
+  color: #451A03;
+  background: linear-gradient(180deg, #FEF08A 0%, #F59E0B 100%);
+  border: 1.5px solid #FCD34D;
+  border-radius: 20px;
+  padding: 4px 12px; /* 已增加邊距顯得落落大方 */
+  margin-top: 3px;
+  width: fit-content;
+  box-shadow: 0 2px 5px rgba(245, 158, 11, 0.3); /* 精緻微光投影 */
 }
-#page-w-login>* ,#page-w-home>* ,#page-w-records>* ,#page-w-leaderboard>*{position:relative;z-index:1}
+
+/* 修仙境界境界卡 */
+.cult-hero{
+  position:relative;border-radius:var(--r-lg);padding:1.5rem;margin-bottom:1.25rem;
+  overflow:hidden;color:#fff;
+  border: 2px solid var(--border);
+}
+.cult-glow{
+  position:absolute;inset:0;opacity:.65;
+  background:radial-gradient(180px 150px at 90% -10%, var(--realm), transparent 80%);
+}
+.cult-spark{position:absolute;right:16px;bottom:12px;font-size:64px;opacity:.08;pointer-events:none}
+.cult-top{display:flex;align-items:center;gap:16px;position:relative}
+.cult-avatar{
+  width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 900; color: #fff; border: 2.5px solid var(--realm);
+  background: rgba(255,255,255,0.08); box-shadow: 0 0 15px -3px var(--realm);
+}
+.cult-name{font-size:22px;font-weight:900;letter-spacing:.05em; color: #FFFFFF !important;}
+.cult-realm-badge{
+  display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:12px;font-weight:900;
+  color:#FFFFFF !important;background:var(--realm);border-radius:20px;padding:3px 12px;
+  box-shadow:0 0 10px var(--realm);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.cult-coin{position:relative;margin-top:1.25rem;display:flex;align-items:baseline;gap:6px}
+.cult-coin-num{font-size:36px;font-weight:900;color:#FBBF24 !important;text-shadow:0 2px 4px rgba(0,0,0,0.5)}
+.cult-coin-lbl{font-size:13px;color:rgba(255,255,255,0.9) !important;}
+.cult-prog-wrap{position:relative;margin-top:1rem}
+.cult-prog{height:12px;background:rgba(255,255,255,0.15);border-radius:6px;overflow:hidden;border:1.5px solid rgba(0,0,0,0.3)}
+.cult-prog-fill{
+  height:100%;border-radius:6px;
+  background:linear-gradient(90deg, var(--realm), #FBBF24);
+  transition:width .9s cubic-bezier(0.1, 1, 0.1, 1);
+}
+.cult-prog-txt{font-size:12px;color:rgba(255,255,255,0.95) !important;margin-top:6px}
+.cult-prog-txt b{color:#FBBF24 !important;}
+
+/* 洞府及修行紀錄古卷樣式 */
+#page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard,#page-w-submit{
+  position:relative;
+  min-height:calc(100vh - 120px);
+  padding:1.5rem;
+  border-radius:var(--r-lg);
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.35) 0%, transparent 35%),
+    radial-gradient(circle at 90% 90%, rgba(34,62,80,0.1) 0%, transparent 40%),
+    linear-gradient(180deg, #FAF6EE 0%, #F5ECDF 100%);
+  border: 2px solid var(--border);
+}
+#page-w-login::before, #page-w-home::before, #page-w-records::before, #page-w-leaderboard::before, #page-w-submit::before{
+  content:"";
+  position:absolute;inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23223E50' stroke-width='1.5' opacity='.06'%3E%3Cpath d='M9 120c30-50 50-70 90-70 20 0 40 10 60 20'/%3E%3Ccircle cx='50' cy='50' r='3.5'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;
+}
+#page-w-login::after, #page-w-home::after, #page-w-records::after, #page-w-leaderboard::after, #page-w-submit::after{
+  content:""; position:absolute; left:12px; right:12px; top:12px; bottom:12px;
+  border: 1.5px dashed rgba(195,181,155,0.45); border-radius: 16px; pointer-events:none;
+}
+#page-w-login > *, #page-w-home > *, #page-w-records > *, #page-w-leaderboard > *, #page-w-submit > * {
+  position:relative; z-index:1;
+}
+
 .immortal-panel{
-  background:linear-gradient(180deg,rgba(255,251,241,.94),rgba(245,236,215,.96));
-  border:2px solid #8D7348;border-radius:22px;
-  box-shadow:0 14px 30px rgba(80,62,30,.12), inset 0 0 0 4px rgba(255,248,233,.72);
+  background: rgba(255, 254, 252, 0.96);
+  border: 3px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 12px 28px rgba(195,181,155,0.25);
 }
-.immortal-panel.soft{border-color:#A08A63;box-shadow:0 10px 22px rgba(80,62,30,.10), inset 0 0 0 3px rgba(255,249,238,.72)}
+.immortal-title{
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--blue-grey); font-weight: 900; font-size: 14px;
+  padding: 8px 16px; border-radius: 99px;
+  background: linear-gradient(180deg, #FFFBF5, #EADFCE);
+  border: 1.5px solid var(--border);
+}
+
+/* 登入介面藝術化 */
 .worker-login.immortal-entry{
-  min-height:560px;display:grid;grid-template-columns:minmax(230px,360px) minmax(340px,520px);
-  align-items:center;justify-content:center;gap:28px;text-align:left;padding:1.5rem;
+  min-height: 520px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+  align-items: stretch;
+  padding: 0;
+  overflow: hidden;
 }
 .immortal-visual{
-  min-height:470px;padding:1.6rem 1.5rem;color:#fff;position:relative;overflow:hidden;
-  background:
-    radial-gradient(circle at 50% 40%,rgba(255,231,166,.52),transparent 25%),
-    linear-gradient(180deg,rgba(34,44,49,.94),rgba(87,57,24,.94));
+  padding: 2.5rem 2rem;
+  background: linear-gradient(180deg, var(--blue-grey) 0%, #16252F 100%);
+  color: #fff; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-right: none;
 }
+.immortal-orbit{
+  width: 220px; height: 220px; border-radius: 50%; border: 1.5px dashed rgba(245,182,130,0.3);
+  position: absolute; left: 50%; top: 40%; transform: translate(-50%,-50%);
+  animation: spin 60s linear infinite;
+}
+@keyframes spin { from {transform:translate(-50%,-50%) rotate(0deg)} to {transform:translate(-50%,-50%) rotate(360deg)} }
+.immortal-core{
+  width: 120px; height: 120px; border-radius: 50%;
+  background: radial-gradient(circle, #FFDFB4 0%, var(--peach-gold) 50%, #16252F 100%);
+  position: absolute; left: 50%; top: 40%; transform: translate(-50%,-50%);
+  box-shadow: 0 0 35px rgba(245,182,130,0.4);
+  display: flex; align-items: center; justify-content: center;
+}
+.immortal-core-glow{
+  font-size: 40px; animation: breathe 3s ease-in-out infinite;
+}
+@keyframes breathe { 0%,100%{transform:scale(0.9);opacity:0.8} 50%{transform:scale(1.05);opacity:1} }
 .immortal-brand{
-  position:absolute;left:1.4rem;top:1.2rem;font-size:34px;font-weight:800;letter-spacing:.12em;
-  color:#E8F4FF;text-shadow:0 3px 0 rgba(28,73,99,.85),0 0 18px rgba(80,175,255,.26);
+  font-size: 28px; font-weight: 900; color: #FFF; letter-spacing: 0.15em;
 }
-.immortal-brand small{display:block;font-size:11px;font-weight:500;letter-spacing:.18em;color:#D8EFFF;margin-top:4px}
-.immortal-orbit{position:absolute;width:260px;height:260px;left:50%;top:48%;transform:translate(-50%,-50%);border:2px solid rgba(255,214,118,.35);border-radius:50%;box-shadow:0 0 0 10px rgba(255,214,118,.06),0 0 40px rgba(255,176,66,.15)}
-.immortal-seat{position:absolute;width:190px;height:26px;left:50%;top:62%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,224,136,.68),rgba(255,181,55,.12) 72%,transparent 100%)}
-.immortal-avatar-art{position:absolute;left:50%;top:51%;transform:translate(-50%,-50%);width:90px;height:115px;border-radius:48px 48px 24px 24px;background:linear-gradient(180deg,#F4E9D9 0 26px,#FBF8F2 26px 62px,#DFC8A7 62px 100%);box-shadow:0 0 22px rgba(255,216,119,.15)}
-.immortal-avatar-art::before{content:"";position:absolute;width:52px;height:54px;left:19px;top:-14px;border-radius:999px;background:rgba(62,39,36,.92);box-shadow:-24px 28px 0 -14px rgba(62,39,36,.88),24px 28px 0 -14px rgba(62,39,36,.88)}
-.immortal-avatar-art::after{content:"";position:absolute;width:16px;height:54px;left:37px;top:-36px;border-radius:999px;background:linear-gradient(180deg,#752F2C,#C8705E)}
-.immortal-orb{position:absolute;width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#FFFBEF 0%,#FFE39A 34%,#C98721 100%);color:#5E3B02;font-size:24px;font-weight:700;box-shadow:0 0 18px rgba(255,183,63,.35),0 0 0 4px rgba(255,240,200,.16)}
-.immortal-o1{left:18%;top:27%}.immortal-o2{left:29%;top:67%}.immortal-o3{right:18%;top:26%}.immortal-o4{right:12%;top:58%}
-.immortal-visual-caption{position:absolute;left:1.6rem;right:1.6rem;bottom:1.35rem;color:rgba(255,247,234,.92);font-size:12px;line-height:1.8;text-align:center}
-.immortal-form{padding:1.9rem 1.7rem 1.7rem;position:relative}
-.immortal-title{display:inline-flex;align-items:center;gap:8px;color:#4B3620;font-weight:700;letter-spacing:.08em;padding:.45rem 1rem;border-radius:999px;background:linear-gradient(180deg,#FFF8E7,#E6D0A7);border:1.5px solid #B99762;box-shadow:0 4px 10px rgba(101,73,35,.12)}
-.immortal-form .worker-login-title{font-size:28px;color:#4B3620;letter-spacing:.14em;margin:.85rem 0 .5rem;font-weight:800}
-.immortal-form .worker-login-sub{font-size:13px;color:#6C5B44;line-height:1.85}
-.immortal-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(160,138,99,.55),transparent);margin:1rem 0 1.15rem}
-.immortal-form .worker-search-box{max-width:none;display:grid;grid-template-columns:1fr auto}
-.immortal-form .worker-search-box input{min-height:48px;border-radius:14px;border:1.5px solid #B39B74;background:rgba(255,252,246,.92);padding:0 14px;font-size:15px;box-shadow:inset 0 1px 6px rgba(120,95,48,.06)}
-.immortal-form .worker-search-box input:focus{border-color:#3F7F83;box-shadow:0 0 0 3px rgba(63,127,131,.12)}
-.btn-immortal{min-width:132px;min-height:48px;border-radius:14px;border:1.5px solid #8E6C2E;color:#fff;background:linear-gradient(180deg,#5BA19E,#2F6468);font-weight:700;letter-spacing:.08em;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 8px 16px rgba(47,100,104,.18)}
-.immortal-entry-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:1rem}
-.immortal-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:rgba(255,249,238,.84);border:1px solid rgba(141,115,72,.28);color:#6E5738;font-size:11px;font-weight:700;letter-spacing:.04em}
-#page-w-home .w-back,#page-w-records .w-back,#page-w-leaderboard .w-back{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;border:1.5px solid rgba(135,106,63,.32);background:rgba(255,251,242,.82);color:#75552A;font-size:12px;font-weight:700;box-shadow:0 4px 10px rgba(81,58,26,.08)}
-#page-w-home .w-back:hover,#page-w-records .w-back:hover,#page-w-leaderboard .w-back:hover{text-decoration:none;background:rgba(255,248,236,.95)}
-#page-w-home .card,#page-w-records .card,#page-w-leaderboard .card,#page-w-home .w-stat{background:linear-gradient(180deg,rgba(255,251,243,.95),rgba(244,236,214,.96));border:2px solid #91764A;border-radius:20px;box-shadow:0 12px 24px rgba(92,68,33,.10), inset 0 0 0 3px rgba(255,250,241,.68)}
-#page-w-home .card-head,#page-w-records .card-head,#page-w-leaderboard .card-head{background:linear-gradient(180deg,rgba(255,247,228,.96),rgba(236,218,184,.95));border-bottom:1.5px solid rgba(145,118,74,.28)}
-#page-w-home .card-head-title,#page-w-records .card-head-title,#page-w-leaderboard .card-head-title{color:#4B3620;letter-spacing:.05em}
-.immortal-empty{padding:1.3rem 1rem;border-radius:16px;border:1.5px dashed rgba(145,118,74,.32);background:rgba(255,251,244,.65);color:#7A6140;text-align:center}
-@media (max-width:980px){
-  .worker-login.immortal-entry{grid-template-columns:1fr;max-width:660px;margin:0 auto;padding:1rem}
-  .immortal-visual{min-height:320px}
-  .immortal-orbit{width:220px;height:220px}
+.immortal-brand small{
+  display:block; font-size: 11px; color: var(--peach-gold); letter-spacing:0.2em; margin-top:4px;
 }
-@media (max-width:640px){
-  #page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard{padding:.65rem;border-radius:16px}
-  .immortal-form .worker-search-box{grid-template-columns:1fr}
-  .btn-immortal{width:100%}
-  .immortal-form{padding:1.4rem 1.1rem}
-  .immortal-form .worker-login-title{font-size:24px}
-  .immortal-visual{min-height:260px}
-  .immortal-orb{width:50px;height:50px;font-size:18px}
-  .immortal-brand{font-size:28px}
+.immortal-form{padding: 2.5rem 2rem; display:flex; flex-direction: column; justify-content: center;}
+.btn-immortal{
+  background: linear-gradient(180deg, var(--blue-grey) 0%, #172B38 100%);
+  color: #fff; border: 2px solid #111F28; border-radius: 10px; font-weight: 900;
+  padding: 12px 20px; cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(34,62,80,0.3);
+}
+.btn-immortal:hover{
+  transform: translateY(-2px);
+  color: var(--peach-gold);
+  box-shadow: 0 6px 16px rgba(34,62,80,0.4);
 }
 
-/* ── MOBILE RESPONSIVE OPTIMIZATION ── */
-.mobile-only{display:none}
-.table-scroll{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
-.table-scroll table{min-width:680px}
-#page-records .table-scroll table{min-width:760px}
-#page-workers .table-scroll table{min-width:760px}
-#page-settlement .table-scroll table{min-width:720px}
-.mobile-action-row{display:flex;justify-content:flex-end;margin-bottom:1.25rem}
-.action-cell{white-space:nowrap}
-@media (max-width: 920px){
-  body{background:#fbf4e8}
-  .app{display:block;min-height:100vh}
-  .sidebar{
-    width:100%;height:auto;position:sticky;top:0;z-index:50;
-    border-right:none;border-bottom:1.5px solid var(--border);
-    box-shadow:0 6px 18px rgba(44,44,42,.06)
-  }
-  .logo-block{padding:.75rem .9rem;display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
-  .logo-zh{font-size:17px}
-  .logo-en{font-size:9px}
-  .nav-group-label{display:none}
-  #admin-nav,#worker-nav{
-    overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;
-    padding:0 .75rem .55rem;scrollbar-width:none
-  }
-  #admin-nav::-webkit-scrollbar,#worker-nav::-webkit-scrollbar{display:none}
-  #admin-nav .nav-item,#worker-nav .nav-item{
-    display:inline-flex;margin-right:6px;padding:8px 12px;border:1px solid var(--border);
-    border-radius:999px;background:#fff;font-size:12px;vertical-align:middle
-  }
-  #admin-nav .nav-item.active,#worker-nav .nav-item.active{background:#FFF0E8;border-color:#FFD7C5}
-  .nav-dot{display:none}
-  .role-switcher{
-    padding:.55rem .75rem .75rem;border-top:1px solid var(--border);
-    background:#fff
-  }
-  .role-switcher label{display:none}
-  .role-pills{max-width:360px;margin:0 auto}
-  .role-pill{min-height:36px;font-size:13px}
-  .main{min-height:auto}
-  .topbar{
-    position:sticky;top:0;z-index:40;padding:.8rem .95rem;
-    box-shadow:0 4px 14px rgba(44,44,42,.04)
-  }
-  .topbar-title{font-size:15px}
-  #topbar-right .btn{padding:6px 12px;font-size:12px}
-  .content{padding:.9rem}
-  .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:1rem}
-  .stat-card{padding:.9rem;border-radius:14px}
-  .stat-value{font-size:20px}
-  .card{border-radius:16px;margin-bottom:1rem;overflow:hidden}
-  .card-head{padding:.85rem .9rem;gap:10px;align-items:flex-start}
-  .card-head-title{line-height:1.4}
-  .card-body{padding:.9rem}
-  .lb-metric-bar{padding:.8rem .9rem 0;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}
-  .metric-tab,.race-tab{flex:0 0 auto;min-height:34px}
-  .race-tabs{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
-  .champion{margin:.9rem .9rem .25rem;padding:.85rem .9rem;gap:10px}
-  .champion-name,.champion-score{font-size:16px}
-  .lb-summary{margin:.75rem .9rem .25rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-  .race-wrap{padding:.95rem .9rem .4rem}
-  .race-row{
-    display:grid;grid-template-columns:34px 1fr auto;gap:8px 8px;
-    align-items:center;margin-bottom:14px
-  }
-  .race-name{min-width:0;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .race-track{grid-column:2 / 4;height:32px}
-  .race-score{font-size:12px;min-width:64px;text-align:right}
-  .rank-medal{width:28px;height:28px}
-  .boat-anim{transform:translateY(-50%) scale(.86);transform-origin:center}
-  .coin-card{flex-wrap:wrap;padding:1rem;margin-bottom:1rem}
-  .coin-icon{font-size:34px}
-  .coin-count{font-size:26px}
-  .coin-side{flex-basis:100%}
-  .cult-hero{padding:1.05rem;margin-bottom:1rem}
-  .cult-avatar{width:48px;height:48px;font-size:19px}
-  .cult-name{font-size:17px}
-  .cult-coin-num{font-size:28px}
-  .w-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .w-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .w-tab{flex:0 0 auto}
-  .worker-login{min-height:calc(100vh - 210px);padding:2rem .75rem}
-  .worker-login-icon{font-size:46px}
-  .worker-login-title{font-size:19px}
-  .worker-search-box{max-width:420px}
-  .form-row,.form-row-3{grid-template-columns:1fr;gap:10px}
-  .form-group input,.form-group select,.worker-search-box input{font-size:16px;min-height:42px}
-  .btn{min-height:38px}
-  .modal-bg{align-items:flex-end;padding:0}
-  .modal{
-    width:100%;max-width:100vw;max-height:88vh;overflow:auto;
-    border-radius:22px 22px 0 0;padding:1.15rem
-  }
-  .modal-head{margin-bottom:1rem}
-  .modal-foot{position:sticky;bottom:-1.15rem;background:var(--card);padding:.8rem 0 .1rem}
-  .toast-el{bottom:1rem;max-width:calc(100vw - 32px);white-space:normal;text-align:center}
+.worker-submit-layout{
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
 }
-@media (max-width: 640px){
-  .content{padding:.7rem}
-  .stat-grid{grid-template-columns:1fr}
-  .stat-card{display:flex;align-items:center;justify-content:space-between;gap:10px}
-  .stat-label{margin-bottom:0}
-  .stat-value{font-size:18px;text-align:right}
-  .mobile-action-row{display:block}
-  .mobile-action-row .btn{width:100%}
-  .card-head{flex-direction:column}
-  .card-head .race-tabs{width:100%}
-  .card-head .race-tab{flex:1;text-align:center}
-  .lb-summary{grid-template-columns:1fr}
-  .lb-sum-item{padding:.75rem}
-  .race-row{grid-template-columns:32px 1fr;gap:7px}
-  .race-score{grid-column:2;text-align:left;min-width:0}
-  .race-track{grid-column:1 / 3;height:30px}
-  .w-stat-grid{grid-template-columns:1fr}
-  .coin-card{display:block;text-align:left}
-  .coin-main{margin-top:.45rem}
-  .coin-side{margin-top:.75rem}
-  .worker-search-box{display:grid;grid-template-columns:1fr;max-width:100%}
-  .worker-search-box .btn,.worker-search-box button{width:100%}
-  .admin-login-mobile{min-height:calc(100vh - 180px)}
-  .modal-foot{display:grid;grid-template-columns:1fr 1fr}
-  .modal-foot .btn{width:100%}
-  .empty-state{padding:1.5rem .75rem}
-  th,td{padding:9px 8px}
-  .btn-sm{padding:5px 9px;min-height:32px}
+.submit-scene{
+  background: linear-gradient(180deg, #1C2D3A, #28392F);
+  border-radius: 16px; padding: 1.25rem; color: #F1EAD7;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border: 2px solid var(--peach-gold);
 }
-@media (max-width: 420px){
-  .logo-block{align-items:center}
-  .logo-en{display:none}
-  .topbar{padding:.72rem .75rem}
-  .content{padding:.55rem}
-  .card,.stat-card{border-radius:14px}
-  .metric-tab{padding:6px 10px;font-size:11px}
-  .race-tab{padding:5px 12px;font-size:11px}
-  .champion-crown{font-size:24px}
-  .champion-name,.champion-score{font-size:15px}
+.submit-scene-title{font-size:18px; font-weight:900; margin-bottom:8px; color: var(--peach-gold)}
+.submit-mini{
+  background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15);
+  border-radius: 12px; padding: 8px 12px; display:flex; flex-direction:column; gap:2px;
+}
+.submit-mini b{font-size:20px; color: var(--peach-gold)}
+.submit-mini span{font-size:11px; color: #E2E8F0}
+
+#page-w-home .w-back, #page-w-records .w-back, #page-w-leaderboard .w-back, #page-w-submit .w-back{
+  display: inline-flex; align-items: center; gap: 6px; cursor:pointer;
+  padding: 8px 16px; border-radius: 99px; border: 2px solid var(--border);
+  background: #FFFBF5; color: var(--blue-grey); font-size:13px; font-weight:900;
+  margin-bottom:1.25rem; box-shadow: var(--shadow-sm); transition: all 0.2s;
+}
+#page-w-home .w-back:hover, #page-w-records .w-back:hover, #page-w-leaderboard .w-back:hover, #page-w-submit .w-back:hover{
+  background: var(--border);
+  color: #000000;
 }
 
+#page-w-home #w-stats .w-stat{
+  background: #FFFDF9; border: 2px solid var(--border); border-radius: 16px; padding: 1.25rem;
+  text-align: center; box-shadow: var(--shadow-sm);
+}
+#page-w-home #w-stats .w-stat-label{color:#000000; font-size:12px; letter-spacing:0.08em; font-weight:900}
+#page-w-home #w-stats .w-stat-value{color: var(--blue-grey); font-size:24px; font-weight:900; margin-top:4px}
+
+#page-w-records .card, #page-w-home .card, #page-w-leaderboard .card, #page-w-submit .card{
+  background: rgba(255,254,250,0.96); border: 2px solid var(--border); border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(195,181,155,0.15);
+}
+#page-w-records .card-head, #page-w-home .card-head, #page-w-leaderboard .card-head, #page-w-submit .card-head{
+  background: linear-gradient(180deg, #FBF8F0, #F4EAD9); border-bottom: 2px solid var(--border);
+}
+#page-w-records .card-head-title, #page-w-home .card-head-title, #page-w-leaderboard .card-head-title, #page-w-submit .card-head-title{
+  color: var(--blue-grey); font-weight:900;
+}
+#page-w-records table th, #page-w-leaderboard table th, #page-w-submit table th{
+  color: #000000; border-bottom: 2px solid var(--border); background: #FAF5EA;
+}
+#page-w-records table tr:hover td, #page-w-leaderboard table tr:hover td, #page-w-submit table tr:hover td{
+  background: #FDF9F0;
+}
+
+.immortal-empty{
+  padding: 2.5rem; text-align: center; border: 2px dashed var(--border);
+  border-radius: 12px; background: rgba(250,245,235,0.5); color: #000000; font-size:14px; font-weight: 700;
+}
+
+.source-badge{
+  display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 99px;
+  font-size: 11px; font-weight: 900;
+}
+.source-admin{background: #EADFC9; color: var(--blue-grey); border: 1px solid var(--border)}
+.source-worker{background: #DCECF0; color: #1C6B72; border: 1px solid #BCE0E5}
+
+/* 漢堡按鈕與遮罩等行動端響應式 CSS */
+@media (max-width: 992px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-lg);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .menu-toggle {
+    display: flex;
+  }
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 95;
+  }
+  .sidebar-overlay.open {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .worker-login.immortal-entry {
+    grid-template-columns: 1fr;
+  }
+  .immortal-visual {
+    padding: 1.5rem;
+    min-height: 240px;
+  }
+  .immortal-orbit, .immortal-core {
+    top: 50%;
+  }
+  .worker-submit-layout {
+    grid-template-columns: 1fr;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
 <body>
 
+<!-- 響應式側邊欄遮罩 -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar(false)"></div>
+
 <div class="app">
-  <div class="sidebar">
+  <!-- 側邊導覽列（後台無仙俠感，改為簡潔專業的管理者後台） -->
+  <div class="sidebar" id="app-sidebar">
     <div class="logo-block">
-      <div class="logo-zh">永祿坊</div>
-      <div class="logo-en">PIECEWORK SYSTEM</div>
+      <div class="logo-icon">
+        <!-- 採用 logo06-03.jpg 經典意境打造的龍尾神翼仙舟 SVG -->
+        <svg viewBox="0 0 100 100" style="width: 44px; height: 44px; background: var(--blue-grey); border-radius: 8px; padding: 2px;">
+          <!-- Waves/Clouds -->
+          <path d="M 10,75 C 22,68 35,82 48,74 C 60,66 72,82 85,74 C 92,70 95,78 95,78 C 95,86 5,86 5,78 Z" fill="#F5B682" opacity="0.85"/>
+          <!-- Dragon Ship Body & Sails -->
+          <path d="M 20,68 Q 50,80 80,68 Q 90,56 75,56 Q 60,56 55,40 L 58,22 L 52,22 L 48,40 L 32,56 Z" fill="#F5B682"/>
+          <!-- Dragon Wings & details -->
+          <path d="M 38,62 Q 22,46 12,52 Q 22,60 38,62" fill="#F5B682"/>
+          <path d="M 62,62 Q 78,46 88,52 Q 78,60 62,62" fill="#F5B682"/>
+          <!-- Sail Detail stripes -->
+          <path d="M 55,22 Q 70,32 55,46" stroke="#223E50" stroke-width="1.8" fill="none"/>
+          <path d="M 55,24 Q 40,34 55,48" stroke="#223E50" stroke-width="1.8" fill="none"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-zh">永祿坊</div>
+        <div class="logo-en">PIECEWORK SYSTEM</div>
+      </div>
     </div>
-    <div id="admin-nav">
-      <div class="nav-group-label">後台管理</div>
-      <div class="nav-item active" onclick="showPage('dashboard')"><div class="nav-dot"></div>總覽</div>
-      <div class="nav-item" onclick="showPage('workers')"><div class="nav-dot"></div>代工人員</div>
-      <div class="nav-item" onclick="showPage('items')"><div class="nav-dot"></div>品項單價</div>
-      <div class="nav-item" onclick="showPage('records')"><div class="nav-dot"></div>交件驗收</div>
-      <div class="nav-item" onclick="showPage('settlement')"><div class="nav-dot"></div>結算中心</div>
-      <div class="nav-group-label">排行</div>
-      <div class="nav-item" onclick="showPage('leaderboard')"><div class="nav-dot"></div>榮譽排行榜</div>
+    
+    <!-- 管理者管理選單（移除仙俠風，改為標準商用語） -->
+    <div class="nav-group" id="admin-nav">
+      <div class="nav-group-label">管理者後台</div>
+      <div class="nav-item active" onclick="showPage('dashboard')">
+        <div class="nav-dot"></div>系統總覽
+      </div>
+      <div class="nav-item" onclick="showPage('workers')">
+        <div class="nav-dot"></div>人員管理
+      </div>
+      <div class="nav-item" onclick="showPage('items')">
+        <div class="nav-dot"></div>品項設定
+      </div>
+      <div class="nav-item" onclick="showPage('records')">
+        <div class="nav-dot"></div>交付管理
+      </div>
+      <div class="nav-item" onclick="showPage('settlement')">
+        <div class="nav-dot"></div>薪資結算
+      </div>
+      <div class="nav-group-label">數據統計</div>
+      <div class="nav-item" onclick="showPage('leaderboard')">
+        <div class="nav-dot"></div>業績排行榜
+      </div>
     </div>
-    <div id="worker-nav" style="display:none">
-      <div class="nav-group-label">修仙洞府</div>
-      <div class="nav-item" onclick="showWorkerPage('w-home')"><div class="nav-dot"></div>我的修為</div>
-      <div class="nav-item" onclick="showWorkerPage('w-records')"><div class="nav-dot"></div>修行紀錄</div>
-      <div class="nav-item" onclick="showWorkerPage('w-leaderboard')"><div class="nav-dot"></div>封神榜</div>
+    
+    <!-- 修仙洞府選單 (代工端前台維持好玩的仙修感) -->
+    <div class="nav-group" id="worker-nav" style="display:none">
+      <div class="nav-group-label">修行洞府</div>
+      <div class="nav-item" onclick="showWorkerPage('w-home')">
+        <div class="nav-dot"></div>洞府修為
+      </div>
+      <div class="nav-item" onclick="showWorkerPage('w-submit')">
+        <div class="nav-dot"></div>靈工報件台
+      </div>
+      <div class="nav-item" onclick="showWorkerPage('w-records')">
+        <div class="nav-dot"></div>修行紀錄
+      </div>
+      <div class="nav-item" onclick="showWorkerPage('w-leaderboard')">
+        <div class="nav-dot"></div>天榜風雲
+      </div>
     </div>
+    
+    <!-- 身份切換器 -->
     <div class="role-switcher">
-      <label>身份切換</label>
+      <label>切換修真身分</label>
       <div class="role-pills">
         <button class="role-pill active" onclick="switchRole('admin')">管理者</button>
-        <button class="role-pill" onclick="switchRole('worker')">代工</button>
+        <button class="role-pill" onclick="switchRole('worker')">代工弟子</button>
       </div>
     </div>
   </div>
 
+  <!-- 主內容視窗 -->
   <div class="main">
     <div class="topbar">
-      <div class="topbar-title" id="page-title">總覽</div>
+      <div class="topbar-left">
+        <button class="menu-toggle" onclick="toggleSidebar(true)">☰</button>
+        <div class="topbar-title" id="page-title">系統總覽</div>
+      </div>
       <div id="topbar-right"></div>
     </div>
+    
     <div class="content">
 
+      <!-- 頁面：後台登入（移除玄幻防禦結界，改為一般登入） -->
       <div class="page active" id="page-admin-login">
-        <div class="worker-login admin-login-mobile">
-          <div class="worker-login-icon">🔐</div>
-          <div class="worker-login-title">後台管理登入</div>
-          <div class="worker-login-sub">請輸入管理者密碼後，再進入總覽、代工人員、品項與結算中心</div>
-          <div class="worker-search-box">
-            <input id="admin-password-input" type="password" placeholder="請輸入後台密碼" onkeydown="if(event.key==='Enter')adminLogin()">
-            <button class="btn btn-primary" onclick="adminLogin()">登入後台</button>
+        <div class="worker-login immortal-panel" style="max-width: 500px; margin: 4rem auto; padding: 2.5rem 2rem; text-align: center;">
+          <div style="font-size: 50px; margin-bottom: 1rem;">🔐</div>
+          <div class="modal-title" style="font-size: 20px; justify-content: center; margin-bottom: 0.5rem; width: 100%;">管理者登入</div>
+          <p style="font-size: 14px; color: #000000; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.6;">請輸入管理者密碼，以進入系統管理後台。</p>
+          <div style="display: flex; gap: 8px; flex-direction: column;">
+            <input id="admin-password-input" type="password" placeholder="請輸入管理者密碼" onkeydown="if(event.key==='Enter')adminLogin()" style="padding: 12px 14px; font-size: 15px; border: 2px solid var(--border); border-radius: var(--r-sm); outline: none; text-align: center; font-weight: 900;">
+            <button class="btn btn-primary" onclick="adminLogin()" style="padding: 12px; font-size: 14px;">登入</button>
           </div>
-          <div id="admin-login-err" style="font-size:12px;color:var(--red);display:none">密碼錯誤，請重新輸入</div>
+          <div id="admin-login-err" style="font-size:13px; color:var(--red); display:none; margin-top:10px; font-weight: 900;">⚠️ 密碼錯誤，請重新輸入！</div>
         </div>
       </div>
 
+      <!-- 頁面：天樞總覽（管理者數據總覽 - 後台無仙俠感） -->
       <div class="page" id="page-dashboard">
         <div class="stat-grid" id="dash-stats"></div>
         <div class="card">
-          <div class="card-head"><span class="card-head-title">最近交件紀錄</span></div>
-          <div class="table-scroll"><table><thead><tr><th>人員</th><th>品項</th><th>合格數</th><th>金額</th><th>狀態</th></tr></thead>
-          <tbody id="dash-recent"></tbody></table></div>
+          <div class="card-head">
+            <span class="card-head-title">📋 近期交付驗收清冊</span>
+            <button class="btn btn-sm" onclick="showPage('records')">查看全部</button>
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>代工人員</th>
+                  <th>交付品項</th>
+                  <th>合格數</th>
+                  <th>結算預估</th>
+                  <th>驗收狀態</th>
+                </tr>
+              </thead>
+              <tbody id="dash-recent"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
+      <!-- 頁面：人員管理（代工人員管理 - 已移除手機欄位） -->
       <div class="page" id="page-workers">
-        <div class="mobile-action-row">
+        <div class="table-filter-bar">
+          <div class="search-wrapper">
+            <svg class="search-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <input id="worker-search" type="text" placeholder="搜尋姓名、暱稱、備註..." oninput="renderWorkers()">
+          </div>
           <button class="btn btn-primary" onclick="openWorkerModal()">＋ 新增人員</button>
         </div>
-        <div class="card table-scroll">
-          <table><thead><tr><th>姓名</th><th>暱稱</th><th>手機</th><th>狀態</th><th>已收獲累積</th><th>解脫金幣</th><th>操作</th></tr></thead>
-          <tbody id="workers-table"></tbody></table>
+        <div class="card">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>姓名</th>
+                  <th>排行榜暱稱</th>
+                  <th>狀態</th>
+                  <th>已驗收產值</th>
+                  <th>累計靈幣</th>
+                  <th style="text-align: right;">操作</th>
+                </tr>
+              </thead>
+              <tbody id="workers-table"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
+      <!-- 頁面：品項單價設定 -->
       <div class="page" id="page-items">
-        <div class="mobile-action-row">
+        <div class="table-filter-bar">
+          <div class="search-wrapper">
+            <svg class="search-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <input id="item-search" type="text" placeholder="搜尋品項名稱、備註..." oninput="renderItems()">
+          </div>
           <button class="btn btn-primary" onclick="openItemModal()">＋ 新增品項</button>
         </div>
-        <div class="card table-scroll">
-          <table><thead><tr><th>品項名稱</th><th>計算單位</th><th>單位數量</th><th>單價</th><th>備註</th><th>操作</th></tr></thead>
-          <tbody id="items-table"></tbody></table>
+        <div class="card">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>品項名稱</th>
+                  <th>單位</th>
+                  <th>基準數量</th>
+                  <th>單價 (元)</th>
+                  <th>備註說明</th>
+                  <th style="text-align: right;">操作</th>
+                </tr>
+              </thead>
+              <tbody id="items-table"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
+      <!-- 頁面：交付清點驗收 -->
       <div class="page" id="page-records">
-        <div class="mobile-action-row">
-          <button class="btn btn-primary" onclick="openModal('record-modal')">＋ 登記交件</button>
+        <div class="table-filter-bar">
+          <div class="search-wrapper">
+            <svg class="search-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <input id="record-search" type="text" placeholder="搜尋人員、品項、日期..." oninput="renderRecords()">
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-primary" onclick="openModal('record-modal')">＋ 新增交付紀錄</button>
+          </div>
         </div>
-        <div class="card table-scroll">
-          <table><thead><tr><th>日期</th><th>人員</th><th>品項</th><th>交回</th><th>合格</th><th>金額</th><th>狀態</th><th>操作</th></tr></thead>
-          <tbody id="records-table"></tbody></table>
+        <div class="card">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>日期</th>
+                  <th>代工人員</th>
+                  <th>品項</th>
+                  <th>來源</th>
+                  <th>自報數量</th>
+                  <th>交回數量</th>
+                  <th>合格數量</th>
+                  <th>實得金額</th>
+                  <th>狀態</th>
+                  <th style="text-align: right;">操作</th>
+                </tr>
+              </thead>
+              <tbody id="records-table"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
+      <!-- 頁面：薪資結算管理 -->
       <div class="page" id="page-settlement">
         <div class="card">
           <div class="card-head">
-            <span class="card-head-title">本週結算（<span id="week-range"></span>）</span>
-            <button class="btn btn-sm" onclick="generateSettlement()">重新計算</button>
+            <span class="card-head-title">💰 本期代工金額結算（<span id="week-range" style="color: var(--red);"></span>）</span>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-sm btn-primary" onclick="generateSettlement()">重新計算</button>
+              <button class="btn btn-sm" onclick="openBackupModal()">💾 資料備份</button>
+            </div>
           </div>
-          <div class="table-scroll"><table><thead><tr><th>人員</th><th>完成金額</th><th>加給</th><th>扣款</th><th>應付金額</th><th>狀態</th><th>操作</th></tr></thead>
-          <tbody id="settlement-table"></tbody></table></div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>代工人員</th>
+                  <th>合格金額</th>
+                  <th>獎勵加給</th>
+                  <th>扣款</th>
+                  <th>實付總額</th>
+                  <th>發放狀態</th>
+                  <th style="text-align: right;">操作</th>
+                </tr>
+              </thead>
+              <tbody id="settlement-table"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
+      <!-- 頁面：業績排行榜 -->
       <div class="page" id="page-leaderboard">
         <div class="card">
           <div class="card-head">
-            <span class="card-head-title">榮譽排行榜 ⛵</span>
+            <span class="card-head-title">🏆 業績排行榜</span>
             <div class="race-tabs">
-              <button class="race-tab active" onclick="switchLbPeriod('this',this)">本週</button>
-              <button class="race-tab" onclick="switchLbPeriod('last',this)">上週</button>
+              <button class="race-tab active" onclick="switchLbPeriod('this',this)">本期</button>
+              <button class="race-tab" onclick="switchLbPeriod('last',this)">上期</button>
               <button class="race-tab" onclick="switchLbPeriod('month',this)">本月</button>
             </div>
           </div>
           <div class="lb-metric-bar">
-            <button class="metric-tab active" onclick="switchLbTab('earn',this)">💰 產值榜</button>
-            <button class="metric-tab" onclick="switchLbTab('combined',this)">⭐ 綜合榜</button>
-            <button class="metric-tab" onclick="switchLbTab('quality',this)">✨ 品質榜</button>
-            <button class="metric-tab" onclick="switchLbTab('coin',this)">🪙 金幣榜</button>
+            <button class="metric-tab active" onclick="switchLbTab('earn',this)">🔥 產值排行榜</button>
+            <button class="metric-tab" onclick="switchLbTab('combined',this)">⚗️ 綜合排行榜</button>
+            <button class="metric-tab" onclick="switchLbTab('quality',this)">💎 品質排行榜</button>
+            <button class="metric-tab" onclick="switchLbTab('coin',this)">🪙 累計靈幣榜</button>
           </div>
           <div id="lb-champion"></div>
           <div id="lb-summary"></div>
@@ -525,74 +1423,155 @@ tr:hover td{background:#FFFBF7}
         </div>
       </div>
 
-      <!-- Worker Pages -->
+      <!-- ─────────────────────────────────────────────────────────────
+           代工端頁面（修行洞府 UI 保持仙俠風骨以提供沉浸式趣味）
+           ───────────────────────────────────────────────────────────── -->
+      
+      <!-- 代工登入頁面 -->
       <div class="page" id="page-w-login">
         <div class="worker-login immortal-entry">
           <div class="immortal-visual immortal-panel">
-            <div class="immortal-brand">仙途<small>IMMORTAL PATH</small></div>
+            <div class="immortal-brand">永祿仙途<small>IMMORTAL PATH</small></div>
             <div class="immortal-orbit"></div>
-            <div class="immortal-seat"></div>
-            <div class="immortal-avatar-art"></div>
-            <div class="immortal-orb immortal-o1">丹</div>
-            <div class="immortal-orb immortal-o2">火</div>
-            <div class="immortal-orb immortal-o3">道</div>
-            <div class="immortal-orb immortal-o4">靈</div>
-            <div class="immortal-visual-caption">以道號入世，以修為問鼎。登入後可查看個人修為、修行紀錄與煉丹天榜。</div>
+            <div class="immortal-core">
+              <span class="immortal-core-glow">⚗️</span>
+            </div>
+            <div class="immortal-visual-caption" style="color: #FFFFFF !important; font-size:13px; font-weight:700; opacity:0.9;">輸入你的代工名號，即可破開虛空、進入個人修行洞府。在此處，你可以自行上報產量、查看本期功德資糧與煉丹天榜。</div>
           </div>
-          <div class="immortal-form immortal-panel soft">
-            <div class="immortal-title">⛩️ 踏入仙途</div>
-            <div class="worker-login-title">報上道號，查詢仙緣</div>
-            <div class="worker-login-sub">輸入你的道號（姓名或暱稱），即可進入個人洞府，查看修為境界、解脫金幣與煉丹天榜。</div>
-            <div class="immortal-divider"></div>
-            <div class="worker-search-box">
-              <input id="w-name-input" placeholder="請輸入道號（姓名 / 暱稱）" onkeydown="if(event.key==='Enter')workerLogin()">
-              <button class="btn btn-immortal" onclick="workerLogin()">踏入仙途</button>
+          <div class="immortal-form immortal-panel">
+            <div class="immortal-title">⛩️ 踏入仙途修行</div>
+            <div class="worker-login-title" style="font-size: 24px; font-weight: 900; color: var(--blue-grey); margin: 12px 0;">報上道號，尋回仙緣</div>
+            <p style="font-size: 14px; color: #000000; font-weight: 700; margin-bottom: 20px; line-height: 1.6;">本介面專為代工弟子修行所設。請輸入你在坊間登記的「真實姓名」或「暱稱道號」，即可探查自身功力。</p>
+            <div class="search-wrapper" style="max-width:100%; margin-bottom: 12px;">
+              <input id="w-name-input" placeholder="請輸入道號（姓名 / 暱稱）" onkeydown="if(event.key==='Enter')workerLogin()" style="padding: 12px; font-size:15px; border: 2px solid var(--border); border-radius: 10px; width: 100%; font-weight: 900;">
             </div>
-            <div class="immortal-entry-meta">
-              <span class="immortal-pill">⚗️ 修為總覽</span>
-              <span class="immortal-pill">📜 修行紀錄</span>
-              <span class="immortal-pill">🏆 煉丹天榜</span>
-            </div>
-            <div id="w-login-err" style="font-size:12px;color:#B4472F;display:none;margin-top:12px">查無此道號，請確認後再試</div>
+            <button class="btn-immortal" onclick="workerLogin()">破開洞府結界</button>
+            <div id="w-login-err" style="font-size:13.5px; color:#B4472F; display:none; margin-top:12px; font-weight: 900;">⚠️ 稟告道友，山門查無此名號，請確認名稱是否正確！</div>
           </div>
         </div>
       </div>
 
+      <!-- 代工首頁：我的修為 -->
       <div class="page" id="page-w-home">
         <div class="w-back" onclick="workerLogout()">← 重返山門</div>
         <div id="w-hero-box"></div>
-        <div class="w-stat-grid" id="w-stats"></div>
+        <div class="w-stat-grid" id="w-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 1.25rem;"></div>
         <div class="card">
-          <div class="card-head"><span class="card-head-title">待點化的法器（待驗收）</span></div>
+          <div class="card-head"><span class="card-head-title">⚙️ 待點化的法器零件（掌櫃審核驗收中）</span></div>
           <div class="card-body" id="w-pending"></div>
         </div>
       </div>
 
+      <!-- 代工修行紀錄 -->
       <div class="page" id="page-w-records">
         <div class="w-back" onclick="workerLogout()">← 重返山門</div>
         <div class="card">
-          <div class="card-head"><span class="card-head-title">我的修行紀錄</span></div>
-          <div class="table-scroll"><table><thead><tr><th>日期</th><th>品項</th><th>合格數</th><th>單價</th><th>金額</th><th>狀態</th></tr></thead>
-          <tbody id="w-records-table"></tbody></table></div>
+          <div class="card-head"><span class="card-head-title">📜 弟子生涯修行紀錄</span></div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>交付日期</th>
+                  <th>法製品項</th>
+                  <th>自報數量</th>
+                  <th>審定合格</th>
+                  <th>所得資糧</th>
+                  <th>狀態</th>
+                </tr>
+              </thead>
+              <tbody id="w-records-table"></tbody>
+            </table>
+          </div>
         </div>
       </div>
 
+      <!-- 代工上報工件 -->
+      <div class="page" id="page-w-submit">
+        <div class="w-back" onclick="workerLogout()">← 重返山門</div>
+        <div class="card">
+          <div class="card-head"><span class="card-head-title">⚗️ 靈工自主上報台</span></div>
+          <div class="card-body">
+            <div class="worker-submit-layout">
+              <div class="submit-scene">
+                <div>
+                  <div class="badge badge-ok" style="background: rgba(255,255,255,0.15); color: #FFF; border: 1.5px solid rgba(255,255,255,0.35);">委託受理中</div>
+                  <div class="submit-scene-title" style="margin-top: 12px;">自主上報 · 減輕掌櫃審查</div>
+                  <p style="font-size: 13px; opacity: 0.95; line-height: 1.8; color: #FFFFFF !important; font-weight: 700;">代工同道可以搶先登記本次製作合格的大概數量。此資料送出後，掌櫃在後台只需直接覆核，便可一鍵完成驗收，增進效率！</p>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 1rem;">
+                  <div class="submit-mini"><b id="w-submit-pending-count">0</b><span>審查中法寶</span></div>
+                  <div class="submit-mini"><b id="w-submit-recent-count">0</b><span>近日上報次</span></div>
+                </div>
+              </div>
+              <div class="submit-form-panel" style="background: #FFFDF9; padding: 1.25rem; border-radius: 16px; border: 2px solid var(--border);">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>上報日期</label>
+                    <input id="ws-date" type="date">
+                  </div>
+                  <div class="form-group">
+                    <label>上報法製品項</label>
+                    <select id="ws-item" onchange="calcWorkerSubmitPreview()"></select>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>自填本次數量 (可不填)</label>
+                    <input id="ws-qty" type="number" min="0" placeholder="例如: 300" oninput="calcWorkerSubmitPreview()">
+                  </div>
+                  <div class="form-group">
+                    <label>修行留言備註 (選填)</label>
+                    <input id="ws-note" placeholder="例如：零件先交，剩下明日補齊">
+                  </div>
+                </div>
+                <div class="preview-box submit-preview-box" style="background: #FAF6ED; border-color: var(--border);">
+                  <span style="font-weight: 900; color: #5C4325;" id="ws-preview">請輸入數量以獲得預估得法力</span>
+                </div>
+                <div style="display: flex; justify-content: flex-end;">
+                  <button class="btn btn-primary btn-immortal" onclick="submitWorkerRecord()" style="background: linear-gradient(180deg, #A88252, #7D5C35); border-color:#5E4323;">呈遞報件摺子</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" style="margin-top: 1.5rem;">
+          <div class="card-head"><span class="card-head-title">⏳ 弟子近期上報紀錄列表</span></div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>上報日期</th>
+                  <th>品項</th>
+                  <th>自報數量</th>
+                  <th>審查預估</th>
+                  <th>狀態</th>
+                  <th>留言備註</th>
+                </tr>
+              </thead>
+              <tbody id="w-submit-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 代工排行榜 -->
       <div class="page" id="page-w-leaderboard">
         <div class="w-back" onclick="workerLogout()">← 重返山門</div>
         <div class="card">
           <div class="card-head">
-            <span class="card-head-title">封神榜 ⚔️</span>
+            <span class="card-head-title">✨ 煉丹天榜風雲碑</span>
             <div class="race-tabs" id="w-period-tabs">
-              <button class="race-tab active" onclick="switchWLbPeriod('this',this)">本週</button>
-              <button class="race-tab" onclick="switchWLbPeriod('last',this)">上週</button>
+              <button class="race-tab active" onclick="switchWLbPeriod('this',this)">本期</button>
+              <button class="race-tab" onclick="switchWLbPeriod('last',this)">上期</button>
               <button class="race-tab" onclick="switchWLbPeriod('month',this)">本月</button>
             </div>
           </div>
           <div class="lb-metric-bar" id="w-metric-bar">
-            <button class="metric-tab active" onclick="switchWLbTab('earn',this)">💰 產值榜</button>
-            <button class="metric-tab" onclick="switchWLbTab('combined',this)">⭐ 綜合榜</button>
-            <button class="metric-tab" onclick="switchWLbTab('quality',this)">✨ 品質榜</button>
-            <button class="metric-tab" onclick="switchWLbTab('coin',this)">🪙 金幣榜</button>
+            <button class="metric-tab active" onclick="switchWLbTab('earn',this)">🔥 產值丹榜</button>
+            <button class="metric-tab" onclick="switchWLbTab('combined',this)">⚗️ 綜合丹榜</button>
+            <button class="metric-tab" onclick="switchWLbTab('quality',this)">💎 成丹品質榜</button>
+            <button class="metric-tab" onclick="switchWLbTab('coin',this)">🪙 靈幣功德榜</button>
           </div>
           <div id="w-lb-champion"></div>
           <div id="w-lb-self"></div>
@@ -605,19 +1584,40 @@ tr:hover td{background:#FFFBF7}
   </div>
 </div>
 
-<!-- Modals -->
+<!-- ─────────────────────────────────────────────────────────────
+     對話框集錦 (Modals - 移除後台仙俠色彩)
+     ───────────────────────────────────────────────────────────── -->
+
+<!-- 對話框：新增/修改代工人員（已移除手機號碼輸入） -->
 <div class="modal-bg" id="worker-modal">
   <div class="modal">
-    <div class="modal-head"><span class="modal-title" id="worker-modal-title">新增代工人員</span><button class="modal-close" onclick="closeModal('worker-modal')">✕</button></div>
-    <div class="form-row">
-      <div class="form-group"><label>姓名</label><input id="wf-name" placeholder="阿美"></div>
-      <div class="form-group"><label>暱稱（排行榜顯示）</label><input id="wf-nick" placeholder="阿美姐"></div>
+    <div class="modal-head">
+      <span class="modal-title" id="worker-modal-title">新增人員</span>
+      <button class="modal-close" onclick="closeModal('worker-modal')">✕</button>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>手機</label><input id="wf-phone" placeholder="09xx-xxx-xxx"></div>
-      <div class="form-group"><label>狀態</label><select id="wf-status"><option value="active">合作中</option><option value="pause">暫停</option></select></div>
+      <div class="form-group">
+        <label>真實姓名</label>
+        <input id="wf-name" placeholder="阿美">
+      </div>
+      <div class="form-group">
+        <label>排行榜暱稱</label>
+        <input id="wf-nick" placeholder="美仙尊">
+      </div>
     </div>
-    <div class="form-group" style="margin-bottom:12px"><label>備註</label><input id="wf-note" placeholder="擅長品項、注意事項"></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>帳號狀態</label>
+        <select id="wf-status">
+          <option value="active">啟用</option>
+          <option value="pause">停用</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom: 12px;">
+      <label>備註說明</label>
+      <input id="wf-note" placeholder="如：速度極快、蓮花製作好手">
+    </div>
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('worker-modal')">取消</button>
       <button class="btn btn-primary" onclick="saveWorker()">儲存</button>
@@ -625,18 +1625,37 @@ tr:hover td{background:#FFFBF7}
   </div>
 </div>
 
+<!-- 對話框：新增/修改品項 -->
 <div class="modal-bg" id="item-modal">
   <div class="modal">
-    <div class="modal-head"><span class="modal-title" id="item-modal-title">新增品項</span><button class="modal-close" onclick="closeModal('item-modal')">✕</button></div>
-    <div class="form-row">
-      <div class="form-group"><label>品項名稱</label><input id="if-name" placeholder="三角片折製"></div>
-      <div class="form-group"><label>計算單位標示</label><input id="if-unit" placeholder="100片"></div>
+    <div class="modal-head">
+      <span class="modal-title" id="item-modal-title">新增品項設定</span>
+      <button class="modal-close" onclick="closeModal('item-modal')">✕</button>
     </div>
     <div class="form-row">
-      <div class="form-group"><label>單位包含數量</label><input id="if-qty" type="number" placeholder="100" min="1"></div>
-      <div class="form-group"><label>單價（元）</label><input id="if-price" type="number" placeholder="30" min="0"></div>
+      <div class="form-group">
+        <label>品項名稱</label>
+        <input id="if-name" placeholder="三角折製">
+      </div>
+      <div class="form-group">
+        <label>單位 (如：每 100 片)</label>
+        <input id="if-unit" placeholder="每 100 片">
+      </div>
     </div>
-    <div class="form-group" style="margin-bottom:12px"><label>備註</label><input id="if-note" placeholder="驗收標準、注意事項"></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>基準數量</label>
+        <input id="if-qty" type="number" placeholder="100" min="1">
+      </div>
+      <div class="form-group">
+        <label>單價 (元)</label>
+        <input id="if-price" type="number" placeholder="30" min="0">
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom: 12px;">
+      <label>備註說明</label>
+      <input id="if-note" placeholder="例如：角邊平整不脫膠">
+    </div>
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('item-modal')">取消</button>
       <button class="btn btn-primary" onclick="saveItem()">儲存</button>
@@ -644,33 +1663,188 @@ tr:hover td{background:#FFFBF7}
   </div>
 </div>
 
+<!-- 對話框：登記交件驗收 -->
 <div class="modal-bg" id="record-modal">
   <div class="modal">
-    <div class="modal-head"><span class="modal-title">登記交件驗收</span><button class="modal-close" onclick="closeModal('record-modal')">✕</button></div>
+    <div class="modal-head">
+      <span class="modal-title">新增交付紀錄</span>
+      <button class="modal-close" onclick="closeModal('record-modal')">✕</button>
+    </div>
     <div class="form-row">
-      <div class="form-group"><label>日期</label><input id="rf-date" type="date"></div>
-      <div class="form-group"><label>代工人員</label><select id="rf-worker"></select></div>
+      <div class="form-group">
+        <label>交付日期</label>
+        <input id="rf-date" type="date">
+      </div>
+      <div class="form-group">
+        <label>代工人員</label>
+        <select id="rf-worker"></select>
+      </div>
     </div>
-    <div class="form-group" style="margin-bottom:12px"><label>品項</label><select id="rf-item" onchange="calcPreview()"></select></div>
+    <div class="form-group" style="margin-bottom: 12px;">
+      <label>品項</label>
+      <select id="rf-item" onchange="calcPreview()"></select>
+    </div>
     <div class="form-row-3">
-      <div class="form-group"><label>交回數量</label><input id="rf-total" type="number" min="0" placeholder="0" oninput="calcPreview()"></div>
-      <div class="form-group"><label>合格數量</label><input id="rf-pass" type="number" min="0" placeholder="0" oninput="calcPreview()"></div>
-      <div class="form-group"><label>不良數量</label><input id="rf-fail" type="number" min="0" placeholder="自動" readonly></div>
+      <div class="form-group">
+        <label>交付總數</label>
+        <input id="rf-total" type="number" min="0" placeholder="0" oninput="calcPreview()">
+      </div>
+      <div class="form-group">
+        <label>合格數量</label>
+        <input id="rf-pass" type="number" min="0" placeholder="0" oninput="calcPreview()">
+      </div>
+      <div class="form-group">
+        <label>不良數量</label>
+        <input id="rf-fail" type="number" min="0" placeholder="自動計算" readonly>
+      </div>
     </div>
-    <div class="preview-box">預估金額：<strong id="rf-preview">—</strong></div>
+    <div class="preview-box">
+      預估金額：<strong id="rf-preview" style="color: var(--red); font-size: 15px;">—</strong>
+    </div>
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('record-modal')">取消</button>
-      <button class="btn btn-primary" onclick="addRecord()">確認驗收</button>
+      <button class="btn btn-primary" onclick="addRecord()">確定登記</button>
     </div>
   </div>
 </div>
 
-<div class="toast-el" id="toast"></div>
+<!-- 對話框：修改交件紀錄 -->
+<div class="modal-bg" id="record-edit-modal">
+  <div class="modal" style="width: 540px;">
+    <div class="modal-head">
+      <span class="modal-title">修改交付紀錄</span>
+      <button class="modal-close" onclick="closeModal('record-edit-modal')">✕</button>
+    </div>
+    <input type="hidden" id="ef-record-id">
+    <div class="form-row">
+      <div class="form-group">
+        <label>日期</label>
+        <input id="ef-date" type="date">
+      </div>
+      <div class="form-group">
+        <label>代工人員</label>
+        <select id="ef-worker"></select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>品項</label>
+        <select id="ef-item" onchange="calcEditPreview()"></select>
+      </div>
+      <div class="form-group">
+        <label>來源</label>
+        <select id="ef-source">
+          <option value="admin">管理者後台親記</option>
+          <option value="worker">代工自上報</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row-3">
+      <div class="form-group">
+        <label>自報數量</label>
+        <input id="ef-selfqty" type="number" min="0" placeholder="可為空" oninput="calcEditPreview()">
+      </div>
+      <div class="form-group">
+        <label>交回數量</label>
+        <input id="ef-total" type="number" min="0" placeholder="0" oninput="calcEditPreview()">
+      </div>
+      <div class="form-group">
+        <label>合格數量</label>
+        <input id="ef-pass" type="number" min="0" placeholder="0" oninput="calcEditPreview()">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>審核狀態</label>
+        <select id="ef-status">
+          <option value="pending">待驗收</option>
+          <option value="verified">已驗收</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>預估金額</label>
+        <input id="ef-amount" readonly style="font-weight: 900; color: var(--red);">
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom: 12px;">
+      <label>備註</label>
+      <input id="ef-note" placeholder="記錄調整原因...">
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('record-edit-modal')">取消</button>
+      <button class="btn btn-primary" onclick="saveRecordEdit()">儲存</button>
+    </div>
+  </div>
+</div>
 
+<!-- 對話框：結算金額編輯 -->
+<div class="modal-bg" id="settlement-edit-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">⚖️ 調整薪資</span>
+      <button class="modal-close" onclick="closeModal('settlement-edit-modal')">✕</button>
+    </div>
+    <input type="hidden" id="sef-wid">
+    <input type="hidden" id="sef-week">
+    <div class="form-group" style="margin-bottom: 12px;">
+      <label>代工人員</label>
+      <input id="sef-name" type="text" readonly style="background: #F5F5F4; font-weight: bold;">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>實得金額</label>
+        <input id="sef-earned" type="text" readonly style="background: #F5F5F4;">
+      </div>
+      <div class="form-group">
+        <label>調整後總額</label>
+        <input id="sef-total" type="text" readonly style="font-weight: 900; color: var(--red); background: #FAF9F6;">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>獎勵金 ($)</label>
+        <input id="sef-bonus" type="number" min="0" placeholder="0" oninput="calcSettlementEditTotal()">
+      </div>
+      <div class="form-group">
+        <label>扣款 ($)</label>
+        <input id="sef-deduct" type="number" min="0" placeholder="0" oninput="calcSettlementEditTotal()">
+      </div>
+    </div>
+    <p style="font-size: 11px; color: #000000; font-weight: 700; line-height: 1.5;">* 調整後的金額會立即存入結算單中。重新點擊「重新計算」可能會覆蓋手動編輯的內容。</p>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('settlement-edit-modal')">取消</button>
+      <button class="btn btn-primary" onclick="saveSettlementAdjustment()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 備份中心對話框 -->
+<div class="modal-bg" id="backup-modal">
+  <div class="modal" style="width: 550px;">
+    <div class="modal-head">
+      <span class="modal-title">💾 永祿系統資料備份</span>
+      <button class="modal-close" onclick="closeModal('backup-modal')">✕</button>
+    </div>
+    <div class="form-group" style="margin-bottom: 16px;">
+      <label>備份資料 (JSON)</label>
+      <textarea id="backup-json-data" rows="8" style="font-family: monospace; font-size: 12px; font-weight: 700; background: #FAF9F6;" onclick="this.select()"></textarea>
+      <span style="font-size: 12px; color: #000000; font-weight: 700; margin-top: 4px;">複製上方所有內容，可保存至您的電腦中。亦可在下方貼上舊的備份代碼並進行還原。</span>
+    </div>
+    <div style="display: flex; gap: 10px; justify-content: flex-between;">
+      <button class="btn" onclick="copyBackupData()" style="flex: 1;">📋 一鍵複製備份碼</button>
+      <button class="btn btn-primary" onclick="importBackupData()" style="flex: 1; background: var(--teal); border-color: var(--teal);">⚡ 貼上並匯入還原</button>
+    </div>
+  </div>
+</div>
+
+<!-- 萬用對話確認窗 -->
 <div class="modal-bg" id="confirm-modal">
-  <div class="modal" style="width:380px">
-    <div class="modal-head"><span class="modal-title" id="confirm-title">確認</span><button class="modal-close" onclick="closeConfirm()">✕</button></div>
-    <div id="confirm-msg" style="font-size:14px;color:var(--ink);line-height:1.7"></div>
+  <div class="modal" style="width: 380px;">
+    <div class="modal-head">
+      <span class="modal-title" id="confirm-title">操作確認</span>
+      <button class="modal-close" onclick="closeConfirm()">✕</button>
+    </div>
+    <div id="confirm-msg" style="font-size: 14px; color: var(--ink); font-weight: 700; line-height: 1.7; margin-bottom: 1rem;"></div>
     <div class="modal-foot">
       <button class="btn" onclick="closeConfirm()">取消</button>
       <button class="btn btn-primary" id="confirm-ok" onclick="doConfirm()">確定</button>
@@ -678,754 +1852,1486 @@ tr:hover td{background:#FFFBF7}
   </div>
 </div>
 
-<script>
-const BOAT_COLORS=[['#E8472A','#FF8066'],['#3A7BD5','#7AAFF5'],['#1DB87A','#5DDBA8'],['#F5A623','#FFCC6A'],['#9B59B6','#C39BD3']];
-const MEDAL_BG=['#F5A623','#B4B2A9','#F0997B','#F1EFE8','#F1EFE8'];
-const MEDAL_FG=['#633806','#444441','#712B13','#888780','#888780'];
+<!-- 提示氣泡 -->
+<div class="toast-el" id="toast"></div>
 
-function boatSVG(ci,phase){
-  const [body,acc]=BOAT_COLORS[ci%BOAT_COLORS.length];
-  const p1=Math.sin(phase)*3.5;
-  const p2=Math.sin(phase+Math.PI)*3.5;
-  return `<svg width="40" height="40" viewBox="0 0 40 40" style="display:block;overflow:visible">
-    <path d="M6 23 Q20 15 34 23 L32 28 Q20 20 8 28Z" fill="${body}"/>
-    <path d="M6 23 Q5 20 3 19 Q7 19 8 22Z" fill="${body}"/>
-    <path d="M34 23 Q36 20 37 19 Q34 20 32 22Z" fill="${body}"/>
-    <rect x="19" y="8" width="2.5" height="13" rx="1.2" fill="${acc}" opacity=".9"/>
-    <path d="M21.5 8 L29 12 L21.5 16Z" fill="${acc}"/>
-    <circle cx="10" cy="23" r="2.3" fill="white" opacity=".9"/>
-    <circle cx="15.5" cy="20" r="2.3" fill="white" opacity=".9"/>
-    <circle cx="20.5" cy="19" r="2.3" fill="white" opacity=".9"/>
-    <circle cx="25.5" cy="20" r="2.3" fill="white" opacity=".9"/>
-    <circle cx="31" cy="23" r="2.3" fill="white" opacity=".9"/>
-    <line x1="10" y1="23" x2="${7+p1}" y2="${30+p1}" stroke="${acc}" stroke-width="1.8" stroke-linecap="round"/>
-    <line x1="15.5" y1="20" x2="${12.5+p2}" y2="${27+p2}" stroke="${acc}" stroke-width="1.8" stroke-linecap="round"/>
-    <line x1="25.5" y1="20" x2="${22.5+p1}" y2="${27+p1}" stroke="${acc}" stroke-width="1.8" stroke-linecap="round"/>
-    <line x1="31" y1="23" x2="${28+p2}" y2="${30+p2}" stroke="${acc}" stroke-width="1.8" stroke-linecap="round"/>
+<!-- ─────────────────────────────────────────────────────────────
+     JS 業務邏輯及動畫處理
+     ───────────────────────────────────────────────────────────── -->
+<script>
+// 精緻爐鼎 SVG 漂浮微光效果
+const BOAT_COLORS=[['#D32F2F','#EF5350'],['#3B82F6','#60A5FA'],['#0D9488','#2DD4BF'],['#F59E0B','#FBBF24'],['#8B5CF6','#A78BFA']];
+const MEDAL_BG=['#D4AF37','#B1AFA7','#CD7F32','#E7E5E4','#E7E5E4'];
+const MEDAL_FG=['#3B2A07','#2D2C2A','#3F2108','#57534E','#57534E'];
+
+function boatSVG(ci, phase){
+  const [body, acc] = BOAT_COLORS[ci % BOAT_COLORS.length];
+  const lift = Math.sin(phase) * 3;
+  const drift = Math.cos(phase) * 2;
+  return `<svg width="42" height="42" viewBox="0 0 42 42" style="display:block;overflow:visible">
+    <defs>
+      <radialGradient id="glow-${ci}" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="${acc}" stop-opacity=".95"/>
+        <stop offset="55%" stop-color="${body}" stop-opacity=".45"/>
+        <stop offset="100%" stop-color="${body}" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="cauld-${ci}" x1="0" x2="1">
+        <stop offset="0%" stop-color="${body}"/>
+        <stop offset="100%" stop-color="${acc}"/>
+      </linearGradient>
+    </defs>
+    <ellipse cx="21" cy="32" rx="14" ry="4" fill="#000" opacity=".5"/>
+    <circle cx="21" cy="15" r="11" fill="url(#glow-${ci})" opacity=".9" transform="translate(0 ${lift*0.3})"/>
+    <circle cx="21" cy="14" r="6" fill="#FFFBEB" opacity=".96" transform="translate(0 ${lift*0.2})"/>
+    <!-- 爐身 -->
+    <path d="M12 21 Q21 16 30 21 L28 30 Q21 34 14 30 Z" fill="url(#cauld-${ci})"/>
+    <path d="M11 21 Q21 25 31 21" fill="none" stroke="#FFFBEB" stroke-opacity=".7" stroke-width="1.2"/>
+    <circle cx="21" cy="26" r="3" fill="#FFFBEB" opacity=".9" transform="translate(${drift*0.2} ${lift*0.4})"/>
   </svg>`;
 }
 
 let animFrame=null;
-function startBoatAnim(count,prefix){
+function startBoatAnim(count, prefix){
   cancelAnimationFrame(animFrame);
   let t=0;
   function tick(){
-    t+=0.13;
-    for(let i=0;i<count;i++){
-      const el=document.getElementById(prefix+i);
-      if(el) el.innerHTML=boatSVG(i,t+(i*0.9));
+    t += 0.1;
+    for(let i=0; i<count; i++){
+      const el = document.getElementById(prefix + i);
+      if(el) el.innerHTML = boatSVG(i, t + (i * 0.8));
     }
-    animFrame=requestAnimationFrame(tick);
+    animFrame = requestAnimationFrame(tick);
   }
   tick();
 }
 
-// 品質榜資格門檻：本期交件量需達此件數才列入評比
-const QUALITY_MIN=20;
-// 解脫金幣：與台幣 1:1（每累積 $1 已驗收產值 = 1 枚），各自累積、永不歸零
-const COIN_RATE=1;
-function cumulativeEarned(wid){return db.records.filter(r=>r.workerId===wid&&r.status==='verified').reduce((a,r)=>a+r.amount,0);}
-function coinsOf(amount){return Math.floor((amount||0)/COIN_RATE);}
+// 業務指標常數
+const QUALITY_MIN = 20;
+const COIN_RATE = 1;
 
-// 修仙境界：依累積解脫金幣晉級
+function cumulativeEarned(wid){
+  return db.records.filter(r => r.workerId === wid && r.status === 'verified').reduce((a, r) => a + r.amount, 0);
+}
+function coinsOf(amount){
+  return Math.floor((amount || 0) / COIN_RATE);
+}
+
+// 修仙十重天境界 (保留給前台趣味性)
 const REALMS=[
-  {name:'練氣',min:0,color:'#7A8B6F'},
-  {name:'築基',min:1000,color:'#1DB87A'},
-  {name:'金丹',min:3000,color:'#F5A623'},
-  {name:'元嬰',min:8000,color:'#3A7BD5'},
-  {name:'化神',min:20000,color:'#9B59B6'},
-  {name:'煉虛',min:50000,color:'#5B5BD6'},
-  {name:'合體',min:100000,color:'#E8472A'},
-  {name:'大乘',min:200000,color:'#C9971C'},
-  {name:'渡劫',min:500000,color:'#B5179E'},
-  {name:'飛昇',min:1000000,color:'#F5C84B'},
+  {name:'練氣期', min:0, color:'#78716C'},
+  {name:'築基期', min:1000, color:'#10B981'},
+  {name:'金丹期', min:3000, color:'#F59E0B'},
+  {name:'元嬰期', min:8000, color:'#3B82F6'},
+  {name:'化神期', min:20000, color:'#8B5CF6'},
+  {name:'煉虛期', min:50000, color:'#6366F1'},
+  {name:'合體期', min:100000, color:'#EF4444'},
+  {name:'大乘期', min:200000, color:'#F59E0B'},
+  {name:'渡劫期', min:500000, color:'#EC4899'},
+  {name:'飛昇境', min:1000000, color:'#10B981'},
 ];
 const LAYER_CN=['一','二','三','四','五','六','七','八','九'];
+
 function cultivation(coins){
-  coins=coins||0;
-  let idx=0;
-  for(let i=0;i<REALMS.length;i++){if(coins>=REALMS[i].min)idx=i;}
-  const cur=REALMS[idx];
-  const isMax=idx===REALMS.length-1;
-  const next=isMax?null:REALMS[idx+1];
-  const span=isMax?1:(next.min-cur.min);
-  const into=coins-cur.min;
-  const layer=isMax?9:Math.min(9,Math.floor(into/(span/9))+1);
-  const pct=isMax?100:Math.min(100,Math.round(into/span*100));
-  return{realm:cur.name,color:cur.color,layerLabel:isMax?'圓滿':LAYER_CN[layer-1]+'層',isMax,nextName:next?next.name:null,toNext:isMax?0:(next.min-coins),pct};
+  coins = coins || 0;
+  let idx = 0;
+  for(let i=0; i<REALMS.length; i++){
+    if(coins >= REALMS[i].min) idx = i;
+  }
+  const cur = REALMS[idx];
+  const isMax = idx === REALMS.length - 1;
+  const next = isMax ? null : REALMS[idx + 1];
+  const span = isMax ? 1 : (next.min - cur.min);
+  const into = coins - cur.min;
+  const layer = isMax ? 9 : Math.min(9, Math.floor(into / (span / 9)) + 1);
+  const pct = isMax ? 100 : Math.min(100, Math.round(into / span * 100));
+  return {
+    realm: cur.name,
+    color: cur.color,
+    layerLabel: isMax ? '大圓滿' : LAYER_CN[layer - 1] + '層',
+    isMax,
+    nextName: next ? next.name : null,
+    toNext: isMax ? 0 : (next.min - coins),
+    pct
+  };
 }
 
-function mondayOf(d){const x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return x;}
-function fmtRange(s,e){return `${s.getMonth()+1}/${s.getDate()}–${e.getMonth()+1}/${e.getDate()}`;}
-function inRange(dateStr,s,e){const d=new Date(dateStr+'T00:00:00');return d>=s&&d<=e;}
+function mondayOf(d){
+  const x = new Date(d);
+  x.setHours(0,0,0,0);
+  x.setDate(x.getDate() - ((x.getDay() + 6) % 7));
+  return x;
+}
+function fmtRange(s, e){
+  return `${s.getMonth() + 1}/${s.getDate()} – ${e.getMonth() + 1}/${e.getDate()}`;
+}
+function inRange(dateStr, s, e){
+  const d = new Date(dateStr + 'T00:00:00');
+  return d >= s && d <= e;
+}
 
-// 回傳本期與上一期的起訖（上一期用來算名次升降）
+// 階段計算起迄
 function periodBounds(period){
-  const now=new Date();
-  if(period==='all'){
-    return{s:new Date(0),e:new Date(8640000000000000),ps:new Date(0),pe:new Date(0),label:'累積總榜'};
+  const now = new Date();
+  if(period === 'all'){
+    return {s: new Date(0), e: new Date(8640000000000000), ps: new Date(0), pe: new Date(0), label: '累計總天榜'};
   }
-  if(period==='month'){
-    const s=new Date(now.getFullYear(),now.getMonth(),1);
-    const e=new Date(now.getFullYear(),now.getMonth()+1,0);e.setHours(23,59,59,999);
-    const ps=new Date(now.getFullYear(),now.getMonth()-1,1);
-    const pe=new Date(now.getFullYear(),now.getMonth(),0);pe.setHours(23,59,59,999);
-    return{s,e,ps,pe,label:`${s.getFullYear()}/${s.getMonth()+1}`};
+  if(period === 'month'){
+    const s = new Date(now.getFullYear(), now.getMonth(), 1);
+    const e = new Date(now.getFullYear(), now.getMonth() + 1, 0); e.setHours(23, 59, 59, 999);
+    const ps = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const pe = new Date(now.getFullYear(), now.getMonth(), 0); pe.setHours(23, 59, 59, 999);
+    return {s, e, ps, pe, label: `${s.getFullYear()}年${s.getMonth() + 1}月`};
   }
-  let s=mondayOf(now);
-  if(period==='last') s=new Date(s.getTime()-7*864e5);
-  const e=new Date(s);e.setDate(s.getDate()+6);e.setHours(23,59,59,999);
-  const ps=new Date(s.getTime()-7*864e5);
-  const pe=new Date(s.getTime()-864e5);pe.setHours(23,59,59,999);
-  return{s,e,ps,pe,label:fmtRange(s,e)};
+  let s = mondayOf(now);
+  if(period === 'last') s = new Date(s.getTime() - 7 * 864e5);
+  const e = new Date(s); e.setDate(s.getDate() + 6); e.setHours(23, 59, 59, 999);
+  const ps = new Date(s.getTime() - 7 * 864e5);
+  const pe = new Date(s.getTime() - 864e5); pe.setHours(23, 59, 59, 999);
+  return {s, e, ps, pe, label: fmtRange(s, e)};
 }
 
-// 彙整每位代工的產值、合格率、綜合分
-function computeStandings(recs,metric){
-  const agg={};
-  recs.forEach(r=>{
-    const a=agg[r.workerId]||(agg[r.workerId]={earn:0,pass:0,total:0});
-    a.earn+=r.amount;a.pass+=r.pass;a.total+=r.total;
+// 排行計算
+function computeStandings(recs, metric){
+  const agg = {};
+  recs.forEach(r => {
+    const a = agg[r.workerId] || (agg[r.workerId] = {earn: 0, pass: 0, total: 0});
+    a.earn += r.amount;
+    a.pass += r.pass;
+    a.total += r.total;
   });
-  let rows=Object.entries(agg).map(([wid,a])=>{
-    const w=gw(+wid);
-    const passRate=a.total?a.pass/a.total:0;
+  let rows = Object.entries(agg).map(([wid, a]) => {
+    const w = gw(+wid);
+    const passRate = a.total ? a.pass / a.total : 0;
     let score;
-    if(metric==='quality') score=passRate*100;
-    else if(metric==='combined') score=Math.round(a.earn*(0.5+0.5*passRate));// 產值×品質加權
-    else score=a.earn;
-    return{workerId:+wid,nick:w?(w.nick||w.name):'—',score,earn:a.earn,passRate,total:a.total,pass:a.pass};
+    if(metric === 'quality') score = passRate * 100;
+    else if(metric === 'combined') score = Math.round(a.earn * (0.5 + 0.5 * passRate));
+    else score = a.earn;
+    return {
+      workerId: +wid,
+      nick: w ? (w.nick || w.name) : '無名同道',
+      score,
+      earn: a.earn,
+      passRate,
+      total: a.total,
+      pass: a.pass
+    };
   });
-  if(metric==='quality') rows=rows.filter(r=>r.total>=QUALITY_MIN);
-  rows.sort((a,b)=>b.score-a.score||b.earn-a.earn);
+  if(metric === 'quality') rows = rows.filter(r => r.total >= QUALITY_MIN);
+  rows.sort((a, b) => b.score - a.score || b.earn - a.earn);
   return rows;
 }
 
-function deltaBadge(prevRank,wid,curRank){
-  if(!prevRank||!(wid in prevRank)) return '<span class="delta delta-new">NEW</span>';
-  const d=prevRank[wid]-curRank;
-  if(d>0) return `<span class="delta delta-up">▲${d}</span>`;
-  if(d<0) return `<span class="delta delta-down">▼${-d}</span>`;
-  return '<span class="delta delta-same">–</span>';
+function deltaBadge(prevRank, wid, curRank){
+  if(!prevRank || !(wid in prevRank)) return '<span class="delta delta-new">✨ 新進榜</span>';
+  const d = prevRank[wid] - curRank;
+  if(d > 0) return `<span class="delta delta-up">▲ 上升${d}名</span>`;
+  if(d < 0) return `<span class="delta delta-down">▼ 下降${-d}名</span>`;
+  return '<span class="delta delta-same">名次不變</span>';
 }
 
-function fmtScore(r,metric){
-  if(metric==='quality') return r.score.toFixed(1)+'%';
-  if(metric==='combined') return r.score.toLocaleString()+'分';
-  if(metric==='coin') return r.score.toLocaleString()+' 枚';
-  return '$'+r.score.toLocaleString();
+function fmtScore(r, metric){
+  if(metric === 'quality') return r.score.toFixed(1) + '%';
+  if(metric === 'combined') return r.score.toLocaleString() + ' 綜合分';
+  if(metric === 'coin') return r.score.toLocaleString() + ' 枚';
+  return '$' + r.score.toLocaleString();
 }
 
-function renderChampion(id,rows,metric,label){
-  const el=document.getElementById(id);if(!el)return;
-  if(!rows.length){el.innerHTML='';return;}
-  const top=rows[0];
-  const title={earn:'產值船長',combined:'總船長',quality:'品質船長',coin:'解脫金幣王'}[metric];
-  el.innerHTML=`<div class="champion">
-    <div class="champion-crown">👑</div>
+function renderChampion(id, rows, metric, label){
+  const el = document.getElementById(id); if(!el) return;
+  if(!rows.length) { el.innerHTML = ''; return; }
+  const top = rows[0];
+  const title = {earn: '最高產值傑出代工', combined: '綜合表現優秀代工', quality: '品質第一精準代工', coin: '功德無量資深代工'}[metric];
+  const icon = {earn: '🔥', combined: '⚗️', quality: '💎', coin: '🪙'}[metric] || '✨';
+  el.innerHTML = `<div class="champion">
+    <div class="champion-crown">${icon}</div>
     <div class="champion-info">
-      <div class="champion-label">${label} · ${title}</div>
+      <div class="champion-label">✨ ${label} · ${title} ✨</div>
       <div class="champion-name">${top.nick}</div>
     </div>
-    <div class="champion-score">${fmtScore(top,metric)}</div>
+    <div class="champion-score">${fmtScore(top, metric)}</div>
   </div>`;
 }
 
-function renderLbSummary(id,recs){
-  const el=document.getElementById(id);if(!el)return;
-  const ppl=new Set(recs.map(r=>r.workerId)).size;
-  const out=recs.reduce((a,r)=>a+r.amount,0);
-  const totT=recs.reduce((a,r)=>a+r.total,0);
-  const totP=recs.reduce((a,r)=>a+r.pass,0);
-  const rate=totT?(totP/totT*100).toFixed(1):'0.0';
-  el.innerHTML=`<div class="lb-summary">
-    <div class="lb-sum-item"><span class="lb-sum-num">${ppl}</span><span class="lb-sum-lbl">上工人數</span></div>
-    <div class="lb-sum-item"><span class="lb-sum-num">$${out.toLocaleString()}</span><span class="lb-sum-lbl">總產值</span></div>
+function renderLbSummary(id, recs){
+  const el = document.getElementById(id); if(!el) return;
+  const ppl = new Set(recs.map(r => r.workerId)).size;
+  const out = recs.reduce((a, r) => a + r.amount, 0);
+  const totT = recs.reduce((a, r) => a + r.total, 0);
+  const totP = recs.reduce((a, r) => a + r.pass, 0);
+  const rate = totT ? (totP / totT * 100).toFixed(1) : '0.0';
+  el.innerHTML = `<div class="lb-summary">
+    <div class="lb-sum-item"><span class="lb-sum-num">${ppl} 人</span><span class="lb-sum-lbl">代工人員參榜</span></div>
+    <div class="lb-sum-item"><span class="lb-sum-num">$${out.toLocaleString()}</span><span class="lb-sum-lbl">累計產值總和</span></div>
     <div class="lb-sum-item"><span class="lb-sum-num">${rate}%</span><span class="lb-sum-lbl">平均合格率</span></div>
   </div>`;
 }
 
-function renderRaceRanked(containerId,rows,metric,prevRank,selfId,emptyMsg,opts){
-  opts=opts||{};
-  const showDelta=opts.showDelta!==false && !!prevRank;
-  const showCoins=!!opts.showCoins;
-  const el=document.getElementById(containerId);
-  if(!rows.length){el.innerHTML=`<div class="empty-state">${emptyMsg||'本期尚無交件資料'}</div>`;return;}
-  const max=rows[0].score||1;
-  const bp=containerId+'-boat-';
-  el.innerHTML=rows.map((r,i)=>{
-    const pct=Math.max(12,Math.round(r.score/max*90));
-    const isSelf=selfId&&r.workerId===selfId;
-    const coin=showCoins?`<span class="coin-chip">🪙${coinsOf(r.earn)}</span>`:'';
-    return `<div class="race-row${isSelf?' race-self':''}">
-      <div class="race-rank"><span class="rank-medal" style="background:${MEDAL_BG[i]||'#F1EFE8'};color:${MEDAL_FG[i]||'#888780'}">${i+1}</span>${showDelta?deltaBadge(prevRank,r.workerId,i+1):''}</div>
-      <div class="race-name">${r.nick}${isSelf?'<span class="self-tag">你</span>':''}${coin}</div>
+function renderRaceRanked(containerId, rows, metric, prevRank, selfId, emptyMsg, opts){
+  opts = opts || {};
+  const showDelta = opts.showDelta !== false && !!prevRank;
+  const showCoins = !!opts.showCoins;
+  const el = document.getElementById(containerId);
+  if(!rows.length){
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">⏳</div>${emptyMsg || '本期尚無資料'}</div>`;
+    return;
+  }
+  const max = rows[0].score || 1;
+  const bp = containerId + '-boat-';
+  el.innerHTML = rows.map((r, i) => {
+    const pct = Math.max(15, Math.min(95, Math.round(r.score / max * 85)));
+    const isSelf = selfId && r.workerId === selfId;
+    const coin = showCoins ? `<span class="coin-chip">🪙${coinsOf(r.earn)}</span>` : '';
+    return `<div class="race-row${isSelf ? ' race-self' : ''}">
+      <div class="race-rank">
+        <span class="rank-medal" style="background:${MEDAL_BG[i] || '#111E27'};color:${MEDAL_FG[i] || '#F5B682'}">${i+1}</span>
+        ${showDelta ? deltaBadge(prevRank, r.workerId, i+1) : ''}
+      </div>
+      <div class="race-name">
+        <span>${r.nick}</span>
+        ${isSelf ? '<span class="self-tag">閣下</span>' : ''}
+        ${coin}
+      </div>
       <div class="race-track">
-        <div class="race-lane" style="width:${pct}%;background:${BOAT_COLORS[i%5][0]}28">
-          <div class="boat-anim" id="${bp}${i}">${boatSVG(i,0)}</div>
+        <div class="race-lane" style="width:${pct}%; background:linear-gradient(90deg, transparent, ${BOAT_COLORS[i % 5][0]}25)">
+          <div class="boat-anim" id="${bp}${i}">${boatSVG(i, 0)}</div>
         </div>
       </div>
-      <div class="race-score">${fmtScore(r,metric)}</div>
+      <div class="race-score">${fmtScore(r, metric)}</div>
     </div>`;
   }).join('');
-  startBoatAnim(rows.length,bp);
+  startBoatAnim(rows.length, bp);
 }
 
 let currentLbTab='earn';
 let currentLbPeriod='this';
-function switchLbTab(tab,btn){
-  currentLbTab=tab;
-  document.querySelectorAll('.lb-metric-bar .metric-tab').forEach(b=>b.classList.remove('active'));
+function switchLbTab(tab, btn){
+  currentLbTab = tab;
+  document.querySelectorAll('.lb-metric-bar .metric-tab').forEach(b => b.classList.remove('active'));
   if(btn) btn.classList.add('active');
   renderLeaderboard();
 }
-function switchLbPeriod(p,btn){
-  currentLbPeriod=p;
-  document.querySelectorAll('#page-leaderboard .race-tabs .race-tab').forEach(b=>b.classList.remove('active'));
+function switchLbPeriod(p, btn){
+  currentLbPeriod = p;
+  document.querySelectorAll('#page-leaderboard .race-tabs .race-tab').forEach(b => b.classList.remove('active'));
   if(btn) btn.classList.add('active');
   renderLeaderboard();
 }
 
 function renderLeaderboard(){
-  const isCoin=currentLbTab==='coin';
-  const periodTabs=document.querySelector('#page-leaderboard .race-tabs');
-  if(periodTabs) periodTabs.classList.toggle('dim',isCoin);
-  let recs,label,prevRank={},showDelta=false;
+  const isCoin = currentLbTab === 'coin';
+  const periodTabs = document.querySelector('#page-leaderboard .race-tabs');
+  if(periodTabs) periodTabs.classList.toggle('dim', isCoin);
+  
+  let recs, label, prevRank={}, showDelta=false;
   if(isCoin){
-    recs=db.records.filter(r=>r.status==='verified');// 歷來累計，不分期間
-    label='歷來累計';
-  }else{
-    const pb=periodBounds(currentLbPeriod);
-    recs=db.records.filter(r=>r.status==='verified'&&inRange(r.date,pb.s,pb.e));
-    label=pb.label;showDelta=true;
-    computeStandings(db.records.filter(r=>r.status==='verified'&&inRange(r.date,pb.ps,pb.pe)),currentLbTab).forEach((r,i)=>prevRank[r.workerId]=i+1);
+    recs = db.records.filter(r => r.status === 'verified');
+    label = '自盤古開天累計';
+  } else {
+    const pb = periodBounds(currentLbPeriod);
+    recs = db.records.filter(r => r.status === 'verified' && inRange(r.date, pb.s, pb.e));
+    label = pb.label;
+    showDelta = true;
+    computeStandings(db.records.filter(r => r.status === 'verified' && inRange(r.date, pb.ps, pb.pe)), currentLbTab)
+      .forEach((r, i) => prevRank[r.workerId] = i + 1);
   }
-  const rows=computeStandings(recs,currentLbTab);
-  renderChampion('lb-champion',rows,currentLbTab,label);
-  renderLbSummary('lb-summary',recs);
-  renderRaceRanked('lb-race',rows,currentLbTab,prevRank,null,'尚無已驗收的交件',{showDelta});
-  const note=document.getElementById('lb-note');
-  if(isCoin) note.innerHTML=`<div class="lb-note">＊金幣榜 = 每位代工歷來累計的解脫金幣（已驗收產值，NT$1 ＝ 1 枚），各自累積、永不歸零、不分期間。</div>`;
-  else if(currentLbTab==='quality') note.innerHTML=`<div class="lb-note">＊品質榜 = 合格率（合格數 ÷ 交回數）；需本期交件量達 ${QUALITY_MIN} 件以上才列入評比，避免少量滿分灌水。</div>`;
-  else if(currentLbTab==='combined') note.innerHTML=`<div class="lb-note">＊綜合分 = 產值 × 品質加權（合格率越高越接近滿分），兼顧產量與良率。</div>`;
-  else note.innerHTML=`<div class="lb-note">＊產值榜 = 本期已驗收交件的金額合計；▲▼ 為相較上一期的名次變化。</div>`;
+  const rows = computeStandings(recs, currentLbTab);
+  renderChampion('lb-champion', rows, currentLbTab, label);
+  renderLbSummary('lb-summary', recs);
+  renderRaceRanked('lb-race', rows, currentLbTab, prevRank, null, '本期尚未有資料登入。', {showDelta});
+  
+  const note = document.getElementById('lb-note');
+  if(isCoin) note.innerHTML = `<div class="lb-note">＊ 累計靈幣榜：為代工弟子歷來累計「已驗收」資糧之總合 ($1 = 1 枚)，永不清除、不分期限。</div>`;
+  else if(currentLbTab === 'quality') note.innerHTML = `<div class="lb-note">＊ 品質排行榜：依據「合格數 ÷ 收回數」百分比排序。為防偏誤，本期至少需累計交件達 ${QUALITY_MIN} 件以上方有登榜資格。</div>`;
+  else if(currentLbTab === 'combined') note.innerHTML = `<div class="lb-note">＊ 綜合排行榜：產出金額與合格率的綜合評估。</div>`;
+  else note.innerHTML = `<div class="lb-note">＊ 產值排行榜：本期合格實收金額；▲▼ 指標反映與上期之名次升降。</div>`;
 }
+
+// 代工專用排行榜 (前台仍保留好玩的仙俠風)
 let currentWLbTab='earn';
 let currentWLbPeriod='this';
-function switchWLbTab(t,btn){
-  currentWLbTab=t;
-  document.querySelectorAll('#w-metric-bar .metric-tab').forEach(b=>b.classList.remove('active'));
+function switchWLbTab(t, btn){
+  currentWLbTab = t;
+  document.querySelectorAll('#w-metric-bar .metric-tab').forEach(b => b.classList.remove('active'));
   if(btn) btn.classList.add('active');
   renderWorkerLeaderboard();
 }
-function switchWLbPeriod(p,btn){
-  currentWLbPeriod=p;
-  document.querySelectorAll('#w-period-tabs .race-tab').forEach(b=>b.classList.remove('active'));
+function switchWLbPeriod(p, btn){
+  currentWLbPeriod = p;
+  document.querySelectorAll('#w-period-tabs .race-tab').forEach(b => b.classList.remove('active'));
   if(btn) btn.classList.add('active');
   renderWorkerLeaderboard();
 }
 function renderWorkerLeaderboard(){
-  const isCoin=currentWLbTab==='coin';
-  const periodTabs=document.getElementById('w-period-tabs');
-  if(periodTabs) periodTabs.classList.toggle('dim',isCoin);
-  let recs,label,prevRank={},showDelta=false;
+  const isCoin = currentWLbTab === 'coin';
+  const periodTabs = document.getElementById('w-period-tabs');
+  if(periodTabs) periodTabs.classList.toggle('dim', isCoin);
+  
+  let recs, label, prevRank={}, showDelta=false;
   if(isCoin){
-    recs=db.records.filter(r=>r.status==='verified');
-    label='歷來累計';
-  }else{
-    const pb=periodBounds(currentWLbPeriod);
-    recs=db.records.filter(r=>r.status==='verified'&&inRange(r.date,pb.s,pb.e));
-    label=pb.label;showDelta=true;
-    computeStandings(db.records.filter(r=>r.status==='verified'&&inRange(r.date,pb.ps,pb.pe)),currentWLbTab).forEach((r,i)=>prevRank[r.workerId]=i+1);
+    recs = db.records.filter(r => r.status === 'verified');
+    label = '累計生涯';
+  } else {
+    const pb = periodBounds(currentWLbPeriod);
+    recs = db.records.filter(r => r.status === 'verified' && inRange(r.date, pb.s, pb.e));
+    label = pb.label;
+    showDelta = true;
+    computeStandings(db.records.filter(r => r.status === 'verified' && inRange(r.date, pb.ps, pb.pe)), currentWLbTab)
+      .forEach((r, i) => prevRank[r.workerId] = i + 1);
   }
-  const rows=computeStandings(recs,currentWLbTab);
-  renderChampion('w-lb-champion',rows,currentWLbTab,label);
-  // 自己的名次提示
-  const self=document.getElementById('w-lb-self');
-  const myIdx=rows.findIndex(r=>r.workerId===currentWorkerId);
+  const rows = computeStandings(recs, currentWLbTab);
+  renderChampion('w-lb-champion', rows, currentWLbTab, label);
+  
+  const self = document.getElementById('w-lb-self');
+  const myIdx = rows.findIndex(r => r.workerId === currentWorkerId);
   if(self){
-    if(myIdx>=0){
-      const me=rows[myIdx];
-      const val=currentWLbTab==='quality'?me.score.toFixed(1)+'% 合格率'
-        :currentWLbTab==='combined'?me.score.toLocaleString()+' 綜合分'
-        :isCoin?'🪙 '+me.score.toLocaleString()+' 枚解脫金幣'
-        :'$'+me.earn.toLocaleString();
-      self.innerHTML=`<div class="w-lb-self">你目前排名 <strong>第 ${myIdx+1} 名</strong>　${val}</div>`;
-    }else{
-      self.innerHTML=`<div class="w-lb-self">這個榜單你還沒上榜，趕快上船一起划！⛵</div>`;
+    if(myIdx >= 0){
+      const me = rows[myIdx];
+      const val = currentWLbTab === 'quality' ? me.score.toFixed(1) + '% 合格成丹率'
+                : currentWLbTab === 'combined' ? me.score.toLocaleString() + ' 綜合修為分'
+                : isCoin ? '🪙 ' + me.score.toLocaleString() + ' 枚靈幣修為'
+                : '$' + me.earn.toLocaleString();
+      self.innerHTML = `<div class="w-lb-self">師兄姐好！您目前在該榜排行 <strong>第 ${myIdx + 1} 位</strong> （修為：${val}）</div>`;
+    } else {
+      self.innerHTML = `<div class="w-lb-self">道友尚未入榜，速速派發法宝或自主報件，衝擊金丹天榜吧！⚡</div>`;
     }
   }
-  renderRaceRanked('w-lb-race',rows,currentWLbTab,prevRank,currentWorkerId,'本期還沒有人完成驗收',{showDelta});
-  const note=document.getElementById('w-lb-note');
-  if(note){
-    if(isCoin) note.innerHTML=`<div class="lb-note">＊金幣榜為歷來累計的解脫金幣，NT$1 ＝ 1 枚，各自累積、永不歸零。</div>`;
-    else if(currentWLbTab==='quality') note.innerHTML=`<div class="lb-note">＊品質榜需本期交件達 ${QUALITY_MIN} 件以上才列入。</div>`;
-    else if(currentWLbTab==='combined') note.innerHTML=`<div class="lb-note">＊綜合分 = 產值 × 品質加權，量與良率並重。</div>`;
-    else note.innerHTML='';
-  }
+  renderRaceRanked('w-lb-race', rows, currentWLbTab, prevRank, currentWorkerId, '天榜碑尚未有任何數據...', {showDelta});
 }
 
-// 後台管理密碼：請在這裡修改。
-// 注意：GitHub Pages / 純前端網頁無法做到真正保密；此密碼只能防止一般訪客誤入後台。
+// 🔐 安全密碼與數據儲存
 const ADMIN_PASSWORD='8888';
 const ADMIN_AUTH_KEY='yonglufang_admin_auth';
 
 let db={
   workers:[
-    {id:1,name:'阿美',nick:'阿美姐',phone:'0912-345-678',status:'active',note:'擅長折紙'},
-    {id:2,name:'小芳',nick:'小芳',phone:'0923-456-789',status:'active',note:'速度快'},
-    {id:3,name:'小玉',nick:'小玉',phone:'0934-567-890',status:'active',note:'品質佳'},
-    {id:4,name:'阿珠',nick:'阿珠',phone:'0945-678-901',status:'active',note:''},
+    {id:1, name:'阿美', nick:'阿美祖師', status:'active', note:'手極巧，折紙專家'},
+    {id:2, name:'小芳', nick:'小芳仙子', status:'active', note:'龍船與折紙皆通'},
+    {id:3, name:'小玉', nick:'玉面觀音', status:'active', note:'品質一絕，絕無不良'},
+    {id:4, name:'阿珠', nick:'神珠大師', status:'active', note:'善串接，速驚人'}
   ],
   items:[
-    {id:1,name:'三角片折製',unit:'100片',qty:100,price:30,note:'按百片計'},
-    {id:2,name:'龍船鱗片組裝',unit:'1組',qty:1,price:15,note:'需驗收'},
-    {id:3,name:'蓮花製作',unit:'1朵',qty:1,price:8,note:'依規格'},
-    {id:4,name:'元寶串接',unit:'1串',qty:1,price:12,note:''},
+    {id:1, name:'三角片折製', unit:'每 100片', qty:100, price:30, note:'規格精細'},
+    {id:2, name:'龍船鱗片組裝', unit:'每 1組', qty:1, price:15, note:'極需細心度'},
+    {id:3, name:'蓮花製作', unit:'每 1朵', qty:1, price:8, note:'花瓣外張角均勻'},
+    {id:4, name:'元寶串接', unit:'每 1串', qty:1, price:12, note:'拉力需妥當'}
   ],
   records:[
-    {id:1,date:'2026-06-16',workerId:1,itemId:1,total:1000,pass:980,amount:294,status:'verified'},
-    {id:2,date:'2026-06-17',workerId:2,itemId:3,total:50,pass:48,amount:384,status:'verified'},
-    {id:3,date:'2026-06-18',workerId:3,itemId:4,total:30,pass:30,amount:360,status:'verified'},
-    {id:4,date:'2026-06-19',workerId:4,itemId:2,total:40,pass:38,amount:570,status:'verified'},
-    {id:5,date:'2026-06-20',workerId:1,itemId:2,total:20,pass:19,amount:285,status:'pending'},
-    {id:6,date:'2026-06-21',workerId:2,itemId:1,total:500,pass:495,amount:148,status:'verified'},
-    {id:7,date:'2026-06-22',workerId:3,itemId:3,total:60,pass:60,amount:480,status:'pending'},
-    {id:8,date:'2026-06-22',workerId:4,itemId:1,total:300,pass:295,amount:88,status:'verified'},
+    {id:1, date:'2026-06-16', workerId:1, itemId:1, total:1000, pass:980, amount:294, status:'verified', source:'admin', note:''},
+    {id:2, date:'2026-06-17', workerId:2, itemId:3, total:50, pass:48, amount:384, status:'verified', source:'admin', note:''},
+    {id:3, date:'2026-06-18', workerId:3, itemId:4, total:30, pass:30, amount:360, status:'verified', source:'admin', note:''},
+    {id:4, date:'2026-06-19', workerId:4, itemId:2, total:40, pass:38, amount:570, status:'verified', source:'admin', note:''},
+    {id:5, date:'2026-06-20', workerId:1, itemId:2, total:20, pass:19, amount:285, status:'pending', source:'worker', selfQty:20, note:''},
+    {id:6, date:'2026-06-21', workerId:2, itemId:1, total:500, pass:495, amount:148, status:'verified', source:'admin', note:''},
+    {id:7, date:'2026-06-22', workerId:3, itemId:3, total:60, pass:60, amount:480, status:'pending', source:'worker', selfQty:60, note:''},
+    {id:8, date:'2026-06-22', workerId:4, itemId:1, total:300, pass:295, amount:88, status:'verified', source:'admin', note:''}
   ],
   settlements:[],
-  nextId:{workers:5,items:5,records:9}
+  nextId:{workers:5, items:5, records:9}
 };
 
-function loadDB(){try{const s=localStorage.getItem('yonglufang_v2');if(s)db=JSON.parse(s);}catch(e){}}
-function saveDB(){try{localStorage.setItem('yonglufang_v2',JSON.stringify(db));}catch(e){}}
+function loadDB(){
+  try{
+    const s = localStorage.getItem('yonglufang_v2');
+    if(s) db = JSON.parse(s);
+  } catch(e) { console.error('還原儲存時空失敗！', e); }
+}
+function saveDB(){
+  try{
+    localStorage.setItem('yonglufang_v2', JSON.stringify(db));
+  } catch(e) { console.error('存檔失敗！', e); }
+}
+
+function normalizeDB(){
+  db.workers = db.workers || [];
+  db.items = db.items || [];
+  db.records = db.records || [];
+  db.settlements = db.settlements || [];
+  db.nextId = db.nextId || {workers:1, items:1, records:1};
+  db.records = db.records.map(r => ({
+    ...r,
+    source: r.source || 'admin',
+    selfQty: (r.selfQty === undefined || r.selfQty === null || r.selfQty === '') ? null : Number(r.selfQty),
+    note: r.note || ''
+  }));
+  const nextWorker = (db.workers.reduce((m, w) => Math.max(m, w.id || 0), 0) || 0) + 1;
+  const nextItem = (db.items.reduce((m, i) => Math.max(m, i.id || 0), 0) || 0) + 1;
+  const nextRec = (db.records.reduce((m, r) => Math.max(m, r.id || 0), 0) || 0) + 1;
+  db.nextId = {
+    workers: Math.max(db.nextId.workers || 1, nextWorker),
+    items: Math.max(db.nextId.items || 1, nextItem),
+    records: Math.max(db.nextId.records || 1, nextRec)
+  };
+}
+
+function sourceBadge(src){
+  return src === 'worker' ? '<span class="source-badge source-worker">自報</span>' : '<span class="source-badge source-admin">管理者登記</span>';
+}
 
 let currentRole='admin';
 let currentWorkerId=null;
 
-function isAdminLoggedIn(){return sessionStorage.getItem(ADMIN_AUTH_KEY)==='1';}
-function showAdminLogin(){
-  currentRole='admin';
-  cancelAnimationFrame(animFrame);
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-admin-login').classList.add('active');
-  document.querySelectorAll('.role-pill').forEach((b,i)=>b.classList.toggle('active',i===0));
-  document.getElementById('admin-nav').style.display='none';
-  document.getElementById('worker-nav').style.display='none';
-  document.getElementById('page-title').textContent='後台登入';
-  document.getElementById('topbar-right').innerHTML='';
-  setTimeout(()=>{const input=document.getElementById('admin-password-input');if(input)input.focus();},0);
+function isAdminLoggedIn(){
+  return sessionStorage.getItem(ADMIN_AUTH_KEY) === '1';
 }
+
+function showAdminLogin(){
+  currentRole = 'admin';
+  cancelAnimationFrame(animFrame);
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-admin-login').classList.add('active');
+  document.querySelectorAll('.role-pill').forEach((b, i) => b.classList.toggle('active', i === 0));
+  document.getElementById('admin-nav').style.display = 'none';
+  document.getElementById('worker-nav').style.display = 'none';
+  document.getElementById('page-title').textContent = '管理者登入';
+  document.getElementById('topbar-right').innerHTML = '';
+  setTimeout(() => {
+    const input = document.getElementById('admin-password-input');
+    if(input) input.focus();
+  }, 50);
+}
+
 function adminLogin(){
-  const input=document.getElementById('admin-password-input');
-  const pw=(input?.value||'').trim();
-  if(pw!==ADMIN_PASSWORD){
-    document.getElementById('admin-login-err').style.display='block';
-    if(input){input.value='';input.focus();}
+  const input = document.getElementById('admin-password-input');
+  const pw = (input?.value || '').trim();
+  if(pw !== ADMIN_PASSWORD){
+    document.getElementById('admin-login-err').style.display = 'block';
+    if(input) { input.value = ''; input.focus(); }
     return;
   }
-  document.getElementById('admin-login-err').style.display='none';
-  sessionStorage.setItem(ADMIN_AUTH_KEY,'1');
-  renderDashboard();renderWorkers();renderItems();renderRecords();
-  document.getElementById('week-range').textContent=getWeekRange();
+  document.getElementById('admin-login-err').style.display = 'none';
+  sessionStorage.setItem(ADMIN_AUTH_KEY, '1');
+  
+  renderDashboard(); renderWorkers(); renderItems(); renderRecords();
+  document.getElementById('week-range').textContent = getWeekRange();
   switchRole('admin');
-  toast('後台登入成功 ✅');
+  toast('登入成功！ 🔐');
 }
+
 function adminLogout(){
   sessionStorage.removeItem(ADMIN_AUTH_KEY);
-  const input=document.getElementById('admin-password-input');
-  if(input)input.value='';
+  const input = document.getElementById('admin-password-input');
+  if(input) input.value = '';
   showAdminLogin();
-  toast('已登出後台');
+  toast('管理者已登出');
 }
+
 function requireAdmin(){
   if(!isAdminLoggedIn()){
     showAdminLogin();
-    toast('請先輸入後台密碼');
+    toast('請先登入系統管理者帳號！');
     return false;
   }
   return true;
 }
+
 function setAdminTopbar(){
-  document.getElementById('topbar-right').innerHTML='<button class="btn btn-sm" onclick="adminLogout()">登出後台</button>';
+  document.getElementById('topbar-right').innerHTML = `<button class="btn btn-sm btn-danger" onclick="adminLogout()">🔒 登出後台</button>`;
 }
 
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);}
-function gw(id){return db.workers.find(w=>w.id===id);}
-function gi(id){return db.items.find(i=>i.id===id);}
-function gwn(id){const w=gw(id);return w?w.name:'—';}
-function gin(id){const i=gi(id);return i?i.name:'—';}
-function giu(id){const i=gi(id);return i?`${i.unit} $${i.price}`:'—';}
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function gw(id){ return db.workers.find(w => w.id === id); }
+function gi(id){ return db.items.find(i => i.id === id); }
+function gwn(id){ const w = gw(id); return w ? w.name : '—'; }
+function gin(id){ const i = gi(id); return i ? i.name : '—'; }
+function giu(id){
+  const i = gi(id);
+  return i ? `${i.unit} $${i.price}` : '—';
+}
+
 function statusBadge(s){
-  const m={verified:'<span class="badge badge-ok">已驗收</span>',pending:'<span class="badge badge-wait">待驗收</span>',paid:'<span class="badge badge-paid">已付款</span>',unpaid:'<span class="badge badge-unpaid">未付款</span>',active:'<span class="badge badge-ok">合作中</span>',pause:'<span class="badge badge-gray">暫停</span>'};
-  return m[s]||s;
+  const m = {
+    verified: '<span class="badge badge-ok">✓ 已驗收</span>',
+    pending: '<span class="badge badge-wait">⏳ 待驗收</span>',
+    paid: '<span class="badge badge-paid">💰 已發放</span>',
+    unpaid: '<span class="badge badge-unpaid">❌ 未發放</span>',
+    active: '<span class="badge badge-ok">啟用</span>',
+    pause: '<span class="badge badge-gray">停用</span>'
+  };
+  return m[s] || s;
+}
+
+function toggleSidebar(open){
+  const sidebar = document.getElementById('app-sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  if(open){
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+  } else {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+  }
 }
 
 function openModal(id){
-  if(id==='record-modal'&&!requireAdmin())return;
-  if(id==='record-modal'){
-    document.getElementById('rf-date').value=new Date().toISOString().slice(0,10);
-    const ws=db.workers.filter(w=>w.status==='active');
-    document.getElementById('rf-worker').innerHTML=ws.map(w=>`<option value="${w.id}">${w.name}</option>`).join('');
-    document.getElementById('rf-item').innerHTML=db.items.map(i=>`<option value="${i.id}">${i.name} — ${i.unit} $${i.price}</option>`).join('');
+  if(id === 'record-modal' && !requireAdmin()) return;
+  if(id === 'record-modal'){
+    document.getElementById('rf-date').value = new Date().toISOString().slice(0, 10);
+    const ws = db.workers.filter(w => w.status === 'active');
+    document.getElementById('rf-worker').innerHTML = ws.map(w => `<option value="${w.id}">${w.name} (${w.nick || w.name})</option>`).join('');
+    document.getElementById('rf-item').innerHTML = db.items.map(i => `<option value="${i.id}">${i.name} (${i.unit} $${i.price})</option>`).join('');
+    calcPreview();
   }
   document.getElementById(id).classList.add('open');
 }
-function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+}
 
 function calcPreview(){
-  const iid=+document.getElementById('rf-item').value;
-  const pass=+document.getElementById('rf-pass').value||0;
-  const total=+document.getElementById('rf-total').value||0;
-  document.getElementById('rf-fail').value=Math.max(0,total-pass);
-  const it=gi(iid);
-  document.getElementById('rf-preview').textContent=it&&pass>0?'$'+Math.round(pass/it.qty*it.price).toLocaleString():'—';
+  const iid = +document.getElementById('rf-item').value;
+  const pass = +document.getElementById('rf-pass').value || 0;
+  const total = +document.getElementById('rf-total').value || 0;
+  document.getElementById('rf-fail').value = Math.max(0, total - pass);
+  const it = gi(iid);
+  document.getElementById('rf-preview').textContent = it && pass > 0 ? '$' + Math.round(pass / it.qty * it.price).toLocaleString() : '—';
 }
 
 let editingWorkerId=null;
 function openWorkerModal(){
-  if(!requireAdmin())return;
-  editingWorkerId=null;
-  document.getElementById('worker-modal-title').textContent='新增代工人員';
-  ['wf-name','wf-nick','wf-phone','wf-note'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('wf-status').value='active';
+  if(!requireAdmin()) return;
+  editingWorkerId = null;
+  document.getElementById('worker-modal-title').textContent = '新增人員';
+  ['wf-name','wf-nick','wf-note'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('wf-status').value = 'active';
   document.getElementById('worker-modal').classList.add('open');
 }
+
 function editWorker(id){
-  if(!requireAdmin())return;
-  const w=gw(id);if(!w)return;
-  editingWorkerId=id;
-  document.getElementById('worker-modal-title').textContent='編輯代工人員';
-  document.getElementById('wf-name').value=w.name;
-  document.getElementById('wf-nick').value=w.nick||'';
-  document.getElementById('wf-phone').value=w.phone||'';
-  document.getElementById('wf-status').value=w.status||'active';
-  document.getElementById('wf-note').value=w.note||'';
+  if(!requireAdmin()) return;
+  const w = gw(id); if(!w) return;
+  editingWorkerId = id;
+  document.getElementById('worker-modal-title').textContent = '修改人員資料';
+  document.getElementById('wf-name').value = w.name;
+  document.getElementById('wf-nick').value = w.nick || '';
+  document.getElementById('wf-status').value = w.status || 'active';
+  document.getElementById('wf-note').value = w.note || '';
   document.getElementById('worker-modal').classList.add('open');
 }
+
 function saveWorker(){
-  if(!requireAdmin())return;
-  const name=document.getElementById('wf-name').value.trim();
-  if(!name)return toast('請填寫姓名');
-  const nick=document.getElementById('wf-nick').value||name;
-  const phone=document.getElementById('wf-phone').value;
-  const status=document.getElementById('wf-status').value;
-  const note=document.getElementById('wf-note').value;
+  if(!requireAdmin()) return;
+  const name = document.getElementById('wf-name').value.trim();
+  if(!name) return toast('⚠️ 姓名為必填欄位！');
+  const nick = document.getElementById('wf-nick').value.trim() || name;
+  const status = document.getElementById('wf-status').value;
+  const note = document.getElementById('wf-note').value.trim();
+  
   if(editingWorkerId){
-    const w=gw(editingWorkerId);
-    if(w){w.name=name;w.nick=nick;w.phone=phone;w.status=status;w.note=note;}
-    toast('人員資料已更新 ✏️');
-  }else{
-    db.workers.push({id:db.nextId.workers++,name,nick,phone,status,note});
-    toast('人員已新增 🎉');
+    const w = gw(editingWorkerId);
+    if(w){ w.name = name; w.nick = nick; w.status = status; w.note = note; }
+    toast('✏️ 人員資料已儲存');
+  } else {
+    db.workers.push({id: db.nextId.workers++, name, nick, status, note});
+    toast('🎉 成功新增代工人員！');
   }
-  saveDB();closeModal('worker-modal');renderWorkers();renderDashboard();editingWorkerId=null;
-  ['wf-name','wf-nick','wf-phone','wf-note'].forEach(id=>document.getElementById(id).value='');
+  saveDB(); closeModal('worker-modal'); renderWorkers(); renderDashboard();
+  editingWorkerId = null;
 }
+
 let editingItemId=null;
 function openItemModal(){
-  if(!requireAdmin())return;
-  editingItemId=null;
-  document.getElementById('item-modal-title').textContent='新增品項';
-  ['if-name','if-unit','if-qty','if-price','if-note'].forEach(id=>document.getElementById(id).value='');
+  if(!requireAdmin()) return;
+  editingItemId = null;
+  document.getElementById('item-modal-title').textContent = '新增品項';
+  ['if-name','if-unit','if-qty','if-price','if-note'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('item-modal').classList.add('open');
 }
+
 function editItem(id){
-  if(!requireAdmin())return;
-  const it=gi(id);if(!it)return;
-  editingItemId=id;
-  document.getElementById('item-modal-title').textContent='編輯品項';
-  document.getElementById('if-name').value=it.name;
-  document.getElementById('if-unit').value=it.unit||'';
-  document.getElementById('if-qty').value=it.qty;
-  document.getElementById('if-price').value=it.price;
-  document.getElementById('if-note').value=it.note||'';
+  if(!requireAdmin()) return;
+  const it = gi(id); if(!it) return;
+  editingItemId = id;
+  document.getElementById('item-modal-title').textContent = '修改品項設定';
+  document.getElementById('if-name').value = it.name;
+  document.getElementById('if-unit').value = it.unit || '';
+  document.getElementById('if-qty').value = it.qty;
+  document.getElementById('if-price').value = it.price;
+  document.getElementById('if-note').value = it.note || '';
   document.getElementById('item-modal').classList.add('open');
 }
+
 function saveItem(){
-  if(!requireAdmin())return;
-  const name=document.getElementById('if-name').value.trim();
-  const price=+document.getElementById('if-price').value;
-  const qty=+document.getElementById('if-qty').value||1;
-  if(!name||!price)return toast('請填寫品項名稱與單價');
-  const unit=document.getElementById('if-unit').value;
-  const note=document.getElementById('if-note').value;
+  if(!requireAdmin()) return;
+  const name = document.getElementById('if-name').value.trim();
+  const price = +document.getElementById('if-price').value;
+  const qty = +document.getElementById('if-qty').value || 1;
+  if(!name || price === undefined) return toast('⚠️ 品項名與單價為必填屬性！');
+  const unit = document.getElementById('if-unit').value.trim() || `${qty}個`;
+  const note = document.getElementById('if-note').value.trim();
+  
   if(editingItemId){
-    const it=gi(editingItemId);
-    if(it){it.name=name;it.unit=unit;it.qty=qty;it.price=price;it.note=note;}
-    toast('品項已更新 ✏️');
-  }else{
-    db.items.push({id:db.nextId.items++,name,unit,qty,price,note});
-    toast('品項已新增 ✅');
+    const it = gi(editingItemId);
+    if(it){ it.name = name; it.unit = unit; it.qty = qty; it.price = price; it.note = note; }
+    toast('✏️ 品項設定修改完成');
+  } else {
+    db.items.push({id: db.nextId.items++, name, unit, qty, price, note});
+    toast('✅ 新增品項成功');
   }
-  saveDB();closeModal('item-modal');renderItems();editingItemId=null;
-  ['if-name','if-unit','if-qty','if-price','if-note'].forEach(id=>document.getElementById(id).value='');
+  saveDB(); closeModal('item-modal'); renderItems();
+  editingItemId = null;
 }
+
 function addRecord(){
-  if(!requireAdmin())return;
-  const wid=+document.getElementById('rf-worker').value;
-  const iid=+document.getElementById('rf-item').value;
-  const total=+document.getElementById('rf-total').value||0;
-  const pass=+document.getElementById('rf-pass').value||0;
-  const date=document.getElementById('rf-date').value;
-  if(!wid||!iid||!pass)return toast('請填寫完整資料');
-  const it=gi(iid);
-  db.records.push({id:db.nextId.records++,date,workerId:wid,itemId:iid,total,pass,amount:Math.round(pass/it.qty*it.price),status:'pending'});
-  saveDB();closeModal('record-modal');renderRecords();renderDashboard();toast('交件已登記 ✅');
+  if(!requireAdmin()) return;
+  const wid = +document.getElementById('rf-worker').value;
+  const iid = +document.getElementById('rf-item').value;
+  const total = +document.getElementById('rf-total').value || 0;
+  const pass = +document.getElementById('rf-pass').value || 0;
+  const date = document.getElementById('rf-date').value;
+  if(!wid || !iid || !pass) return toast('⚠️ 交件驗收之數量、人員欄位必備！');
+  const it = gi(iid);
+  db.records.push({
+    id: db.nextId.records++,
+    date,
+    workerId: wid,
+    itemId: iid,
+    total,
+    pass,
+    amount: Math.round(pass / it.qty * it.price),
+    status: 'pending',
+    source: 'admin',
+    selfQty: null,
+    note: ''
+  });
+  saveDB(); closeModal('record-modal'); refreshAfterDataChange();
+  toast('✓ 交件紀錄已登記，待核驗');
 }
+
+function calcEditPreview(){
+  const iid = +document.getElementById('ef-item').value;
+  const pass = +document.getElementById('ef-pass').value || 0;
+  const it = gi(iid);
+  document.getElementById('ef-amount').value = it ? '$' + Math.round(pass / it.qty * it.price).toLocaleString() : '—';
+}
+
+function openRecordEdit(id){
+  if(!requireAdmin()) return;
+  const r = db.records.find(r => r.id === id); if(!r) return;
+  document.getElementById('ef-record-id').value = r.id;
+  document.getElementById('ef-worker').innerHTML = db.workers.map(w => `<option value="${w.id}">${w.name}</option>`).join('');
+  document.getElementById('ef-item').innerHTML = db.items.map(i => `<option value="${i.id}">${i.name} — ${i.unit} $${i.price}</option>`).join('');
+  
+  document.getElementById('ef-date').value = r.date;
+  document.getElementById('ef-worker').value = r.workerId;
+  document.getElementById('ef-item').value = r.itemId;
+  document.getElementById('ef-source').value = r.source || 'admin';
+  document.getElementById('ef-selfqty').value = r.selfQty ?? '';
+  document.getElementById('ef-total').value = r.total;
+  document.getElementById('ef-pass').value = r.pass;
+  document.getElementById('ef-status').value = r.status;
+  document.getElementById('ef-note').value = r.note || '';
+  
+  calcEditPreview();
+  openModal('record-edit-modal');
+}
+
+function saveRecordEdit(){
+  if(!requireAdmin()) return;
+  const id = +document.getElementById('ef-record-id').value;
+  const r = db.records.find(r => r.id === id); if(!r) return;
+  const wid = +document.getElementById('ef-worker').value;
+  const iid = +document.getElementById('ef-item').value;
+  const total = +document.getElementById('ef-total').value || 0;
+  const pass = +document.getElementById('ef-pass').value || 0;
+  const date = document.getElementById('ef-date').value;
+  const selfQtyRaw = document.getElementById('ef-selfqty').value.trim();
+  const selfQty = selfQtyRaw === '' ? null : (+selfQtyRaw || 0);
+  
+  if(!wid || !iid || !date) return toast('⚠️ 表單內容有誤，請確認後儲存！');
+  const it = gi(iid);
+  
+  Object.assign(r, {
+    date,
+    workerId: wid,
+    itemId: iid,
+    total,
+    pass,
+    source: document.getElementById('ef-source').value,
+    status: document.getElementById('ef-status').value,
+    selfQty,
+    note: document.getElementById('ef-note').value.trim(),
+    amount: Math.round(pass / it.qty * it.price)
+  });
+  
+  saveDB(); closeModal('record-edit-modal'); refreshAfterDataChange();
+  toast('✏️ 交付紀錄已修改完成！');
+}
+
+// ─────────────────────────────────────────────────────────────
+// 結算加給/扣款編輯邏輯
+// ─────────────────────────────────────────────────────────────
+function openSettlementEdit(wid, week){
+  if(!requireAdmin()) return;
+  const s = db.settlements.find(item => item.workerId === wid && item.week === week);
+  if(!s) return toast('⚠️ 找不到該人員本週的結算紀錄，請先重新計算！');
+  
+  document.getElementById('sef-wid').value = wid;
+  document.getElementById('sef-week').value = week;
+  document.getElementById('sef-name').value = gwn(wid);
+  document.getElementById('sef-earned').value = `$${s.earned.toLocaleString()}`;
+  document.getElementById('sef-bonus').value = s.bonus || 0;
+  document.getElementById('sef-deduct').value = s.deduct || 0;
+  
+  calcSettlementEditTotal();
+  openModal('settlement-edit-modal');
+}
+
+function calcSettlementEditTotal(){
+  const earned = +document.getElementById('sef-earned').value.replace('$', '').replace(/,/g, '') || 0;
+  const bonus = +document.getElementById('sef-bonus').value || 0;
+  const deduct = +document.getElementById('sef-deduct').value || 0;
+  const total = earned + bonus - deduct;
+  document.getElementById('sef-total').value = `$${total.toLocaleString()}`;
+}
+
+function saveSettlementAdjustment(){
+  const wid = +document.getElementById('sef-wid').value;
+  const week = document.getElementById('sef-week').value;
+  const s = db.settlements.find(item => item.workerId === wid && item.week === week);
+  if(!s) return;
+  
+  s.bonus = +document.getElementById('sef-bonus').value || 0;
+  s.deduct = +document.getElementById('sef-deduct').value || 0;
+  s.amount = s.earned + s.bonus - s.deduct;
+  
+  saveDB();
+  closeModal('settlement-edit-modal');
+  generateSettlement();
+  toast('⚖️ 調整薪資完成！');
+}
+
+// ─────────────────────────────────────────────────────────────
+// 資料備份導入匯出邏輯
+// ─────────────────────────────────────────────────────────────
+function openBackupModal(){
+  document.getElementById('backup-json-data').value = JSON.stringify(db, null, 2);
+  openModal('backup-modal');
+}
+
+function copyBackupData(){
+  const ta = document.getElementById('backup-json-data');
+  ta.select();
+  document.execCommand('copy');
+  toast('📋 備份代碼已複製到剪貼簿！');
+}
+
+function importBackupData(){
+  const raw = document.getElementById('backup-json-data').value.trim();
+  if(!raw) return toast('⚠️ 請貼上有效的 JSON 備份代碼！');
+  
+  askConfirm('⚠️ 匯入將覆蓋當前所有人員、品項及交付資料！確定繼續嗎？', () => {
+    try{
+      const imported = JSON.parse(raw);
+      if(!imported.workers || !imported.items || !imported.records){
+        throw new Error('格式不符合系統規定');
+      }
+      db = imported;
+      normalizeDB();
+      saveDB();
+      closeModal('backup-modal');
+      refreshAfterDataChange();
+      toast('⚡ 資料已完美還原。');
+    } catch(e) {
+      toast('❌ 還原失敗！備份代碼格式不正確。');
+    }
+  }, '強制還原');
+}
+
+// ─────────────────────────────────────────────────────────────
+// 代工靈工自主上報 (代工端維持修真風骨)
+// ─────────────────────────────────────────────────────────────
+function calcWorkerSubmitPreview(){
+  const iid = +document.getElementById('ws-item').value;
+  const raw = (document.getElementById('ws-qty').value || '').trim();
+  const preview = document.getElementById('ws-preview');
+  const it = gi(iid);
+  if(!it){ preview.textContent = '請先挑選要上報的功課品項'; return; }
+  if(raw === ''){ preview.textContent = '💡 數量留空亦可，掌櫃點件時會自行為您填入實收數。'; return; }
+  const qty = +raw || 0;
+  if(qty <= 0){ preview.textContent = '⚠️ 請填入大於零的數量'; return; }
+  preview.innerHTML = `本次登記：<b>${qty.toLocaleString()}</b> ${it.unit.split(' ')[0] || '件'}，預估可得資糧：<strong style="color:var(--red);">$${Math.round(qty/it.qty*it.price).toLocaleString()}</strong>`;
+}
+
+function renderWorkerSubmitPage(){
+  if(!currentWorkerId) return;
+  const itemSel = document.getElementById('ws-item');
+  if(itemSel){
+    itemSel.innerHTML = db.items.map(i => `<option value="${i.id}">${i.name} (${i.unit} $${i.price})</option>`).join('');
+  }
+  const dateInput = document.getElementById('ws-date');
+  if(dateInput && !dateInput.value) dateInput.value = new Date().toISOString().slice(0, 10);
+  calcWorkerSubmitPreview();
+  
+  const myReports = db.records.filter(r => r.workerId === currentWorkerId && (r.source === 'worker' || r.selfQty !== null || r.note))
+                     .slice().sort((a,b) => b.date.localeCompare(a.date)).slice(0, 8);
+                     
+  document.getElementById('w-submit-pending-count').textContent = db.records.filter(r => r.workerId === currentWorkerId && r.status === 'pending').length;
+  document.getElementById('w-submit-recent-count').textContent = myReports.length;
+  
+  const tbody = document.getElementById('w-submit-table');
+  if(tbody){
+    tbody.innerHTML = myReports.length ? myReports.map(r => `<tr>
+      <td>${r.date}</td>
+      <td>${gin(r.itemId)}</td>
+      <td>${r.selfQty == null ? '—' : r.selfQty.toLocaleString()}</td>
+      <td>$${r.amount.toLocaleString()}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td style="color: var(--muted); max-width: 150px; overflow: hidden; text-overflow: ellipsis; font-weight:900;">${r.note || '—'}</td>
+    </tr>`).join('') : '<tr><td colspan="6" class="empty-state">道友近日尚未遞交任何摺子。</td></tr>';
+  }
+}
+
+function submitWorkerRecord(){
+  if(!currentWorkerId) return;
+  const date = document.getElementById('ws-date').value;
+  const iid = +document.getElementById('ws-item').value;
+  const raw = (document.getElementById('ws-qty').value || '').trim();
+  const note = document.getElementById('ws-note').value.trim();
+  
+  if(!date || !iid) return toast('⚠️ 日期與品項不容有缺！');
+  if(raw !== '' && (+raw || 0) <= 0) return toast('⚠️ 自報數量需填入大於 0 的正數！');
+  const selfQty = raw === '' ? null : (+raw || 0);
+  const it = gi(iid);
+  const pass = selfQty || 0;
+  
+  db.records.push({
+    id: db.nextId.records++,
+    date,
+    workerId: currentWorkerId,
+    itemId: iid,
+    total: selfQty || 0,
+    pass,
+    amount: Math.round(pass / it.qty * it.price),
+    status: 'pending',
+    source: 'worker',
+    selfQty,
+    note
+  });
+  
+  saveDB();
+  document.getElementById('ws-qty').value = '';
+  document.getElementById('ws-note').value = '';
+  calcWorkerSubmitPreview();
+  refreshAfterDataChange();
+  renderWorkerSubmitPage();
+  toast(selfQty == null ? '✓ 摺子已遞交，待掌櫃清點核實！' : '✓ 自報數量及摺子送出成功！');
+}
+
+// 萬用確認對話框
 let _confirmCb=null;
-function askConfirm(msg,onOk,okText){
-  document.getElementById('confirm-msg').innerHTML=msg;
-  document.getElementById('confirm-ok').textContent=okText||'確定';
-  _confirmCb=onOk;
+function askConfirm(msg, onOk, okText){
+  document.getElementById('confirm-msg').innerHTML = msg;
+  document.getElementById('confirm-ok').textContent = okText || '確定';
+  _confirmCb = onOk;
   document.getElementById('confirm-modal').classList.add('open');
 }
-function closeConfirm(){document.getElementById('confirm-modal').classList.remove('open');_confirmCb=null;}
-function doConfirm(){const cb=_confirmCb;closeConfirm();if(cb)cb();}
+function closeConfirm(){
+  document.getElementById('confirm-modal').classList.remove('open');
+  _confirmCb = null;
+}
+function doConfirm(){
+  const cb = _confirmCb;
+  closeConfirm();
+  if(cb) cb();
+}
 
 function refreshAfterDataChange(){
   renderDashboard();
   renderWorkers();
   renderItems();
   renderRecords();
-  const active=document.querySelector('.page.active');
-  if(active&&active.id==='page-leaderboard')renderLeaderboard();
-  if(active&&active.id==='page-w-leaderboard')renderWorkerLeaderboard();
-  if(active&&active.id==='page-settlement')generateSettlement();
-  if(currentWorkerId&&gw(currentWorkerId))renderWorkerPages(currentWorkerId);
+  
+  const active = document.querySelector('.page.active');
+  if(active && active.id === 'page-leaderboard') renderLeaderboard();
+  if(active && active.id === 'page-w-leaderboard') renderWorkerLeaderboard();
+  if(active && active.id === 'page-settlement') generateSettlement();
+  if(currentWorkerId && gw(currentWorkerId)) renderWorkerPages(currentWorkerId);
 }
 
+// 刪除處理
 function deleteWorker(id){
-  if(!requireAdmin())return;
-  const w=gw(id);if(!w)return;
-  const recCount=db.records.filter(r=>r.workerId===id).length;
-  const settlementCount=db.settlements.filter(s=>s.workerId===id).length;
-  const msg=recCount||settlementCount
-    ? `確定要刪除「${w.name}」嗎？<br>會一併刪除此人相關的交件紀錄 ${recCount} 筆、結算資料 ${settlementCount} 筆。<br><strong style="color:#B42318">此動作無法復原。</strong>`
-    : `確定要刪除「${w.name}」嗎？<br><strong style="color:#B42318">此動作無法復原。</strong>`;
-  askConfirm(msg,()=>{
-    db.workers=db.workers.filter(w=>w.id!==id);
-    db.records=db.records.filter(r=>r.workerId!==id);
-    db.settlements=db.settlements.filter(s=>s.workerId!==id);
-    if(currentWorkerId===id)currentWorkerId=null;
-    saveDB();refreshAfterDataChange();toast('人員已刪除 🗑️');
-  },'刪除人員');
+  if(!requireAdmin()) return;
+  const w = gw(id); if(!w) return;
+  const recCount = db.records.filter(r => r.workerId === id).length;
+  const settlementCount = db.settlements.filter(s => s.workerId === id).length;
+  const msg = recCount || settlementCount
+    ? `⚠️ 確定要將代工「${w.name}」刪除嗎？<br>此舉將一併刪除其交付紀錄 ${recCount} 筆、結算資料 ${settlementCount} 筆。<br><strong style="color:#B42318">此操作不可逆。</strong>`
+    : `⚠️ 確定要刪除代工人員「${w.name}」嗎？`;
+  askConfirm(msg, () => {
+    db.workers = db.workers.filter(w => w.id !== id);
+    db.records = db.records.filter(r => r.workerId !== id);
+    db.settlements = db.settlements.filter(s => s.workerId !== id);
+    if(currentWorkerId === id) currentWorkerId = null;
+    saveDB(); refreshAfterDataChange(); toast('🗑️ 人員已刪除');
+  }, '確定刪除');
 }
 
 function deleteRecord(id){
-  if(!requireAdmin())return;
-  const r=db.records.find(r=>r.id===id);if(!r)return;
-  askConfirm(`確定要刪除這筆交件紀錄嗎？<br>${r.date}｜${gwn(r.workerId)}｜${gin(r.itemId)}｜$${r.amount.toLocaleString()}<br><strong style="color:#B42318">刪除後會同步影響總覽、排行榜與本週結算。</strong>`,()=>{
-    db.records=db.records.filter(r=>r.id!==id);
-    saveDB();refreshAfterDataChange();toast('交件紀錄已刪除 🗑️');
-  },'刪除紀錄');
+  if(!requireAdmin()) return;
+  const r = db.records.find(r => r.id === id); if(!r) return;
+  askConfirm(`⚠️ 確定要刪除這筆交付紀錄嗎？<br>${r.date} ｜ ${gwn(r.workerId)} ｜ ${gin(r.itemId)} ｜ $${r.amount.toLocaleString()}<br><strong style="color:#B42318">此操作會直接影響結算金額與排行榜數據。</strong>`, () => {
+    db.records = db.records.filter(r => r.id !== id);
+    saveDB(); refreshAfterDataChange(); toast('🗑️ 紀錄已刪除');
+  }, '確定刪除');
 }
 
 function deleteItem(id){
-  if(!requireAdmin())return;
-  askConfirm('確定要刪除這個品項嗎？<br>（已登記的交件紀錄不受影響）',()=>{
-    db.items=db.items.filter(i=>i.id!==id);saveDB();refreshAfterDataChange();toast('已刪除');
-  },'刪除');
+  if(!requireAdmin()) return;
+  const it = gi(id); if(!it) return;
+  askConfirm(`⚠️ 確定要刪除「${it.name}」品項嗎？<br>（先前已完成的歷史紀錄並不會受影響）`, () => {
+    db.items = db.items.filter(i => i.id !== id);
+    saveDB(); refreshAfterDataChange(); toast('🗑️ 品項已刪除');
+  }, '確定刪除');
 }
-function verifyRecord(id){if(!requireAdmin())return;const r=db.records.find(r=>r.id===id);if(r){r.status='verified';saveDB();refreshAfterDataChange();toast('驗收完成 ✅');}}
+
+function verifyRecord(id){
+  if(!requireAdmin()) return;
+  const r = db.records.find(r => r.id === id);
+  if(r){
+    r.status = 'verified';
+    saveDB();
+    refreshAfterDataChange();
+    toast('✓ 驗收完成！');
+  }
+}
+
 function unverifyRecord(id){
-  if(!requireAdmin())return;
-  askConfirm('要把這筆改回「待驗收」嗎？<br>（會一併從排行與結算中移除這筆已驗收金額）',()=>{
-    const r=db.records.find(r=>r.id===id);if(r){r.status='pending';saveDB();renderRecords();renderDashboard();toast('已改回待驗收 ↩');}
-  },'取消驗收');
+  if(!requireAdmin()) return;
+  askConfirm('⚠️ 確定要將這筆已驗收紀錄撤回為「待驗收」狀態嗎？', () => {
+    const r = db.records.find(r => r.id === id);
+    if(r){
+      r.status = 'pending';
+      saveDB();
+      refreshAfterDataChange();
+      toast('↩ 已撤回至待驗收狀態');
+    }
+  }, '撤回驗收');
 }
 
 function isThisWeek(dateStr){
-  const d=new Date(dateStr),now=new Date();
-  const s=new Date(now);s.setDate(now.getDate()-now.getDay()+1);s.setHours(0,0,0,0);
-  const e=new Date(s);e.setDate(s.getDate()+6);e.setHours(23,59,59,999);
-  return d>=s&&d<=e;
-}
-function getWeekRange(){
-  const now=new Date();
-  const s=new Date(now);s.setDate(now.getDate()-now.getDay()+1);
-  const e=new Date(s);e.setDate(s.getDate()+6);
-  return `${s.getMonth()+1}/${s.getDate()} – ${e.getMonth()+1}/${e.getDate()}`;
+  const d = new Date(dateStr), now = new Date();
+  const s = new Date(now); s.setDate(now.getDate() - now.getDay() + 1); s.setHours(0,0,0,0);
+  const e = new Date(s); e.setDate(s.getDate() + 6); e.setHours(23, 59, 59, 999);
+  return d >= s && d <= e;
 }
 
+function getWeekRange(){
+  const now = new Date();
+  const s = new Date(now); s.setDate(now.getDate() - now.getDay() + 1);
+  const e = new Date(s); e.setDate(s.getDate() + 6);
+  return `${s.getMonth() + 1}/${s.getDate()} – ${e.getMonth() + 1}/${e.getDate()}`;
+}
+
+// ─────────────────────────────────────────────────────────────
+// 後台各頁面渲染功能 (後台無仙俠感)
+// ─────────────────────────────────────────────────────────────
 function renderDashboard(){
-  const active=db.workers.filter(w=>w.status==='active').length;
-  const wRecs=db.records.filter(r=>isThisWeek(r.date));
-  const wAmt=wRecs.reduce((a,r)=>a+r.amount,0);
-  const pending=db.records.filter(r=>r.status==='pending').length;
-  const unpaid=db.settlements.filter(s=>s.status==='unpaid').reduce((a,s)=>a+s.amount,0);
-  document.getElementById('dash-stats').innerHTML=`
-    <div class="stat-card"><div class="stat-label">在職人員</div><div class="stat-value">${active} 人</div></div>
-    <div class="stat-card"><div class="stat-label">本週完成金額</div><div class="stat-value stat-accent">$${wAmt.toLocaleString()}</div></div>
-    <div class="stat-card"><div class="stat-label">待驗收筆數</div><div class="stat-value">${pending} 筆</div></div>
-    <div class="stat-card"><div class="stat-label">未付款金額</div><div class="stat-value">$${unpaid.toLocaleString()}</div></div>
+  const active = db.workers.filter(w => w.status === 'active').length;
+  const wRecs = db.records.filter(r => isThisWeek(r.date));
+  const wAmt = wRecs.reduce((a, r) => a + r.amount, 0);
+  const pending = db.records.filter(r => r.status === 'pending').length;
+  const unpaid = db.settlements.filter(s => s.status === 'unpaid').reduce((a, s) => a + s.amount, 0);
+  
+  document.getElementById('dash-stats').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-info">
+        <span class="stat-label">在職人數</span>
+        <span class="stat-value">${active} 人</span>
+      </div>
+      <div class="stat-icon">🏮</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-info">
+        <span class="stat-label">本週合格產值</span>
+        <span class="stat-value stat-accent">$${wAmt.toLocaleString()}</span>
+      </div>
+      <div class="stat-icon" style="background:#FAF4E8; color:var(--blue-grey);">⚡</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-info">
+        <span class="stat-label">待核驗筆數</span>
+        <span class="stat-value">${pending} 筆</span>
+      </div>
+      <div class="stat-icon" style="background:#FAF4E8; color:var(--blue-grey);">⏳</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-info">
+        <span class="stat-label">未付金額</span>
+        <span class="stat-value">$${unpaid.toLocaleString()}</span>
+      </div>
+      <div class="stat-icon" style="background:#FAF4E8; color:var(--teal);">🪙</div>
+    </div>
   `;
-  const recents=db.records.slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8);
-  document.getElementById('dash-recent').innerHTML=recents.length?recents.map(r=>`
-    <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar">${(gwn(r.workerId)||'?').slice(0,1)}</div>${gwn(r.workerId)}</div></td><td>${gin(r.itemId)}</td><td>${r.pass.toLocaleString()}</td><td>$${r.amount.toLocaleString()}</td><td>${statusBadge(r.status)}${r.status==='pending'?` <button class="btn btn-sm" style="margin-left:6px" onclick="verifyRecord(${r.id})">驗收</button>`:` <button class="btn btn-sm" style="margin-left:6px" onclick="unverifyRecord(${r.id})">取消驗收</button>`}</td></tr>
-  `).join(''):'<tr><td colspan="5" class="empty-state">尚無資料</td></tr>';
+  
+  const recents = db.records.slice().sort((a,b) => b.date.localeCompare(a.date)).slice(0, 8);
+  document.getElementById('dash-recent').innerHTML = recents.length ? recents.map(r => `
+    <tr>
+      <td>
+        <div style="display:flex; align-items:center; gap:8px">
+          <div class="avatar">${(gwn(r.workerId) || '?').slice(0, 1)}</div>
+          <div>
+            <strong style="font-size:14px; color:var(--blue-grey);">${gwn(r.workerId)}</strong>
+            <div style="font-size:11px; color:#111; font-weight:700;">${gw(r.workerId)?.nick || ''}</div>
+          </div>
+        </div>
+      </td>
+      <td>${gin(r.itemId)}</td>
+      <td><strong>${r.pass.toLocaleString()}</strong></td>
+      <td><strong style="color:var(--red); font-size:15px;">$${r.amount.toLocaleString()}</strong></td>
+      <td>
+        <div style="display:flex; align-items:center; gap:6px;">
+          ${statusBadge(r.status)}
+          ${r.status === 'pending' 
+            ? `<button class="btn btn-sm btn-primary" onclick="verifyRecord(${r.id})">驗收</button>` 
+            : `<button class="btn btn-sm" onclick="unverifyRecord(${r.id})">撤回</button>`}
+        </div>
+      </td>
+    </tr>
+  `).join('') : '<tr><td colspan="5" class="empty-state">尚無近期交付紀錄</td></tr>';
 }
+
 function renderWorkers(){
-  const totals={};
-  db.records.forEach(r=>{if(r.status==='verified')totals[r.workerId]=(totals[r.workerId]||0)+r.amount;});
-  document.getElementById('workers-table').innerHTML=db.workers.map(w=>`
-    <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar">${w.name.slice(0,1)}</div>${w.name}</div></td><td>${w.nick}</td><td>${w.phone}</td><td>${statusBadge(w.status)}</td><td>$${(totals[w.id]||0).toLocaleString()}</td><td><span class="coin-chip">🪙${coinsOf(totals[w.id]||0)}</span></td><td class="action-cell"><button class="btn btn-sm" onclick="editWorker(${w.id})">編輯</button> <button class="btn btn-sm" onclick="previewWorker(${w.id})">前台預覽</button> <button class="btn btn-sm btn-danger" onclick="deleteWorker(${w.id})">刪除</button></td></tr>
-  `).join('')||'<tr><td colspan="7" class="empty-state">尚未新增人員</td></tr>';
+  const kw = document.getElementById('worker-search')?.value.toLowerCase() || '';
+  const totals = {};
+  db.records.forEach(r => {
+    if(r.status === 'verified') totals[r.workerId] = (totals[r.workerId] || 0) + r.amount;
+  });
+  
+  // 篩選人員，已完全移除手機搜尋
+  const filtered = db.workers.filter(w => {
+    return w.name.toLowerCase().includes(kw) || 
+           (w.nick || '').toLowerCase().includes(kw) || 
+           (w.note || '').toLowerCase().includes(kw);
+  });
+  
+  // 渲染人員列表（已拿掉手機號碼欄位、按鈕改為「預覽」）
+  document.getElementById('workers-table').innerHTML = filtered.length ? filtered.map(w => `
+    <tr>
+      <td>
+        <div style="display:flex; align-items:center; gap:8px">
+          <div class="avatar">${w.name.slice(0,1)}</div>
+          <strong style="font-size:14px; color:#000000;">${w.name}</strong>
+        </div>
+      </td>
+      <td><span style="font-weight: 900; color:var(--blue-grey);">${w.nick || '—'}</span></td>
+      <td>${statusBadge(w.status)}</td>
+      <td><strong style="color:var(--red);">$${(totals[w.id] || 0).toLocaleString()}</strong></td>
+      <td><span class="coin-chip">🪙 ${coinsOf(totals[w.id] || 0).toLocaleString()} 枚</span></td>
+      <td style="text-align: right;">
+        <button class="btn btn-sm" onclick="editWorker(${w.id})">✏️ 修改</button>
+        <button class="btn btn-sm" onclick="previewWorker(${w.id})" style="color:var(--teal); border-color:rgba(29,91,94,0.35);">預覽</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteWorker(${w.id})">🗑️ 刪除</button>
+      </td>
+    </tr>
+  `).join('') : '<tr><td colspan="6" class="empty-state"><div class="empty-icon">📭</div>無符合此搜尋條件之人員</td></tr>';
 }
+
 function renderItems(){
-  document.getElementById('items-table').innerHTML=db.items.map(i=>`
-    <tr><td>${i.name}</td><td>${i.unit}</td><td>${i.qty}</td><td>$${i.price}</td><td style="color:var(--muted);font-size:12px">${i.note}</td><td class="action-cell"><button class="btn btn-sm" onclick="editItem(${i.id})">編輯</button> <button class="btn btn-sm btn-danger" onclick="deleteItem(${i.id})">刪除</button></td></tr>
-  `).join('')||'<tr><td colspan="6" class="empty-state">尚未新增品項</td></tr>';
+  const kw = document.getElementById('item-search')?.value.toLowerCase() || '';
+  
+  const filtered = db.items.filter(i => {
+    return i.name.toLowerCase().includes(kw) || 
+           (i.unit || '').toLowerCase().includes(kw) || 
+           (i.note || '').toLowerCase().includes(kw);
+  });
+  
+  document.getElementById('items-table').innerHTML = filtered.length ? filtered.map(i => `
+    <tr>
+      <td><strong>${i.name}</strong></td>
+      <td><span class="badge badge-gray">${i.unit}</span></td>
+      <td>${i.qty} 件</td>
+      <td><strong style="color:var(--red); font-size:15px;">$${i.price}</strong></td>
+      <td style="color:#111; font-size:13px; font-weight:700; max-width: 200px; overflow: hidden; text-overflow: ellipsis;" title="${i.note}">${i.note || '—'}</td>
+      <td style="text-align: right;">
+        <button class="btn btn-sm" onclick="editItem(${i.id})">✏️ 修改</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteItem(${i.id})">🗑️ 刪除</button>
+      </td>
+    </tr>
+  `).join('') : '<tr><td colspan="6" class="empty-state"><div class="empty-icon">📦</div>尚無符合條件之品項</td></tr>';
 }
+
 function renderRecords(){
-  const sorted=db.records.slice().sort((a,b)=>b.date.localeCompare(a.date));
-  document.getElementById('records-table').innerHTML=sorted.map(r=>`
-    <tr><td>${r.date}</td><td>${gwn(r.workerId)}</td><td>${gin(r.itemId)}</td><td>${r.total.toLocaleString()}</td><td>${r.pass.toLocaleString()}</td><td>$${r.amount.toLocaleString()}</td><td>${statusBadge(r.status)}${r.status==='pending'?` <button class="btn btn-sm" style="margin-left:6px" onclick="verifyRecord(${r.id})">驗收</button>`:` <button class="btn btn-sm" style="margin-left:6px" onclick="unverifyRecord(${r.id})">取消驗收</button>`}</td><td class="action-cell"><button class="btn btn-sm btn-danger" onclick="deleteRecord(${r.id})">刪除</button></td></tr>
-  `).join('')||'<tr><td colspan="8" class="empty-state">尚無紀錄</td></tr>';
+  const kw = document.getElementById('record-search')?.value.toLowerCase() || '';
+  const sorted = db.records.slice().sort((a,b) => b.date.localeCompare(a.date));
+  
+  const filtered = sorted.filter(r => {
+    const name = gwn(r.workerId).toLowerCase();
+    const item = gin(r.itemId).toLowerCase();
+    return name.includes(kw) || item.includes(kw) || r.date.includes(kw);
+  });
+  
+  document.getElementById('records-table').innerHTML = filtered.length ? filtered.map(r => `
+    <tr>
+      <td>${r.date}</td>
+      <td>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <div class="avatar" style="width:24px; height:24px; font-size:11px;">${gwn(r.workerId).slice(0,1)}</div>
+          <strong>${gwn(r.workerId)}</strong>
+        </div>
+      </td>
+      <td>${gin(r.itemId)}</td>
+      <td>${sourceBadge(r.source)}</td>
+      <td>${r.selfQty == null ? '—' : `<span style="font-weight: 900; color: var(--teal);">${r.selfQty.toLocaleString()}</span>`}</td>
+      <td>${r.total.toLocaleString()}</td>
+      <td><strong style="color: var(--teal);">${r.pass.toLocaleString()}</strong></td>
+      <td><strong style="color:var(--red); font-size:14px;">$${r.amount.toLocaleString()}</strong></td>
+      <td>${statusBadge(r.status)}</td>
+      <td style="text-align: right;">
+        <button class="btn btn-sm" onclick="openRecordEdit(${r.id})">✏️ 修改</button>
+        ${r.status === 'pending'
+          ? `<button class="btn btn-sm btn-primary" onclick="verifyRecord(${r.id})">✓ 驗收</button>`
+          : `<button class="btn btn-sm" onclick="unverifyRecord(${r.id})">↩ 撤回</button>`}
+        <button class="btn btn-sm btn-danger btn-icon-only" onclick="deleteRecord(${r.id})">🗑️</button>
+        ${r.note ? `<div style="font-size:12px; color:#111; font-weight:700; text-align: left; margin-top: 4px; border-left: 2px solid var(--border); padding-left: 6px;">備註：${r.note}</div>` : ''}
+      </td>
+    </tr>
+  `).join('') : '<tr><td colspan="10" class="empty-state"><div class="empty-icon">📂</div>尚無符合條件之交付紀錄</td></tr>';
 }
+
 function generateSettlement(){
-  if(!requireAdmin())return;
-  const wRecs=db.records.filter(r=>isThisWeek(r.date)&&r.status==='verified');
-  const byW={};
-  wRecs.forEach(r=>{byW[r.workerId]=(byW[r.workerId]||0)+r.amount;});
-  const week=getWeekRange();
-  db.settlements=db.settlements.filter(s=>s.week!==week||Object.prototype.hasOwnProperty.call(byW,s.workerId));
-  Object.entries(byW).forEach(([wid,earned])=>{
-    let s=db.settlements.find(s=>s.workerId===+wid&&s.week===week);
-    if(!s){s={workerId:+wid,week,earned,bonus:0,deduct:0,amount:earned,status:'unpaid'};db.settlements.push(s);}
-    else{s.earned=earned;s.amount=s.earned+s.bonus-s.deduct;}
+  if(!requireAdmin()) return;
+  const wRecs = db.records.filter(r => isThisWeek(r.date) && r.status === 'verified');
+  const byW = {};
+  wRecs.forEach(r => { byW[r.workerId] = (byW[r.workerId] || 0) + r.amount; });
+  const week = getWeekRange();
+  
+  db.settlements = db.settlements.filter(s => s.week !== week || Object.prototype.hasOwnProperty.call(byW, s.workerId));
+  
+  Object.entries(byW).forEach(([wid, earned]) => {
+    let s = db.settlements.find(item => item.workerId === +wid && item.week === week);
+    if(!s){
+      s = { workerId: +wid, week, earned, bonus: 0, deduct: 0, amount: earned, status: 'unpaid' };
+      db.settlements.push(s);
+    } else {
+      s.earned = earned;
+      s.amount = s.earned + (s.bonus || 0) - (s.deduct || 0);
+    }
   });
   saveDB();
-  document.getElementById('week-range').textContent=week;
-  const ws=db.settlements.filter(s=>s.week===week);
-  document.getElementById('settlement-table').innerHTML=ws.length?ws.map(s=>`
-    <tr><td>${gwn(s.workerId)}</td><td>$${s.earned.toLocaleString()}</td><td>$${s.bonus}</td><td>$${s.deduct}</td><td><strong>$${s.amount.toLocaleString()}</strong></td><td>${statusBadge(s.status)}</td><td>${s.status==='unpaid'?`<button class="btn btn-sm btn-primary" onclick="markPaid(${s.workerId},'${s.week}')">確認付款</button>`:`<button class="btn btn-sm" onclick="markUnpaid(${s.workerId},'${s.week}')">改回未付款</button>`}</td></tr>
-  `).join(''):'<tr><td colspan="7" class="empty-state">尚無資料，請按「重新計算」</td></tr>';
-}
-function markPaid(wid,week){
-  if(!requireAdmin())return;
-  askConfirm('確定要標記為「已付款」嗎？<br>若按錯，可在同一列按「改回未付款」還原。',()=>{
-    const s=db.settlements.find(s=>s.workerId===+wid&&s.week===week);if(s){s.status='paid';saveDB();generateSettlement();toast('已付款 ✅');}
-  },'確認付款');
-}
-function markUnpaid(wid,week){
-  if(!requireAdmin())return;
-  askConfirm('要把這筆改回「未付款」嗎？',()=>{
-    const s=db.settlements.find(s=>s.workerId===+wid&&s.week===week);if(s){s.status='unpaid';saveDB();generateSettlement();toast('已改回未付款 ↩');}
-  },'改回未付款');
+  
+  document.getElementById('week-range').textContent = week;
+  const ws = db.settlements.filter(s => s.week === week);
+  
+  document.getElementById('settlement-table').innerHTML = ws.length ? ws.map(s => `
+    <tr>
+      <td><strong>${gwn(s.workerId)}</strong></td>
+      <td>$${s.earned.toLocaleString()}</td>
+      <td><span style="color:var(--teal); font-weight:900;">+$${s.bonus || 0}</span></td>
+      <td><span style="color:var(--red); font-weight:900;">-$${s.deduct || 0}</span></td>
+      <td><strong style="color:var(--red); font-size:15px;">$${s.amount.toLocaleString()}</strong></td>
+      <td>${statusBadge(s.status)}</td>
+      <td style="text-align: right;">
+        <button class="btn btn-sm" onclick="openSettlementEdit(${s.workerId},'${s.week}')">⚖️ 調整薪資</button>
+        ${s.status === 'unpaid'
+          ? `<button class="btn btn-sm btn-primary" onclick="markPaid(${s.workerId},'${s.week}')">✓ 確定支付</button>`
+          : `<button class="btn btn-sm" onclick="markUnpaid(${s.workerId},'${s.week}')">↩ 改回未付</button>`}
+      </td>
+    </tr>
+  `).join('') : '<tr><td colspan="7" class="empty-state"><div class="empty-icon">💸</div>本週尚無驗收合格之代工，請先驗收交件！</td></tr>';
 }
 
+function markPaid(wid, week){
+  if(!requireAdmin()) return;
+  askConfirm(`確定已將薪資發放給「${gwn(wid)}」了嗎？<br>確定後將會標記為「已發放」。`, () => {
+    const s = db.settlements.find(item => item.workerId === +wid && item.week === week);
+    if(s){ s.status = 'paid'; saveDB(); generateSettlement(); toast('💰 發放完成！'); }
+  }, '完成給付');
+}
+
+function markUnpaid(wid, week){
+  if(!requireAdmin()) return;
+  askConfirm(`要把「${gwn(wid)}」的本期結算，改回「未發放」嗎？`, () => {
+    const s = db.settlements.find(item => item.workerId === +wid && item.week === week);
+    if(s){ s.status = 'unpaid'; saveDB(); generateSettlement(); toast('↩ 已改回未發放狀態'); }
+  }, '改回未發放');
+}
+
+// ─────────────────────────────────────────────────────────────
+// 代工前台登入與切換處理
+// ─────────────────────────────────────────────────────────────
 function workerLogin(){
-  const name=document.getElementById('w-name-input').value.trim();
-  const w=db.workers.find(w=>w.name===name||w.nick===name);
-  if(!w){document.getElementById('w-login-err').style.display='block';return;}
-  document.getElementById('w-login-err').style.display='none';
-  currentWorkerId=w.id;
+  const name = document.getElementById('w-name-input').value.trim();
+  const w = db.workers.find(item => item.name === name || item.nick === name);
+  if(!w){
+    document.getElementById('w-login-err').style.display = 'block';
+    return;
+  }
+  document.getElementById('w-login-err').style.display = 'none';
+  currentWorkerId = w.id;
   renderWorkerPages(w.id);
   showWorkerPage('w-home');
+  toast(`🏮 歡迎回到修行洞府，${w.nick || w.name}！`);
 }
-function workerLogout(){currentWorkerId=null;document.getElementById('w-name-input').value='';showWorkerPage('w-login');}
-function previewWorker(id){switchRole('worker');currentWorkerId=id;renderWorkerPages(id);showWorkerPage('w-home');}
+
+function workerLogout(){
+  currentWorkerId = null;
+  document.getElementById('w-name-input').value = '';
+  showWorkerPage('w-login');
+}
+
+function previewWorker(id){
+  switchRole('worker');
+  currentWorkerId = id;
+  renderWorkerPages(id);
+  showWorkerPage('w-home');
+}
 
 function renderWorkerPages(wid){
-  const w=gw(wid);if(!w)return;
-  const myRecs=db.records.filter(r=>r.workerId===wid);
-  const weekEarn=myRecs.filter(r=>isThisWeek(r.date)).reduce((a,r)=>a+r.amount,0);
-  const now=new Date();
-  const monthEarn=myRecs.filter(r=>{const d=new Date(r.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}).reduce((a,r)=>a+r.amount,0);
-  const myS=db.settlements.filter(s=>s.workerId===wid);
-  const unpaid=myS.filter(s=>s.status==='unpaid').reduce((a,s)=>a+s.amount,0);
-  const paid=myS.filter(s=>s.status==='paid').reduce((a,s)=>a+s.amount,0);
-  // 解脫金幣（1:1）＋ 修仙境界
-  const cum=cumulativeEarned(wid);
-  const coins=coinsOf(cum);
-  const c=cultivation(coins);
-  const daoHao=w.nick||w.name;
-  const progTxt=c.isMax?'已臻化境，飛昇圓滿 ⛩️':`距「${c.nextName}」尚需 <b>$${c.toNext.toLocaleString()}</b> 解脫金幣`;
-  document.getElementById('w-hero-box').innerHTML=`<div class="cult-hero" style="--realm:${c.color}">
+  const w = gw(wid); if(!w) return;
+  const myRecs = db.records.filter(r => r.workerId === wid);
+  const weekEarn = myRecs.filter(r => isThisWeek(r.date)).reduce((a, r) => a + r.amount, 0);
+  const now = new Date();
+  const monthEarn = myRecs.filter(r => {
+    const d = new Date(r.date);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }).reduce((a, r) => a + r.amount, 0);
+  
+  const myS = db.settlements.filter(s => s.workerId === wid);
+  const unpaid = myS.filter(s => s.status === 'unpaid').reduce((a, s) => a + s.amount, 0);
+  const paid = myS.filter(s => s.status === 'paid').reduce((a, s) => a + s.amount, 0);
+  
+  const cum = cumulativeEarned(wid);
+  const coins = coinsOf(cum);
+  const c = cultivation(coins);
+  const daoHao = w.nick || w.name;
+  const progTxt = c.isMax ? '🎉 功德圓滿，已登飛昇之境！' : `距離下個境界「${c.nextName}」尚差 <b>${c.toNext.toLocaleString()}</b> 枚功德靈幣`;
+  
+  document.getElementById('w-hero-box').innerHTML = `<div class="cult-hero" style="--realm:${c.color}; background: linear-gradient(135deg, #1C2D3A, #111D25);">
     <div class="cult-glow"></div>
-    <div class="cult-spark">⛩️</div>
+    <div class="cult-spark">⚗️</div>
     <div class="cult-top">
       <div class="cult-avatar">${daoHao.slice(0,1)}</div>
       <div>
         <div class="cult-name">${daoHao}</div>
-        <div class="cult-realm-badge">⚡ ${c.realm}${c.layerLabel}</div>
+        <div class="cult-realm-badge" style="background:${c.color}; color:#FFF;">⚡ 當前境界：${c.realm} · ${c.layerLabel}</div>
       </div>
     </div>
-    <div class="cult-coin"><span class="cult-coin-num">🪙 ${coins.toLocaleString()}</span><span class="cult-coin-lbl">解脫金幣（修為）</span></div>
+    <div class="cult-coin">
+      <span class="cult-coin-num">🪙 ${coins.toLocaleString()}</span>
+      <span class="cult-coin-lbl">累積修為靈幣 (合格資糧)</span>
+    </div>
     <div class="cult-prog-wrap">
-      <div class="cult-prog"><div class="cult-prog-fill" style="width:${c.pct}%"></div></div>
+      <div class="cult-prog"><div class="cult-prog-fill" style="width:${c.pct}%; --realm:${c.color}"></div></div>
       <div class="cult-prog-txt">${progTxt}</div>
     </div>
   </div>`;
-  document.getElementById('w-stats').innerHTML=`
-    <div class="w-stat"><div class="w-stat-label">本週修為</div><div class="w-stat-value" style="color:var(--red)">$${weekEarn.toLocaleString()}</div></div>
-    <div class="w-stat"><div class="w-stat-label">本月修為</div><div class="w-stat-value">$${monthEarn.toLocaleString()}</div></div>
-    <div class="w-stat"><div class="w-stat-label">待領功德金</div><div class="w-stat-value" style="color:#854F0B">$${unpaid.toLocaleString()}</div></div>
-    <div class="w-stat"><div class="w-stat-label">已領功德金</div><div class="w-stat-value" style="color:var(--teal)">$${paid.toLocaleString()}</div></div>
+  
+  document.getElementById('w-stats').innerHTML = `
+    <div class="w-stat">
+      <div class="w-stat-label">本期修為產值</div>
+      <div class="w-stat-value" style="color:var(--red);">$${weekEarn.toLocaleString()}</div>
+    </div>
+    <div class="w-stat">
+      <div class="w-stat-label">本月累計修行</div>
+      <div class="w-stat-value" style="color:var(--blue-grey);">$${monthEarn.toLocaleString()}</div>
+    </div>
+    <div class="w-stat">
+      <div class="w-stat-label">未領俸祿資糧</div>
+      <div class="w-stat-value" style="color:#B45309;">$${unpaid.toLocaleString()}</div>
+    </div>
+    <div class="w-stat">
+      <div class="w-stat-label">累計已發資糧</div>
+      <div class="w-stat-value" style="color:var(--teal);">$${paid.toLocaleString()}</div>
+    </div>
   `;
-  const pending=myRecs.filter(r=>r.status==='pending');
-  document.getElementById('w-pending').innerHTML=pending.length?`<table><thead><tr><th>日期</th><th>品項</th><th>交回數</th><th>預估金額</th></tr></thead><tbody>${pending.map(r=>`<tr><td>${r.date}</td><td>${gin(r.itemId)}</td><td>${r.total}</td><td>$${r.amount.toLocaleString()}</td></tr>`).join('')}</tbody></table>`:'<div class="empty-state">目前沒有待點化的法器 🎉</div>';
-  const sorted=myRecs.slice().sort((a,b)=>b.date.localeCompare(a.date));
-  document.getElementById('w-records-table').innerHTML=sorted.map(r=>`
-    <tr><td>${r.date}</td><td>${gin(r.itemId)}</td><td>${r.pass.toLocaleString()}</td><td>${giu(r.itemId)}</td><td>$${r.amount.toLocaleString()}</td><td>${statusBadge(r.status)}</td></tr>
-  `).join('')||'<tr><td colspan="6" class="empty-state">尚無紀錄</td></tr>';
+  
+  const pending = myRecs.filter(r => r.status === 'pending');
+  document.getElementById('w-pending').innerHTML = pending.length ? `
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>日期</th>
+            <th>品項</th>
+            <th>自報數量</th>
+            <th>交回數量</th>
+            <th>預估資糧</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${pending.map(r => `<tr>
+            <td>${r.date}</td>
+            <td><strong>${gin(r.itemId)}</strong><div style="margin-top:2px;">${sourceBadge(r.source)}</div></td>
+            <td>${r.selfQty == null ? '—' : r.selfQty.toLocaleString()}</td>
+            <td>${r.total.toLocaleString()}</td>
+            <td><strong style="color:var(--red);">$${r.amount.toLocaleString()}</strong></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  ` : '<div class="immortal-empty">🎉 暫無任何待審核驗收的功課零件。</div>';
+  
+  const sorted = myRecs.slice().sort((a,b) => b.date.localeCompare(a.date));
+  document.getElementById('w-records-table').innerHTML = sorted.length ? sorted.map(r => `
+    <tr>
+      <td>${r.date}</td>
+      <td><strong>${gin(r.itemId)}</strong></td>
+      <td>${r.selfQty == null ? '—' : r.selfQty.toLocaleString()}</td>
+      <td>${r.pass.toLocaleString()}</td>
+      <td><strong style="color:var(--red);">$${r.amount.toLocaleString()}</strong></td>
+      <td>${statusBadge(r.status)}</td>
+    </tr>
+  `).join('') : '<tr><td colspan="6" class="empty-state">尚無修行紀錄</td></tr>';
+  
+  renderWorkerSubmitPage();
 }
 
+// 導覽跳頁邏輯 (已全面改為簡潔專業的後台品味)
 function showPage(name){
-  if(!requireAdmin())return;
+  if(!isAdminLoggedIn()){
+    showAdminLogin();
+    return;
+  }
+  toggleSidebar(false); 
+  cancelAnimationFrame(animFrame);
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-' + name);
+  if(!page) return;
+  
+  page.classList.add('active');
+  document.querySelectorAll('#admin-nav .nav-item').forEach(n => n.classList.remove('active'));
+  
+  const order = ['dashboard','workers','items','records','settlement','leaderboard'];
+  const idx = order.indexOf(name);
+  const navs = document.querySelectorAll('#admin-nav .nav-item');
+  if(idx >= 0 && navs[idx]) navs[idx].classList.add('active');
+  
+  const titles = {
+    dashboard: '系統總覽',
+    workers: '代工人員管理',
+    items: '品項單價設定',
+    records: '交付驗收管理',
+    settlement: '薪資結算管理',
+    leaderboard: '業績排行榜'
+  };
+  
+  document.getElementById('page-title').textContent = titles[name] || name;
   setAdminTopbar();
-  cancelAnimationFrame(animFrame);
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('#admin-nav .nav-item').forEach(n=>n.classList.remove('active'));
-  const order=['dashboard','workers','items','records','settlement','leaderboard'];
-  const idx=order.indexOf(name);
-  if(idx>=0) document.querySelectorAll('#admin-nav .nav-item')[idx].classList.add('active');
-  const titles={dashboard:'總覽',workers:'代工人員',items:'品項單價',records:'交件驗收',settlement:'結算中心',leaderboard:'榮譽排行榜'};
-  document.getElementById('page-title').textContent=titles[name]||name;
-  if(name==='settlement'){document.getElementById('week-range').textContent=getWeekRange();generateSettlement();}
-  if(name==='leaderboard') renderLeaderboard();
+  
+  if(name === 'dashboard') renderDashboard();
+  if(name === 'workers') renderWorkers();
+  if(name === 'items') renderItems();
+  if(name === 'records') renderRecords();
+  if(name === 'settlement') generateSettlement();
+  if(name === 'leaderboard') renderLeaderboard();
 }
+
 function showWorkerPage(name){
-  document.getElementById('topbar-right').innerHTML='';
-  // 未登入時，個人頁面導回登入（封神榜可公開瀏覽）
-  if((name==='w-home'||name==='w-records')&&!currentWorkerId) name='w-login';
+  toggleSidebar(false); 
+  document.getElementById('topbar-right').innerHTML = '';
+  if((name === 'w-home' || name === 'w-submit' || name === 'w-records') && !currentWorkerId) name = 'w-login';
+  
   cancelAnimationFrame(animFrame);
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('#worker-nav .nav-item').forEach(n=>n.classList.remove('active'));
-  const wOrder=['w-home','w-records','w-leaderboard'];
-  const idx=wOrder.indexOf(name);
-  if(idx>=0) document.querySelectorAll('#worker-nav .nav-item')[idx].classList.add('active');
-  const titles={'w-login':'踏入仙途','w-home':'洞府修為','w-records':'修行紀錄','w-leaderboard':'封神榜'};
-  document.getElementById('page-title').textContent=titles[name]||name;
-  if(name==='w-leaderboard') renderWorkerLeaderboard();
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-' + name);
+  if(page) page.classList.add('active');
+  
+  document.querySelectorAll('#worker-nav .nav-item').forEach(n => n.classList.remove('active'));
+  const wOrder = ['w-home','w-submit','w-records','w-leaderboard'];
+  const idx = wOrder.indexOf(name);
+  if(idx >= 0){
+    const items = document.querySelectorAll('#worker-nav .nav-item');
+    if(items[idx]) items[idx].classList.add('active');
+  }
+  
+  const titles = {
+    'w-login': '破開洞府結界',
+    'w-home': '洞府修為',
+    'w-submit': '靈工自主上報台',
+    'w-records': '修行紀錄簿',
+    'w-leaderboard': '煉丹天榜'
+  };
+  document.getElementById('page-title').textContent = titles[name] || name;
+  
+  if(name === 'w-leaderboard') renderWorkerLeaderboard();
+  if(name === 'w-submit') renderWorkerSubmitPage();
 }
+
 function switchRole(role){
-  currentRole=role;
+  currentRole = role;
   cancelAnimationFrame(animFrame);
-  document.querySelectorAll('.role-pill').forEach((b,i)=>b.classList.toggle('active',(i===0&&role==='admin')||(i===1&&role==='worker')));
-  if(role==='admin'){
+  document.querySelectorAll('.role-pill').forEach((b, i) => b.classList.toggle('active', (i === 0 && role === 'admin') || (i === 1 && role === 'worker')));
+  
+  if(role === 'admin'){
     if(!isAdminLoggedIn()){
       showAdminLogin();
       return;
     }
-    document.getElementById('admin-nav').style.display='block';
-    document.getElementById('worker-nav').style.display='none';
+    document.getElementById('admin-nav').style.display = 'block';
+    document.getElementById('worker-nav').style.display = 'none';
     showPage('dashboard');
-  }else{
-    document.getElementById('admin-nav').style.display='none';
-    document.getElementById('worker-nav').style.display='block';
-    document.getElementById('topbar-right').innerHTML='';
-    if(currentWorkerId){renderWorkerPages(currentWorkerId);showWorkerPage('w-home');}else showWorkerPage('w-login');
+  } else {
+    document.getElementById('admin-nav').style.display = 'none';
+    document.getElementById('worker-nav').style.display = 'block';
+    document.getElementById('topbar-right').innerHTML = '';
+    if(currentWorkerId){
+      renderWorkerPages(currentWorkerId);
+      showWorkerPage('w-home');
+    } else {
+      showWorkerPage('w-login');
+    }
   }
 }
 
+// 初始化
 loadDB();
-renderDashboard();renderWorkers();renderItems();renderRecords();
-document.getElementById('week-range').textContent=getWeekRange();
-if(isAdminLoggedIn())switchRole('admin');else showAdminLogin();
+normalizeDB();
+saveDB();
+
+try{
+  renderDashboard(); renderWorkers(); renderItems(); renderRecords();
+} catch(e) { console.error('初始化頁面載入失敗！', e); }
+
+const wr = document.getElementById('week-range');
+if(wr) wr.textContent = getWeekRange();
+
+if(isAdminLoggedIn()) switchRole('admin'); else showAdminLogin();
 </script>
+
+<script>
+// 表單 Enter 即時送出響應式處理
+document.addEventListener('DOMContentLoaded', function(){
+  const btn = document.querySelector('#page-admin-login button');
+  const input = document.getElementById('admin-password-input');
+  if(btn && typeof adminLogin === 'function'){
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      adminLogin();
+    });
+  }
+  if(input && typeof adminLogin === 'function'){
+    input.addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){
+        e.preventDefault();
+        adminLogin();
+      }
+    });
+  }
+});
+</script>
+
 </body>
 </html>
+```
+eof
+
+### 🌟 本次精雕細琢亮點：
+* **「聯絡手機」徹底退役**：符合您的需求，將代工人員管理中的手機號碼欄位完全移除，同時將「新增/修改人員」的表單進行了簡化，後台更為精緻美觀。
+* **「預覽」簡約大氣**：原先表格中的 `🔮 洞府預覽` 正式精簡更名為簡明扼要的 **`預覽`** 按鈕，減少不必要的干擾元素。
+* **後台正式「去仙俠化」**：我們將管理者後台的所有修仙名詞進行了替換。
+  * 「天樞總覽法壇」 ➡️ **「系統總覽」**
+  * 「仙徒修行名冊」 ➡️ **「人員管理」**
+  * 「法製品項天契」 ➡️ **「品項設定」**
+  * 「交付清點驗收壇」 ➡️ **「交付管理」**
+  * 「靈石資糧結算殿」 ➡️ **「薪資結算」**
+  * 「至尊丹道風雲榜」 ➡️ **「業績排行榜」**
+  * 「除名弟子」 ➡️ **「刪除人員」**
+  * 各大彈窗的修辭（如「護陣結界」、「納入法眼」、「定稿」）也全部更換為最實用的商用中性詞彙。
+* **保留前台的奇幻與趣味性**：代工弟子的「修行洞府」依然保留了豐富的修仙體驗，讓人員能夠一邊代工、一邊快樂衝榜，將運營效率提到最高！
