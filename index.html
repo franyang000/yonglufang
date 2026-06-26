@@ -1581,25 +1581,45 @@ tr:hover td{background:#FAF5EC}
 
       <!-- 同道排行榜 -->
       <div class="page" id="page-w-leaderboard">
-        <div class="card">
-          <div class="card-head">
-            <span class="card-head-title">✨ 煉丹天榜風雲碑</span>
-            <div class="race-tabs" id="w-period-tabs">
-              <button class="race-tab active" onclick="switchWLbPeriod('this',this)">本期</button>
-              <button class="race-tab" onclick="switchWLbPeriod('last',this)">上期</button>
-              <button class="race-tab" onclick="switchWLbPeriod('month',this)">本月</button>
+        <div id="w-lb-lock-panel" class="worker-login immortal-panel" style="max-width: 500px; margin: 3rem auto; padding: 2.5rem 2rem; text-align: center;">
+          <div style="font-size: 50px; margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--gold-beige));">🔮</div>
+          <div class="modal-title" style="font-size: 20px; justify-content: center; margin-bottom: 0.5rem; width: 100%; color: var(--navy-deep);">窺天玄境法陣</div>
+          <p style="font-size: 14px; color: #1F2937; font-weight: 400; margin-bottom: 1.5rem; line-height: 1.6;">
+            天榜乃本門修行機緣所在，設有護山幻陣。<br>請口誦並輸入<b>兩字接引密語</b>以破開法陣、參閱風雲。
+          </p>
+          <div style="background: #FAF6ED; border: 1px dashed var(--border-solid); padding: 12px; border-radius: var(--r-sm); margin-bottom: 1.5rem; font-size: 13px; text-align: left; line-height: 1.5; color: #5C4325;">
+            <b>📜 幻陣提示：</b><br>
+            「凡人求真，向天一問；修仙之路，始於足下。」<br>
+            提示：這兩個字代表著探求天地奧秘、追尋真理的方向。
+          </div>
+          <div style="display: flex; gap: 8px; flex-direction: column;">
+            <input id="w-whisper-input" type="text" placeholder="請輸入兩字解陣密語 (例: 飛昇/證道/問道)" onkeydown="if(event.key==='Enter')verifyWhisper()" style="padding: 12px 14px; font-size: 15px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); outline: none; text-align: center; font-weight: 400;">
+            <button class="btn btn-primary btn-immortal" onclick="verifyWhisper()" style="padding: 12px; font-size: 14px;">破陣窺天 ⚡</button>
+          </div>
+          <div id="w-whisper-err" style="font-size:13px; color:var(--red-palace); display:none; margin-top:10px; font-weight: 500;">⚠️ 密語未能契合陣樞，幻陣未破！</div>
+        </div>
+
+        <div id="w-lb-content" style="display: none;">
+          <div class="card">
+            <div class="card-head">
+              <span class="card-head-title">✨ 煉丹天榜風雲碑</span>
+              <div class="race-tabs" id="w-period-tabs">
+                <button class="race-tab active" onclick="switchWLbPeriod('this',this)">本期</button>
+                <button class="race-tab" onclick="switchWLbPeriod('last',this)">上期</button>
+                <button class="race-tab" onclick="switchWLbPeriod('month',this)">本月</button>
+              </div>
             </div>
+            <div class="lb-metric-bar" id="w-metric-bar">
+              <button class="metric-tab active" onclick="switchWLbTab('earn',this)">🔥 產值丹榜</button>
+              <button class="metric-tab" onclick="switchWLbTab('combined',this)">⚗️ 綜合丹榜</button>
+              <button class="metric-tab" onclick="switchWLbTab('quality',this)">💎 成丹品質榜</button>
+              <button class="metric-tab" onclick="switchWLbTab('coin',this)">🪙 靈幣功德榜</button>
+            </div>
+            <div id="w-lb-champion"></div>
+            <div id="w-lb-self" class="w-lb-self"></div>
+            <div class="race-wrap" id="w-lb-race"></div>
+            <div id="w-lb-note"></div>
           </div>
-          <div class="lb-metric-bar" id="w-metric-bar">
-            <button class="metric-tab active" onclick="switchWLbTab('earn',this)">🔥 產值丹榜</button>
-            <button class="metric-tab" onclick="switchWLbTab('combined',this)">⚗️ 綜合丹榜</button>
-            <button class="metric-tab" onclick="switchWLbTab('quality',this)">💎 成丹品質榜</button>
-            <button class="metric-tab" onclick="switchWLbTab('coin',this)">🪙 靈幣功德榜</button>
-          </div>
-          <div id="w-lb-champion"></div>
-          <div id="w-lb-self" class="w-lb-self"></div>
-          <div class="race-wrap" id="w-lb-race"></div>
-          <div id="w-lb-note"></div>
         </div>
       </div>
 
@@ -1926,6 +1946,8 @@ let db = {
 
 const ADMIN_PASSWORD = '8888';
 const ADMIN_AUTH_KEY = 'yonglufang_admin_auth';
+const CULT_WHISPER = '問道';
+const WHISPER_AUTH_KEY = 'yonglufang_whisper_auth';
 
 const BOAT_COLORS=[
   ['#EAD292','#FFEBAA'], // 經典金沙 曜岩金
@@ -2264,6 +2286,39 @@ function renderWorkerLeaderboard(){
     }
   }
   renderRaceRanked('w-lb-race', rows, currentWLbTab, prevRank, currentWorkerId, '天榜碑尚未有任何數據...', {showDelta});
+}
+
+function verifyWhisper(){
+  const input = document.getElementById('w-whisper-input');
+  const val = (input?.value || '').trim();
+  if(val !== CULT_WHISPER){
+    document.getElementById('w-whisper-err').style.display = 'block';
+    if(input) { input.value = ''; input.focus(); }
+    return;
+  }
+  document.getElementById('w-whisper-err').style.display = 'none';
+  sessionStorage.setItem(WHISPER_AUTH_KEY, '1');
+  toast('⚡ 陣法已破，天機契合！');
+  checkLeaderboardUnlock();
+}
+
+function checkLeaderboardUnlock(){
+  const isUnlocked = sessionStorage.getItem(WHISPER_AUTH_KEY) === '1';
+  const lockPanel = document.getElementById('w-lb-lock-panel');
+  const contentPanel = document.getElementById('w-lb-content');
+  
+  if(isUnlocked){
+    if(lockPanel) lockPanel.style.display = 'none';
+    if(contentPanel) contentPanel.style.display = 'block';
+    renderWorkerLeaderboard();
+  } else {
+    if(lockPanel) lockPanel.style.display = 'block';
+    if(contentPanel) contentPanel.style.display = 'none';
+    setTimeout(() => {
+      const input = document.getElementById('w-whisper-input');
+      if(input) input.focus();
+    }, 50);
+  }
 }
 
 function loadDB(){
@@ -3344,7 +3399,7 @@ function showWorkerPage(name){
   };
   document.getElementById('page-title').textContent = titles[name] || name;
   
-  if(name === 'w-leaderboard') renderWorkerLeaderboard();
+  if(name === 'w-leaderboard') checkLeaderboardUnlock();
   if(name === 'w-submit') renderWorkerSubmitPage();
 }
 
