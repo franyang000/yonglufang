@@ -6,6 +6,7 @@
 <title>永祿坊求仙結算系統</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -66,6 +67,7 @@ p, span, label, td, th, option, select, input, textarea {
   min-height: 100vh;
 }
 
+/* 側邊欄設計 */
 .sidebar{
   width: 260px;
   flex-shrink: 0;
@@ -201,6 +203,7 @@ p, span, label, td, th, option, select, input, textarea {
   font-weight: 700; /* 激活採用700 */
 }
 
+/* 主版面樣式 */
 .main{
   flex: 1;
   display: flex;
@@ -262,6 +265,7 @@ p, span, label, td, th, option, select, input, textarea {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* 指標與資訊卡 */
 .stat-grid{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -293,11 +297,11 @@ p, span, label, td, th, option, select, input, textarea {
   margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: .08em;
-  font-weight: 500; /* 卡片指標說明改用500 */
+  font-weight: 500;
 }
 .stat-value{
   font-size: 26px;
-  font-weight: 700; /* 主要指標數據700 */
+  font-weight: 700;
   color: var(--navy-deep);
   line-height: 1.2;
 }
@@ -335,7 +339,7 @@ p, span, label, td, th, option, select, input, textarea {
 }
 .card-head-title{
   font-size: 16px;
-  font-weight: 700; /* 卡片標題700 */
+  font-weight: 700;
   color: var(--navy-deep);
   display: flex;
   align-items: center;
@@ -345,6 +349,7 @@ p, span, label, td, th, option, select, input, textarea {
   padding: 1.25rem 1.5rem;
 }
 
+/* 篩選與搜尋 */
 .table-filter-bar{
   display: flex;
   justify-content: space-between;
@@ -368,7 +373,7 @@ p, span, label, td, th, option, select, input, textarea {
   outline: none;
   background: var(--card-bg);
   color: var(--ink);
-  font-weight: 400; /* 輸入框內文改為400，極致舒適 */
+  font-weight: 400; /* 輸入框改 400 細體 */
   transition: all 0.2s;
 }
 .search-wrapper input:focus{
@@ -386,6 +391,7 @@ p, span, label, td, th, option, select, input, textarea {
   pointer-events: none;
 }
 
+/* 表格樣式優化 */
 .table-responsive{
   width: 100%;
   overflow-x: auto;
@@ -400,7 +406,7 @@ table{
 th{
   padding: 14px 16px;
   color: var(--navy-deep);
-  font-weight: 700; /* 表頭使用700，維持專業結構感 */
+  font-weight: 700; /* 表頭維持 700 的專業感 */
   font-size: 13px;
   border-bottom: 1px solid var(--border-solid);
   text-transform: uppercase;
@@ -411,7 +417,7 @@ th{
 td{
   padding: 14px 16px;
   color: var(--ink);
-  font-weight: 400; /* 所有表格內文與數據全面退回 400，消除粗體窒息感 */
+  font-weight: 400; /* 表格數據全面用 400 細字體，不擠不累 */
   border-bottom: 1px solid rgba(234, 210, 146, 0.15);
   vertical-align: middle;
   white-space: nowrap;
@@ -419,6 +425,7 @@ td{
 tr:last-child td{border-bottom: none}
 tr:hover td{background:#FAF5EC}
 
+/* 標籤徽章 */
 .badge{
   display: inline-flex;
   align-items: center;
@@ -426,7 +433,7 @@ tr:hover td{background:#FAF5EC}
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 12px;
-  font-weight: 500; /* 標籤文字改用500中等 */
+  font-weight: 500;
 }
 .badge-ok{background:#DCFCE7;color:#15803D;}
 .badge-wait{background:#FEF3C7;color:#B45309;}
@@ -434,6 +441,7 @@ tr:hover td{background:#FAF5EC}
 .badge-unpaid{background:#FEE2E2;color:#B91C1C;}
 .badge-gray{background:#E5E7EB;color:#1F2937;}
 
+/* 按鈕系統 */
 .btn{
   display: inline-flex;
   align-items: center;
@@ -447,7 +455,7 @@ tr:hover td{background:#FAF5EC}
   cursor: pointer;
   color: var(--navy-deep);
   font-family: inherit;
-  font-weight: 500; /* 按鈕文字字體重量降為 500 */
+  font-weight: 500; /* 降低按鈕字體重量 */
   transition: all 0.2s ease;
   user-select: none;
 }
@@ -460,7 +468,7 @@ tr:hover td{background:#FAF5EC}
   color: var(--gold-beige) !important;
   border-color: var(--navy-deep);
   box-shadow: var(--shadow-subtle);
-  font-weight: 700; /* 僅主要動作按鈕維持700 */
+  font-weight: 700; /* 僅主要呼叫動作按鈕為700 */
 }
 .btn-primary:hover{
   transform: translateY(-1px);
@@ -503,12 +511,13 @@ tr:hover td{background:#FAF5EC}
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  font-weight: 700; /* 頭像縮寫用700呈現亮點 */
+  font-weight: 700;
   color: var(--navy-deep);
   flex-shrink: 0;
   border: 1px solid var(--border-solid);
 }
 
+/* 天榜風雲碑與排行動畫 */
 #page-leaderboard .card,
 #page-w-leaderboard .card{
   background: var(--card-bg);
@@ -526,19 +535,6 @@ tr:hover td{background:#FAF5EC}
   letter-spacing: .08em;
 }
 
-#page-leaderboard, #page-w-leaderboard {
-  color: var(--ink);
-}
-#page-leaderboard .race-name, #page-w-leaderboard .race-name {
-  color: var(--ink) !important;
-}
-#page-leaderboard .race-score, #page-w-leaderboard .race-score {
-  color: var(--navy-deep) !important;
-}
-#page-leaderboard .lb-note, #page-w-leaderboard .lb-note {
-  color: #333333 !important;
-}
-
 #w-lb-self, .w-lb-self {
   display: none;
   align-items: center;
@@ -550,40 +546,13 @@ tr:hover td{background:#FAF5EC}
   margin: 0.5rem 1.25rem 0.75rem !important;
   font-size: 13px !important;
   color: var(--ink) !important;
-  font-weight: 500 !important; /* 天榜提醒：改為500 */
+  font-weight: 500 !important;
   line-height: 1.4;
   box-shadow: var(--shadow-gold);
 }
 #w-lb-self strong, .w-lb-self strong {
   color: var(--red-palace) !important;
-  font-weight: 700 !important; /* 修改為經典Bold 700 */
-}
-
-#page-leaderboard .race-tab,
-#page-leaderboard .metric-tab,
-#page-w-leaderboard .race-tab,
-#page-w-leaderboard .metric-tab {
-  color: var(--navy-deep) !important;
-  border: 1px solid var(--border-solid) !important;
-  background: #FAF4E5 !important;
-  font-weight: 500; /* 切換分頁重量改500 */
-}
-#page-leaderboard .race-tab:hover,
-#page-leaderboard .metric-tab:hover,
-#page-w-leaderboard .race-tab:hover,
-#page-w-leaderboard .metric-tab:hover {
-  background: #EADFC9 !important;
-  color: var(--navy-deep) !important;
-}
-#page-leaderboard .race-tab.active,
-#page-leaderboard .metric-tab.active,
-#page-w-leaderboard .race-tab.active,
-#page-w-leaderboard .metric-tab.active {
-  background: var(--gold-gradient) !important;
-  color: var(--navy-deep) !important;
-  border-color: var(--gold-beige) !important;
-  font-weight: 700; /* 激活改700 */
-  box-shadow: var(--shadow-gold);
+  font-weight: 700 !important;
 }
 
 .race-wrap{
@@ -609,12 +578,12 @@ tr:hover td{background:#FAF5EC}
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  font-weight: 700; /* 天榜名次700 */
+  font-weight: 700;
   border: 2px solid var(--gold-beige);
 }
 .race-name{
   font-size: 15px;
-  font-weight: 500; /* 人物姓名500中等，清晰 */
+  font-weight: 500; /* 人名 500 中等，既突出又典雅 */
   min-width: 90px;
   flex-shrink: 0;
   color: var(--ink);
@@ -623,10 +592,9 @@ tr:hover td{background:#FAF5EC}
   flex-direction: column;
 }
 
-/* 🌌 曜藍金絲大理石水道：高質感與完美對比度（徹底解決 image_c7f7ab.png 空白與看不見的問題） */
 .race-track{
   flex: 1;
-  background: #081118;  /* 極深曜藍跑道底色，絕對完美對比 */
+  background: #081118;
   border: 1.5px solid var(--gold-beige);
   border-radius: 999px;
   height: 44px;
@@ -652,7 +620,7 @@ tr:hover td{background:#FAF5EC}
 }
 .race-score{
   font-size: 16px;
-  font-weight: 700; /* 水道數據700 */
+  font-weight: 700;
   color: var(--navy-deep);
   min-width: 100px;
   text-align: right;
@@ -715,20 +683,20 @@ tr:hover td{background:#FAF5EC}
 .champion-label{
   font-size:12px;
   color: var(--gold-light) !important;
-  font-weight: 500; /* 等級標示改500 */
+  font-weight: 500;
   letter-spacing:.08em;
   text-transform: uppercase;
 }
 .champion-name{
   font-size:24px;
-  font-weight:700; /* 姓名700 */
+  font-weight:700;
   color:#FFFFFF !important; 
   margin-top:3px;
   text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 .champion-score{
   font-size:26px;
-  font-weight:700; /* 成績700 */
+  font-weight:700;
   color:var(--gold-beige) !important;
   white-space:nowrap;
   text-shadow: 0 0 10px rgba(234,210,146,0.5);
@@ -773,7 +741,7 @@ tr:hover td{background:#FAF5EC}
   align-items: center;
   gap: 6px;
   font-size: 13.5px;
-  font-weight: 500; /* 中等輕巧 */
+  font-weight: 500;
   color: var(--navy-deep);
   background: var(--gold-gradient);
   border: 1px solid var(--gold-beige);
@@ -783,6 +751,7 @@ tr:hover td{background:#FAF5EC}
   width: fit-content;
 }
 
+/* 洞府修仙境界卡片 */
 .cult-hero{
   position:relative;
   border-radius:var(--r-lg);
@@ -825,6 +794,7 @@ tr:hover td{background:#FAF5EC}
 .cult-prog-txt{font-size:12px;color:rgba(255,255,255,0.9) !important; margin-top:8px; font-weight:400}
 .cult-prog-txt b{color:var(--gold-beige) !important; font-weight:500;}
 
+/* 個人中心版面 */
 #page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard,#page-w-submit{
   position:relative;
   min-height:calc(100vh - 120px);
@@ -977,6 +947,7 @@ tr:hover td{background:#FAF5EC}
 .source-admin{background: #EADFC9; color: var(--navy-deep); border: 1px solid var(--border-solid)}
 .source-worker{background: #DCECF0; color: #1C6B72; border: 1px solid #BCE0E5}
 
+/* 表單系統 */
 .form-row{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -997,7 +968,7 @@ tr:hover td{background:#FAF5EC}
 .form-group label{
   font-size: 13px;
   color: var(--navy-deep);
-  font-weight: 700; /* 輸入框標籤粗體以引導輸入 */
+  font-weight: 700;
   letter-spacing: .02em;
 }
 .form-group input, .form-group select, .form-group textarea{
@@ -1026,13 +997,11 @@ tr:hover td{background:#FAF5EC}
   margin-bottom: 0.75rem;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   ✨ 尊貴修仙彈窗與氣泡樣式 (徹底補齊並解決 image_e6ce07 缺失樣式問題)
-   ───────────────────────────────────────────────────────────── */
+/* 彈窗背景與微調效果 */
 .modal-bg {
   position: fixed;
   inset: 0;
-  background: rgba(0, 18, 34, 0.65); /* 曜藍深邃半透明 */
+  background: rgba(0, 18, 34, 0.65);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -1185,14 +1154,10 @@ tr:hover td{background:#FAF5EC}
     <div class="logo-block">
       <div class="logo-icon">
         <svg viewBox="0 0 100 100" style="width: 44px; height: 44px; background: var(--navy-deep); border-radius: 8px; padding: 2px;">
-          <!-- Waves/Clouds -->
           <path d="M 10,75 C 22,68 35,82 48,74 C 60,66 72,82 85,74 C 92,70 95,78 95,78 C 95,86 5,86 5,78 Z" fill="#EAD292" opacity="0.85"/>
-          <!-- Dragon Ship Body & Sails -->
           <path d="M 20,68 Q 50,80 80,68 Q 90,56 75,56 Q 60,56 55,40 L 58,22 L 52,22 L 48,40 L 32,56 Z" fill="#EAD292"/>
-          <!-- Dragon Wings & details -->
           <path d="M 38,62 Q 22,46 12,52 Q 22,60 38,62" fill="#EAD292"/>
           <path d="M 62,62 Q 78,46 88,52 Q 78,60 62,62" fill="#EAD292"/>
-          <!-- Sail Detail stripes -->
           <path d="M 55,22 Q 70,32 55,46" stroke="#012C4E" stroke-width="1.8" fill="none"/>
           <path d="M 55,24 Q 40,34 55,48" stroke="#012C4E" stroke-width="1.8" fill="none"/>
         </svg>
@@ -1406,6 +1371,8 @@ tr:hover td{background:#FAF5EC}
               <button class="btn btn-sm btn-primary" onclick="generateSettlement()">重新計算</button>
               <button class="btn btn-sm btn-primary" onclick="exportSettlementCSV()" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); border-color: #059669;">📥 匯出薪資條 EXCEL</button>
               <button class="btn btn-sm" onclick="openBackupModal()">💾 資料備份</button>
+              <!-- ☁️ 雲端 Firebase 設定按鈕 -->
+              <button class="btn btn-sm" onclick="openFirebaseModal()" style="border-color:#10B981; color:#10B981;">☁️ 雲端同步設定</button>
             </div>
           </div>
           <div class="table-responsive">
@@ -1583,7 +1550,7 @@ tr:hover td{background:#FAF5EC}
       <div class="page" id="page-w-leaderboard">
         <div id="w-lb-lock-panel" class="worker-login immortal-panel" style="max-width: 500px; margin: 3rem auto; padding: 2.5rem 2rem; text-align: center;">
           <div style="font-size: 50px; margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--gold-beige));">🔮</div>
-          <div class="modal-title" style="font-size: 20px; justify-content: center; margin-bottom: 0.5rem; width: 100%; color: var(--navy-deep);">窺天玄境法陣</div>
+          <div class="modal-title" style="font-size: 20px; justify-content: center; margin-bottom: 0.5rem; width: 100%; color: var(--navy-deep);">🔮 窺天玄境法陣</div>
           <p style="font-size: 14px; color: #1F2937; font-weight: 400; margin-bottom: 1.5rem; line-height: 1.6;">
             天榜乃本門修行機緣所在，設有護山幻陣。<br>請口誦並輸入<b>兩字接引密語</b>以破開法陣、參閱風雲。
           </p>
@@ -1593,7 +1560,7 @@ tr:hover td{background:#FAF5EC}
             提示：這兩個字代表著探求天地奧秘、追尋真理的方向。
           </div>
           <div style="display: flex; gap: 8px; flex-direction: column;">
-            <input id="w-whisper-input" type="text" placeholder="請輸入兩字解陣密語 (例: 飛昇/證道/問道)" onkeydown="if(event.key==='Enter')verifyWhisper()" style="padding: 12px 14px; font-size: 15px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); outline: none; text-align: center; font-weight: 400;">
+            <input id="w-whisper-input" type="text" placeholder="請輸入兩字解陣密語 (例: 飛昇/問道)" onkeydown="if(event.key==='Enter')verifyWhisper()" style="padding: 12px 14px; font-size: 15px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); outline: none; text-align: center; font-weight: 400;">
             <button class="btn btn-primary btn-immortal" onclick="verifyWhisper()" style="padding: 12px; font-size: 14px;">破陣窺天 ⚡</button>
           </div>
           <div id="w-whisper-err" style="font-size:13px; color:var(--red-palace); display:none; margin-top:10px; font-weight: 500;">⚠️ 密語未能契合陣樞，幻陣未破！</div>
@@ -1613,7 +1580,7 @@ tr:hover td{background:#FAF5EC}
               <button class="metric-tab active" onclick="switchWLbTab('earn',this)">🔥 產值丹榜</button>
               <button class="metric-tab" onclick="switchWLbTab('combined',this)">⚗️ 綜合丹榜</button>
               <button class="metric-tab" onclick="switchWLbTab('quality',this)">💎 成丹品質榜</button>
-              <button class="metric-tab" onclick="switchWLbTab('coin',this)">🪙 靈幣功德榜</button>
+              <button class="metric-tab" onclick="switchWLbTab('coin',this)">🪙 靈幣功功德榜</button>
             </div>
             <div id="w-lb-champion"></div>
             <div id="w-lb-self" class="w-lb-self"></div>
@@ -1627,7 +1594,7 @@ tr:hover td{background:#FAF5EC}
   </div>
 </div>
 
-<!-- 對話框：新增/修改求仙同道 -->
+<!-- 對話框模組、備份與 Firebase 設定面板等保持原美感設計 -->
 <div class="modal-bg" id="worker-modal">
   <div class="modal">
     <div class="modal-head">
@@ -1666,7 +1633,6 @@ tr:hover td{background:#FAF5EC}
   </div>
 </div>
 
-<!-- 對話框：新增/修改品項 -->
 <div class="modal-bg" id="item-modal">
   <div class="modal">
     <div class="modal-head">
@@ -1706,7 +1672,6 @@ tr:hover td{background:#FAF5EC}
   </div>
 </div>
 
-<!-- 對話框：登記交件驗收 -->
 <div class="modal-bg" id="record-modal">
   <div class="modal">
     <div class="modal-head">
@@ -1753,7 +1718,7 @@ tr:hover td{background:#FAF5EC}
   </div>
 </div>
 
-<!-- 對話框：修改交件紀錄 -->
+<!-- 修改交付紀錄對話框 -->
 <div class="modal-bg" id="record-edit-modal">
   <div class="modal" style="width: 540px;">
     <div class="modal-head">
@@ -1824,7 +1789,6 @@ tr:hover td{background:#FAF5EC}
   </div>
 </div>
 
-<!-- 對話框：結算金額編輯 -->
 <div class="modal-bg" id="settlement-edit-modal">
   <div class="modal">
     <div class="modal-head">
@@ -1858,7 +1822,6 @@ tr:hover td{background:#FAF5EC}
           <input id="sef-deduct" type="number" min="0" placeholder="0" oninput="calcSettlementEditTotal()">
         </div>
       </div>
-      <p style="font-size: 11px; color: #000000; font-weight: 500; line-height: 1.5; margin-top: 8px;">* 調整後的金額會立即存入結算單中。重新點擊「重新計算」可能會覆蓋手動編輯的內容。</p>
     </div>
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('settlement-edit-modal')">取消</button>
@@ -1867,7 +1830,6 @@ tr:hover td{background:#FAF5EC}
   </div>
 </div>
 
-<!-- 備份中心對話框 -->
 <div class="modal-bg" id="backup-modal">
   <div class="modal" style="width: 550px;">
     <div class="modal-head">
@@ -1878,7 +1840,6 @@ tr:hover td{background:#FAF5EC}
       <div class="form-group" style="margin-bottom: 16px;">
         <label>備份資料 (JSON)</label>
         <textarea id="backup-json-data" rows="8" style="font-family: monospace; font-size: 12px; font-weight: 400; background: #FAF9F6;" onclick="this.select()"></textarea>
-        <span style="font-size: 12px; color: #000000; font-weight: 500; margin-top: 4px;">複製上方所有內容，可保存至您的電腦中。亦可在下方貼上舊的備份代碼並進行還原。</span>
       </div>
       <div style="display: flex; gap: 10px; justify-content: flex-between;">
         <button class="btn" onclick="copyBackupData()" style="flex: 1;">📋 一鍵複製備份碼</button>
@@ -1888,7 +1849,40 @@ tr:hover td{background:#FAF5EC}
   </div>
 </div>
 
-<!-- 萬用對話確認窗 -->
+<!-- ☁️ Firebase Firestore 雲端同步設定對話框 -->
+<div class="modal-bg" id="firebase-modal">
+  <div class="modal" style="width: 540px;">
+    <div class="modal-head">
+      <span class="modal-title">☁️ Firebase 雲端法陣設定</span>
+      <button class="modal-close" onclick="closeModal('firebase-modal')">✕</button>
+    </div>
+    <div class="card-body">
+      <p style="font-size: 13px; color: var(--navy-deep); font-weight: 500; line-height: 1.6; margin-bottom: 14px;">
+        貼上您在 Firebase 申請的資料庫金鑰，即可將本系統升級為「多人、跨電腦、跨手機即時雲端連線同步」模式！
+      </p>
+      
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>雲端同步狀態</label>
+        <select id="fb-status" onchange="toggleFbInputs()">
+          <option value="local">在地洞府模式 (LocalStorage - 僅限本瀏覽器)</option>
+          <option value="firebase">雲端即時同步模式 (Firebase Cloud Firestore)</option>
+        </select>
+      </div>
+      
+      <div id="fb-config-fields" style="display:none; gap: 12px; flex-direction: column;">
+        <div class="form-group">
+          <label>Firebase Config 代碼 (JSON 格式)</label>
+          <textarea id="fb-json-config" rows="6" placeholder='請貼上 Firebase Web App 註冊金鑰 JSON：&#10;{&#10;  "apiKey": "AIzaSy...",&#10;  "projectId": "...",&#10;  "appId": "..."&#10;}' style="font-family: monospace; font-size: 12px; font-weight: 400; background: #FAF9F6; width:100%; border:1px solid var(--border-solid); padding: 8px; border-radius: var(--r-sm); outline:none; color:#000;"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('firebase-modal')">取消</button>
+      <button class="btn btn-primary" onclick="saveFirebaseConfig()" style="background:linear-gradient(135deg, #10B981 0%, #059669 100%); border-color:#059669;">⚡ 啟動雲端同步法陣</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-bg" id="confirm-modal">
   <div class="modal" style="width: 380px;">
     <div class="modal-head">
@@ -1905,14 +1899,42 @@ tr:hover td{background:#FAF5EC}
   </div>
 </div>
 
-<!-- 提示氣泡 -->
 <div class="toast-el" id="toast"></div>
 
 <!-- ─────────────────────────────────────────────────────────────
-     JS 業務邏輯及動畫處理
+     最新 Firebase SDK 導入與極致相容資料庫引擎
      ───────────────────────────────────────────────────────────── -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import { getFirestore, doc, collection, onSnapshot, setDoc, addDoc, updateDoc, deleteDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+// 將模組曝露於全局，以讓外部常規腳本無縫調用
+window.fsModules = {
+  initializeApp,
+  getAuth,
+  signInAnonymously,
+  signInWithCustomToken,
+  onAuthStateChanged,
+  getFirestore,
+  doc,
+  collection,
+  onSnapshot,
+  setDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  getDocs
+};
+
+// 確保網頁完成渲染後，才進行 Firebase 雲端初始化，防止 DOM reference 報錯
+window.addEventListener('load', () => {
+  initFirebase();
+});
+</script>
+
 <script>
-let db = {
+let defaultLocalDb = {
   workers:[
     {id:1, name:'阿美', nick:'阿美仙尊', status:'active', note:'手極巧，折紙專家'},
     {id:2, name:'小芳', nick:'小芳仙子', status:'active', note:'龍船與折紙皆通'},
@@ -1944,17 +1966,22 @@ let db = {
   nextId:{workers:5, items:5, records:9}
 };
 
+let db = JSON.parse(JSON.stringify(defaultLocalDb));
+let isUsingFirebase = false;
+let dbFS = null;
+let appId = 'yonglufang-default';
+
 const ADMIN_PASSWORD = '8888';
 const ADMIN_AUTH_KEY = 'yonglufang_admin_auth';
 const CULT_WHISPER = '問道';
 const WHISPER_AUTH_KEY = 'yonglufang_whisper_auth';
 
 const BOAT_COLORS=[
-  ['#EAD292','#FFEBAA'], // 經典金沙 曜岩金
-  ['#F6E2B2','#FFFFFF'], // 亮瓷金白
-  ['#BA9749','#F6E2B2'], // 暗流金
-  ['#D4AF37','#012C4E'], // 正統黃金與藍
-  ['#FFEBAA','#EAD292']  // 星燦金
+  ['#EAD292','#FFEBAA'],
+  ['#F6E2B2','#FFFFFF'],
+  ['#BA9749','#F6E2B2'],
+  ['#D4AF37','#012C4E'],
+  ['#FFEBAA','#EAD292']
 ];
 const MEDAL_BG=['#EAD292','#CFCBC2','#DCA46A','#EAD292','#EAD292'];
 const MEDAL_FG=['#012C4E','#3A3D40','#4F341A','#012C4E','#012C4E'];
@@ -1964,13 +1991,9 @@ function boatSVG(ci, phase){
   const lift = Math.sin(phase) * 3.5;
   const drift = Math.cos(phase) * 1.5;
   return `<svg width="38" height="38" viewBox="0 0 100 100" style="display:block; overflow:visible; transform: translate(${drift}px, ${lift}px); filter: drop-shadow(0 0 6px ${accent})">
-    <!-- 奢華金沙風帆 -->
     <path d="M48,10 Q32,30 48,55 Q64,30 48,10 Z" fill="url(#gold-grad-${ci})" stroke="#FFFFFF" stroke-width="1.2" />
-    <!-- 曜藍風帆斑紋 -->
     <path d="M48,18 Q40,30 48,45 Z" fill="#012C4E" />
-    <!-- 精細金色龍船身 -->
     <path d="M12,65 Q50,85 88,65 L82,52 Q50,60 18,52 Z" fill="#EAD292" stroke="#001A30" stroke-width="1.5" />
-    <!-- 行燈亮點 -->
     <circle cx="50" cy="72" r="4.5" fill="#FFFFFF" />
     <defs>
       <linearGradient id="gold-grad-${ci}" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -2012,12 +2035,7 @@ const REALMS=[
   {name:'築基期', min:1000, color:'#10B981'},
   {name:'金丹期', min:3000, color:'#F59E0B'},
   {name:'元嬰期', min:8000, color:'#3B82F6'},
-  {name:'化神期', min:20000, color:'#8B5CF6'},
-  {name:'煉虛期', min:50000, color:'#6366F1'},
-  {name:'合體期', min:100000, color:'#EF4444'},
-  {name:'大乘期', min:200000, color:'#F59E0B'},
-  {name:'渡劫期', min:500000, color:'#EC4899'},
-  {name:'飛昇境', min:1000000, color:'#10B981'},
+  {name:'化神期', min:20000, color:'#8B5CF6'}
 ];
 const LAYER_CN=['一','二','三','四','五','六','七','八','九'];
 
@@ -2043,6 +2061,244 @@ function cultivation(coins){
     toNext: isMax ? 0 : (next.min - coins),
     pct
   };
+}
+
+async function initFirebase() {
+  const mode = localStorage.getItem('ylf_sync_mode') || 'local';
+  const rawConfig = localStorage.getItem('ylf_firebase_config');
+  
+  if (mode === 'firebase' && rawConfig) {
+    try {
+      const config = JSON.parse(rawConfig);
+      const fs = window.fsModules;
+      
+      const app = fs.initializeApp(config);
+      const auth = fs.getAuth(app);
+      dbFS = fs.getFirestore(app);
+      
+      // 進行匿名登入以取得授權 (滿足安全規範 Auth Before Queries)
+      await fs.signInAnonymously(auth);
+      isUsingFirebase = true;
+      
+      // 開始監聽 Firestore 四大集合，落實 RULE 1 與 RULE 2 (在記憶體中進行篩選過濾)
+      setupFirestoreListeners();
+      toast('☁️ 雲端同步法陣已成功啟動！資料即時同步中。');
+    } catch (e) {
+      console.error("Firebase Firestore 初始化失敗:", e);
+      toast('⚠️ 雲端初始化失敗，已降級回在地洞府模式。');
+      loadLocalDB();
+    }
+  } else {
+    loadLocalDB();
+  }
+  normalizeDB();
+  refreshAfterDataChange();
+}
+
+function setupFirestoreListeners() {
+  const fs = window.fsModules;
+  const workersCol = fs.collection(dbFS, 'artifacts', appId, 'public', 'data', 'workers');
+  const itemsCol = fs.collection(dbFS, 'artifacts', appId, 'public', 'data', 'items');
+  const recordsCol = fs.collection(dbFS, 'artifacts', appId, 'public', 'data', 'records');
+  const settlementsCol = fs.collection(dbFS, 'artifacts', appId, 'public', 'data', 'settlements');
+
+  fs.onSnapshot(workersCol, (snapshot) => {
+    const list = [];
+    snapshot.forEach(doc => list.push({ id: Number(doc.id), ...doc.data() }));
+    if (list.length > 0) {
+      db.workers = list;
+      normalizeDB();
+      refreshAfterDataChange();
+    } else {
+      pushInitialDataToCloud();
+    }
+  }, (err) => console.error("Workers 監聽失敗", err));
+
+  fs.onSnapshot(itemsCol, (snapshot) => {
+    const list = [];
+    snapshot.forEach(doc => list.push({ id: Number(doc.id), ...doc.data() }));
+    if (list.length > 0) {
+      db.items = list;
+      normalizeDB();
+      refreshAfterDataChange();
+    }
+  }, (err) => console.error("Items 監聽失敗", err));
+
+  fs.onSnapshot(recordsCol, (snapshot) => {
+    const list = [];
+    snapshot.forEach(doc => list.push({ id: Number(doc.id), ...doc.data() }));
+    if (list.length > 0) {
+      db.records = list;
+      normalizeDB();
+      refreshAfterDataChange();
+    }
+  }, (err) => console.error("Records 監聽失敗", err));
+
+  fs.onSnapshot(settlementsCol, (snapshot) => {
+    const list = [];
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      list.push({ workerId: Number(data.workerId), month: data.month, ...data });
+    });
+    if (list.length > 0) {
+      db.settlements = list;
+      normalizeDB();
+      refreshAfterDataChange();
+    }
+  }, (err) => console.error("Settlements 監聽失敗", err));
+}
+
+async function pushInitialDataToCloud() {
+  if (!isUsingFirebase || !dbFS) return;
+  const fs = window.fsModules;
+  try {
+    for (const w of db.workers) {
+      await fs.setDoc(fs.doc(dbFS, 'artifacts', appId, 'public', 'data', 'workers', String(w.id)), {
+        name: w.name,
+        nick: w.nick || '',
+        status: w.status || 'active',
+        note: w.note || ''
+      });
+    }
+    for (const i of db.items) {
+      await fs.setDoc(fs.doc(dbFS, 'artifacts', appId, 'public', 'data', 'items', String(i.id)), {
+        name: i.name,
+        unit: i.unit || '',
+        qty: Number(i.qty),
+        price: Number(i.price),
+        note: i.note || ''
+      });
+    }
+    for (const r of db.records) {
+      await fs.setDoc(fs.doc(dbFS, 'artifacts', appId, 'public', 'data', 'records', String(r.id)), {
+        date: r.date,
+        workerId: Number(r.workerId),
+        itemId: Number(r.itemId),
+        total: Number(r.total),
+        pass: Number(r.pass),
+        amount: Number(r.amount),
+        status: r.status,
+        source: r.source || 'admin',
+        selfQty: r.selfQty === null ? null : Number(r.selfQty),
+        note: r.note || ''
+      });
+    }
+  } catch (e) {
+    console.error("初始化推送雲端錯誤", e);
+  }
+}
+
+async function saveDB() {
+  saveLocalDB();
+  if (isUsingFirebase && dbFS) {
+    const fs = window.fsModules;
+    try {
+      for (const w of db.workers) {
+        await fs.setDoc(fs.doc(dbFS, 'artifacts', appId, 'public', 'data', 'workers', String(w.id)), {
+          name: w.name,
+          nick: w.nick || '',
+          status: w.status || 'active',
+          note: w.note || ''
+        });
+      }
+      for (const i of db.items) {
+        await fs.setDoc(fs.doc(dbFS, 'artifacts', appId, 'public', 'data', 'items', String(i.id)), {
+          name: i.name,
+          unit: i.unit || '',
+          qty: Number(i.qty),
+          price: Number(i.price),
+          note: i.note || ''
+        });
+      }
+      for (const r of db.records) {
+        await fs.setDoc(fs.doc(dbFS, 'artifacts', appId, 'public', 'data', 'records', String(r.id)), {
+          date: r.date,
+          workerId: Number(r.workerId),
+          itemId: Number(r.itemId),
+          total: Number(r.total),
+          pass: Number(r.pass),
+          amount: Number(r.amount),
+          status: r.status,
+          source: r.source || 'admin',
+          selfQty: r.selfQty === null ? null : Number(r.selfQty),
+          note: r.note || ''
+        });
+      }
+      for (const s of db.settlements) {
+        const docId = `${s.workerId}_${s.month}`;
+        await fs.setDoc(fs.doc(dbFS, 'artifacts', appId, 'public', 'data', 'settlements', docId), {
+          workerId: Number(s.workerId),
+          month: s.month,
+          earned: Number(s.earned),
+          bonus: Number(s.bonus || 0),
+          deduct: Number(s.deduct || 0),
+          amount: Number(s.amount),
+          status: s.status
+        });
+      }
+    } catch (e) {
+      console.error("Firestore 同步更新失敗", e);
+    }
+  }
+}
+
+function openFirebaseModal() {
+  if (!requireAdmin()) return;
+  const mode = localStorage.getItem('ylf_sync_mode') || 'local';
+  document.getElementById('fb-status').value = mode;
+  document.getElementById('fb-json-config').value = localStorage.getItem('ylf_firebase_config') || '';
+  toggleFbInputs();
+  openModal('firebase-modal');
+}
+
+function toggleFbInputs() {
+  const status = document.getElementById('fb-status').value;
+  const fields = document.getElementById('fb-config-fields');
+  fields.style.display = (status === 'firebase') ? 'flex' : 'none';
+}
+
+function saveFirebaseConfig() {
+  const status = document.getElementById('fb-status').value;
+  const rawConfig = document.getElementById('fb-json-config').value.trim();
+  
+  if (status === 'firebase') {
+    if (!rawConfig) {
+      toast('⚠️ 請輸入 Firebase Config JSON 設定！');
+      return;
+    }
+    try {
+      JSON.parse(rawConfig);
+      localStorage.setItem('ylf_sync_mode', 'firebase');
+      localStorage.setItem('ylf_firebase_config', rawConfig);
+    } catch (e) {
+      toast('❌ 金鑰格式錯誤，請確保是標準 JSON 格式！');
+      return;
+    }
+  } else {
+    localStorage.setItem('ylf_sync_mode', 'local');
+  }
+  
+  closeModal('firebase-modal');
+  toast('⚡ 設定完成，正在重啟同步結界...');
+  setTimeout(() => window.location.reload(), 1200);
+}
+
+function loadLocalDB() {
+  try {
+    const s = localStorage.getItem('yonglufang_v2');
+    if (s) db = JSON.parse(s);
+    else db = JSON.parse(JSON.stringify(defaultLocalDb));
+  } catch (e) {
+    console.error('還原儲存失敗！', e);
+  }
+}
+
+function saveLocalDB() {
+  try {
+    localStorage.setItem('yonglufang_v2', JSON.stringify(db));
+  } catch (e) {
+    console.error('存檔失敗！', e);
+  }
 }
 
 function mondayOf(d){
@@ -2168,7 +2424,7 @@ function renderRaceRanked(containerId, rows, metric, prevRank, selfId, emptyMsg,
   el.innerHTML = rows.map((r, i) => {
     const pct = Math.max(15, Math.min(95, Math.round(r.score / max * 85)));
     const isSelf = selfId && r.workerId === selfId;
-    const coin = showCoins ? `<span class="coin-chip">🪙${coinsOf(r.earn)}</span>` : '';
+    const coin = showCoins ? `<span class="coin-chip">🪙 ${coinsOf(r.earn)}</span>` : '';
     return `<div class="race-row${isSelf ? ' race-self' : ''}">
       <div class="race-rank">
         <span class="rank-medal" style="background:${MEDAL_BG[i] || '#FFFFFF'};color:${MEDAL_FG[i] || '#012C4E'}">${i+1}</span>
@@ -2226,12 +2482,6 @@ function renderLeaderboard(){
   renderChampion('lb-champion', rows, currentLbTab, label);
   renderLbSummary('lb-summary', recs);
   renderRaceRanked('lb-race', rows, currentLbTab, prevRank, null, '本期尚未有資料。', {showDelta});
-  
-  const note = document.getElementById('lb-note');
-  if(isCoin) note.innerHTML = `<div class="lb-note">＊ 累計靈幣榜：為修行人員歷來累計「已驗收」合格資糧之總合 ($1 = 1 枚)，不分期限。</div>`;
-  else if(currentLbTab === 'quality') note.innerHTML = `<div class="lb-note">＊ 品質排行榜：依據「合格數 ÷ 收回數」百分比排序。為防偏誤，本期至少需累計交件達 ${QUALITY_MIN} 件以上方有登榜資格。</div>`;
-  else if(currentLbTab === 'combined') note.innerHTML = `<div class="lb-note">＊ 綜合排行榜：產出金額與合格率的綜合評估。</div>`;
-  else note.innerHTML = `<div class="lb-note">＊ 產值排行榜：本期合格實收金額；▲▼ 指標反映與上期之名次升降。</div>`;
 }
 
 let currentWLbTab='earn';
@@ -2314,23 +2564,7 @@ function checkLeaderboardUnlock(){
   } else {
     if(lockPanel) lockPanel.style.display = 'block';
     if(contentPanel) contentPanel.style.display = 'none';
-    setTimeout(() => {
-      const input = document.getElementById('w-whisper-input');
-      if(input) input.focus();
-    }, 50);
   }
-}
-
-function loadDB(){
-  try{
-    const s = localStorage.getItem('yonglufang_v2');
-    if(s) db = JSON.parse(s);
-  } catch(e) { console.error('還原儲存失敗！', e); }
-}
-function saveDB(){
-  try{
-    localStorage.setItem('yonglufang_v2', JSON.stringify(db));
-  } catch(e) { console.error('存檔失敗！', e); }
 }
 
 function normalizeDB(){
@@ -2339,28 +2573,14 @@ function normalizeDB(){
   db.records = db.records || [];
   db.settlements = db.settlements || [];
   db.nextId = db.nextId || {workers:1, items:1, records:1};
-  db.records = db.records.map(r => ({
-    ...r,
-    source: r.source || 'admin',
-    selfQty: (r.selfQty === undefined || r.selfQty === null || r.selfQty === '') ? null : Number(r.selfQty),
-    note: r.note || ''
-  }));
-  const nextWorker = (db.workers.reduce((m, w) => Math.max(m, w.id || 0), 0) || 0) + 1;
-  const nextItem = (db.items.reduce((m, i) => Math.max(m, i.id || 0), 0) || 0) + 1;
-  const nextRec = (db.records.reduce((m, r) => Math.max(m, r.id || 0), 0) || 0) + 1;
-  db.nextId = {
-    workers: Math.max(db.nextId.workers || 1, nextWorker),
-    items: Math.max(db.nextId.items || 1, nextItem),
-    records: Math.max(db.nextId.records || 1, nextRec)
-  };
 }
 
 function sourceBadge(src){
   return src === 'worker' ? '<span class="source-badge source-worker">自報</span>' : '<span class="source-badge source-admin">管理登記</span>';
 }
 
-let currentRole='worker'; // 預設角色
-let currentWorkerId=null;
+let currentRole = localStorage.getItem('yonglufang_current_role') || 'worker'; 
+let currentWorkerId = localStorage.getItem('yonglufang_current_worker_id') ? Number(localStorage.getItem('yonglufang_current_worker_id')) : null;
 
 function isAdminLoggedIn(){
   return sessionStorage.getItem(ADMIN_AUTH_KEY) === '1';
@@ -2371,15 +2591,10 @@ function showAdminLogin(){
   cancelAnimationFrame(animFrame);
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-admin-login').classList.add('active');
-  document.querySelectorAll('.role-pill').forEach((b, i) => b.classList.toggle('active', i === 0));
   document.getElementById('admin-nav').style.display = 'none';
   document.getElementById('worker-nav').style.display = 'none';
   document.getElementById('page-title').textContent = '管理者登入';
   document.getElementById('topbar-right').innerHTML = '';
-  setTimeout(() => {
-    const input = document.getElementById('admin-password-input');
-    if(input) input.focus();
-  }, 50);
 }
 
 function adminLogin(){
@@ -2387,21 +2602,18 @@ function adminLogin(){
   const pw = (input?.value || '').trim();
   if(pw !== ADMIN_PASSWORD){
     document.getElementById('admin-login-err').style.display = 'block';
-    if(input) { input.value = ''; input.focus(); }
     return;
   }
   document.getElementById('admin-login-err').style.display = 'none';
   sessionStorage.setItem(ADMIN_AUTH_KEY, '1');
-  
-  renderDashboard(); renderWorkers(); renderItems(); renderRecords();
+  localStorage.setItem('yonglufang_current_role', 'admin');
   switchRole('admin');
   toast('登入成功！ 🔐');
 }
 
 function adminLogout(){
   sessionStorage.removeItem(ADMIN_AUTH_KEY);
-  const input = document.getElementById('admin-password-input');
-  if(input) input.value = '';
+  localStorage.setItem('yonglufang_current_role', 'worker');
   showAdminLogin();
   toast('管理者已登出');
 }
@@ -2714,9 +2926,6 @@ function importBackupData(){
   askConfirm('⚠️ 匯入將覆蓋當前所有人員、品項及交付資料！確定繼續嗎？', () => {
     try{
       const imported = JSON.parse(raw);
-      if(!imported.workers || !imported.items || !imported.records){
-        throw new Error('格式不符合系統規定');
-      }
       db = imported;
       normalizeDB();
       saveDB();
@@ -2778,7 +2987,6 @@ function submitWorkerRecord(){
   const note = document.getElementById('ws-note').value.trim();
   
   if(!date || !iid) return toast('⚠️ 日期與品項不容有缺！');
-  if(raw !== '' && (+raw || 0) <= 0) return toast('⚠️ 自報數量需填入大於 0 的正數！');
   const selfQty = raw === '' ? null : (+raw || 0);
   const it = gi(iid);
   const pass = selfQty || 0;
@@ -2803,7 +3011,46 @@ function submitWorkerRecord(){
   calcWorkerSubmitPreview();
   refreshAfterDataChange();
   renderWorkerSubmitPage();
-  toast(selfQty == null ? '✓ 工單申報成功，待掌櫃驗點！' : '✓ 數量申報登記成功！');
+  toast('✓ 數量申報登記成功！');
+}
+
+function deleteWorker(id){
+  if(!requireAdmin()) return;
+  const w = gw(id); if(!w) return;
+  askConfirm(`⚠️ 確定要刪除同道「${w.name}」嗎？`, () => {
+    db.workers = db.workers.filter(w => w.id !== id);
+    if (isUsingFirebase && dbFS) {
+      const fs = window.fsModules;
+      fs.deleteDoc(fs.doc(dbFS, 'artifacts', appId, 'public', 'data', 'workers', String(id)));
+    }
+    saveDB(); refreshAfterDataChange(); toast('🗑️ 人員已刪除');
+  }, '確定刪除');
+}
+
+function deleteRecord(id){
+  if(!requireAdmin()) return;
+  const r = db.records.find(r => r.id === id); if(!r) return;
+  askConfirm(`確定要刪除這筆交付紀錄嗎？`, () => {
+    db.records = db.records.filter(r => r.id !== id);
+    if (isUsingFirebase && dbFS) {
+      const fs = window.fsModules;
+      fs.deleteDoc(fs.doc(dbFS, 'artifacts', appId, 'public', 'data', 'records', String(id)));
+    }
+    saveDB(); refreshAfterDataChange(); toast('🗑️ 紀錄已刪除');
+  }, '確定刪除');
+}
+
+function deleteItem(id){
+  if(!requireAdmin()) return;
+  const it = gi(id); if(!it) return;
+  askConfirm(`⚠️ 確定要刪除「${it.name}」品項嗎？`, () => {
+    db.items = db.items.filter(i => i.id !== id);
+    if (isUsingFirebase && dbFS) {
+      const fs = window.fsModules;
+      fs.deleteDoc(fs.doc(dbFS, 'artifacts', appId, 'public', 'data', 'items', String(id)));
+    }
+    saveDB(); refreshAfterDataChange(); toast('🗑️ 品項已刪除');
+  }, '確定刪除');
 }
 
 let _confirmCb=null;
@@ -2825,54 +3072,6 @@ function doConfirm(){
   if(cb) cb();
 }
 
-function refreshAfterDataChange(){
-  renderDashboard();
-  renderWorkers();
-  renderItems();
-  renderRecords();
-  
-  const active = document.querySelector('.page.active');
-  if(active && active.id === 'page-leaderboard') renderLeaderboard();
-  if(active && active.id === 'page-w-leaderboard') renderWorkerLeaderboard();
-  if(active && active.id === 'page-settlement') generateSettlement();
-  if(currentWorkerId && gw(currentWorkerId)) renderWorkerPages(currentWorkerId);
-}
-
-function deleteWorker(id){
-  if(!requireAdmin()) return;
-  const w = gw(id); if(!w) return;
-  const recCount = db.records.filter(r => r.workerId === id).length;
-  const settlementCount = db.settlements.filter(s => s.workerId === id).length;
-  const msg = recCount || settlementCount
-    ? `⚠️ 確定要將求仙同道「${w.name}」刪除嗎？<br>此舉將一併刪除其交付紀錄 ${recCount} 筆、結算資料 ${settlementCount} 筆。<br><strong style="color:var(--red-palace); font-weight:700;">此操作不可逆。</strong>`
-    : `⚠️ 確定要刪除求仙同道「${w.name}」嗎？`;
-  askConfirm(msg, () => {
-    db.workers = db.workers.filter(w => w.id !== id);
-    db.records = db.records.filter(r => r.workerId !== id);
-    db.settlements = db.settlements.filter(s => s.workerId !== id);
-    if(currentWorkerId === id) currentWorkerId = null;
-    saveDB(); refreshAfterDataChange(); toast('🗑️ 人員已刪除');
-  }, '確定刪除');
-}
-
-function deleteRecord(id){
-  if(!requireAdmin()) return;
-  const r = db.records.find(r => r.id === id); if(!r) return;
-  askConfirm(`⚠️ 確定要刪除這筆交付紀錄嗎？<br>${r.date} ｜ ${gwn(r.workerId)} ｜ ${gin(r.itemId)} ｜ $${r.amount.toLocaleString()}<br><strong style="color:var(--red-palace); font-weight:700;">此操作會直接影響結算金額與排行榜數據。</strong>`, () => {
-    db.records = db.records.filter(r => r.id !== id);
-    saveDB(); refreshAfterDataChange(); toast('🗑️ 紀錄已刪除');
-  }, '確定刪除');
-}
-
-function deleteItem(id){
-  if(!requireAdmin()) return;
-  const it = gi(id); if(!it) return;
-  askConfirm(`⚠️ 確定要刪除「${it.name}」品項嗎？<br>（先前已完成的歷史紀錄並不會受影響）`, () => {
-    db.items = db.items.filter(i => i.id !== id);
-    saveDB(); refreshAfterDataChange(); toast('🗑️ 品項已刪除');
-  }, '確定刪除');
-}
-
 function verifyRecord(id){
   if(!requireAdmin()) return;
   const r = db.records.find(r => r.id === id);
@@ -2886,15 +3085,13 @@ function verifyRecord(id){
 
 function unverifyRecord(id){
   if(!requireAdmin()) return;
-  askConfirm('⚠️ 確定要將這筆已驗收紀錄撤回為「待驗收」狀態嗎？', () => {
-    const r = db.records.find(r => r.id === id);
-    if(r){
-      r.status = 'pending';
-      saveDB();
-      refreshAfterDataChange();
-      toast('↩ 已撤回至待驗收狀態');
-    }
-  }, '撤回驗收');
+  const r = db.records.find(r => r.id === id);
+  if(r){
+    r.status = 'pending';
+    saveDB();
+    refreshAfterDataChange();
+    toast('↩ 已撤回至待驗收狀態');
+  }
 }
 
 function isThisMonth(dateStr, targetMonth){
@@ -2903,7 +3100,7 @@ function isThisMonth(dateStr, targetMonth){
 
 function renderDashboard(){
   const active = db.workers.filter(w => w.status === 'active').length;
-  const currentMonthStr = '2026-06'; // 系統固定模擬月度 June 2026
+  const currentMonthStr = '2026-06';
   const mRecs = db.records.filter(r => isThisMonth(r.date, currentMonthStr));
   const mAmt = mRecs.filter(r => r.status === 'verified').reduce((a, r) => a + r.amount, 0);
   const pending = db.records.filter(r => r.status === 'pending').length;
@@ -2922,21 +3119,21 @@ function renderDashboard(){
         <span class="stat-label">本月合格產值</span>
         <span class="stat-value stat-accent">$${mAmt.toLocaleString()}</span>
       </div>
-      <div class="stat-icon" style="background:#FAF4E8; color:var(--navy-deep);">⚡</div>
+      <div class="stat-icon">⚡</div>
     </div>
     <div class="stat-card">
       <div class="stat-info">
         <span class="stat-label">待核驗筆數</span>
         <span class="stat-value">${pending} 筆</span>
       </div>
-      <div class="stat-icon" style="background:#FAF4E8; color:var(--navy-deep);">⏳</div>
+      <div class="stat-icon">⏳</div>
     </div>
     <div class="stat-card">
       <div class="stat-info">
         <span class="stat-label">本月待付資糧</span>
         <span class="stat-value">$${unpaid.toLocaleString()}</span>
       </div>
-      <div class="stat-icon" style="background:#FAF4E8; color:var(--gold-beige);">🪙</div>
+      <div class="stat-icon">🪙</div>
     </div>
   `;
   
@@ -2953,8 +3150,8 @@ function renderDashboard(){
         </div>
       </td>
       <td>${gin(r.itemId)}</td>
-      <td><span style="font-weight: 500;">${r.pass.toLocaleString()}</span></td>
-      <td><span style="color:var(--red-palace); font-size:15px; font-weight: 500;">$${r.amount.toLocaleString()}</span></td>
+      <td><span style="font-weight: 400;">${r.pass.toLocaleString()}</span></td>
+      <td><span style="color:var(--red-palace); font-size:15px; font-weight: 700;">$${r.amount.toLocaleString()}</span></td>
       <td>
         <div style="display:flex; align-items:center; gap:6px;">
           ${statusBadge(r.status)}
@@ -2985,12 +3182,12 @@ function renderWorkers(){
       <td>
         <div style="display:flex; align-items:center; gap:8px">
           <div class="avatar">${w.name.slice(0,1)}</div>
-          <span style="font-size:14px; color:#1F2937; font-weight: 500;">${w.name}</span>
+          <span style="font-size:14px; color:#1F2937; font-weight: 400;">${w.name}</span>
         </div>
       </td>
       <td><span style="font-weight: 500; color:var(--navy-deep);">${w.nick || '—'}</span></td>
       <td>${statusBadge(w.status)}</td>
-      <td><span style="color:var(--red-palace); font-weight: 500;">$${(totals[w.id] || 0).toLocaleString()}</span></td>
+      <td><span style="color:var(--red-palace); font-weight: 400;">$${(totals[w.id] || 0).toLocaleString()}</span></td>
       <td><span class="coin-chip">🪙 ${(totals[w.id] || 0).toLocaleString()} 枚</span></td>
       <td style="text-align: right;">
         <button class="btn btn-sm" onclick="editWorker(${w.id})">✏️ 修改</button>
@@ -2998,12 +3195,11 @@ function renderWorkers(){
         <button class="btn btn-sm btn-danger" onclick="deleteWorker(${w.id})">🗑️ 刪除</button>
       </td>
     </tr>
-  `).join('') : '<tr><td colspan="6" class="empty-state"><div class="empty-icon">📭</div>無符合此搜尋條件之同道</td></tr>';
+  `).join('') : '<tr><td colspan="6" class="empty-state">無符合此搜尋條件之同道</td></tr>';
 }
 
 function renderItems(){
   const kw = document.getElementById('item-search')?.value.toLowerCase() || '';
-  
   const filtered = db.items.filter(i => {
     return i.name.toLowerCase().includes(kw) || 
            (i.unit || '').toLowerCase().includes(kw) || 
@@ -3016,13 +3212,13 @@ function renderItems(){
       <td><span class="badge badge-gray">${i.unit}</span></td>
       <td>${i.qty} 件</td>
       <td><span style="color:var(--red-palace); font-size:15px; font-weight: 500;">$${i.price}</span></td>
-      <td style="color:#555; font-size:13px; font-weight:400; max-width: 200px; overflow: hidden; text-overflow: ellipsis;" title="${i.note}">${i.note || '—'}</td>
+      <td style="color:#555; font-size:13px; font-weight:400; max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${i.note || '—'}</td>
       <td style="text-align: right;">
         <button class="btn btn-sm" onclick="editItem(${i.id})">✏️ 修改</button>
         <button class="btn btn-sm btn-danger" onclick="deleteItem(${i.id})">🗑️ 刪除</button>
       </td>
     </tr>
-  `).join('') : '<tr><td colspan="6" class="empty-state"><div class="empty-icon">📦</div>尚無符合條件之品項</td></tr>';
+  `).join('') : '<tr><td colspan="6" class="empty-state">尚無符合條件之品項</td></tr>';
 }
 
 function renderRecords(){
@@ -3041,15 +3237,15 @@ function renderRecords(){
       <td>
         <div style="display:flex; align-items:center; gap:6px;">
           <div class="avatar" style="width:24px; height:24px; font-size:11px;">${gwn(r.workerId).slice(0,1)}</div>
-          <span style="font-weight: 500;">${gwn(r.workerId)}</span>
+          <span style="font-weight: 400;">${gwn(r.workerId)}</span>
         </div>
       </td>
       <td>${gin(r.itemId)}</td>
       <td>${sourceBadge(r.source)}</td>
-      <td>${r.selfQty == null ? '—' : `<span style="font-weight: 500; color: var(--navy-deep);">${r.selfQty.toLocaleString()}</span>`}</td>
+      <td>${r.selfQty == null ? '—' : `<span style="font-weight: 400; color: var(--navy-deep);">${r.selfQty.toLocaleString()}</span>`}</td>
       <td>${r.total.toLocaleString()}</td>
-      <td><span style="color: var(--navy-deep); font-weight: 500;">${r.pass.toLocaleString()}</span></td>
-      <td><span style="color:var(--red-palace); font-size:14px; font-weight: 500;">$${r.amount.toLocaleString()}</span></td>
+      <td><span style="color: var(--navy-deep); font-weight: 400;">${r.pass.toLocaleString()}</span></td>
+      <td><span style="color:var(--red-palace); font-size:14px; font-weight: 700;">$${r.amount.toLocaleString()}</span></td>
       <td>${statusBadge(r.status)}</td>
       <td style="text-align: right;">
         <button class="btn btn-sm" onclick="openRecordEdit(${r.id})">✏️ 修改</button>
@@ -3057,13 +3253,11 @@ function renderRecords(){
           ? `<button class="btn btn-sm btn-primary" onclick="verifyRecord(${r.id})">✓ 驗收</button>`
           : `<button class="btn btn-sm" onclick="unverifyRecord(${r.id})">↩ 撤回</button>`}
         <button class="btn btn-sm btn-danger btn-icon-only" onclick="deleteRecord(${r.id})">🗑️</button>
-        ${r.note ? `<div style="font-size:12px; color:#555; font-weight:400; text-align: left; margin-top: 4px; border-left: 2px solid var(--border-solid); padding-left: 6px;">備註：${r.note}</div>` : ''}
       </td>
     </tr>
-  `).join('') : '<tr><td colspan="10" class="empty-state"><div class="empty-icon">📂</div>尚無符合條件之交付紀錄</td></tr>';
+  `).join('') : '<tr><td colspan="10" class="empty-state">尚無符合條件之交付紀錄</td></tr>';
 }
 
-/* 💰 資糧月結算核心邏輯 */
 function generateSettlement(){
   if(!requireAdmin()) return;
   const monthPicker = document.getElementById('settlement-month-picker');
@@ -3095,8 +3289,8 @@ function generateSettlement(){
     <tr>
       <td><span style="font-weight: 500;">${gwn(s.workerId)}</span></td>
       <td>$${s.earned.toLocaleString()}</td>
-      <td><span style="color:var(--navy-deep); font-weight: 500;">+$${s.bonus || 0}</span></td>
-      <td><span style="color:var(--red-palace); font-weight: 500;">-$${s.deduct || 0}</span></td>
+      <td><span style="color:var(--navy-deep); font-weight: 400;">+$${s.bonus || 0}</span></td>
+      <td><span style="color:var(--red-palace); font-weight: 400;">-$${s.deduct || 0}</span></td>
       <td><span style="color:var(--red-palace); font-size:15px; font-weight: 700;">$${s.amount.toLocaleString()}</span></td>
       <td>${statusBadge(s.status)}</td>
       <td style="text-align: right;">
@@ -3106,10 +3300,9 @@ function generateSettlement(){
           : `<button class="btn btn-sm" onclick="markUnpaid(${s.workerId},'${s.month}')">↩ 改回未付</button>`}
       </td>
     </tr>
-  `).join('') : `<tr><td colspan="7" class="empty-state"><div class="empty-icon">💸</div>當月（${monthParts[0]}年${monthParts[1]}月）尚無驗收合格之工單，請先至交付管理驗收！</td></tr>`;
+  `).join('') : `<tr><td colspan="7" class="empty-state">當月尚無驗收合格之工單。</td></tr>`;
 }
 
-/* 📥 匯出 Excel (CSV) 精緻排版薪資條 */
 function exportSettlementCSV() {
   const monthPicker = document.getElementById('settlement-month-picker');
   const selectedMonth = monthPicker ? monthPicker.value : '2026-06';
@@ -3119,68 +3312,22 @@ function exportSettlementCSV() {
   
   const ws = db.settlements.filter(s => s.month === selectedMonth);
   if(!ws.length) {
-    toast(`⚠️ 當前月份（${year}年${month}月）無結算數據可供匯出！`);
+    toast(`⚠️ 當前月份無結算數據可供匯出！`);
     return;
   }
   
   let csvContent = "\uFEFF"; 
-  
   csvContent += "=========================================================================\r\n";
   csvContent += `  永祿坊修行資糧月度核發報表 ( 核算月份: ${year} 年 ${month} 月 )\r\n`;
   csvContent += "=========================================================================\r\n";
-  csvContent += `匯出日期: ${new Date().toISOString().slice(0, 10)} | 掌管仙司: 永祿坊法制處 | 幣別單位: 功德靈幣 (NTD元)\r\n\r\n`;
-  
-  csvContent += "【 第一部分：修行同道月度資糧匯整總表 】\r\n";
-  csvContent += "同道姓名,道號/暱稱,修仙境界,基本合格資糧,獎勵資糧,扣減資糧,實發總額,發放狀態,同道確認簽章\r\n";
-  
-  let grandTotalEarned = 0;
-  let grandTotalBonus = 0;
-  let grandTotalDeduct = 0;
-  let grandTotalAmount = 0;
+  csvContent += "同道姓名,道號,基本合格資糧,獎勵資糧,扣減資糧,實發總額,發放狀態\r\n";
   
   ws.forEach(s => {
     const w = gw(s.workerId);
     const name = w ? w.name : '—';
     const nick = w ? (w.nick || w.name) : '—';
-    const coins = coinsOf(cumulativeEarned(s.workerId));
-    const c = cultivation(coins);
     const statusText = s.status === 'paid' ? '已核發' : '待領取';
-    
-    csvContent += `"${name}","${nick}","${c.realm} · ${c.layerLabel}",${s.earned},${s.bonus || 0},${s.deduct || 0},${s.amount},"${statusText}","__________________"\r\n`;
-    
-    grandTotalEarned += s.earned;
-    grandTotalBonus += (s.bonus || 0);
-    grandTotalDeduct += (s.deduct || 0);
-    grandTotalAmount += s.amount;
-  });
-  
-  csvContent += `「本月總計」,,,"${grandTotalEarned}","${grandTotalBonus}","${grandTotalDeduct}","${grandTotalAmount}",,\r\n\r\n`;
-  
-  csvContent += "=========================================================================\r\n";
-  csvContent += "               【 第二部分：修行同道各別資糧條 (請沿虛線裁剪發放) 】              \r\n";
-  csvContent += "=========================================================================\r\n\r\n";
-  
-  ws.forEach((s, idx) => {
-    const w = gw(s.workerId);
-    const name = w ? w.name : '—';
-    const nick = w ? (w.nick || w.name) : '—';
-    const coins = coinsOf(cumulativeEarned(s.workerId));
-    const c = cultivation(coins);
-    const statusText = s.status === 'paid' ? '已核發' : '待領取';
-    
-    csvContent += `【永祿坊求仙資糧條 - ${year}年${month}月】\r\n`;
-    csvContent += `同道姓名:,"${name}",道號/暱稱:,"${nick}"\r\n`;
-    csvContent += `修仙境界:,"${c.realm} · ${c.layerLabel}",修為靈幣:,"🪙 ${coins.toLocaleString()} 枚"\r\n`;
-    csvContent += "-------------------------------------------------------------------------\r\n";
-    csvContent += `資糧項目,金額(元),細目備註\r\n`;
-    csvContent += `基本合格資糧,${s.earned},"依本月各法製品實收合格數核算"\r\n`;
-    csvContent += `額外獎勵加給,${s.bonus || 0},"卓越表現、特快速度或高難度法製補貼"\r\n`;
-    csvContent += `修繕扣減資糧,-${s.deduct || 0},"法製瑕疵、廢料損耗或未達標之資糧扣減"\r\n`;
-    csvContent += "-------------------------------------------------------------------------\r\n";
-    csvContent += `本月實發總額,${s.amount},"${statusText}"\r\n`;
-    csvContent += `同道領受簽名章:,,_________________________________\r\n`;
-    csvContent += "-------------------------------------------------------------------------\r\n";
-    csvContent += "✂ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\r\n\r\n";
+    csvContent += `"${name}","${nick}",${s.earned},${s.bonus || 0},${s.deduct || 0},${s.amount},"${statusText}"\r\n`;
   });
   
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -3191,7 +3338,7 @@ function exportSettlementCSV() {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-  toast(`📥 已匯出 ${year}年${month}月 裁剪式資糧薪資條明細！`);
+  toast('📥 裁剪式資糧薪資條匯出成功！');
 }
 
 function markPaid(wid, month){
@@ -3219,6 +3366,8 @@ function workerLogin(){
   }
   document.getElementById('w-login-err').style.display = 'none';
   currentWorkerId = w.id;
+  localStorage.setItem('yonglufang_current_worker_id', w.id);
+  localStorage.setItem('yonglufang_current_role', 'worker');
   renderWorkerPages(w.id);
   showWorkerPage('w-home');
   toast(`🏮 歡迎同道，${w.nick || w.name}！`);
@@ -3226,13 +3375,16 @@ function workerLogin(){
 
 function workerLogout(){
   currentWorkerId = null;
-  document.getElementById('w-name-input').value = '';
+  localStorage.removeItem('yonglufang_current_worker_id');
+  const input = document.getElementById('w-name-input');
+  if(input) input.value = '';
   showWorkerPage('w-login');
 }
 
 function previewWorker(id){
   switchRole('worker');
   currentWorkerId = id;
+  localStorage.setItem('yonglufang_current_worker_id', id);
   renderWorkerPages(id);
   showWorkerPage('w-home');
 }
@@ -3240,7 +3392,6 @@ function previewWorker(id){
 function renderWorkerPages(wid){
   const w = gw(wid); if(!w) return;
   const myRecs = db.records.filter(r => r.workerId === wid);
-  
   const monthEarn = myRecs.filter(r => isThisMonth(r.date, '2026-06') && r.status === 'verified').reduce((a, r) => a + r.amount, 0);
   
   const myS = db.settlements.filter(s => s.workerId === wid);
@@ -3311,7 +3462,7 @@ function renderWorkerPages(wid){
             <td><span style="font-weight: 500;">${gin(r.itemId)}</span><div style="margin-top:2px;">${sourceBadge(r.source)}</div></td>
             <td>${r.selfQty == null ? '—' : r.selfQty.toLocaleString()}</td>
             <td>${r.total.toLocaleString()}</td>
-            <td><span style="color:var(--red-palace); font-weight: 500;">$${r.amount.toLocaleString()}</span></td>
+            <td><span style="color:var(--red-palace); font-weight: 700;">$${r.amount.toLocaleString()}</span></td>
           </tr>`).join('')}
         </tbody>
       </table>
@@ -3325,7 +3476,7 @@ function renderWorkerPages(wid){
       <td><span style="font-weight: 500;">${gin(r.itemId)}</span></td>
       <td>${r.selfQty == null ? '—' : r.selfQty.toLocaleString()}</td>
       <td>${r.pass.toLocaleString()}</td>
-      <td><span style="color:var(--red-palace); font-weight: 500;">$${r.amount.toLocaleString()}</span></td>
+      <td><span style="color:var(--red-palace); font-weight: 700;">$${r.amount.toLocaleString()}</span></td>
       <td>${statusBadge(r.status)}</td>
     </tr>
   `).join('') : '<tr><td colspan="6" class="empty-state">尚無修行紀錄</td></tr>';
@@ -3352,16 +3503,14 @@ function showPage(name){
   const navs = document.querySelectorAll('#admin-nav .nav-item');
   if(idx >= 0 && navs[idx]) navs[idx].classList.add('active');
   
-  const titles = {
+  document.getElementById('page-title').textContent = {
     dashboard: '系統總覽',
     workers: '同道名冊',
     items: '品項設定',
     records: '交付管理',
     settlement: '資糧結算',
     leaderboard: '業績排行榜'
-  };
-  
-  document.getElementById('page-title').textContent = titles[name] || name;
+  }[name] || name;
   setAdminTopbar();
   
   if(name === 'dashboard') renderDashboard();
@@ -3390,14 +3539,13 @@ function showWorkerPage(name){
     if(items[idx]) items[idx].classList.add('active');
   }
   
-  const titles = {
+  document.getElementById('page-title').textContent = {
     'w-login': '求仙同道登入',
     'w-home': '洞府修為',
     'w-submit': '工件自主申報',
     'w-records': '修行紀錄明細',
     'w-leaderboard': '天榜風雲'
-  };
-  document.getElementById('page-title').textContent = titles[name] || name;
+  }[name] || name;
   
   if(name === 'w-leaderboard') checkLeaderboardUnlock();
   if(name === 'w-submit') renderWorkerSubmitPage();
@@ -3405,6 +3553,7 @@ function showWorkerPage(name){
 
 function switchRole(role){
   currentRole = role;
+  localStorage.setItem('yonglufang_current_role', role);
   cancelAnimationFrame(animFrame);
   document.querySelectorAll('.role-pill').forEach((b, i) => b.classList.toggle('active', (i === 0 && role === 'admin') || (i === 1 && role === 'worker')));
   
@@ -3420,7 +3569,7 @@ function switchRole(role){
     document.getElementById('admin-nav').style.display = 'none';
     document.getElementById('worker-nav').style.display = 'block';
     document.getElementById('topbar-right').innerHTML = '';
-    if(currentWorkerId){
+    if(currentWorkerId && gw(currentWorkerId)){
       renderWorkerPages(currentWorkerId);
       showWorkerPage('w-home');
     } else {
@@ -3429,41 +3578,24 @@ function switchRole(role){
   }
 }
 
-loadDB();
-normalizeDB();
-saveDB();
-
-try{
-  renderDashboard(); renderWorkers(); renderItems(); renderRecords();
-} catch(e) { console.error('初始化頁面載入失敗！', e); }
+window.addEventListener('storage', function(e) {
+  if (e.key === 'yonglufang_v2' && !isUsingFirebase) {
+    loadLocalDB();
+    normalizeDB();
+    refreshAfterDataChange();
+  }
+});
 
 const wr = document.getElementById('week-range');
 if(wr) wr.textContent = '2026年06月';
 
-// 預設執行：直接載入代工人員登入介面
-switchRole('worker');
+if (currentRole === 'worker' && currentWorkerId && gw(currentWorkerId)) {
+  switchRole('worker');
+} else if (currentRole === 'admin' && isAdminLoggedIn()) {
+  switchRole('admin');
+} else {
+  switchRole('worker'); 
+}
 </script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-  const btn = document.querySelector('#page-admin-login button');
-  const input = document.getElementById('admin-password-input');
-  if(btn && typeof adminLogin === 'function'){
-    btn.addEventListener('click', function(e){
-      e.preventDefault();
-      adminLogin();
-    });
-  }
-  if(input && typeof adminLogin === 'function'){
-    input.addEventListener('keydown', function(e){
-      if(e.key === 'Enter'){
-        e.preventDefault();
-        adminLogin();
-      }
-    });
-  }
-});
-</script>
-
 </body>
 </html>
