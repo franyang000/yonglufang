@@ -38,10 +38,27 @@ body{
   min-height: 100vh;
   color: var(--ink);
   overflow-x: hidden;
+  font-weight: 400; /* 全局預設：400細字體，消除視覺疲勞 */
 }
 
 p, span, label, td, th, option, select, input, textarea {
   color: var(--ink);
+}
+
+/* 美化捲軸 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(234, 210, 146, 0.03);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(1, 44, 78, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(1, 44, 78, 0.4);
 }
 
 .app{
@@ -60,16 +77,50 @@ p, span, label, td, th, option, select, input, textarea {
   height: 100vh;
   z-index: 100;
   border-right: 1px solid var(--border-subtle);
+  transition: transform 0.3s ease;
+}
+
+.logo-block{
+  padding: 1.5rem 1.25rem;
+  border-bottom: 1px solid rgba(234, 210, 146, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-icon{
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(234, 210, 146, 0.1);
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-subtle);
+}
+.logo-zh{
+  font-size: 22px;
+  font-weight: 900; /* 僅商標保留900極粗 */
+  color: var(--gold-beige);
+  letter-spacing: .12em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.logo-en{
+  font-size: 10px;
+  color: #FFFFFF;
+  margin-top: 2px;
+  letter-spacing: .08em;
+  opacity: 0.8;
+  font-weight: 400;
 }
 
 .nav-group{
   flex: 1;
   overflow-y: auto;
-  padding: 1rem 0 0.75rem;
+  padding: 0.75rem 0;
 }
 .nav-group-label{
   font-size: 11px;
-  font-weight: 900;
+  font-weight: 700; /* 中等偏粗 */
   color: var(--gold-beige);
   padding: 0.75rem 1.25rem 0.25rem;
   letter-spacing: .12em;
@@ -86,6 +137,7 @@ p, span, label, td, th, option, select, input, textarea {
   cursor: pointer;
   transition: all 0.2s ease;
   border-left: 4px solid transparent;
+  font-weight: 400; /* 選單預設細 */
 }
 .nav-item:hover{
   background: rgba(234, 210, 146, 0.08);
@@ -94,7 +146,7 @@ p, span, label, td, th, option, select, input, textarea {
 .nav-item.active{
   background: rgba(234, 210, 146, 0.12);
   color: var(--gold-beige);
-  font-weight: 900;
+  font-weight: 700; /* 激活項目粗體 */
   border-left-color: var(--gold-beige);
 }
 .nav-dot{
@@ -119,7 +171,7 @@ p, span, label, td, th, option, select, input, textarea {
   color: var(--gold-beige);
   display: block;
   margin-bottom: 8px;
-  font-weight: 900;
+  font-weight: 700;
 }
 .role-pills{
   display: flex;
@@ -140,13 +192,13 @@ p, span, label, td, th, option, select, input, textarea {
   border-radius: 6px;
   color: #FFFFFF;
   font-family: inherit;
-  font-weight: 700;
+  font-weight: 500; /* 切換器按鈕採用500 */
   transition: all 0.2s ease;
 }
 .role-pill.active{
   background: var(--gold-gradient);
   color: var(--navy-deep);
-  font-weight: 900;
+  font-weight: 700; /* 激活採用700 */
 }
 
 .main{
@@ -183,7 +235,7 @@ p, span, label, td, th, option, select, input, textarea {
 }
 .topbar-title{
   font-size: 20px;
-  font-weight: 900;
+  font-weight: 700; /* 改用700，優雅且具厚實感 */
   color: var(--gold-beige);
   display: flex;
   align-items: center;
@@ -241,11 +293,11 @@ p, span, label, td, th, option, select, input, textarea {
   margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: .08em;
-  font-weight: 700;
+  font-weight: 500; /* 卡片指標說明改用500 */
 }
 .stat-value{
   font-size: 26px;
-  font-weight: 900;
+  font-weight: 700; /* 主要指標數據700 */
   color: var(--navy-deep);
   line-height: 1.2;
 }
@@ -283,7 +335,7 @@ p, span, label, td, th, option, select, input, textarea {
 }
 .card-head-title{
   font-size: 16px;
-  font-weight: 900;
+  font-weight: 700; /* 卡片標題700 */
   color: var(--navy-deep);
   display: flex;
   align-items: center;
@@ -316,7 +368,7 @@ p, span, label, td, th, option, select, input, textarea {
   outline: none;
   background: var(--card-bg);
   color: var(--ink);
-  font-weight: 700;
+  font-weight: 400; /* 輸入框內文改為400，極致舒適 */
   transition: all 0.2s;
 }
 .search-wrapper input:focus{
@@ -348,7 +400,7 @@ table{
 th{
   padding: 14px 16px;
   color: var(--navy-deep);
-  font-weight: 900;
+  font-weight: 700; /* 表頭使用700，維持專業結構感 */
   font-size: 13px;
   border-bottom: 1px solid var(--border-solid);
   text-transform: uppercase;
@@ -359,7 +411,7 @@ th{
 td{
   padding: 14px 16px;
   color: var(--ink);
-  font-weight: 700;
+  font-weight: 400; /* 所有表格內文與數據全面退回 400，消除粗體窒息感 */
   border-bottom: 1px solid rgba(234, 210, 146, 0.15);
   vertical-align: middle;
   white-space: nowrap;
@@ -374,7 +426,7 @@ tr:hover td{background:#FAF5EC}
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 500; /* 標籤文字改用500中等 */
 }
 .badge-ok{background:#DCFCE7;color:#15803D;}
 .badge-wait{background:#FEF3C7;color:#B45309;}
@@ -395,7 +447,7 @@ tr:hover td{background:#FAF5EC}
   cursor: pointer;
   color: var(--navy-deep);
   font-family: inherit;
-  font-weight: 700;
+  font-weight: 500; /* 按鈕文字字體重量降為 500 */
   transition: all 0.2s ease;
   user-select: none;
 }
@@ -408,6 +460,7 @@ tr:hover td{background:#FAF5EC}
   color: var(--gold-beige) !important;
   border-color: var(--navy-deep);
   box-shadow: var(--shadow-subtle);
+  font-weight: 700; /* 僅主要動作按鈕維持700 */
 }
 .btn-primary:hover{
   transform: translateY(-1px);
@@ -450,7 +503,7 @@ tr:hover td{background:#FAF5EC}
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  font-weight: 900;
+  font-weight: 700; /* 頭像縮寫用700呈現亮點 */
   color: var(--navy-deep);
   flex-shrink: 0;
   border: 1px solid var(--border-solid);
@@ -497,13 +550,13 @@ tr:hover td{background:#FAF5EC}
   margin: 0.5rem 1.25rem 0.75rem !important;
   font-size: 13px !important;
   color: var(--ink) !important;
-  font-weight: 700 !important;
+  font-weight: 500 !important; /* 天榜提醒：改為500 */
   line-height: 1.4;
   box-shadow: var(--shadow-gold);
 }
 #w-lb-self strong, .w-lb-self strong {
   color: var(--red-palace) !important;
-  font-weight: 900 !important;
+  font-weight: 700 !important; /* 修改為經典Bold 700 */
 }
 
 #page-leaderboard .race-tab,
@@ -513,6 +566,7 @@ tr:hover td{background:#FAF5EC}
   color: var(--navy-deep) !important;
   border: 1px solid var(--border-solid) !important;
   background: #FAF4E5 !important;
+  font-weight: 500; /* 切換分頁重量改500 */
 }
 #page-leaderboard .race-tab:hover,
 #page-leaderboard .metric-tab:hover,
@@ -528,7 +582,7 @@ tr:hover td{background:#FAF5EC}
   background: var(--gold-gradient) !important;
   color: var(--navy-deep) !important;
   border-color: var(--gold-beige) !important;
-  font-weight: 900 !important;
+  font-weight: 700; /* 激活改700 */
   box-shadow: var(--shadow-gold);
 }
 
@@ -555,12 +609,12 @@ tr:hover td{background:#FAF5EC}
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  font-weight: 900;
+  font-weight: 700; /* 天榜名次700 */
   border: 2px solid var(--gold-beige);
 }
 .race-name{
   font-size: 15px;
-  font-weight: 900;
+  font-weight: 500; /* 人物姓名500中等，清晰 */
   min-width: 90px;
   flex-shrink: 0;
   color: var(--ink);
@@ -569,15 +623,16 @@ tr:hover td{background:#FAF5EC}
   flex-direction: column;
 }
 
+/* 🌌 曜藍金絲大理石水道：高質感與完美對比度（徹底解決 image_c7f7ab.png 空白與看不見的問題） */
 .race-track{
   flex: 1;
-  background: var(--navy-gradient); 
+  background: #081118;  /* 極深曜藍跑道底色，絕對完美對比 */
   border: 1.5px solid var(--gold-beige);
   border-radius: 999px;
   height: 44px;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+  box-shadow: inset 0 3px 10px rgba(0,0,0,0.8);
 }
 .race-lane{
   height: 100%;
@@ -587,6 +642,7 @@ tr:hover td{background:#FAF5EC}
   position: relative;
   min-width: 60px;
   transition: width 1.2s cubic-bezier(0.1, 1, 0.1, 1);
+  background: linear-gradient(90deg, rgba(234, 210, 146, 0.03) 0%, rgba(234, 210, 146, 0.15) 100%);
 }
 .boat-anim{
   position: absolute;
@@ -596,7 +652,7 @@ tr:hover td{background:#FAF5EC}
 }
 .race-score{
   font-size: 16px;
-  font-weight: 900;
+  font-weight: 700; /* 水道數據700 */
   color: var(--navy-deep);
   min-width: 100px;
   text-align: right;
@@ -612,7 +668,7 @@ tr:hover td{background:#FAF5EC}
   background: rgba(0, 0, 0, 0.02);
   cursor: pointer;
   color: var(--navy-deep);
-  font-weight: 700;
+  font-weight: 500;
   transition: all 0.2s;
   font-family: inherit;
 }
@@ -623,7 +679,7 @@ tr:hover td{background:#FAF5EC}
   background: var(--gold-gradient);
   color: var(--navy-deep);
   border-color: var(--gold-beige);
-  font-weight: 900;
+  font-weight: 700;
 }
 .race-tabs.dim{opacity:.4;pointer-events:none}
 .lb-metric-bar{
@@ -659,20 +715,20 @@ tr:hover td{background:#FAF5EC}
 .champion-label{
   font-size:12px;
   color: var(--gold-light) !important;
-  font-weight:900;
+  font-weight: 500; /* 等級標示改500 */
   letter-spacing:.08em;
   text-transform: uppercase;
 }
 .champion-name{
   font-size:24px;
-  font-weight:900;
+  font-weight:700; /* 姓名700 */
   color:#FFFFFF !important; 
   margin-top:3px;
   text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 .champion-score{
   font-size:26px;
-  font-weight:900;
+  font-weight:700; /* 成績700 */
   color:var(--gold-beige) !important;
   white-space:nowrap;
   text-shadow: 0 0 10px rgba(234,210,146,0.5);
@@ -687,21 +743,37 @@ tr:hover td{background:#FAF5EC}
   padding: 12px; 
   text-align: center;
 }
-.lb-sum-num{display:block;font-size:18px;font-weight:900;color:var(--navy-deep)}
-.lb-sum-lbl{display:block;font-size:11px;color:#555555;margin-top:2px}
-.lb-note{font-size:12px;color:#333333;padding: 0 1.25rem 1.25rem;line-height:1.6}
-.delta{display:block;font-size:10px;font-weight:900;margin-top:2px}
+.lb-sum-num{display:block;font-size:18px;font-weight:700;color:var(--navy-deep)}
+.lb-sum-lbl{display:block;font-size:11px;color:#555555;margin-top:2px;font-weight:400}
+.lb-note{font-size:12px;color:#333333;padding: 0 1.25rem 1.25rem;line-height:1.6;font-weight:400}
+.delta{display:block;font-size:10px;font-weight:500;margin-top:2px}
 .delta-up{color:#10B981}
 .delta-down{color:#EF4444}
 .delta-same{color:#555555}
-.delta-new{color:#B45309}
+.delta-new{
+  display: inline-block;
+  background: linear-gradient(135deg, #EF4444, #9E2A2B);
+  color: #FFFFFF !important;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 1px 4px rgba(158, 42, 43, 0.3);
+  animation: pulseNew 1.5s infinite;
+}
+@keyframes pulseNew {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.05); }
+}
 
 .coin-chip{
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 13.5px;
-  font-weight: 700;
+  font-weight: 500; /* 中等輕巧 */
   color: var(--navy-deep);
   background: var(--gold-gradient);
   border: 1px solid var(--gold-beige);
@@ -730,19 +802,19 @@ tr:hover td{background:#FAF5EC}
 .cult-top{display:flex;align-items:center;gap:16px;position:relative}
 .cult-avatar{
   width: 62px; height: 62px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 26px; font-weight: 900; color: #fff; border: 2.5px solid var(--gold-beige);
+  font-size: 26px; font-weight: 700; color: #fff; border: 2.5px solid var(--gold-beige);
   background: var(--realm);
   box-shadow: 0 0 12px var(--realm);
 }
-.cult-name{font-size:24px; font-weight:900; letter-spacing:.05em; color: #FFFFFF !important; text-shadow: 0 1px 4px rgba(0,0,0,0.8);}
+.cult-name{font-size:24px; font-weight:700; letter-spacing:.05em; color: #FFFFFF !important; text-shadow: 0 1px 4px rgba(0,0,0,0.8);}
 .cult-realm-badge{
-  display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:12.5px;font-weight:900;
+  display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:12.5px;font-weight:700;
   color:#FFFFFF !important;background:var(--realm);border-radius:20px;padding:4px 14px;
   border: 1px solid rgba(255,255,255,0.4);
 }
 .cult-coin{position:relative;margin-top:1.25rem;display:flex;align-items:baseline;gap:6px}
-.cult-coin-num{font-size:38px;font-weight:900;color:var(--gold-beige) !important; text-shadow: 0 0 8px rgba(234,210,146,0.6);}
-.cult-coin-lbl{font-size:13px;color:rgba(255,255,255,0.8) !important;}
+.cult-coin-num{font-size:38px;font-weight:700;color:var(--gold-beige) !important; text-shadow: 0 0 8px rgba(234,210,146,0.6);}
+.cult-coin-lbl{font-size:13px;color:rgba(255,255,255,0.8) !important; font-weight:400}
 .cult-prog-wrap{position:relative;margin-top:1rem}
 .cult-prog{height:12px;background:rgba(255,255,255,0.15);border-radius:6px;overflow:hidden; border: 1px solid rgba(255,255,255,0.1);}
 .cult-prog-fill{
@@ -750,8 +822,8 @@ tr:hover td{background:#FAF5EC}
   background:linear-gradient(90deg, var(--realm), #FCEBB6);
   transition:width .9s cubic-bezier(0.1, 1, 0.1, 1);
 }
-.cult-prog-txt{font-size:12px;color:rgba(255,255,255,0.9) !important; margin-top:8px}
-.cult-prog-txt b{color:var(--gold-beige) !important;}
+.cult-prog-txt{font-size:12px;color:rgba(255,255,255,0.9) !important; margin-top:8px; font-weight:400}
+.cult-prog-txt b{color:var(--gold-beige) !important; font-weight:500;}
 
 #page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard,#page-w-submit{
   position:relative;
@@ -779,7 +851,7 @@ tr:hover td{background:#FAF5EC}
 }
 .immortal-title{
   display: inline-flex; align-items: center; gap: 6px;
-  color: var(--navy-deep); font-weight: 900; font-size: 14px;
+  color: var(--navy-deep); font-weight: 700; font-size: 14px;
   padding: 8px 16px; border-radius: 99px;
   background: linear-gradient(180deg, #FFFBF5, #EADFCE);
   border: 1px solid rgba(234, 210, 146, 0.25);
@@ -821,6 +893,7 @@ tr:hover td{background:#FAF5EC}
 }
 .immortal-brand small{
   display:block; font-size: 11px; color: var(--gold-light); letter-spacing:0.2em; margin-top:4px;
+  font-weight: 500;
 }
 .immortal-form{padding: 2.5rem 2rem; display:flex; flex-direction: column; justify-content: center;}
 .btn-immortal{
@@ -828,7 +901,7 @@ tr:hover td{background:#FAF5EC}
   color: var(--navy-deep) !important;
   border: 1px solid var(--gold-beige);
   border-radius: 10px;
-  font-weight: 900;
+  font-weight: 700;
   padding: 12px 20px;
   cursor: pointer;
   transition: all 0.2s;
@@ -849,18 +922,18 @@ tr:hover td{background:#FAF5EC}
   border-radius: 16px; padding: 1.25rem; color: #F1EAD7;
   display: flex; flex-direction: column; justify-content: space-between;
 }
-.submit-scene-title{font-size:18px; font-weight:900; margin-bottom:8px; color: var(--gold-light)}
+.submit-scene-title{font-size:18px; font-weight:700; margin-bottom:8px; color: var(--gold-light)}
 .submit-mini{
   background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.05);
   border-radius: 12px; padding: 8px 12px; display:flex; flex-direction:column; gap:2px;
 }
-.submit-mini b{font-size:20px; color: var(--gold-light)}
-.submit-mini span{font-size:11px; color: #E2E8F0}
+.submit-mini b{font-size:20px; color: var(--gold-light); font-weight: 700;}
+.submit-mini span{font-size:11px; color: #E2E8F0; font-weight: 400;}
 
 #page-w-home .w-back, #page-w-records .w-back, #page-w-leaderboard .w-back, #page-w-submit .w-back{
   display: inline-flex; align-items: center; gap: 6px; cursor:pointer;
   padding: 8px 16px; border-radius: 99px; border: 1px solid var(--border-solid);
-  background: #FFFBF5; color: var(--navy-deep); font-size:13px; font-weight:900;
+  background: #FFFBF5; color: var(--navy-deep); font-size:13px; font-weight:500;
   margin-bottom:1.25rem; transition: all 0.2s;
 }
 #page-w-home .w-back:hover, #page-w-records .w-back:hover, #page-w-leaderboard .w-back:hover, #page-w-submit .w-back:hover{
@@ -873,8 +946,8 @@ tr:hover td{background:#FAF5EC}
   text-align: center;
   box-shadow: var(--shadow-subtle);
 }
-#page-w-home #w-stats .w-stat-label{color:#333; font-size:12px; letter-spacing:0.08em; font-weight:900}
-#page-w-home #w-stats .w-stat-value{color: var(--navy-deep); font-size:24px; font-weight:900; margin-top:4px}
+#page-w-home #w-stats .w-stat-label{color:#333; font-size:12px; letter-spacing:0.08em; font-weight:500}
+#page-w-home #w-stats .w-stat-value{color: var(--navy-deep); font-size:24px; font-weight:700; margin-top:4px}
 
 #page-w-records .card, #page-w-home .card, #page-w-leaderboard .card, #page-w-submit .card{
   background: rgba(255,254,250,0.98); border: 1px solid var(--border-solid); border-radius: 16px;
@@ -883,7 +956,7 @@ tr:hover td{background:#FAF5EC}
   background: linear-gradient(180deg, #FAF4E5, #F4EAD9); border-bottom: 1px solid var(--border-solid);
 }
 #page-w-records .card-head-title, #page-w-home .card-head-title, #page-w-leaderboard .card-head-title, #page-w-submit .card-head-title{
-  color: var(--navy-deep); font-weight:900;
+  color: var(--navy-deep); font-weight:700;
 }
 #page-w-records table th, #page-w-leaderboard table th, #page-w-submit table th{
   color: #000000; border-bottom: 1px solid var(--border-solid); background: #FAF3E0;
@@ -894,12 +967,12 @@ tr:hover td{background:#FAF5EC}
 
 .immortal-empty{
   padding: 2.5rem; text-align: center; border: 1.5px dashed var(--border-solid);
-  border-radius: 12px; background: rgba(250,245,235,0.5); color: #000000; font-size:14px; font-weight: 700;
+  border-radius: 12px; background: rgba(250,245,235,0.5); color: #000000; font-size:14px; font-weight: 500;
 }
 
 .source-badge{
   display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 99px;
-  font-size: 11px; font-weight: 900;
+  font-size: 11px; font-weight: 500;
 }
 .source-admin{background: #EADFC9; color: var(--navy-deep); border: 1px solid var(--border-solid)}
 .source-worker{background: #DCECF0; color: #1C6B72; border: 1px solid #BCE0E5}
@@ -924,13 +997,13 @@ tr:hover td{background:#FAF5EC}
 .form-group label{
   font-size: 13px;
   color: var(--navy-deep);
-  font-weight: 900;
+  font-weight: 700; /* 輸入框標籤粗體以引導輸入 */
   letter-spacing: .02em;
 }
 .form-group input, .form-group select, .form-group textarea{
   font-size: 14px;
   font-family: inherit;
-  font-weight: 700;
+  font-weight: 400; /* 輸入內容皆為 400 細體 */
   border-radius: var(--r-sm);
   border: 1px solid var(--border-solid);
   padding: 10px 12px;
@@ -942,67 +1015,118 @@ tr:hover td{background:#FAF5EC}
   border-color: var(--navy-deep);
 }
 
-/* Modal setup */
-.modal-bg{
-  display: none;
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: #7A8B99;
+  font-weight: 500;
+}
+.empty-icon {
+  font-size: 40px;
+  margin-bottom: 0.75rem;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ✨ 尊貴修仙彈窗與氣泡樣式 (徹底補齊並解決 image_e6ce07 缺失樣式問題)
+   ───────────────────────────────────────────────────────────── */
+.modal-bg {
   position: fixed;
   inset: 0;
-  background: rgba(0, 18, 34, 0.45);
-  z-index: 2000;
+  background: rgba(0, 18, 34, 0.65); /* 曜藍深邃半透明 */
+  backdrop-filter: blur(4px);
+  display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(3px);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
   padding: 1rem;
 }
-.modal-bg.open{display:flex}
-.modal{
-  background: #FCFAF6;
-  border-radius: var(--r-lg);
-  border: 1px solid var(--border-solid);
-  padding: 1.75rem;
-  width: 500px;
-  max-width: 100%;
-  position: relative;
-  box-shadow: var(--shadow-gold);
-  max-height: 90vh;
-  overflow-y: auto;
+.modal-bg.open {
+  opacity: 1;
+  pointer-events: auto;
 }
-.modal-head{
+.modal {
+  background: #FFFFFF;
+  border: 2px solid var(--gold-beige);
+  border-radius: var(--r-lg);
+  width: 100%;
+  max-width: 500px;
+  box-shadow: var(--shadow-gold), 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+.modal-bg.open .modal {
+  transform: scale(1);
+}
+.modal-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
-  border-bottom: 1px dashed var(--border-solid);
-  padding-bottom: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(180deg, #FAF4E5, #F4EAD9);
+  border-bottom: 1px solid var(--border-solid);
 }
-.modal-title{
-  font-size: 18px;
-  font-weight: 900;
+.modal-title {
+  font-size: 16px;
+  font-weight: 700;
   color: var(--navy-deep);
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.modal-close{
-  background: #EADFC9;
+.modal-close {
+  background: none;
   border: none;
+  font-size: 18px;
   cursor: pointer;
-  color: #000000;
-  font-size: 14px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+  color: var(--navy-deep);
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
 }
-.modal-foot{
+.modal-close:hover {
+  opacity: 1;
+  background: rgba(0,0,0,0.05);
+}
+.modal-foot {
   display: flex;
-  gap: 10px;
   justify-content: flex-end;
-  margin-top: 1.25rem;
-  border-top: 1px dashed var(--border-solid);
-  padding-top: 0.75rem;
+  gap: 12px;
+  padding: 1rem 1.5rem;
+  background: #FAF9F6;
+  border-top: 1px solid var(--border-solid);
+}
+
+/* 提示氣泡 */
+.toast-el {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--navy-gradient);
+  color: var(--gold-beige);
+  border: 1px solid var(--gold-beige);
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: var(--shadow-gold), 0 10px 15px -3px rgba(0,0,0,0.3);
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+}
+.toast-el.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
 }
 
 @media (max-width: 992px) {
@@ -1058,8 +1182,27 @@ tr:hover td{background:#FAF5EC}
 <div class="app">
   <!-- 側邊導覽列 -->
   <div class="sidebar" id="app-sidebar">
-    <!-- Logo 區塊已移除：側欄直接進入導覽，避免上方銜接粗糙 -->
-
+    <div class="logo-block">
+      <div class="logo-icon">
+        <svg viewBox="0 0 100 100" style="width: 44px; height: 44px; background: var(--navy-deep); border-radius: 8px; padding: 2px;">
+          <!-- Waves/Clouds -->
+          <path d="M 10,75 C 22,68 35,82 48,74 C 60,66 72,82 85,74 C 92,70 95,78 95,78 C 95,86 5,86 5,78 Z" fill="#EAD292" opacity="0.85"/>
+          <!-- Dragon Ship Body & Sails -->
+          <path d="M 20,68 Q 50,80 80,68 Q 90,56 75,56 Q 60,56 55,40 L 58,22 L 52,22 L 48,40 L 32,56 Z" fill="#EAD292"/>
+          <!-- Dragon Wings & details -->
+          <path d="M 38,62 Q 22,46 12,52 Q 22,60 38,62" fill="#EAD292"/>
+          <path d="M 62,62 Q 78,46 88,52 Q 78,60 62,62" fill="#EAD292"/>
+          <!-- Sail Detail stripes -->
+          <path d="M 55,22 Q 70,32 55,46" stroke="#012C4E" stroke-width="1.8" fill="none"/>
+          <path d="M 55,24 Q 40,34 55,48" stroke="#012C4E" stroke-width="1.8" fill="none"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-zh">永祿坊</div>
+        <div class="logo-en">IMMORTAL SYSTEM</div>
+      </div>
+    </div>
+    
     <!-- 管理者管理選單 -->
     <div class="nav-group" id="admin-nav" style="display:none">
       <div class="nav-group-label">管理者後台</div>
@@ -1084,7 +1227,7 @@ tr:hover td{background:#FAF5EC}
       </div>
     </div>
     
-    <!-- 求仙同道個人中心選單（更名：求仙同道 ➔ 求仙同道） -->
+    <!-- 求仙同道個人中心選單 -->
     <div class="nav-group" id="worker-nav">
       <div class="nav-group-label">求仙同道專區</div>
       <div class="nav-item active" onclick="showWorkerPage('w-home')">
@@ -1101,7 +1244,7 @@ tr:hover td{background:#FAF5EC}
       </div>
     </div>
     
-    <!-- 身份切換器（更名：求仙同道 ➔ 求仙同道） -->
+    <!-- 身份切換器 -->
     <div class="role-switcher">
       <label>切換修仙身分</label>
       <div class="role-pills">
@@ -1128,12 +1271,12 @@ tr:hover td{background:#FAF5EC}
         <div class="worker-login immortal-panel" style="max-width: 500px; margin: 4rem auto; padding: 2.5rem 2rem; text-align: center;">
           <div style="font-size: 50px; margin-bottom: 1rem;">🔐</div>
           <div class="modal-title" style="font-size: 20px; justify-content: center; margin-bottom: 0.5rem; width: 100%;">管理者登入</div>
-          <p style="font-size: 14px; color: #000000; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.6;">請輸入管理者密碼，以進入系統管理後台。</p>
+          <p style="font-size: 14px; color: #000000; font-weight: 500; margin-bottom: 1.5rem; line-height: 1.6;">請輸入管理者密碼，以進入系統管理後台。</p>
           <div style="display: flex; gap: 8px; flex-direction: column;">
-            <input id="admin-password-input" type="password" placeholder="請輸入管理者密碼" onkeydown="if(event.key==='Enter')adminLogin()" style="padding: 12px 14px; font-size: 15px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); outline: none; text-align: center; font-weight: 900;">
+            <input id="admin-password-input" type="password" placeholder="請輸入管理者密碼" onkeydown="if(event.key==='Enter')adminLogin()" style="padding: 12px 14px; font-size: 15px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); outline: none; text-align: center; font-weight: 400;">
             <button class="btn btn-primary" onclick="adminLogin()" style="padding: 12px; font-size: 14px;">登入</button>
           </div>
-          <div id="admin-login-err" style="font-size:13px; color:var(--red-palace); display:none; margin-top:10px; font-weight: 900;">⚠️ 密碼錯誤，請重新輸入！</div>
+          <div id="admin-login-err" style="font-size:13px; color:var(--red-palace); display:none; margin-top:10px; font-weight: 500;">⚠️ 密碼錯誤，請重新輸入！</div>
         </div>
       </div>
 
@@ -1177,7 +1320,7 @@ tr:hover td{background:#FAF5EC}
               <thead>
                 <tr>
                   <th>姓名</th>
-                  <th>排行榜暱稱</th>
+                  <th>排行榜道號</th>
                   <th>狀態</th>
                   <th>已驗收產值</th>
                   <th>累計靈幣</th>
@@ -1252,15 +1395,17 @@ tr:hover td{background:#FAF5EC}
         </div>
       </div>
 
-      <!-- 頁面：薪資結算管理 -->
+      <!-- 頁面：資糧結算管理 (月結、精緻薪資條) -->
       <div class="page" id="page-settlement">
         <div class="card">
           <div class="card-head">
             <span class="card-head-title">💰 本期修行資糧結算（<span id="week-range" style="color: var(--red-palace);"></span>）</span>
-            <div style="display: flex; gap: 8px;">
-              <input id="payroll-month" type="month" style="height: 34px; padding: 6px 10px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); font-family: inherit; font-weight: 900; color: var(--navy-deep); background: #FFFFFF;">
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+              <span style="font-size: 13px; font-weight: 500; color: var(--navy-deep);">選擇月份：</span>
+              <input type="month" id="settlement-month-picker" value="2026-06" onchange="generateSettlement()" style="padding: 6px 10px; font-size: 13px; border: 1px solid var(--border-solid); border-radius: 6px; font-weight: 500; outline: none; background: #FFF; color: #000;">
               <button class="btn btn-sm btn-primary" onclick="generateSettlement()">重新計算</button>
-              <button class="btn btn-sm" onclick="exportMonthlyPayrollExcel()">📤 匯出每月薪資條 Excel</button>
+              <button class="btn btn-sm btn-primary" onclick="exportSettlementCSV()" style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); border-color: #059669;">📥 匯出薪資條 EXCEL</button>
+              <button class="btn btn-sm" onclick="openBackupModal()">💾 資料備份</button>
             </div>
           </div>
           <div class="table-responsive">
@@ -1315,17 +1460,17 @@ tr:hover td{background:#FAF5EC}
             <div class="immortal-core">
               <span class="immortal-core-glow">⚗️</span>
             </div>
-            <div class="immortal-visual-caption" style="color: #FFFFFF !important; font-size:13px; font-weight:700; opacity:0.9;">輸入您在永祿坊登記的真實姓名或道號，即可破開法陣結界、查看本期功德資糧、實收薪資累計以及各期天榜。</div>
+            <div class="immortal-visual-caption" style="color: #FFFFFF !important; font-size:13px; font-weight:500; opacity:0.9;">輸入您在永祿坊登記的真實姓名或道號，即可破開法陣結界、查看本期功德資糧、實收薪資累計以及各期天榜。</div>
           </div>
           <div class="immortal-form immortal-panel">
             <div class="immortal-title">⛩️ 登入求仙個人中心</div>
-            <div class="worker-login-title" style="font-size: 24px; font-weight: 900; color: var(--navy-deep); margin: 12px 0;">報上名號，契合靈樞</div>
-            <p style="font-size: 14px; color: #000000; font-weight: 700; margin-bottom: 20px; line-height: 1.6;">本介面專為求仙同道申報工件、自查功德資糧所設。登入後即可看見個人當前修為靈幣與境界名次。</p>
+            <div class="worker-login-title" style="font-size: 24px; font-weight: 700; color: var(--navy-deep); margin: 12px 0;">報上名號，契合靈樞</div>
+            <p style="font-size: 14px; color: #000000; font-weight: 500; margin-bottom: 20px; line-height: 1.6;">本介面專為求仙同道申報工件、自查功德資糧所設。登入後即可看見個人當前修為靈幣與境界名次。</p>
             <div class="search-wrapper" style="max-width:100%; margin-bottom: 12px;">
-              <input id="w-name-input" placeholder="請輸入姓名 / 排行榜道號" onkeydown="if(event.key==='Enter')workerLogin()" style="padding: 12px; font-size:15px; border: 1px solid var(--border-solid); border-radius: 10px; width: 100%; font-weight: 900;">
+              <input id="w-name-input" placeholder="請輸入姓名 / 排行榜道號" onkeydown="if(event.key==='Enter')workerLogin()" style="padding: 12px; font-size:15px; border: 1px solid var(--border-solid); border-radius: 10px; width: 100%; font-weight: 400;">
             </div>
             <button class="btn-immortal" onclick="workerLogin()">登入個人中心</button>
-            <div id="w-login-err" style="font-size:13.5px; color:#B4472F; display:none; margin-top:12px; font-weight: 900;">⚠️ 查無此同道名號，請確認名稱是否輸入正確！</div>
+            <div id="w-login-err" style="font-size:13.5px; color:#B4472F; display:none; margin-top:12px; font-weight: 500;">⚠️ 查無此同道名號，請確認名稱是否輸入正確！</div>
           </div>
         </div>
       </div>
@@ -1375,7 +1520,7 @@ tr:hover td{background:#FAF5EC}
                 <div>
                   <div class="badge badge-ok" style="background: rgba(255,255,255,0.15); color: #FFF; border: 1px solid rgba(255,255,255,0.35);">工件自報通道</div>
                   <div class="submit-scene-title" style="margin-top: 12px;">自主申報 · 減輕核驗</div>
-                  <p style="font-size: 13px; opacity: 0.95; line-height: 1.8; color: #FFFFFF !important; font-weight: 700;">求仙同道可以搶先在此處登記本次完工、交回的工件大概數量。送出後，管理者核對數目無誤即可一鍵審定驗收，效率翻倍！</p>
+                  <p style="font-size: 13px; opacity: 0.95; line-height: 1.8; color: #FFFFFF !important; font-weight: 500;">求仙同道可以搶先在此處登記本次完工、交回的工件大概數量。送出後，管理者核對數目無誤即可一鍵審定驗收，效率翻倍！</p>
                 </div>
                 <div style="display: flex; gap: 8px; margin-top: 1rem;">
                   <div class="submit-mini"><b id="w-submit-pending-count">0</b><span>審核中工單</span></div>
@@ -1404,7 +1549,7 @@ tr:hover td{background:#FAF5EC}
                   </div>
                 </div>
                 <div class="preview-box submit-preview-box" style="background: #FAF6ED; border-color: var(--border-solid);">
-                  <span style="font-weight: 900; color: #5C4325;" id="ws-preview">請輸入數量以獲得預估金額</span>
+                  <span style="font-weight: 500; color: #5C4325;" id="ws-preview">請輸入數量以獲得預估金額</span>
                 </div>
                 <div style="display: flex; justify-content: flex-end;">
                   <button class="btn btn-primary btn-immortal" onclick="submitWorkerRecord()" style="background: var(--navy-gradient); color: var(--gold-beige) !important; border-color: var(--gold-beige);">確認並呈遞申報</button>
@@ -1469,28 +1614,30 @@ tr:hover td{background:#FAF5EC}
       <span class="modal-title" id="worker-modal-title">新增人員</span>
       <button class="modal-close" onclick="closeModal('worker-modal')">✕</button>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>真實姓名</label>
-        <input id="wf-name" placeholder="阿美">
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>真實姓名</label>
+          <input id="wf-name" placeholder="阿美">
+        </div>
+        <div class="form-group">
+          <label>排行榜道號 (暱稱)</label>
+          <input id="wf-nick" placeholder="美仙尊">
+        </div>
       </div>
-      <div class="form-group">
-        <label>排行榜道號 (暱稱)</label>
-        <input id="wf-nick" placeholder="美仙尊">
+      <div class="form-row">
+        <div class="form-group">
+          <label>帳號狀態</label>
+          <select id="wf-status">
+            <option value="active">啟用</option>
+            <option value="pause">停用</option>
+          </select>
+        </div>
       </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>帳號狀態</label>
-        <select id="wf-status">
-          <option value="active">啟用</option>
-          <option value="pause">停用</option>
-        </select>
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>修為備註</label>
+        <input id="wf-note" placeholder="如：速度極快、蓮花製作好手">
       </div>
-    </div>
-    <div class="form-group" style="margin-bottom: 12px;">
-      <label>修為備註</label>
-      <input id="wf-note" placeholder="如：速度極快、蓮花製作好手">
     </div>
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('worker-modal')">取消</button>
@@ -1506,29 +1653,31 @@ tr:hover td{background:#FAF5EC}
       <span class="modal-title" id="item-modal-title">新增品項設定</span>
       <button class="modal-close" onclick="closeModal('item-modal')">✕</button>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>品項名稱</label>
-        <input id="if-name" placeholder="三角折製">
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>品項名稱</label>
+          <input id="if-name" placeholder="三角折製">
+        </div>
+        <div class="form-group">
+          <label>單位 (如：每 100 片)</label>
+          <input id="if-unit" placeholder="每 100 片">
+        </div>
       </div>
-      <div class="form-group">
-        <label>單位 (如：每 100 片)</label>
-        <input id="if-unit" placeholder="每 100 片">
+      <div class="form-row">
+        <div class="form-group">
+          <label>基準數量</label>
+          <input id="if-qty" type="number" placeholder="100" min="1">
+        </div>
+        <div class="form-group">
+          <label>單價 (元)</label>
+          <input id="if-price" type="number" placeholder="30" min="0">
+        </div>
       </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>基準數量</label>
-        <input id="if-qty" type="number" placeholder="100" min="1">
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>備註說明</label>
+        <input id="if-note" placeholder="例如：角邊平整不脫膠">
       </div>
-      <div class="form-group">
-        <label>單價 (元)</label>
-        <input id="if-price" type="number" placeholder="30" min="0">
-      </div>
-    </div>
-    <div class="form-group" style="margin-bottom: 12px;">
-      <label>備註說明</label>
-      <input id="if-note" placeholder="例如：角邊平整不脫膠">
     </div>
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('item-modal')">取消</button>
@@ -1544,36 +1693,38 @@ tr:hover td{background:#FAF5EC}
       <span class="modal-title">新增交付紀錄</span>
       <button class="modal-close" onclick="closeModal('record-modal')">✕</button>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>交付日期</label>
-        <input id="rf-date" type="date">
+    <div class="card-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>交付日期</label>
+          <input id="rf-date" type="date">
+        </div>
+        <div class="form-group">
+          <label>求仙同道</label>
+          <select id="rf-worker"></select>
+        </div>
       </div>
-      <div class="form-group">
-        <label>求仙同道</label>
-        <select id="rf-worker"></select>
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>品項</label>
+        <select id="rf-item" onchange="calcPreview()"></select>
       </div>
-    </div>
-    <div class="form-group" style="margin-bottom: 12px;">
-      <label>品項</label>
-      <select id="rf-item" onchange="calcPreview()"></select>
-    </div>
-    <div class="form-row-3">
-      <div class="form-group">
-        <label>交付總數</label>
-        <input id="rf-total" type="number" min="0" placeholder="0" oninput="calcPreview()">
+      <div class="form-row-3">
+        <div class="form-group">
+          <label>交付總數</label>
+          <input id="rf-total" type="number" min="0" placeholder="0" oninput="calcPreview()">
+        </div>
+        <div class="form-group">
+          <label>合格數量</label>
+          <input id="rf-pass" type="number" min="0" placeholder="0" oninput="calcPreview()">
+        </div>
+        <div class="form-group">
+          <label>不良數量</label>
+          <input id="rf-fail" type="number" min="0" placeholder="自動計算" readonly>
+        </div>
       </div>
-      <div class="form-group">
-        <label>合格數量</label>
-        <input id="rf-pass" type="number" min="0" placeholder="0" oninput="calcPreview()">
+      <div class="preview-box">
+        預估金額：<strong id="rf-preview" style="color: var(--red-palace); font-size: 15px; font-weight: 700;">—</strong>
       </div>
-      <div class="form-group">
-        <label>不良數量</label>
-        <input id="rf-fail" type="number" min="0" placeholder="自動計算" readonly>
-      </div>
-    </div>
-    <div class="preview-box">
-      預估金額：<strong id="rf-preview" style="color: var(--red-palace); font-size: 15px;">—</strong>
     </div>
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('record-modal')">取消</button>
@@ -1589,60 +1740,62 @@ tr:hover td{background:#FAF5EC}
       <span class="modal-title">修改交付紀錄</span>
       <button class="modal-close" onclick="closeModal('record-edit-modal')">✕</button>
     </div>
-    <input type="hidden" id="ef-record-id">
-    <div class="form-row">
-      <div class="form-group">
-        <label>日期</label>
-        <input id="ef-date" type="date">
+    <div class="card-body">
+      <input type="hidden" id="ef-record-id">
+      <div class="form-row">
+        <div class="form-group">
+          <label>日期</label>
+          <input id="ef-date" type="date">
+        </div>
+        <div class="form-group">
+          <label>求仙同道</label>
+          <select id="ef-worker"></select>
+        </div>
       </div>
-      <div class="form-group">
-        <label>求仙同道</label>
-        <select id="ef-worker"></select>
+      <div class="form-row">
+        <div class="form-group">
+          <label>品項</label>
+          <select id="ef-item" onchange="calcEditPreview()"></select>
+        </div>
+        <div class="form-group">
+          <label>來源</label>
+          <select id="ef-source">
+            <option value="admin">管理者後台親記</option>
+            <option value="worker">同道自上報</option>
+          </select>
+        </div>
       </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>品項</label>
-        <select id="ef-item" onchange="calcEditPreview()"></select>
+      <div class="form-row-3">
+        <div class="form-group">
+          <label>自報數量</label>
+          <input id="ef-selfqty" type="number" min="0" placeholder="可為空" oninput="calcEditPreview()">
+        </div>
+        <div class="form-group">
+          <label>交回數量</label>
+          <input id="ef-total" type="number" min="0" placeholder="0" oninput="calcEditPreview()">
+        </div>
+        <div class="form-group">
+          <label>合格數量</label>
+          <input id="ef-pass" type="number" min="0" placeholder="0" oninput="calcEditPreview()">
+        </div>
       </div>
-      <div class="form-group">
-        <label>來源</label>
-        <select id="ef-source">
-          <option value="admin">管理者後台親記</option>
-          <option value="worker">同道自上報</option>
-        </select>
+      <div class="form-row">
+        <div class="form-group">
+          <label>審核狀態</label>
+          <select id="ef-status">
+            <option value="pending">待驗收</option>
+            <option value="verified">已驗收</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>預估金額</label>
+          <input id="ef-amount" readonly style="font-weight: 700; color: var(--red-palace);">
+        </div>
       </div>
-    </div>
-    <div class="form-row-3">
-      <div class="form-group">
-        <label>自報數量</label>
-        <input id="ef-selfqty" type="number" min="0" placeholder="可為空" oninput="calcEditPreview()">
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>備註</label>
+        <input id="ef-note" placeholder="記錄調整原因...">
       </div>
-      <div class="form-group">
-        <label>交回數量</label>
-        <input id="ef-total" type="number" min="0" placeholder="0" oninput="calcEditPreview()">
-      </div>
-      <div class="form-group">
-        <label>合格數量</label>
-        <input id="ef-pass" type="number" min="0" placeholder="0" oninput="calcEditPreview()">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>審核狀態</label>
-        <select id="ef-status">
-          <option value="pending">待驗收</option>
-          <option value="verified">已驗收</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>預估金額</label>
-        <input id="ef-amount" readonly style="font-weight: 900; color: var(--red-palace);">
-      </div>
-    </div>
-    <div class="form-group" style="margin-bottom: 12px;">
-      <label>備註</label>
-      <input id="ef-note" placeholder="記錄調整原因...">
     </div>
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('record-edit-modal')">取消</button>
@@ -1655,36 +1808,38 @@ tr:hover td{background:#FAF5EC}
 <div class="modal-bg" id="settlement-edit-modal">
   <div class="modal">
     <div class="modal-head">
-      <span class="modal-title">⚖️ 調整薪資</span>
+      <span class="modal-title">⚖️ 調整資糧薪資</span>
       <button class="modal-close" onclick="closeModal('settlement-edit-modal')">✕</button>
     </div>
-    <input type="hidden" id="sef-wid">
-    <input type="hidden" id="sef-week">
-    <div class="form-group" style="margin-bottom: 12px;">
-      <label>求仙同道</label>
-      <input id="sef-name" type="text" readonly style="background: #F5F5F4; font-weight: bold;">
+    <div class="card-body">
+      <input type="hidden" id="sef-wid">
+      <input type="hidden" id="sef-month">
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>求仙同道</label>
+        <input id="sef-name" type="text" readonly style="background: #F5F5F4; font-weight: 500;">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>實得金額</label>
+          <input id="sef-earned" type="text" readonly style="background: #F5F5F4;">
+        </div>
+        <div class="form-group">
+          <label>調整後總額</label>
+          <input id="sef-total" type="text" readonly style="font-weight: 700; color: var(--red-palace); background: #FAF9F6;">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>獎勵金 ($)</label>
+          <input id="sef-bonus" type="number" min="0" placeholder="0" oninput="calcSettlementEditTotal()">
+        </div>
+        <div class="form-group">
+          <label>扣款 ($)</label>
+          <input id="sef-deduct" type="number" min="0" placeholder="0" oninput="calcSettlementEditTotal()">
+        </div>
+      </div>
+      <p style="font-size: 11px; color: #000000; font-weight: 500; line-height: 1.5; margin-top: 8px;">* 調整後的金額會立即存入結算單中。重新點擊「重新計算」可能會覆蓋手動編輯的內容。</p>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>實得金額</label>
-        <input id="sef-earned" type="text" readonly style="background: #F5F5F4;">
-      </div>
-      <div class="form-group">
-        <label>調整後總額</label>
-        <input id="sef-total" type="text" readonly style="font-weight: 900; color: var(--red-palace); background: #FAF9F6;">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>獎勵金 ($)</label>
-        <input id="sef-bonus" type="number" min="0" placeholder="0" oninput="calcSettlementEditTotal()">
-      </div>
-      <div class="form-group">
-        <label>扣款 ($)</label>
-        <input id="sef-deduct" type="number" min="0" placeholder="0" oninput="calcSettlementEditTotal()">
-      </div>
-    </div>
-    <p style="font-size: 11px; color: #000000; font-weight: 700; line-height: 1.5;">* 調整後的金額會立即存入結算單中。重新點擊「重新計算」可能會覆蓋手動編輯的內容。</p>
     <div class="modal-foot">
       <button class="btn" onclick="closeModal('settlement-edit-modal')">取消</button>
       <button class="btn btn-primary" onclick="saveSettlementAdjustment()">儲存</button>
@@ -1699,14 +1854,16 @@ tr:hover td{background:#FAF5EC}
       <span class="modal-title">💾 永祿系統資料備份</span>
       <button class="modal-close" onclick="closeModal('backup-modal')">✕</button>
     </div>
-    <div class="form-group" style="margin-bottom: 16px;">
-      <label>備份資料 (JSON)</label>
-      <textarea id="backup-json-data" rows="8" style="font-family: monospace; font-size: 12px; font-weight: 700; background: #FAF9F6;" onclick="this.select()"></textarea>
-      <span style="font-size: 12px; color: #000000; font-weight: 700; margin-top: 4px;">複製上方所有內容，可保存至您的電腦中。亦可在下方貼上舊的備份代碼並進行還原。</span>
-    </div>
-    <div style="display: flex; gap: 10px; justify-content: flex-between;">
-      <button class="btn" onclick="copyBackupData()" style="flex: 1;">📋 一鍵複製備份碼</button>
-      <button class="btn btn-primary" onclick="importBackupData()" style="flex: 1; background: var(--navy-deep); border-color: var(--navy-deep); color: var(--gold-beige) !important;">⚡ 貼上並匯入還原</button>
+    <div class="card-body">
+      <div class="form-group" style="margin-bottom: 16px;">
+        <label>備份資料 (JSON)</label>
+        <textarea id="backup-json-data" rows="8" style="font-family: monospace; font-size: 12px; font-weight: 400; background: #FAF9F6;" onclick="this.select()"></textarea>
+        <span style="font-size: 12px; color: #000000; font-weight: 500; margin-top: 4px;">複製上方所有內容，可保存至您的電腦中。亦可在下方貼上舊的備份代碼並進行還原。</span>
+      </div>
+      <div style="display: flex; gap: 10px; justify-content: flex-between;">
+        <button class="btn" onclick="copyBackupData()" style="flex: 1;">📋 一鍵複製備份碼</button>
+        <button class="btn btn-primary" onclick="importBackupData()" style="flex: 1; background: var(--navy-deep); border-color: var(--navy-deep); color: var(--gold-beige) !important;">⚡ 貼上並匯入還原</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1718,7 +1875,9 @@ tr:hover td{background:#FAF5EC}
       <span class="modal-title" id="confirm-title">操作確認</span>
       <button class="modal-close" onclick="closeConfirm()">✕</button>
     </div>
-    <div id="confirm-msg" style="font-size: 14px; color: var(--ink); font-weight: 700; line-height: 1.7; margin-bottom: 1rem;"></div>
+    <div class="card-body">
+      <div id="confirm-msg" style="font-size: 14px; color: var(--ink); font-weight: 500; line-height: 1.7; margin-bottom: 1rem;"></div>
+    </div>
     <div class="modal-foot">
       <button class="btn" onclick="closeConfirm()">取消</button>
       <button class="btn btn-primary" id="confirm-ok" onclick="doConfirm()">確定</button>
@@ -1738,7 +1897,7 @@ let db = {
     {id:1, name:'阿美', nick:'阿美仙尊', status:'active', note:'手極巧，折紙專家'},
     {id:2, name:'小芳', nick:'小芳仙子', status:'active', note:'龍船與折紙皆通'},
     {id:3, name:'小玉', nick:'玉面觀音', status:'active', note:'品質一絕，絕無不良'},
-    {id:4, name:'阿珠', nick:'神珠大師', status:'active', note:'善串接，速驚人'}
+    {id:4, name:'阿珠', nick:'神珠真人', status:'active', note:'善串接，速驚人'}
   ],
   items:[
     {id:1, name:'三角片折製', unit:'每 100片', qty:100, price:30, note:'規格精細'},
@@ -1756,7 +1915,12 @@ let db = {
     {id:7, date:'2026-06-25', workerId:3, itemId:3, total:60, pass:60, amount:480, status:'pending', source:'worker', selfQty:60, note:''},
     {id:8, date:'2026-06-26', workerId:4, itemId:1, total:300, pass:295, amount:88, status:'verified', source:'admin', note:''}
   ],
-  settlements:[],
+  settlements:[
+    { workerId: 1, month: '2026-06', earned: 579, bonus: 50, deduct: 0, amount: 629, status: 'unpaid' },
+    { workerId: 2, month: '2026-06', earned: 532, bonus: 0, deduct: 10, amount: 522, status: 'paid' },
+    { workerId: 3, month: '2026-06', earned: 360, bonus: 100, deduct: 0, amount: 460, status: 'unpaid' },
+    { workerId: 4, month: '2026-06', earned: 658, bonus: 20, deduct: 0, amount: 678, status: 'paid' }
+  ],
   nextId:{workers:5, items:5, records:9}
 };
 
@@ -1777,10 +1941,10 @@ function boatSVG(ci, phase){
   const [accent, secondary] = BOAT_COLORS[ci % BOAT_COLORS.length];
   const lift = Math.sin(phase) * 3.5;
   const drift = Math.cos(phase) * 1.5;
-  return `<svg width="38" height="38" viewBox="0 0 100 100" style="display:block; overflow:visible; transform: translate(${drift}px, ${lift}px); filter: drop-shadow(0 0 5px ${accent})">
+  return `<svg width="38" height="38" viewBox="0 0 100 100" style="display:block; overflow:visible; transform: translate(${drift}px, ${lift}px); filter: drop-shadow(0 0 6px ${accent})">
     <!-- 奢華金沙風帆 -->
     <path d="M48,10 Q32,30 48,55 Q64,30 48,10 Z" fill="url(#gold-grad-${ci})" stroke="#FFFFFF" stroke-width="1.2" />
-    <!-- 曜藍風帆斑紋 (對比極其顯眼) -->
+    <!-- 曜藍風帆斑紋 -->
     <path d="M48,18 Q40,30 48,45 Z" fill="#012C4E" />
     <!-- 精細金色龍船身 -->
     <path d="M12,65 Q50,85 88,65 L82,52 Q50,60 18,52 Z" fill="#EAD292" stroke="#001A30" stroke-width="1.5" />
@@ -1933,7 +2097,7 @@ function deltaBadge(prevRank, wid, curRank){
 
 function fmtScore(r, metric){
   if(metric === 'quality') return r.score.toFixed(1) + '%';
-  if(metric === 'combined') return r.score.toLocaleString() + ' 綜合分';
+  if(metric === 'combined') return r.score.toLocaleString() + ' 分';
   if(metric === 'coin') return r.score.toLocaleString() + ' 枚';
   return '$' + r.score.toLocaleString();
 }
@@ -1942,7 +2106,7 @@ function renderChampion(id, rows, metric, label){
   const el = document.getElementById(id); if(!el) return;
   if(!rows.length) { el.innerHTML = ''; return; }
   const top = rows[0];
-  const title = {earn: '最高產值傑出同道', combined: '綜合表現優秀同道', quality: '品質第一精準同道', coin: '功德無量資深同道'}[metric];
+  const title = {earn: '最高產出卓越同道', combined: '綜合表現優秀同道', quality: '成丹品質精巧同道', coin: '功德無量長青同道'}[metric];
   const icon = {earn: '🔥', combined: '⚗️', quality: '💎', coin: '🪙'}[metric] || '✨';
   el.innerHTML = `<div class="champion">
     <div class="champion-crown">${icon}</div>
@@ -1962,7 +2126,7 @@ function renderLbSummary(id, recs){
   const totP = recs.reduce((a, r) => a + r.pass, 0);
   const rate = totT ? (totP / totT * 100).toFixed(1) : '0.0';
   el.innerHTML = `<div class="lb-summary">
-    <div class="lb-sum-item"><span class="lb-sum-num">${ppl} 人</span><span class="lb-sum-lbl">同道參榜</span></div>
+    <div class="lb-sum-item"><span class="lb-sum-num">${ppl} 人</span><span class="lb-sum-lbl">修行同道參榜</span></div>
     <div class="lb-sum-item"><span class="lb-sum-num">$${out.toLocaleString()}</span><span class="lb-sum-lbl">累計產值總和</span></div>
     <div class="lb-sum-item"><span class="lb-sum-num">${rate}%</span><span class="lb-sum-lbl">平均合格率</span></div>
   </div>`;
@@ -1990,7 +2154,7 @@ function renderRaceRanked(containerId, rows, metric, prevRank, selfId, emptyMsg,
       </div>
       <div class="race-name">
         <span>${r.nick}</span>
-        ${isSelf ? '<span class="self-tag" style="font-size:11px; color:var(--red-palace); font-weight:bold;">[閣下]</span>' : ''}
+        ${isSelf ? '<span class="self-tag" style="font-size:11px; color:var(--red-palace); font-weight:500;">[閣下]</span>' : ''}
         ${coin}
       </div>
       <div class="race-track">
@@ -2042,7 +2206,7 @@ function renderLeaderboard(){
   renderRaceRanked('lb-race', rows, currentLbTab, prevRank, null, '本期尚未有資料。', {showDelta});
   
   const note = document.getElementById('lb-note');
-  if(isCoin) note.innerHTML = `<div class="lb-note">＊ 累計靈幣榜：為求仙同道歷來累計「已驗收」合格資糧之總合 ($1 = 1 枚)，不分期限。</div>`;
+  if(isCoin) note.innerHTML = `<div class="lb-note">＊ 累計靈幣榜：為修行人員歷來累計「已驗收」合格資糧之總合 ($1 = 1 枚)，不分期限。</div>`;
   else if(currentLbTab === 'quality') note.innerHTML = `<div class="lb-note">＊ 品質排行榜：依據「合格數 ÷ 收回數」百分比排序。為防偏誤，本期至少需累計交件達 ${QUALITY_MIN} 件以上方有登榜資格。</div>`;
   else if(currentLbTab === 'combined') note.innerHTML = `<div class="lb-note">＊ 綜合排行榜：產出金額與合格率的綜合評估。</div>`;
   else note.innerHTML = `<div class="lb-note">＊ 產值排行榜：本期合格實收金額；▲▼ 指標反映與上期之名次升降。</div>`;
@@ -2089,7 +2253,7 @@ function renderWorkerLeaderboard(){
     if(myIdx >= 0){
       const me = rows[myIdx];
       const val = currentWLbTab === 'quality' ? me.score.toFixed(1) + '% 合格率'
-                : currentWLbTab === 'combined' ? me.score.toLocaleString() + ' 綜合分'
+                : currentWLbTab === 'combined' ? me.score.toLocaleString() + ' 分'
                 : isCoin ? me.score.toLocaleString() + ' 枚靈幣'
                 : '$' + me.earn.toLocaleString();
       self.innerHTML = `<span>📢</span> <span>您好！您目前在該榜排行 <strong>第 ${myIdx + 1} 位</strong> （當前：<strong>${val}</strong>）</span>`;
@@ -2137,7 +2301,7 @@ function normalizeDB(){
 }
 
 function sourceBadge(src){
-  return src === 'worker' ? '<span class="source-badge source-worker">自報</span>' : '<span class="source-badge source-admin">管理者登記</span>';
+  return src === 'worker' ? '<span class="source-badge source-worker">自報</span>' : '<span class="source-badge source-admin">管理登記</span>';
 }
 
 let currentRole='worker'; // 預設角色
@@ -2175,7 +2339,6 @@ function adminLogin(){
   sessionStorage.setItem(ADMIN_AUTH_KEY, '1');
   
   renderDashboard(); renderWorkers(); renderItems(); renderRecords();
-  document.getElementById('week-range').textContent = getWeekRange();
   switchRole('admin');
   toast('登入成功！ 🔐');
 }
@@ -2203,9 +2366,11 @@ function setAdminTopbar(){
 
 function toast(msg){
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
+  if(t) {
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
 }
 
 function gw(id){ return db.workers.find(w => w.id === id); }
@@ -2246,11 +2411,13 @@ function openModal(id){
     document.getElementById('rf-item').innerHTML = db.items.map(i => `<option value="${i.id}">${i.name} (${i.unit} $${i.price})</option>`).join('');
     calcPreview();
   }
-  document.getElementById(id).classList.add('open');
+  const el = document.getElementById(id);
+  if(el) el.classList.add('open');
 }
 
 function closeModal(id){
-  document.getElementById(id).classList.remove('open');
+  const el = document.getElementById(id);
+  if(el) el.classList.remove('open');
 }
 
 function calcPreview(){
@@ -2269,7 +2436,7 @@ function openWorkerModal(){
   document.getElementById('worker-modal-title').textContent = '新增人員';
   ['wf-name','wf-nick','wf-note'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('wf-status').value = 'active';
-  document.getElementById('worker-modal').classList.add('open');
+  openModal('worker-modal');
 }
 
 function editWorker(id){
@@ -2281,7 +2448,7 @@ function editWorker(id){
   document.getElementById('wf-nick').value = w.nick || '';
   document.getElementById('wf-status').value = w.status || 'active';
   document.getElementById('wf-note').value = w.note || '';
-  document.getElementById('worker-modal').classList.add('open');
+  openModal('worker-modal');
 }
 
 function saveWorker(){
@@ -2310,7 +2477,7 @@ function openItemModal(){
   editingItemId = null;
   document.getElementById('item-modal-title').textContent = '新增品項';
   ['if-name','if-unit','if-qty','if-price','if-note'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('item-modal').classList.add('open');
+  openModal('item-modal');
 }
 
 function editItem(id){
@@ -2323,7 +2490,7 @@ function editItem(id){
   document.getElementById('if-qty').value = it.qty;
   document.getElementById('if-price').value = it.price;
   document.getElementById('if-note').value = it.note || '';
-  document.getElementById('item-modal').classList.add('open');
+  openModal('item-modal');
 }
 
 function saveItem(){
@@ -2433,13 +2600,13 @@ function saveRecordEdit(){
   toast('✏️ 交付紀錄已修改完成！');
 }
 
-function openSettlementEdit(wid, week){
+function openSettlementEdit(wid, month){
   if(!requireAdmin()) return;
-  const s = db.settlements.find(item => item.workerId === wid && item.week === week);
-  if(!s) return toast('⚠️ 找不到該人員本週的結算紀錄，請先重新計算！');
+  const s = db.settlements.find(item => item.workerId === wid && item.month === month);
+  if(!s) return toast('⚠️ 找不到該人員本月的結算紀錄，請先點擊重新計算！');
   
   document.getElementById('sef-wid').value = wid;
-  document.getElementById('sef-week').value = week;
+  document.getElementById('sef-month').value = month;
   document.getElementById('sef-name').value = gwn(wid);
   document.getElementById('sef-earned').value = `$${s.earned.toLocaleString()}`;
   document.getElementById('sef-bonus').value = s.bonus || 0;
@@ -2459,8 +2626,8 @@ function calcSettlementEditTotal(){
 
 function saveSettlementAdjustment(){
   const wid = +document.getElementById('sef-wid').value;
-  const week = document.getElementById('sef-week').value;
-  const s = db.settlements.find(item => item.workerId === wid && item.week === week);
+  const month = document.getElementById('sef-month').value;
+  const s = db.settlements.find(item => item.workerId === wid && item.month === month);
   if(!s) return;
   
   s.bonus = +document.getElementById('sef-bonus').value || 0;
@@ -2470,309 +2637,7 @@ function saveSettlementAdjustment(){
   saveDB();
   closeModal('settlement-edit-modal');
   generateSettlement();
-  toast('⚖️ 調整薪資完成！');
-}
-
-
-function pad2(n){
-  return String(n).padStart(2, '0');
-}
-
-function initPayrollMonth(){
-  const input = document.getElementById('payroll-month');
-  if(!input) return;
-  if(!input.value){
-    const now = new Date();
-    input.value = `${now.getFullYear()}-${pad2(now.getMonth() + 1)}`;
-  }
-}
-
-function getPayrollMonthInfo(){
-  initPayrollMonth();
-  const raw = document.getElementById('payroll-month')?.value || '';
-  const m = raw.match(/^(\d{4})-(\d{2})$/);
-  const now = new Date();
-  const year = m ? +m[1] : now.getFullYear();
-  const month = m ? +m[2] : now.getMonth() + 1;
-  const s = new Date(year, month - 1, 1);
-  const e = new Date(year, month, 0);
-  e.setHours(23, 59, 59, 999);
-  return {
-    year,
-    month,
-    monthIndex: month - 1,
-    ym: `${year}-${pad2(month)}`,
-    label: `${year}年${month}月`,
-    s,
-    e
-  };
-}
-
-function escapeExcel(v){
-  if(v === null || v === undefined) return '';
-  return String(v)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
-function parseSettlementWeekRange(week, selectedYear, selectedMonthIndex){
-  const m = String(week || '').match(/(\d{1,2})\/(\d{1,2})\s*[–-]\s*(\d{1,2})\/(\d{1,2})/);
-  if(!m) return null;
-  const sm = +m[1] - 1;
-  const sd = +m[2];
-  const em = +m[3] - 1;
-  const ed = +m[4];
-  let sy = selectedYear;
-  let ey = selectedYear;
-
-  // 處理跨年週，例如 12/29 – 1/4
-  if(sm === 11 && em === 0){
-    if(selectedMonthIndex === 0){
-      sy = selectedYear - 1;
-      ey = selectedYear;
-    } else {
-      sy = selectedYear;
-      ey = selectedYear + 1;
-    }
-  }
-
-  const s = new Date(sy, sm, sd);
-  const e = new Date(ey, em, ed);
-  e.setHours(23, 59, 59, 999);
-  return {s, e};
-}
-
-function settlementWeekIntersectsMonth(settlement, info){
-  const range = parseSettlementWeekRange(settlement.week, info.year, info.monthIndex);
-  if(!range) return false;
-  return range.e >= info.s && range.s <= info.e;
-}
-
-function payrollStatusLabel(statuses){
-  if(!statuses.length) return '未建立結算';
-  if(statuses.every(s => s === 'paid')) return '已發放';
-  if(statuses.some(s => s === 'paid')) return '部分已發放';
-  return '未發放';
-}
-
-function exportMonthlyPayrollExcel(){
-  if(!requireAdmin()) return;
-  const info = getPayrollMonthInfo();
-  const monthRecords = db.records
-    .filter(r => r.status === 'verified' && inRange(r.date, info.s, info.e))
-    .sort((a, b) => String(a.date).localeCompare(String(b.date)) || gwn(a.workerId).localeCompare(gwn(b.workerId)));
-
-  const monthSettlements = (db.settlements || []).filter(s => settlementWeekIntersectsMonth(s, info));
-  const adjByWorker = {};
-  monthSettlements.forEach(s => {
-    const a = adjByWorker[s.workerId] || (adjByWorker[s.workerId] = {bonus: 0, deduct: 0, statuses: [], weeks: []});
-    a.bonus += +(s.bonus || 0);
-    a.deduct += +(s.deduct || 0);
-    a.statuses.push(s.status || 'unpaid');
-    a.weeks.push(s.week);
-  });
-
-  const byWorker = {};
-  monthRecords.forEach(r => {
-    const w = gw(r.workerId) || {id: r.workerId, name: `ID:${r.workerId}`, nick: ''};
-    const a = byWorker[r.workerId] || (byWorker[r.workerId] = {
-      workerId: r.workerId,
-      name: w.name,
-      nick: w.nick || '',
-      earned: 0,
-      totalQty: 0,
-      passQty: 0,
-      records: [],
-      itemMap: {}
-    });
-    a.earned += +(r.amount || 0);
-    a.totalQty += +(r.total || 0);
-    a.passQty += +(r.pass || 0);
-    a.records.push(r);
-
-    const itemName = gin(r.itemId);
-    const item = a.itemMap[itemName] || (a.itemMap[itemName] = {itemName, count: 0, totalQty: 0, passQty: 0, amount: 0});
-    item.count += 1;
-    item.totalQty += +(r.total || 0);
-    item.passQty += +(r.pass || 0);
-    item.amount += +(r.amount || 0);
-  });
-
-  // 若只有手動調整、但本月無驗收明細，也仍列入薪資總表。
-  monthSettlements.forEach(s => {
-    if(byWorker[s.workerId]) return;
-    const w = gw(s.workerId) || {id: s.workerId, name: `ID:${s.workerId}`, nick: ''};
-    byWorker[s.workerId] = {
-      workerId: s.workerId,
-      name: w.name,
-      nick: w.nick || '',
-      earned: 0,
-      totalQty: 0,
-      passQty: 0,
-      records: [],
-      itemMap: {}
-    };
-  });
-
-  const summaries = Object.values(byWorker).map(s => {
-    const adj = adjByWorker[s.workerId] || {bonus: 0, deduct: 0, statuses: [], weeks: []};
-    return {
-      ...s,
-      bonus: adj.bonus,
-      deduct: adj.deduct,
-      amount: s.earned + adj.bonus - adj.deduct,
-      payrollStatus: payrollStatusLabel(adj.statuses),
-      settlementWeeks: [...new Set(adj.weeks)].join('、') || '—'
-    };
-  }).sort((a, b) => a.name.localeCompare(b.name, 'zh-Hant-TW'));
-
-  if(!summaries.length){
-    toast(`⚠️ ${info.label} 沒有可匯出的已驗收薪資資料。`);
-    return;
-  }
-
-  const exportDate = new Date().toLocaleString('zh-TW', {hour12: false});
-  const money = n => Number(n || 0).toLocaleString('zh-TW');
-  const num = n => Number(n || 0).toLocaleString('zh-TW');
-
-  const totalEarned = summaries.reduce((a, s) => a + s.earned, 0);
-  const totalBonus = summaries.reduce((a, s) => a + s.bonus, 0);
-  const totalDeduct = summaries.reduce((a, s) => a + s.deduct, 0);
-  const totalAmount = summaries.reduce((a, s) => a + s.amount, 0);
-
-  const summaryRows = summaries.map(s => `
-    <tr>
-      <td>${escapeExcel(s.name)}</td>
-      <td>${escapeExcel(s.nick || '—')}</td>
-      <td class="num">${money(s.earned)}</td>
-      <td class="num">${money(s.bonus)}</td>
-      <td class="num">${money(s.deduct)}</td>
-      <td class="num strong">${money(s.amount)}</td>
-      <td class="num">${num(s.passQty)}</td>
-      <td>${escapeExcel(s.payrollStatus)}</td>
-      <td>${escapeExcel(s.settlementWeeks)}</td>
-    </tr>`).join('');
-
-  const detailRows = monthRecords.map(r => `
-    <tr>
-      <td>${escapeExcel(r.date)}</td>
-      <td>${escapeExcel(gwn(r.workerId))}</td>
-      <td>${escapeExcel(gin(r.itemId))}</td>
-      <td>${escapeExcel(r.source === 'worker' ? '自報' : '管理者登記')}</td>
-      <td class="num">${r.selfQty == null ? '—' : num(r.selfQty)}</td>
-      <td class="num">${num(r.total)}</td>
-      <td class="num">${num(r.pass)}</td>
-      <td class="num">${money(r.amount)}</td>
-      <td>${escapeExcel(r.note || '')}</td>
-    </tr>`).join('');
-
-  const slipsHtml = summaries.map(s => {
-    const itemRows = Object.values(s.itemMap).sort((a, b) => a.itemName.localeCompare(b.itemName, 'zh-Hant-TW')).map(it => `
-      <tr>
-        <td>${escapeExcel(it.itemName)}</td>
-        <td class="num">${num(it.count)}</td>
-        <td class="num">${num(it.totalQty)}</td>
-        <td class="num">${num(it.passQty)}</td>
-        <td class="num">${money(it.amount)}</td>
-      </tr>`).join('') || '<tr><td colspan="5">本月無驗收品項明細，僅有結算調整。</td></tr>';
-
-    const recordRows = s.records.map(r => `
-      <tr>
-        <td>${escapeExcel(r.date)}</td>
-        <td>${escapeExcel(gin(r.itemId))}</td>
-        <td class="num">${num(r.total)}</td>
-        <td class="num">${num(r.pass)}</td>
-        <td class="num">${money(r.amount)}</td>
-        <td>${escapeExcel(r.note || '')}</td>
-      </tr>`).join('') || '<tr><td colspan="6">本月無交付明細。</td></tr>';
-
-    return `
-      <div class="page-break"></div>
-      <h2>永祿坊｜${escapeExcel(info.label)} 每月薪資條</h2>
-      <table class="slip-head">
-        <tr><th>姓名</th><td>${escapeExcel(s.name)}</td><th>排行榜道號</th><td>${escapeExcel(s.nick || '—')}</td></tr>
-        <tr><th>薪資月份</th><td>${escapeExcel(info.label)}</td><th>匯出時間</th><td>${escapeExcel(exportDate)}</td></tr>
-        <tr><th>結算週期</th><td colspan="3">${escapeExcel(s.settlementWeeks)}</td></tr>
-      </table>
-      <table>
-        <tr><th>合格資糧</th><th>獎勵加給</th><th>扣款</th><th>實付總額</th><th>發放狀態</th></tr>
-        <tr>
-          <td class="num">${money(s.earned)}</td>
-          <td class="num">${money(s.bonus)}</td>
-          <td class="num">${money(s.deduct)}</td>
-          <td class="num strong">${money(s.amount)}</td>
-          <td>${escapeExcel(s.payrollStatus)}</td>
-        </tr>
-      </table>
-      <h3>品項小計</h3>
-      <table>
-        <tr><th>品項</th><th>筆數</th><th>交回數量</th><th>合格數量</th><th>金額</th></tr>
-        ${itemRows}
-      </table>
-      <h3>交付明細</h3>
-      <table>
-        <tr><th>日期</th><th>品項</th><th>交回數量</th><th>合格數量</th><th>金額</th><th>備註</th></tr>
-        ${recordRows}
-      </table>
-      <p class="note">＊本薪資條以「已驗收」交付紀錄計算；待驗收紀錄不列入。本表可直接由 Excel 開啟後另存成 .xlsx 或列印/轉 PDF。</p>
-    `;
-  }).join('');
-
-  const html = `<!DOCTYPE html>
-<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-<head>
-<meta charset="UTF-8">
-<style>
-body{font-family:'Noto Sans TC','Microsoft JhengHei',Arial,sans-serif;color:#1F2937;}
-h1{font-size:22px;color:#012C4E;margin:0 0 8px 0;}
-h2{font-size:20px;color:#012C4E;margin:20px 0 8px 0;}
-h3{font-size:15px;color:#012C4E;margin:14px 0 6px 0;}
-.meta{font-size:12px;margin:0 0 14px 0;color:#555;}
-table{border-collapse:collapse;margin:8px 0 16px 0;width:100%;}
-th{background:#EAD292;color:#012C4E;font-weight:900;border:1px solid #BA9749;padding:7px 9px;}
-td{border:1px solid #D8C99F;padding:7px 9px;vertical-align:top;}
-.num{text-align:right;mso-number-format:'\\#\\,\\#\\#0';}
-.strong{font-weight:900;color:#9E2A2B;}
-.summary-box td{font-size:14px;}
-.slip-head th{width:18%;}.slip-head td{width:32%;}
-.note{font-size:11px;color:#555;margin-top:8px;}
-.page-break{page-break-before:always;}
-</style>
-</head>
-<body>
-  <h1>永祿坊｜${escapeExcel(info.label)} 每月薪資結算總表</h1>
-  <p class="meta">匯出時間：${escapeExcel(exportDate)}｜資料來源：系統內已驗收交付紀錄＋本月結算調整</p>
-  <table class="summary-box">
-    <tr><th>總合格資糧</th><th>總獎勵加給</th><th>總扣款</th><th>總實付金額</th><th>人數</th></tr>
-    <tr><td class="num">${money(totalEarned)}</td><td class="num">${money(totalBonus)}</td><td class="num">${money(totalDeduct)}</td><td class="num strong">${money(totalAmount)}</td><td class="num">${summaries.length}</td></tr>
-  </table>
-  <h2>薪資總表</h2>
-  <table>
-    <tr><th>求仙同道</th><th>排行榜道號</th><th>合格金額</th><th>獎勵加給</th><th>扣款</th><th>實付總額</th><th>合格數量</th><th>發放狀態</th><th>結算週期</th></tr>
-    ${summaryRows}
-  </table>
-  <h2>交付明細總表</h2>
-  <table>
-    <tr><th>日期</th><th>求仙同道</th><th>品項</th><th>來源</th><th>自報數量</th><th>交回數量</th><th>合格數量</th><th>金額</th><th>備註</th></tr>
-    ${detailRows || '<tr><td colspan="9">本月無交付明細。</td></tr>'}
-  </table>
-  ${slipsHtml}
-</body>
-</html>`;
-
-  const blob = new Blob(['\ufeff', html], {type: 'application/vnd.ms-excel;charset=utf-8;'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `永祿坊_${info.ym}_每月薪資條.xls`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  toast(`📤 已匯出 ${info.label} 每月薪資條 Excel！`);
+  toast('⚖️ 調整修行資糧完成！');
 }
 
 function openBackupModal(){
@@ -2818,7 +2683,7 @@ function calcWorkerSubmitPreview(){
   if(raw === ''){ preview.textContent = '💡 數量留空亦可，管理者驗收時會依實收數核發金額。'; return; }
   const qty = +raw || 0;
   if(qty <= 0){ preview.textContent = '⚠️ 請填入大於零的數量'; return; }
-  preview.innerHTML = `本次登記：<b>${qty.toLocaleString()}</b> ${it.unit.split(' ')[0] || '件'}，預估可領：<strong style="color:var(--red-palace);">$${Math.round(qty/it.qty*it.price).toLocaleString()}</strong>`;
+  preview.innerHTML = `本次登記：<b>${qty.toLocaleString()}</b> ${it.unit.split(' ')[0] || '件'}，預估可領：<span style="color:var(--red-palace); font-weight: 500;">$${Math.round(qty/it.qty*it.price).toLocaleString()}</span>`;
 }
 
 function renderWorkerSubmitPage(){
@@ -2845,7 +2710,7 @@ function renderWorkerSubmitPage(){
       <td>${r.selfQty == null ? '—' : r.selfQty.toLocaleString()}</td>
       <td>$${r.amount.toLocaleString()}</td>
       <td>${statusBadge(r.status)}</td>
-      <td style="color: var(--navy-deep); max-width: 150px; overflow: hidden; text-overflow: ellipsis; font-weight:900;">${r.note || '—'}</td>
+      <td style="color: var(--navy-deep); max-width: 150px; overflow: hidden; text-overflow: ellipsis; font-weight:500;">${r.note || '—'}</td>
     </tr>`).join('') : '<tr><td colspan="6" class="empty-state">近日尚未申報任何交付。</td></tr>';
   }
 }
@@ -2891,10 +2756,12 @@ function askConfirm(msg, onOk, okText){
   document.getElementById('confirm-msg').innerHTML = msg;
   document.getElementById('confirm-ok').textContent = okText || '確定';
   _confirmCb = onOk;
-  document.getElementById('confirm-modal').classList.add('open');
+  const el = document.getElementById('confirm-modal');
+  if(el) el.classList.add('open');
 }
 function closeConfirm(){
-  document.getElementById('confirm-modal').classList.remove('open');
+  const el = document.getElementById('confirm-modal');
+  if(el) el.classList.remove('open');
   _confirmCb = null;
 }
 function doConfirm(){
@@ -2922,8 +2789,8 @@ function deleteWorker(id){
   const recCount = db.records.filter(r => r.workerId === id).length;
   const settlementCount = db.settlements.filter(s => s.workerId === id).length;
   const msg = recCount || settlementCount
-    ? `⚠️ 確定要將同道「${w.name}」刪除嗎？<br>此舉將一併刪除其交付紀錄 ${recCount} 筆、結算資料 ${settlementCount} 筆。<br><strong style="color:var(--red-palace)">此操作不可逆。</strong>`
-    : `⚠️ 確定要刪除同道「${w.name}」嗎？`;
+    ? `⚠️ 確定要將求仙同道「${w.name}」刪除嗎？<br>此舉將一併刪除其交付紀錄 ${recCount} 筆、結算資料 ${settlementCount} 筆。<br><strong style="color:var(--red-palace); font-weight:700;">此操作不可逆。</strong>`
+    : `⚠️ 確定要刪除求仙同道「${w.name}」嗎？`;
   askConfirm(msg, () => {
     db.workers = db.workers.filter(w => w.id !== id);
     db.records = db.records.filter(r => r.workerId !== id);
@@ -2936,7 +2803,7 @@ function deleteWorker(id){
 function deleteRecord(id){
   if(!requireAdmin()) return;
   const r = db.records.find(r => r.id === id); if(!r) return;
-  askConfirm(`⚠️ 確定要刪除這筆交付紀錄嗎？<br>${r.date} ｜ ${gwn(r.workerId)} ｜ ${gin(r.itemId)} ｜ $${r.amount.toLocaleString()}<br><strong style="color:var(--red-palace)">此操作會直接影響結算金額與排行榜數據。</strong>`, () => {
+  askConfirm(`⚠️ 確定要刪除這筆交付紀錄嗎？<br>${r.date} ｜ ${gwn(r.workerId)} ｜ ${gin(r.itemId)} ｜ $${r.amount.toLocaleString()}<br><strong style="color:var(--red-palace); font-weight:700;">此操作會直接影響結算金額與排行榜數據。</strong>`, () => {
     db.records = db.records.filter(r => r.id !== id);
     saveDB(); refreshAfterDataChange(); toast('🗑️ 紀錄已刪除');
   }, '確定刪除');
@@ -2975,26 +2842,17 @@ function unverifyRecord(id){
   }, '撤回驗收');
 }
 
-function isThisWeek(dateStr){
-  const d = new Date(dateStr), now = new Date();
-  const s = new Date(now); s.setDate(now.getDate() - now.getDay() + 1); s.setHours(0,0,0,0);
-  const e = new Date(s); e.setDate(s.getDate() + 6); e.setHours(23, 59, 59, 999);
-  return d >= s && d <= e;
-}
-
-function getWeekRange(){
-  const now = new Date();
-  const s = new Date(now); s.setDate(now.getDate() - now.getDay() + 1);
-  const e = new Date(s); e.setDate(s.getDate() + 6);
-  return `${s.getMonth() + 1}/${s.getDate()} – ${e.getMonth() + 1}/${e.getDate()}`;
+function isThisMonth(dateStr, targetMonth){
+  return dateStr.startsWith(targetMonth);
 }
 
 function renderDashboard(){
   const active = db.workers.filter(w => w.status === 'active').length;
-  const wRecs = db.records.filter(r => isThisWeek(r.date));
-  const wAmt = wRecs.reduce((a, r) => a + r.amount, 0);
+  const currentMonthStr = '2026-06'; // 系統固定模擬月度 June 2026
+  const mRecs = db.records.filter(r => isThisMonth(r.date, currentMonthStr));
+  const mAmt = mRecs.filter(r => r.status === 'verified').reduce((a, r) => a + r.amount, 0);
   const pending = db.records.filter(r => r.status === 'pending').length;
-  const unpaid = db.settlements.filter(s => s.status === 'unpaid').reduce((a, s) => a + s.amount, 0);
+  const unpaid = db.settlements.filter(s => s.status === 'unpaid' && s.month === currentMonthStr).reduce((a, s) => a + s.amount, 0);
   
   document.getElementById('dash-stats').innerHTML = `
     <div class="stat-card">
@@ -3006,8 +2864,8 @@ function renderDashboard(){
     </div>
     <div class="stat-card">
       <div class="stat-info">
-        <span class="stat-label">本週合格產值</span>
-        <span class="stat-value stat-accent">$${wAmt.toLocaleString()}</span>
+        <span class="stat-label">本月合格產值</span>
+        <span class="stat-value stat-accent">$${mAmt.toLocaleString()}</span>
       </div>
       <div class="stat-icon" style="background:#FAF4E8; color:var(--navy-deep);">⚡</div>
     </div>
@@ -3020,7 +2878,7 @@ function renderDashboard(){
     </div>
     <div class="stat-card">
       <div class="stat-info">
-        <span class="stat-label">待付金額</span>
+        <span class="stat-label">本月待付資糧</span>
         <span class="stat-value">$${unpaid.toLocaleString()}</span>
       </div>
       <div class="stat-icon" style="background:#FAF4E8; color:var(--gold-beige);">🪙</div>
@@ -3034,14 +2892,14 @@ function renderDashboard(){
         <div style="display:flex; align-items:center; gap:8px">
           <div class="avatar">${(gwn(r.workerId) || '?').slice(0, 1)}</div>
           <div>
-            <strong style="font-size:14px; color:var(--navy-deep);">${gwn(r.workerId)}</strong>
-            <div style="font-size:11px; color:#111; font-weight:700;">${gw(r.workerId)?.nick || ''}</div>
+            <span style="font-size:14px; color:var(--navy-deep); font-weight: 500;">${gwn(r.workerId)}</span>
+            <div style="font-size:11px; color:#555; font-weight:400;">${gw(r.workerId)?.nick || ''}</div>
           </div>
         </div>
       </td>
       <td>${gin(r.itemId)}</td>
-      <td><strong>${r.pass.toLocaleString()}</strong></td>
-      <td><strong style="color:var(--red-palace); font-size:15px;">$${r.amount.toLocaleString()}</strong></td>
+      <td><span style="font-weight: 500;">${r.pass.toLocaleString()}</span></td>
+      <td><span style="color:var(--red-palace); font-size:15px; font-weight: 500;">$${r.amount.toLocaleString()}</span></td>
       <td>
         <div style="display:flex; align-items:center; gap:6px;">
           ${statusBadge(r.status)}
@@ -3072,13 +2930,13 @@ function renderWorkers(){
       <td>
         <div style="display:flex; align-items:center; gap:8px">
           <div class="avatar">${w.name.slice(0,1)}</div>
-          <strong style="font-size:14px; color:#000000;">${w.name}</strong>
+          <span style="font-size:14px; color:#1F2937; font-weight: 500;">${w.name}</span>
         </div>
       </td>
-      <td><span style="font-weight: 900; color:var(--navy-deep);">${w.nick || '—'}</span></td>
+      <td><span style="font-weight: 500; color:var(--navy-deep);">${w.nick || '—'}</span></td>
       <td>${statusBadge(w.status)}</td>
-      <td><strong style="color:var(--red-palace);">$${(totals[w.id] || 0).toLocaleString()}</strong></td>
-      <td><span class="coin-chip">🪙 ${coinsOf(totals[w.id] || 0).toLocaleString()} 枚</span></td>
+      <td><span style="color:var(--red-palace); font-weight: 500;">$${(totals[w.id] || 0).toLocaleString()}</span></td>
+      <td><span class="coin-chip">🪙 ${(totals[w.id] || 0).toLocaleString()} 枚</span></td>
       <td style="text-align: right;">
         <button class="btn btn-sm" onclick="editWorker(${w.id})">✏️ 修改</button>
         <button class="btn btn-sm" onclick="previewWorker(${w.id})" style="color:var(--navy-deep); border-color:var(--gold-beige);">預覽</button>
@@ -3099,11 +2957,11 @@ function renderItems(){
   
   document.getElementById('items-table').innerHTML = filtered.length ? filtered.map(i => `
     <tr>
-      <td><strong>${i.name}</strong></td>
+      <td><span style="font-weight: 500;">${i.name}</span></td>
       <td><span class="badge badge-gray">${i.unit}</span></td>
       <td>${i.qty} 件</td>
-      <td><strong style="color:var(--red-palace); font-size:15px;">$${i.price}</strong></td>
-      <td style="color:#111; font-size:13px; font-weight:700; max-width: 200px; overflow: hidden; text-overflow: ellipsis;" title="${i.note}">${i.note || '—'}</td>
+      <td><span style="color:var(--red-palace); font-size:15px; font-weight: 500;">$${i.price}</span></td>
+      <td style="color:#555; font-size:13px; font-weight:400; max-width: 200px; overflow: hidden; text-overflow: ellipsis;" title="${i.note}">${i.note || '—'}</td>
       <td style="text-align: right;">
         <button class="btn btn-sm" onclick="editItem(${i.id})">✏️ 修改</button>
         <button class="btn btn-sm btn-danger" onclick="deleteItem(${i.id})">🗑️ 刪除</button>
@@ -3128,15 +2986,15 @@ function renderRecords(){
       <td>
         <div style="display:flex; align-items:center; gap:6px;">
           <div class="avatar" style="width:24px; height:24px; font-size:11px;">${gwn(r.workerId).slice(0,1)}</div>
-          <strong>${gwn(r.workerId)}</strong>
+          <span style="font-weight: 500;">${gwn(r.workerId)}</span>
         </div>
       </td>
       <td>${gin(r.itemId)}</td>
       <td>${sourceBadge(r.source)}</td>
-      <td>${r.selfQty == null ? '—' : `<span style="font-weight: 900; color: var(--navy-deep);">${r.selfQty.toLocaleString()}</span>`}</td>
+      <td>${r.selfQty == null ? '—' : `<span style="font-weight: 500; color: var(--navy-deep);">${r.selfQty.toLocaleString()}</span>`}</td>
       <td>${r.total.toLocaleString()}</td>
-      <td><strong style="color: var(--navy-deep);">${r.pass.toLocaleString()}</strong></td>
-      <td><strong style="color:var(--red-palace); font-size:14px;">$${r.amount.toLocaleString()}</strong></td>
+      <td><span style="color: var(--navy-deep); font-weight: 500;">${r.pass.toLocaleString()}</span></td>
+      <td><span style="color:var(--red-palace); font-size:14px; font-weight: 500;">$${r.amount.toLocaleString()}</span></td>
       <td>${statusBadge(r.status)}</td>
       <td style="text-align: right;">
         <button class="btn btn-sm" onclick="openRecordEdit(${r.id})">✏️ 修改</button>
@@ -3144,26 +3002,28 @@ function renderRecords(){
           ? `<button class="btn btn-sm btn-primary" onclick="verifyRecord(${r.id})">✓ 驗收</button>`
           : `<button class="btn btn-sm" onclick="unverifyRecord(${r.id})">↩ 撤回</button>`}
         <button class="btn btn-sm btn-danger btn-icon-only" onclick="deleteRecord(${r.id})">🗑️</button>
-        ${r.note ? `<div style="font-size:12px; color:#111; font-weight:700; text-align: left; margin-top: 4px; border-left: 2px solid var(--border-solid); padding-left: 6px;">備註：${r.note}</div>` : ''}
+        ${r.note ? `<div style="font-size:12px; color:#555; font-weight:400; text-align: left; margin-top: 4px; border-left: 2px solid var(--border-solid); padding-left: 6px;">備註：${r.note}</div>` : ''}
       </td>
     </tr>
   `).join('') : '<tr><td colspan="10" class="empty-state"><div class="empty-icon">📂</div>尚無符合條件之交付紀錄</td></tr>';
 }
 
+/* 💰 資糧月結算核心邏輯 */
 function generateSettlement(){
   if(!requireAdmin()) return;
-  initPayrollMonth();
-  const wRecs = db.records.filter(r => isThisWeek(r.date) && r.status === 'verified');
-  const byW = {};
-  wRecs.forEach(r => { byW[r.workerId] = (byW[r.workerId] || 0) + r.amount; });
-  const week = getWeekRange();
+  const monthPicker = document.getElementById('settlement-month-picker');
+  const month = monthPicker ? monthPicker.value : '2026-06';
   
-  db.settlements = db.settlements.filter(s => s.week !== week || Object.prototype.hasOwnProperty.call(byW, s.workerId));
+  const mRecs = db.records.filter(r => isThisMonth(r.date, month) && r.status === 'verified');
+  const byW = {};
+  mRecs.forEach(r => { byW[r.workerId] = (byW[r.workerId] || 0) + r.amount; });
+  
+  db.settlements = db.settlements.filter(s => s.month !== month || Object.prototype.hasOwnProperty.call(byW, s.workerId));
   
   Object.entries(byW).forEach(([wid, earned]) => {
-    let s = db.settlements.find(item => item.workerId === +wid && item.week === week);
+    let s = db.settlements.find(item => item.workerId === +wid && item.month === month);
     if(!s){
-      s = { workerId: +wid, week, earned, bonus: 0, deduct: 0, amount: earned, status: 'unpaid' };
+      s = { workerId: +wid, month, earned, bonus: 0, deduct: 0, amount: earned, status: 'unpaid' };
       db.settlements.push(s);
     } else {
       s.earned = earned;
@@ -3172,41 +3032,127 @@ function generateSettlement(){
   });
   saveDB();
   
-  document.getElementById('week-range').textContent = week;
-  const ws = db.settlements.filter(s => s.week === week);
+  const monthParts = month.split('-');
+  document.getElementById('week-range').textContent = `${monthParts[0]}年${monthParts[1]}月`;
+  const ws = db.settlements.filter(s => s.month === month);
   
   document.getElementById('settlement-table').innerHTML = ws.length ? ws.map(s => `
     <tr>
-      <td><strong>${gwn(s.workerId)}</strong></td>
+      <td><span style="font-weight: 500;">${gwn(s.workerId)}</span></td>
       <td>$${s.earned.toLocaleString()}</td>
-      <td><span style="color:var(--navy-deep); font-weight:900;">+$${s.bonus || 0}</span></td>
-      <td><span style="color:var(--red-palace); font-weight:900;">-$${s.deduct || 0}</span></td>
-      <td><strong style="color:var(--red-palace); font-size:15px;">$${s.amount.toLocaleString()}</strong></td>
+      <td><span style="color:var(--navy-deep); font-weight: 500;">+$${s.bonus || 0}</span></td>
+      <td><span style="color:var(--red-palace); font-weight: 500;">-$${s.deduct || 0}</span></td>
+      <td><span style="color:var(--red-palace); font-size:15px; font-weight: 700;">$${s.amount.toLocaleString()}</span></td>
       <td>${statusBadge(s.status)}</td>
       <td style="text-align: right;">
-        <button class="btn btn-sm" onclick="openSettlementEdit(${s.workerId},'${s.week}')">⚖️ 調整薪資</button>
+        <button class="btn btn-sm" onclick="openSettlementEdit(${s.workerId},'${s.month}')">⚖️ 調整資糧</button>
         ${s.status === 'unpaid'
-          ? `<button class="btn btn-sm btn-primary" onclick="markPaid(${s.workerId},'${s.week}')">✓ 確定支付</button>`
-          : `<button class="btn btn-sm" onclick="markUnpaid(${s.workerId},'${s.week}')">↩ 改回未付</button>`}
+          ? `<button class="btn btn-sm btn-primary" onclick="markPaid(${s.workerId},'${s.month}')">✓ 確定支付</button>`
+          : `<button class="btn btn-sm" onclick="markUnpaid(${s.workerId},'${s.month}')">↩ 改回未付</button>`}
       </td>
     </tr>
-  `).join('') : '<tr><td colspan="7" class="empty-state"><div class="empty-icon">💸</div>本週尚無驗收合格之工單，請先去交付管理驗收！</td></tr>';
+  `).join('') : `<tr><td colspan="7" class="empty-state"><div class="empty-icon">💸</div>當月（${monthParts[0]}年${monthParts[1]}月）尚無驗收合格之工單，請先至交付管理驗收！</td></tr>`;
 }
 
-function markPaid(wid, week){
+/* 📥 匯出 Excel (CSV) 精緻排版薪資條 */
+function exportSettlementCSV() {
+  const monthPicker = document.getElementById('settlement-month-picker');
+  const selectedMonth = monthPicker ? monthPicker.value : '2026-06';
+  const parts = selectedMonth.split('-');
+  const year = parts[0];
+  const month = parts[1];
+  
+  const ws = db.settlements.filter(s => s.month === selectedMonth);
+  if(!ws.length) {
+    toast(`⚠️ 當前月份（${year}年${month}月）無結算數據可供匯出！`);
+    return;
+  }
+  
+  let csvContent = "\uFEFF"; 
+  
+  csvContent += "=========================================================================\r\n";
+  csvContent += `  永祿坊修行資糧月度核發報表 ( 核算月份: ${year} 年 ${month} 月 )\r\n`;
+  csvContent += "=========================================================================\r\n";
+  csvContent += `匯出日期: ${new Date().toISOString().slice(0, 10)} | 掌管仙司: 永祿坊法制處 | 幣別單位: 功德靈幣 (NTD元)\r\n\r\n`;
+  
+  csvContent += "【 第一部分：修行同道月度資糧匯整總表 】\r\n";
+  csvContent += "同道姓名,道號/暱稱,修仙境界,基本合格資糧,獎勵資糧,扣減資糧,實發總額,發放狀態,同道確認簽章\r\n";
+  
+  let grandTotalEarned = 0;
+  let grandTotalBonus = 0;
+  let grandTotalDeduct = 0;
+  let grandTotalAmount = 0;
+  
+  ws.forEach(s => {
+    const w = gw(s.workerId);
+    const name = w ? w.name : '—';
+    const nick = w ? (w.nick || w.name) : '—';
+    const coins = coinsOf(cumulativeEarned(s.workerId));
+    const c = cultivation(coins);
+    const statusText = s.status === 'paid' ? '已核發' : '待領取';
+    
+    csvContent += `"${name}","${nick}","${c.realm} · ${c.layerLabel}",${s.earned},${s.bonus || 0},${s.deduct || 0},${s.amount},"${statusText}","__________________"\r\n`;
+    
+    grandTotalEarned += s.earned;
+    grandTotalBonus += (s.bonus || 0);
+    grandTotalDeduct += (s.deduct || 0);
+    grandTotalAmount += s.amount;
+  });
+  
+  csvContent += `「本月總計」,,,"${grandTotalEarned}","${grandTotalBonus}","${grandTotalDeduct}","${grandTotalAmount}",,\r\n\r\n`;
+  
+  csvContent += "=========================================================================\r\n";
+  csvContent += "               【 第二部分：修行同道各別資糧條 (請沿虛線裁剪發放) 】              \r\n";
+  csvContent += "=========================================================================\r\n\r\n";
+  
+  ws.forEach((s, idx) => {
+    const w = gw(s.workerId);
+    const name = w ? w.name : '—';
+    const nick = w ? (w.nick || w.name) : '—';
+    const coins = coinsOf(cumulativeEarned(s.workerId));
+    const c = cultivation(coins);
+    const statusText = s.status === 'paid' ? '已核發' : '待領取';
+    
+    csvContent += `【永祿坊求仙資糧條 - ${year}年${month}月】\r\n`;
+    csvContent += `同道姓名:,"${name}",道號/暱稱:,"${nick}"\r\n`;
+    csvContent += `修仙境界:,"${c.realm} · ${c.layerLabel}",修為靈幣:,"🪙 ${coins.toLocaleString()} 枚"\r\n`;
+    csvContent += "-------------------------------------------------------------------------\r\n";
+    csvContent += `資糧項目,金額(元),細目備註\r\n`;
+    csvContent += `基本合格資糧,${s.earned},"依本月各法製品實收合格數核算"\r\n`;
+    csvContent += `額外獎勵加給,${s.bonus || 0},"卓越表現、特快速度或高難度法製補貼"\r\n`;
+    csvContent += `修繕扣減資糧,-${s.deduct || 0},"法製瑕疵、廢料損耗或未達標之資糧扣減"\r\n`;
+    csvContent += "-------------------------------------------------------------------------\r\n";
+    csvContent += `本月實發總額,${s.amount},"${statusText}"\r\n`;
+    csvContent += `同道領受簽名章:,,_________________________________\r\n`;
+    csvContent += "-------------------------------------------------------------------------\r\n";
+    csvContent += "✂ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\r\n\r\n";
+  });
+  
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", `永祿坊求仙資糧條_${year}年${month}月.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  toast(`📥 已匯出 ${year}年${month}月 裁剪式資糧薪資條明細！`);
+}
+
+function markPaid(wid, month){
   if(!requireAdmin()) return;
-  askConfirm(`確定已將薪資發放給「${gwn(wid)}」了嗎？<br>確定後將會標記為「已發放」。`, () => {
-    const s = db.settlements.find(item => item.workerId === +wid && item.week === week);
+  askConfirm(`確定已將資糧發放給同道「${gwn(wid)}」了嗎？`, () => {
+    const s = db.settlements.find(item => item.workerId === +wid && item.month === month);
     if(s){ s.status = 'paid'; saveDB(); generateSettlement(); toast('💰 發放完成！'); }
   }, '完成給付');
 }
 
-function markUnpaid(wid, week){
+function markUnpaid(wid, month){
   if(!requireAdmin()) return;
-  askConfirm(`要把「${gwn(wid)}」的本期結算，改回「未發放」嗎？`, () => {
-    const s = db.settlements.find(item => item.workerId === +wid && item.week === week);
-    if(s){ s.status = 'unpaid'; saveDB(); generateSettlement(); toast('↩ 已改回未發放狀態'); }
-  }, '改回未發放');
+  askConfirm(`要把「${gwn(wid)}」的本期結算，改回「待領取」嗎？`, () => {
+    const s = db.settlements.find(item => item.workerId === +wid && item.month === month);
+    if(s){ s.status = 'unpaid'; saveDB(); generateSettlement(); toast('↩ 已改回待領取狀態'); }
+  }, '改回待領取');
 }
 
 function workerLogin(){
@@ -3220,7 +3166,7 @@ function workerLogin(){
   currentWorkerId = w.id;
   renderWorkerPages(w.id);
   showWorkerPage('w-home');
-  toast(`🏮 歡迎回來，${w.nick || w.name}！`);
+  toast(`🏮 歡迎同道，${w.nick || w.name}！`);
 }
 
 function workerLogout(){
@@ -3239,12 +3185,8 @@ function previewWorker(id){
 function renderWorkerPages(wid){
   const w = gw(wid); if(!w) return;
   const myRecs = db.records.filter(r => r.workerId === wid);
-  const weekEarn = myRecs.filter(r => isThisWeek(r.date)).reduce((a, r) => a + r.amount, 0);
-  const now = new Date();
-  const monthEarn = myRecs.filter(r => {
-    const d = new Date(r.date);
-    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-  }).reduce((a, r) => a + r.amount, 0);
+  
+  const monthEarn = myRecs.filter(r => isThisMonth(r.date, '2026-06') && r.status === 'verified').reduce((a, r) => a + r.amount, 0);
   
   const myS = db.settlements.filter(s => s.workerId === wid);
   const unpaid = myS.filter(s => s.status === 'unpaid').reduce((a, s) => a + s.amount, 0);
@@ -3254,7 +3196,7 @@ function renderWorkerPages(wid){
   const coins = coinsOf(cum);
   const c = cultivation(coins);
   const daoHao = w.nick || w.name;
-  const progTxt = c.isMax ? '🎉 功德圓滿，已登飛昇之境！' : `距離下個境界「${c.nextName}」尚差 <b>${c.toNext.toLocaleString()}</b> 枚功功靈幣`;
+  const progTxt = c.isMax ? '🎉 功德圓滿，已登飛昇之境！' : `距離下個境界「${c.nextName}」尚差 <b>${c.toNext.toLocaleString()}</b> 枚功德靈幣`;
   
   document.getElementById('w-hero-box').innerHTML = `<div class="cult-hero" style="--realm:${c.color};">
     <div class="cult-glow"></div>
@@ -3268,7 +3210,7 @@ function renderWorkerPages(wid){
     </div>
     <div class="cult-coin">
       <span class="cult-coin-num">🪙 ${coins.toLocaleString()}</span>
-      <span class="cult-coin-lbl">累積修為靈幣 (合格資糧)</span>
+      <span class="cult-coin-lbl">累積修為靈幣 (合格功德資糧)</span>
     </div>
     <div class="cult-prog-wrap">
       <div class="cult-prog"><div class="cult-prog-fill" style="width:${c.pct}%; --realm:${c.color}"></div></div>
@@ -3278,20 +3220,20 @@ function renderWorkerPages(wid){
   
   document.getElementById('w-stats').innerHTML = `
     <div class="w-stat">
-      <div class="w-stat-label">本期合格資糧</div>
-      <div class="w-stat-value" style="color:var(--red-palace);">$${weekEarn.toLocaleString()}</div>
+      <div class="w-stat-label">本月合格資糧 (06月)</div>
+      <div class="w-stat-value" style="color:var(--red-palace); font-weight:700;">$${monthEarn.toLocaleString()}</div>
     </div>
     <div class="w-stat">
-      <div class="w-stat-label">本月累計產值</div>
-      <div class="w-stat-value" style="color:var(--navy-deep);">$${monthEarn.toLocaleString()}</div>
+      <div class="w-stat-label">未領俸祿資糧</div>
+      <div class="w-stat-value" style="color:#B45309; font-weight:700;">$${unpaid.toLocaleString()}</div>
     </div>
     <div class="w-stat">
-      <div class="w-stat-label">未領俸祿總額</div>
-      <div class="w-stat-value" style="color:#B45309;">$${unpaid.toLocaleString()}</div>
+      <div class="w-stat-label">已發放資糧</div>
+      <div class="w-stat-value" style="color:var(--navy-deep); font-weight:700;">$${paid.toLocaleString()}</div>
     </div>
     <div class="w-stat">
-      <div class="w-stat-label">已領發放資糧</div>
-      <div class="w-stat-value" style="color:var(--navy-deep);">$${paid.toLocaleString()}</div>
+      <div class="w-stat-label">生涯累計實得</div>
+      <div class="w-stat-value" style="color:var(--navy-deep); font-weight:700;">$${cum.toLocaleString()}</div>
     </div>
   `;
   
@@ -3302,7 +3244,7 @@ function renderWorkerPages(wid){
         <thead>
           <tr>
             <th>日期</th>
-            <th>品項</th>
+            <th>法製品項</th>
             <th>自報數量</th>
             <th>交回數量</th>
             <th>預估資糧</th>
@@ -3311,24 +3253,24 @@ function renderWorkerPages(wid){
         <tbody>
           ${pending.map(r => `<tr>
             <td>${r.date}</td>
-            <td><strong>${gin(r.itemId)}</strong><div style="margin-top:2px;">${sourceBadge(r.source)}</div></td>
+            <td><span style="font-weight: 500;">${gin(r.itemId)}</span><div style="margin-top:2px;">${sourceBadge(r.source)}</div></td>
             <td>${r.selfQty == null ? '—' : r.selfQty.toLocaleString()}</td>
             <td>${r.total.toLocaleString()}</td>
-            <td><strong style="color:var(--red-palace);">$${r.amount.toLocaleString()}</strong></td>
+            <td><span style="color:var(--red-palace); font-weight: 500;">$${r.amount.toLocaleString()}</span></td>
           </tr>`).join('')}
         </tbody>
       </table>
     </div>
-  ` : '<div class="immortal-empty">🎉 暫無任何待清點驗收的工單。</div>';
+  ` : '<div class="immortal-empty">🎉 暫無任何待清點驗收的法製工單。</div>';
   
   const sorted = myRecs.slice().sort((a,b) => b.date.localeCompare(a.date));
   document.getElementById('w-records-table').innerHTML = sorted.length ? sorted.map(r => `
     <tr>
       <td>${r.date}</td>
-      <td><strong>${gin(r.itemId)}</strong></td>
+      <td><span style="font-weight: 500;">${gin(r.itemId)}</span></td>
       <td>${r.selfQty == null ? '—' : r.selfQty.toLocaleString()}</td>
       <td>${r.pass.toLocaleString()}</td>
-      <td><strong style="color:var(--red-palace);">$${r.amount.toLocaleString()}</strong></td>
+      <td><span style="color:var(--red-palace); font-weight: 500;">$${r.amount.toLocaleString()}</span></td>
       <td>${statusBadge(r.status)}</td>
     </tr>
   `).join('') : '<tr><td colspan="6" class="empty-state">尚無修行紀錄</td></tr>';
@@ -3441,9 +3383,9 @@ try{
 } catch(e) { console.error('初始化頁面載入失敗！', e); }
 
 const wr = document.getElementById('week-range');
-if(wr) wr.textContent = getWeekRange();
+if(wr) wr.textContent = '2026年06月';
 
-// 預設執行：直接載入求仙同道登入介面
+// 預設執行：直接載入代工人員登入介面
 switchRole('worker');
 </script>
 
