@@ -1487,7 +1487,7 @@ tr:hover td{background:#FAF5EC}
                 <div>
                   <div class="badge badge-ok" style="background: rgba(255,255,255,0.15); color: #FFF; border: 1px solid rgba(255,255,255,0.35);">工件自報通道</div>
                   <div class="submit-scene-title" style="margin-top: 12px;">自主申報 · 減輕核驗</div>
-                  <p style="font-size: 13px; opacity: 0.95; line-height: 1.8; color: #FFFFFF !important; font-weight: 500;">求仙同道可以搶先在此處登記本次完工、交回的工件大概數量。送出後，管理者核對數目無誤即可一鍵審定驗收，效率翻倍！</p>
+                  <p style="font-size: 13px; opacity: 0.95; line-height: 1.8; color: #FFFFFF !important; font-weight: 500;">求仙同道可以搶先在此處登記本次完工、交回的工件 batch 數量。送出後，管理者核對數目無誤即可一鍵審定驗收，效率翻倍！</p>
                 </div>
                 <div style="display: flex; gap: 8px; margin-top: 1rem;">
                   <div class="submit-mini"><b id="w-submit-pending-count">0</b><span>審核中工單</span></div>
@@ -1976,6 +1976,17 @@ const ADMIN_AUTH_KEY = 'yonglufang_admin_auth';
 const CULT_WHISPER = '問道';
 const WHISPER_AUTH_KEY = 'yonglufang_whisper_auth';
 
+// 預設為使用者建立的專屬 Firebase 設定（YONGLUFANG13149）
+const DEFAULT_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCxXtkyg24yEO5oACvg0YOfAX1rwnu8NDU",
+  authDomain: "yonglufang13149.firebaseapp.com",
+  projectId: "yonglufang13149",
+  storageBucket: "yonglufang13149.firebasestorage.app",
+  messagingSenderId: "921020394759",
+  appId: "1:921020394759:web:2b7a9ddaea1937d64ce9a2",
+  measurementId: "G-16D081ZSKN"
+};
+
 const BOAT_COLORS=[
   ['#EAD292','#FFEBAA'],
   ['#F6E2B2','#FFFFFF'],
@@ -2064,7 +2075,15 @@ function cultivation(coins){
 }
 
 async function initFirebase() {
-  const mode = localStorage.getItem('ylf_sync_mode') || 'local';
+  // 自動偵測：若尚未設定過 ylf_sync_mode，預設開啟 Firebase 同步，並自動載入您專屬的金鑰！
+  if (!localStorage.getItem('ylf_sync_mode')) {
+    localStorage.setItem('ylf_sync_mode', 'firebase');
+  }
+  if (!localStorage.getItem('ylf_firebase_config')) {
+    localStorage.setItem('ylf_firebase_config', JSON.stringify(DEFAULT_FIREBASE_CONFIG));
+  }
+
+  const mode = localStorage.getItem('ylf_sync_mode') || 'firebase';
   const rawConfig = localStorage.getItem('ylf_firebase_config');
   
   if (mode === 'firebase' && rawConfig) {
@@ -2107,6 +2126,9 @@ function setupFirestoreListeners() {
     snapshot.forEach(doc => list.push({ id: Number(doc.id), ...doc.data() }));
     if (list.length > 0) {
       db.workers = list;
+      // 同步最新 ID 生成限制器，防止跨電腦衝突
+      const maxId = Math.max(...list.map(w => w.id), 0);
+      db.nextId.workers = maxId + 1;
       normalizeDB();
       refreshAfterDataChange();
     } else {
@@ -2119,6 +2141,8 @@ function setupFirestoreListeners() {
     snapshot.forEach(doc => list.push({ id: Number(doc.id), ...doc.data() }));
     if (list.length > 0) {
       db.items = list;
+      const maxId = Math.max(...list.map(i => i.id), 0);
+      db.nextId.items = maxId + 1;
       normalizeDB();
       refreshAfterDataChange();
     }
@@ -2129,6 +2153,8 @@ function setupFirestoreListeners() {
     snapshot.forEach(doc => list.push({ id: Number(doc.id), ...doc.data() }));
     if (list.length > 0) {
       db.records = list;
+      const maxId = Math.max(...list.map(r => r.id), 0);
+      db.nextId.records = maxId + 1;
       normalizeDB();
       refreshAfterDataChange();
     }
@@ -2298,6 +2324,23 @@ function saveLocalDB() {
     localStorage.setItem('yonglufang_v2', JSON.stringify(db));
   } catch (e) {
     console.error('存檔失敗！', e);
+  }
+}
+
+// 智慧型雲端數據變更主動刷新機制
+function refreshAfterDataChange() {
+  if (currentRole === 'admin') {
+    renderDashboard();
+    renderWorkers();
+    renderItems();
+    renderRecords();
+    generateSettlement();
+    renderLeaderboard();
+  } else {
+    if (currentWorkerId) {
+      renderWorkerPages(currentWorkerId);
+    }
+    renderWorkerLeaderboard();
   }
 }
 
@@ -3338,7 +3381,7 @@ function exportSettlementCSV() {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-  toast('📥 裁剪式資糧薪資條匯出成功！');
+  toast('📥 裁切式資糧薪資條匯出成功！');
 }
 
 function markPaid(wid, month){
