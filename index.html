@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>永祿坊求仙結算系統（雲端同步版）</title>
+<!-- 導入字體與 HTML2CANVAS 圖片匯出核心庫 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@400;500;600;700;900&family=Ma+Shan+Zheng&family=LXGW+WenKai+TC:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -101,6 +102,9 @@ tr:hover td{background:#FAF5EC}
 .badge-paid{background:#DBEAFE;color:#1D4ED8;}
 .badge-unpaid{background:#FEE2E2;color:#B91C1C;}
 .badge-gray{background:#E5E7EB;color:#1F2937;}
+.badge-owner{background:#FEE2E2;color:#9E2A2B;border:1px solid #FCA5A5;font-weight:700;}
+.badge-employee{background:#DBEAFE;color:#1D4ED8;border:1px solid #BFDBFE;font-weight:700;}
+.badge-contractor{background:#FAF5EC;color:#7A654A;border:1px solid #E5DBCA;font-weight:500;}
 .btn{ display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 20px; font-size: 13px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); background: var(--card-bg); cursor: pointer; color: var(--navy-deep); font-family: inherit; font-weight: 500; transition: all 0.2s ease; user-select: none; }
 .btn:hover{ background: #FAF4EB; border-color: var(--gold-beige); }
 .btn-primary{ background: var(--navy-gradient); color: var(--gold-beige) !important; border-color: var(--navy-deep); box-shadow: var(--shadow-subtle); font-weight: 700; }
@@ -245,8 +249,12 @@ tr:hover td{background:#FAF5EC}
 /* ====================== 資糧條核發頁（敕令卡）====================== */
 #page-slips{
   --slip-paper:#f3e8cf; --slip-paper-2:#ece0c2; --slip-ink:#2b2118; --slip-ink-soft:#7a654a;
-  --slip-cinnabar:#b53326; --slip-cinnabar-deep:#8c2316; --slip-gold:#c6a049; --slip-gold-lt:#ecca81;
-  --slip-gold-dk:#9a7728; --slip-brush"LXGW WenKai TC", "Ma Shan Zheng", "DFKai-SB", "BiauKai", "Kaiti TC"; --slip-serif:"Noto Serif TC",serif; 
+  --slip-cinnabar:#012C4E; /* 改為永祿坊深邃藍 */
+  --slip-cinnabar-deep:#001222; /* 改為永祿坊墨藍色 */
+  --slip-gold:#c6a049; --slip-gold-lt:#ecca81;
+  --slip-gold-dk:#9a7728; 
+  --slip-brush: "LXGW WenKai TC", "Ma Shan Zheng", "DFKai-SB", "BiauKai", "Kaiti TC", "Noto Serif TC", serif; 
+  --slip-serif:"Noto Serif TC",serif; 
 }
 #page-slips .slip-toolbar{ display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; margin-bottom:16px; }
 #page-slips .slip-controls{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
@@ -270,7 +278,7 @@ tr:hover td{background:#FAF5EC}
   position:relative; width:400px; max-width:100%;
   background:linear-gradient(180deg,#f5ecd6,var(--slip-paper) 30%,var(--slip-paper-2));
   border-radius:8px; padding:30px 30px 28px 44px; color:var(--slip-ink);
-  box-shadow:0 30px 60px -28px #000, 0 0 0 1px #cbb585 inset; overflow:hidden; font-family:var(--slip-serif);
+  box-shadow:0 30px 60px -28px rgba(0, 18, 34, 0.45), 0 0 0 1px #cbb585 inset; overflow:hidden; font-family:var(--slip-serif);
 }
 #page-slips .slip::before{
   content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
@@ -280,32 +288,32 @@ tr:hover td{background:#FAF5EC}
   mix-blend-mode:multiply;
 }
 #page-slips .slip__frame{ position:relative; z-index:2; border:1px solid var(--slip-gold-dk); outline:3px solid #c6a04922; outline-offset:3px; border-radius:4px; padding:22px 18px 18px; }
-#page-slips .slip__band{ position:absolute; left:0; top:0; bottom:0; width:22px; z-index:3; background:linear-gradient(180deg,var(--slip-cinnabar),var(--slip-cinnabar-deep)); display:flex; align-items:center; justify-content:center; }
-#page-slips .slip__band span{ writing-mode:vertical-rl; color:#ffe6c6; font-size:11px; letter-spacing:.5em; font-weight:600; opacity:.92; }
-#page-slips .slip__wm{ position:absolute; z-index:1; right:-26px; top:46%; font-family:var(--slip-brush); font-size:200px; color:#b5332608; line-height:1; transform:rotate(-6deg); pointer-events:none; }
+#page-slips .slip__band{ position:absolute; left:0; top:0; bottom:0; width:22px; z-index:3; background:linear-gradient(180deg,var(--slip-cinnabar),var(--slip-cinnabar-deep)); display:flex; align-items:center; justify-content:center; border-right: 1.5px solid var(--slip-gold); }
+#page-slips .slip__band span{ writing-mode:vertical-rl; color:var(--slip-gold-lt); font-size:11px; letter-spacing:.5em; font-weight:600; opacity:.92; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+#page-slips .slip__wm{ position:absolute; z-index:1; right:-26px; top:46%; font-family:var(--slip-brush); font-size:200px; color:rgba(1, 44, 78, 0.05); line-height:1; transform:rotate(-6deg); pointer-events:none; }
 #page-slips .slip__head{ text-align:center; position:relative; z-index:2; }
 #page-slips .slip__mark{ width:40px; height:40px; margin:0 auto 8px; border-radius:50%; border:1.5px solid var(--slip-gold-dk); display:flex; align-items:center; justify-content:center; font-family:var(--slip-brush); font-size:22px; color:var(--slip-gold-dk); background:radial-gradient(circle,#fff6e2,#f0e2c0); }
 #page-slips .slip__title{ font-family:var(--slip-brush); font-size:30px; color:var(--slip-cinnabar-deep); letter-spacing:.16em; }
 #page-slips .slip__sub{ font-size:12px; color:var(--slip-ink-soft); letter-spacing:.3em; margin-top:5px; }
-#page-slips .slip__month{ display:inline-block; margin-top:9px; font-size:12px; letter-spacing:.18em; color:#fff3df; background:linear-gradient(180deg,var(--slip-cinnabar),var(--slip-cinnabar-deep)); padding:3px 14px; border-radius:20px; }
+#page-slips .slip__month{ display:inline-block; margin-top:9px; font-size:12px; letter-spacing:.18em; color:#fff3df; background:linear-gradient(180deg,var(--slip-cinnabar),var(--slip-cinnabar-deep)); border:1px solid var(--slip-gold-lt); padding:3px 14px; border-radius:20px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 #page-slips .slip .rule{ height:0; border:0; border-top:1px solid var(--slip-gold-dk); opacity:.5; margin:16px 4px; position:relative; }
 #page-slips .slip .rule::after{ content:"❖"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:var(--slip-paper); color:var(--slip-gold-dk); font-size:12px; padding:0 8px; }
 #page-slips .slip__body{ position:relative; z-index:2; text-align:center; }
 #page-slips .slip .lbl{ font-size:11px; color:var(--slip-ink-soft); letter-spacing:.4em; }
-#page-slips .slip .daohao{ font-size:clamp(26px,7vw,32px); font-weight:900; color:var(--slip-ink); letter-spacing:.04em; line-height:1.25; margin-top:4px; word-break:break-word; }
-#page-slips .slip .realm{ display:inline-block; margin-top:10px; font-size:13px; color:var(--slip-cinnabar-deep); border:1px solid #c79b5e; border-radius:20px; padding:3px 14px; letter-spacing:.16em; background:#fff7e7; }
+#page-slips .slip .daohao{ font-size:clamp(26px,7vw,32px); font-weight:900; color:var(--slip-ink); letter-spacing:.04em; line-height:1.25; margin-top:4px; word-break:break-word; font-family: var(--slip-brush); }
+#page-slips .slip .realm{ display:inline-block; margin-top:10px; font-size:13px; color:var(--slip-cinnabar-deep); border:1px solid #c79b5e; border-radius:20px; padding:3px 14px; letter-spacing:.16em; background:#fff7e7; font-family: var(--slip-serif); }
 #page-slips .slip .realm:empty{ display:none; }
 #page-slips .slip .amount{ margin-top:22px; padding-top:18px; border-top:1px dashed #c9ab73; }
 #page-slips .slip .amount .cap{ font-size:12px; color:var(--slip-ink-soft); letter-spacing:.4em; }
 #page-slips .slip .amount .big{ font-family:var(--slip-serif); font-weight:900; line-height:1; margin:6px 0 2px; background:linear-gradient(180deg,var(--slip-gold-lt) 12%,#b98a2c 92%); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow:0 1px 0 #fff6; }
 #page-slips .slip .amount .big .num{ font-size:clamp(52px,15vw,68px); letter-spacing:.01em; }
-#page-slips .slip .amount .big .mei{ font-size:24px; margin-left:6px; font-weight:700; }
+#page-slips .slip .amount .big .mei{ font-size:24px; margin-left:6px; font-weight:700; color: var(--slip-gold-dk); }
 #page-slips .slip .amount .ntd{ font-size:13px; color:var(--slip-ink-soft); letter-spacing:.1em; }
 #page-slips .slip__foot{ position:relative; z-index:2; margin-top:18px; display:flex; justify-content:space-between; align-items:flex-end; font-size:11px; color:var(--slip-ink-soft); letter-spacing:.08em; }
 #page-slips .slip__foot .status{ color:var(--slip-cinnabar-deep); font-weight:700; font-size:12px; }
 #page-slips .slip .seal{ position:absolute; z-index:4; right:18px; bottom:16px; width:84px; height:84px; transform:rotate(-9deg); }
-#page-slips .slip .seal .ring{ position:absolute; inset:0; border-radius:8px; border:3px solid var(--slip-cinnabar); box-shadow:0 0 0 1px var(--slip-cinnabar) inset; opacity:.9; }
-#page-slips .slip .seal .chars{ position:absolute; inset:0; display:grid; grid-template-columns:1fr 1fr; place-items:center; font-family:var(--slip-brush); color:var(--slip-cinnabar); font-size:28px; line-height:1; opacity:.9; padding:4px; }
+#page-slips .slip .seal .ring{ position:absolute; inset:0; border-radius:8px; border:3px solid var(--slip-cinnabar); box-shadow:0 0 0 1px var(--slip-cinnabar) inset; opacity:.85; }
+#page-slips .slip .seal .chars{ position:absolute; inset:0; display:grid; grid-template-columns:1fr 1fr; place-items:center; font-family:var(--slip-brush); color:var(--slip-cinnabar); font-size:28px; line-height:1; opacity:.85; padding:4px; }
 #page-slips .slip .seal::after{ content:""; position:absolute; inset:0; border-radius:8px; pointer-events:none; background:radial-gradient(circle at 30% 30%, #fff5 0 10%, #fff0 60%), repeating-linear-gradient(35deg,#fff2 0 1px,#0000 1px 4px); mix-blend-mode:screen; opacity:.5; }
 
 /* 截圖模式：隱藏側欄與工具，只留資糧條 */
@@ -434,7 +442,7 @@ body.slip-focus #page-slips .slip-layout{ grid-template-columns:1fr; }
           <div class="table-responsive">
             <table>
               <thead>
-                <tr><th>姓名</th><th>排行榜道號</th><th>狀態</th><th>已驗收產值</th><th>累計靈幣</th><th style="text-align: right;">操作</th></tr>
+                <tr><th>姓名</th><th>身分級別</th><th>排行榜道號</th><th>狀態</th><th>已驗收產值</th><th>累計靈幣</th><th style="text-align: right;">操作</th></tr>
               </thead>
               <tbody id="workers-table"></tbody>
             </table>
@@ -536,6 +544,8 @@ body.slip-focus #page-slips .slip-layout{ grid-template-columns:1fr; }
                 </div>
                 <hr class="rule">
                 <div class="slip__body">
+                  <div style="font-size: 11px; color: var(--slip-ink-soft); letter-spacing: 0.15em; margin-bottom: 2px;">同 道 姓 名</div>
+                  <div id="slip-s-realname" style="font-size: 14px; font-weight: 700; color: var(--slip-ink-soft); margin-bottom: 12px; font-family: var(--slip-serif);">—</div>
                   <div class="lbl">同 道 道 號</div>
                   <div class="daohao" id="slip-s-dao">—</div>
                   <div class="realm" id="slip-s-realm"></div>
@@ -592,14 +602,49 @@ body.slip-focus #page-slips .slip-layout{ grid-template-columns:1fr; }
             <div class="immortal-visual-caption" style="color: #FFFFFF !important; font-size:13px; font-weight:500; opacity:0.9;">輸入您在永祿坊登記的真實姓名或道號，即可破開法陣結界、查看本期功德資糧、實收薪資累計以及各期天榜。</div>
           </div>
           <div class="immortal-form immortal-panel">
-            <div class="immortal-title">⛩️ 登入求仙個人中心</div>
-            <div class="worker-login-title" style="font-size: 24px; font-weight: 700; color: var(--navy-deep); margin: 12px 0;">報上名號，契合靈樞</div>
-            <p style="font-size: 14px; color: #000000; font-weight: 500; margin-bottom: 20px; line-height: 1.6;">本介面專為求仙同道申報工件、自查功德資糧所設。登入後即可看見個人當前修為靈幣與境界名次。</p>
-            <div class="search-wrapper" style="max-width:100%; margin-bottom: 12px;">
-              <input id="w-name-input" placeholder="請輸入姓名 / 排行榜道號" onkeydown="if(event.key==='Enter')workerLogin()" style="padding: 12px; font-size:15px; border: 1px solid var(--border-solid); border-radius: 10px; width: 100%; font-weight: 400;">
+            <!-- 登入區塊 -->
+            <div id="w-login-box">
+              <div class="immortal-title">⛩️ 登入求仙個人中心</div>
+              <div class="worker-login-title" style="font-size: 24px; font-weight: 700; color: var(--navy-deep); margin: 12px 0;">報上名號，契合靈樞</div>
+              <p style="font-size: 14px; color: #000000; font-weight: 500; margin-bottom: 20px; line-height: 1.6;">本介面專為求仙同道申報工件、自查功德資糧所設。登入後即可看見個人當前修為靈幣與境界名次。</p>
+              <div class="search-wrapper" style="max-width:100%; margin-bottom: 12px;">
+                <input id="w-name-input" placeholder="請輸入姓名 / 排行榜道號" onkeydown="if(event.key==='Enter')workerLogin()" style="padding: 12px; font-size:15px; border: 1px solid var(--border-solid); border-radius: 10px; width: 100%; font-weight: 400;">
+              </div>
+              <button class="btn-immortal" style="width: 100%;" onclick="workerLogin()">登入個人中心</button>
+              <div id="w-login-err" style="font-size:13.5px; color:#B4472F; display:none; margin-top:12px; font-weight: 500;">⚠️ 查無此同道名號，請確認名稱是否輸入正確！</div>
+              <div style="text-align: center; margin-top: 20px; font-size: 13.5px; border-top: 1px dashed var(--border-solid); padding-top: 15px;">
+                <span style="color:#666;">初臨寶地，尚未登記？</span><br>
+                <a href="#" onclick="toggleWorkerReg(true); return false;" style="color: var(--navy-deep); font-weight: 700; text-decoration: underline; display: inline-block; margin-top: 6px;">🆕 點此自主登記入冊 (註冊)</a>
+              </div>
             </div>
-            <button class="btn-immortal" onclick="workerLogin()">登入個人中心</button>
-            <div id="w-login-err" style="font-size:13.5px; color:#B4472F; display:none; margin-top:12px; font-weight: 500;">⚠️ 查無此同道名號，請確認名稱是否輸入正確！</div>
+
+            <!-- 註冊區塊 -->
+            <div id="w-reg-box" style="display: none;">
+              <div class="immortal-title">⛩️ 自主登記入冊 (註冊)</div>
+              <div class="worker-login-title" style="font-size: 24px; font-weight: 700; color: var(--navy-deep); margin: 12px 0;">締結契合，共修仙道</div>
+              <p style="font-size: 13.5px; color: #000000; font-weight: 500; margin-bottom: 15px; line-height: 1.5;">加入永祿坊！自主登記入冊後，您可以立即開始報件、自查功德資糧，並列名於天榜風雲碑。</p>
+              
+              <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
+                <div class="form-group">
+                  <label style="font-size: 12.5px; font-weight: 700; color: var(--navy-deep);">真實姓名 <span style="color:var(--red-palace)">*</span></label>
+                  <input id="w-reg-name" placeholder="例如：阿美" style="padding: 11px; font-size: 14.5px; border: 1px solid var(--border-solid); border-radius: 8px; width: 100%;">
+                </div>
+                <div class="form-group">
+                  <label style="font-size: 12.5px; font-weight: 700; color: var(--navy-deep);">排行榜道號 / 暱稱 <span style="font-weight:400; color:#555;">(留空則同真實姓名)</span></label>
+                  <input id="w-reg-nick" placeholder="例如：阿美仙尊" style="padding: 11px; font-size: 14.5px; border: 1px solid var(--border-solid); border-radius: 8px; width: 100%;">
+                </div>
+                <div class="form-group">
+                  <label style="font-size: 12.5px; font-weight: 700; color: var(--navy-deep);">修為備註 / 專長 <span style="font-weight:400; color:#555;">(選填)</span></label>
+                  <input id="w-reg-note" placeholder="例如：精細折紙、擅長蓮花製作" style="padding: 11px; font-size: 14.5px; border: 1px solid var(--border-solid); border-radius: 8px; width: 100%;">
+                </div>
+              </div>
+
+              <button class="btn-immortal" style="width: 100%;" onclick="workerRegister()">自主登記入冊 ⚡</button>
+              
+              <div style="text-align: center; margin-top: 15px; font-size: 13.5px; border-top: 1px dashed var(--border-solid); padding-top: 12px;">
+                <a href="#" onclick="toggleWorkerReg(false); return false;" style="color: var(--navy-deep); font-weight: 700; text-decoration: none;">← 返回登入介面</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -737,6 +782,13 @@ body.slip-focus #page-slips .slip-layout{ grid-template-columns:1fr; }
         <div class="form-group"><label>排行榜道號 (暱稱)</label><input id="wf-nick" placeholder="美仙尊"></div>
       </div>
       <div class="form-row">
+        <div class="form-group"><label>身分級別</label>
+          <select id="wf-role">
+            <option value="contractor">一般代工</option>
+            <option value="employee">正職員工</option>
+            <option value="owner">坊主</option>
+          </select>
+        </div>
         <div class="form-group"><label>帳號狀態</label>
           <select id="wf-status"><option value="active">啟用</option><option value="pause">停用</option></select>
         </div>
@@ -986,6 +1038,15 @@ const BOAT_COLORS=[
 const MEDAL_BG=['#EAD292','#CFCBC2','#DCA46A','#EAD292','#EAD292'];
 const MEDAL_FG=['#012C4E','#3A3D40','#4F341A','#012C4E','#012C4E'];
 
+function roleBadge(r){
+  const m = {
+    owner: '<span class="badge badge-owner">👑 坊主</span>',
+    employee: '<span class="badge badge-employee">💼 正職員工</span>',
+    contractor: '<span class="badge badge-contractor">🔨 一般代工</span>'
+  };
+  return m[r] || m['contractor'];
+}
+
 function boatSVG(ci, phase){
   const [accent, secondary] = BOAT_COLORS[ci % BOAT_COLORS.length];
   const lift = Math.sin(phase) * 3.5;
@@ -1034,7 +1095,7 @@ const REALMS=[
   {name:'金丹期', min:3000, color:'#F59E0B'},
   {name:'元嬰期', min:8000, color:'#3B82F6'},
   {name:'化神期', min:20000, color:'#8B5CF6'},
-  {name:'煉虛期', min:50000, color:'#6366F1'},
+  {name:'練虛期', min:50000, color:'#6366F1'},
   {name:'合體期', min:100000, color:'#EF4444'},
   {name:'大乘期', min:200000, color:'#F59E0B'},
   {name:'渡劫期', min:500000, color:'#EC4899'},
@@ -1166,7 +1227,7 @@ function renderRaceRanked(containerId, rows, metric, prevRank, selfId, emptyMsg,
   el.innerHTML = rows.map((r, i) => {
     const pct = Math.max(15, Math.min(95, Math.round(r.score / max * 85)));
     const isSelf = selfId && r.workerId === selfId;
-    const coin = showCoins ? `<span class="coin-chip">🪙${coinsOf(r.earn)}</span>` : '';
+    const coin = showCoins ? `<span class="coin-chip">🪙 ${coinsOf(r.earn)}</span>` : '';
     return `<div class="race-row${isSelf ? ' race-self' : ''}">
       <div class="race-rank">
         <span class="rank-medal" style="background:${MEDAL_BG[i] || '#FFFFFF'};color:${MEDAL_FG[i] || '#012C4E'}">${i+1}</span>
@@ -1426,6 +1487,7 @@ function openWorkerModal(){
   editingWorkerId = null;
   document.getElementById('worker-modal-title').textContent = '新增人員';
   ['wf-name','wf-nick','wf-note'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('wf-role').value = 'contractor';
   document.getElementById('wf-status').value = 'active';
   openModal('worker-modal');
 }
@@ -1437,6 +1499,7 @@ function editWorker(id){
   document.getElementById('worker-modal-title').textContent = '修改人員資料';
   document.getElementById('wf-name').value = w.name;
   document.getElementById('wf-nick').value = w.nick || '';
+  document.getElementById('wf-role').value = w.role || 'contractor';
   document.getElementById('wf-status').value = w.status || 'active';
   document.getElementById('wf-note').value = w.note || '';
   openModal('worker-modal');
@@ -1447,11 +1510,12 @@ function saveWorker(){
   const name = document.getElementById('wf-name').value.trim();
   if(!name) return toast('⚠️ 姓名為必填欄位！');
   const nick = document.getElementById('wf-nick').value.trim() || name;
+  const role = document.getElementById('wf-role').value;
   const status = document.getElementById('wf-status').value;
   const note = document.getElementById('wf-note').value.trim();
   let id = editingWorkerId, obj;
-  if(id){ const w = gw(id) || {}; obj = {...w, id, name, nick, status, note}; }
-  else { id = genId(); obj = {id, name, nick, status, note}; }
+  if(id){ const w = gw(id) || {}; obj = {...w, id, name, nick, status, note, role}; }
+  else { id = genId(); obj = {id, name, nick, status, note, role}; }
   const wasEditing = !!editingWorkerId;
   FS.set('workers', id, obj)
     .then(()=>toast(wasEditing ? '✏️ 人員資料已儲存' : '🎉 成功新增求仙同道！'))
@@ -1677,7 +1741,7 @@ function renderWorkerSubmitPage(){
   calcWorkerSubmitPreview();
 
   const myReports = db.records.filter(r => r.workerId === currentWorkerId && (r.source === 'worker' || r.selfQty !== null || r.note))
-                     .slice().sort((a,b) => b.date.localeCompare(a.date)).slice(0, 8);
+                       .slice().sort((a,b) => b.date.localeCompare(a.date)).slice(0, 8);
 
   document.getElementById('w-submit-pending-count').textContent = db.records.filter(r => r.workerId === currentWorkerId && r.status === 'pending').length;
   document.getElementById('w-submit-recent-count').textContent = myReports.length;
@@ -1836,6 +1900,7 @@ function renderWorkers(){
   document.getElementById('workers-table').innerHTML = filtered.length ? filtered.map(w => `
     <tr>
       <td><div style="display:flex; align-items:center; gap:8px"><div class="avatar">${w.name.slice(0,1)}</div><span style="font-size:14px; color:#1F2937; font-weight: 500;">${w.name}</span></div></td>
+      <td>${roleBadge(w.role || 'contractor')}</td>
       <td><span style="font-weight: 500; color:var(--navy-deep);">${w.nick || '—'}</span></td>
       <td>${statusBadge(w.status)}</td>
       <td><span style="color:var(--red-palace); font-weight: 500;">$${(totals[w.id] || 0).toLocaleString()}</span></td>
@@ -1846,7 +1911,7 @@ function renderWorkers(){
         <button class="btn btn-sm btn-danger" onclick="deleteWorker(${w.id})">🗑️ 刪除</button>
       </td>
     </tr>
-  `).join('') : '<tr><td colspan="6" class="empty-state"><div class="empty-icon">📭</div>無符合此搜尋條件之同道</td></tr>';
+  `).join('') : '<tr><td colspan="7" class="empty-state"><div class="empty-icon">📭</div>無符合此搜尋條件之同道</td></tr>';
 }
 
 function renderItems(){
@@ -2039,6 +2104,68 @@ function workerLogin(){
   toast(`🏮 歡迎同道，${w.nick || w.name}！`);
 }
 
+function toggleWorkerReg(show) {
+  const loginBox = document.getElementById('w-login-box');
+  const regBox = document.getElementById('w-reg-box');
+  document.getElementById('w-login-err').style.display = 'none';
+  
+  if (show) {
+    loginBox.style.display = 'none';
+    regBox.style.display = 'block';
+  } else {
+    loginBox.style.display = 'block';
+    regBox.style.display = 'none';
+  }
+}
+
+function workerRegister() {
+  const name = document.getElementById('w-reg-name').value.trim();
+  const nick = document.getElementById('w-reg-nick').value.trim();
+  const note = document.getElementById('w-reg-note').value.trim();
+
+  if (!name) {
+    toast('⚠️ 請輸入您的真實姓名！');
+    return;
+  }
+
+  // 檢查真實姓名或道號是否已經存在於同道名冊
+  const isDuplicate = db.workers.find(w => w.name.toLowerCase() === name.toLowerCase() || (nick && w.nick.toLowerCase() === nick.toLowerCase()));
+  if (isDuplicate) {
+    toast('⚠️ 該名號已被登記，若您已入名冊，請直接在登入處輸入名字。');
+    return;
+  }
+
+  const id = genId();
+  const newWorker = {
+    id: id,
+    name: name,
+    nick: nick || name,
+    status: 'active',
+    note: note || '同道自主登記入冊'
+  };
+
+  FS.set('workers', id, newWorker)
+    .then(() => {
+      currentWorkerId = id;
+      localStorage.setItem('yonglufang_current_worker_id', id);
+      localStorage.setItem('yonglufang_current_role', 'worker');
+      
+      // 清空欄位
+      document.getElementById('w-reg-name').value = '';
+      document.getElementById('w-reg-nick').value = '';
+      document.getElementById('w-reg-note').value = '';
+      toggleWorkerReg(false);
+
+      renderWorkerPages(id);
+      showWorkerPage('w-home');
+      toast(`🎉 恭喜締結契合！歡迎加入，${newWorker.nick}！`);
+    })
+    .catch((err) => {
+      console.error(err);
+      toast('❌ 註冊失敗，請確認與雲端法陣之連結！');
+    });
+}
+
 function workerLogout(){
   currentWorkerId = null;
   localStorage.removeItem('yonglufang_current_worker_id');
@@ -2066,7 +2193,7 @@ function renderWorkerPages(wid){
   const coins = coinsOf(cum);
   const c = cultivation(coins);
   const daoHao = w.nick || w.name;
-  const progTxt = c.isMax ? '🎉 功德圓滿，已登飛昇之境！' : `距離下個境界「${c.nextName}」尚差 <b>${c.toNext.toLocaleString()}</b> 枚功德靈幣`;
+  const progTxt = c.isMax ? '🎉 功功德圓滿，已登飛昇之境！' : `距離下個境界「${c.nextName}」尚差 <b>${c.toNext.toLocaleString()}</b> 枚功德靈幣`;
 
   document.getElementById('w-hero-box').innerHTML = `<div class="cult-hero" style="--realm:${c.color};">
     <div class="cult-glow"></div>
@@ -2193,10 +2320,10 @@ function seedDemoData(){
   askConfirm('要載入一組「範例同道／品項／交付」資料嗎？<br>（會寫入雲端，日後可自行刪除）', async () => {
     const demo = {
       workers:[
-        {id:1, name:'阿美', nick:'阿美仙尊', status:'active', note:'手極巧，折紙專家'},
-        {id:2, name:'小芳', nick:'小芳仙子', status:'active', note:'龍船與折紙皆通'},
-        {id:3, name:'小玉', nick:'玉面觀音', status:'active', note:'品質一絕，絕無不良'},
-        {id:4, name:'阿珠', nick:'神珠真人', status:'active', note:'善串接，速驚人'}
+        {id:1, name:'阿美', nick:'阿美仙尊', status:'active', note:'手極巧，折紙專家', role:'contractor'},
+        {id:2, name:'小芳', nick:'小芳仙子', status:'active', note:'龍船與折紙皆通', role:'contractor'},
+        {id:3, name:'小玉', nick:'玉面觀音', status:'active', note:'品質一絕，絕無不良', role:'employee'},
+        {id:4, name:'阿珠', nick:'神珠真人', status:'active', note:'善串接，速驚人', role:'owner'}
       ],
       items:[
         {id:1, name:'三角片折製', unit:'每 100片', qty:100, price:30, note:'規格精細'},
@@ -2253,8 +2380,10 @@ function renderSlips(){
     roster.innerHTML = list.length ? list.map((s, i) => {
       const w = gw(s.workerId);
       const nm = w ? (w.nick || w.name) : '—';
+      const realNm = w ? w.name : '';
+      const dispName = w && w.nick && w.nick !== w.name ? `${w.nick} <small style="font-size:11px; opacity:0.7; font-weight:normal; color:#666;">(${realNm})</small>` : nm;
       return `<li class="${i === slipIdx ? 'active' : ''}" onclick="selectSlip(${i})">
-        <span class="slip-nm">${nm}</span>
+        <span class="slip-nm" style="display:flex; align-items:center; gap:4px; max-width:180px; overflow:hidden; text-overflow:ellipsis;">${dispName}</span>
         <span class="slip-amt">${(s.amount || 0).toLocaleString()} 枚</span>
       </li>`;
     }).join('') : '<li class="slip-empty">本月尚無結算資料。<br>請先到「資糧結算」按「重新計算」產生本月結算。</li>';
@@ -2273,9 +2402,11 @@ function paintSlip(){
   const s = list[slipIdx];
   const w = gw(s.workerId);
   const dao = w ? (w.nick || w.name) : '—';
+  const realName = w ? w.name : '—';
   const coins = coinsOf(cumulativeEarned(s.workerId));
   const c = cultivation(coins);
   document.getElementById('slip-s-month').textContent = slipMonthLabel(slipMonth);
+  document.getElementById('slip-s-realname').textContent = realName;
   document.getElementById('slip-s-dao').textContent = dao;
   document.getElementById('slip-s-realm').textContent = `${c.realm}・${c.layerLabel}`;
   document.getElementById('slip-s-amt').textContent = (s.amount || 0).toLocaleString();
