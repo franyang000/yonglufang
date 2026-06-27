@@ -617,6 +617,7 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
         <div class="slip-layout">
           <ul class="slip-roster" id="slip-roster"></ul>
           <div class="slip-stage">
+            <button id="slip-exit-focus-float-btn" class="btn" style="display:none; position:fixed; top:20px; right:20px; z-index:99999; background: var(--navy-gradient); color: var(--gold-beige); border: 1px solid var(--gold-beige); box-shadow: var(--shadow-gold);" onclick="toggleSlipFocus()">↩ 退出截圖模式</button>
             <article class="slip" id="slip-card">
               <div class="slip__band"><span>功 德 靈 幣 ・ 求 仙 資 糧</span></div>
               <div class="slip__wm">祿</div>
@@ -2444,10 +2445,21 @@ function slipPrev(){ const list = slipsForMonth(); if(!list.length) return; slip
 function slipNext(){ const list = slipsForMonth(); if(!list.length) return; slipIdx = (slipIdx + 1) % list.length; renderSlips(); }
 
 function toggleSlipFocus(){
-  document.body.classList.toggle('slip-focus');
+  const body = document.body;
+  body.classList.toggle('slip-focus');
   const b = document.getElementById('slip-focus-btn');
-  if(b) b.textContent = document.body.classList.contains('slip-focus') ? '↩ 離開截圖' : '🔍 截圖模式';
+  const floatBtn = document.getElementById('slip-exit-focus-float-btn');
+  const isFocus = body.classList.contains('slip-focus');
+  
+  if(b) b.textContent = isFocus ? '↩ 離開截圖' : '🔍 截圖模式';
+  if(floatBtn) floatBtn.style.display = isFocus ? 'block' : 'none';
 }
+
+document.addEventListener('keydown', function(e) {
+  if(e.key === 'Escape' && document.body.classList.contains('slip-focus')) {
+    toggleSlipFocus();
+  }
+});
 
 async function downloadSlipPNG(){
   const list = slipsForMonth();
