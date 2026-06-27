@@ -10,7 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@400;500;600;700;900&family=Ma+Shan+Zheng&family=LXGW+WenKai+TC:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-/* */
+/* ============================================================
+   永祿坊修仙尊榮版：設計師頂級 UI/UX 核心樣式表
+   ============================================================ */
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --navy-deep: #0C2E4E;
@@ -20,17 +22,17 @@
   --gold-gradient: linear-gradient(135deg, #FFF0C2 0%, #D9B36C 100%);
   --navy-gradient: linear-gradient(135deg, #0C2E4E 0%, #051829 100%);
   --ink: #2C3E50;
-  --bg-soft: #F9F7F3;
+  --bg-soft: #F4F2EE;
   --card-bg: #FFFFFF;
   --border-subtle: rgba(217, 179, 108, 0.15);
-  --border-solid: rgba(217, 179, 108, 0.22);
+  --border-solid: rgba(217, 179, 108, 0.25);
   --red-palace: #9E2A2B;
-  --r-sm: 10px;
+  --r-sm: 8px;
   --r-md: 14px;
-  --r-lg: 20px;
-  --shadow-subtle: 0 4px 20px -2px rgba(12, 46, 78, 0.04);
-  --shadow-gold: 0 6px 20px rgba(217, 179, 108, 0.12);
-  --shadow-premium: 0 10px 30px -10px rgba(12, 46, 78, 0.08);
+  --r-lg: 24px;
+  --shadow-subtle: 0 4px 20px -2px rgba(12, 46, 78, 0.03);
+  --shadow-gold: 0 6px 24px rgba(217, 179, 108, 0.15);
+  --shadow-premium: 0 16px 40px -10px rgba(5, 24, 41, 0.08);
 }
 body{
   font-family:'Noto Sans TC', -apple-system, sans-serif;
@@ -47,193 +49,198 @@ p, span, label, td, th, option, select, input, textarea { color: var(--ink); }
 ::-webkit-scrollbar-thumb { background: rgba(12, 46, 78, 0.15); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(12, 46, 78, 0.3); }
 
-/* */
+/* 佈局架構與專業級過渡動畫 */
 .app{ display: flex; min-height: 100vh; }
 .sidebar{
-  width: 260px; flex-shrink: 0; background: var(--navy-gradient);
+  width: 270px; flex-shrink: 0; background: var(--navy-gradient);
   display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh;
-  z-index: 100; border-right: 1px solid var(--border-subtle); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100; border-right: 1px solid var(--border-subtle); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.logo-block{ padding: 1.75rem 1.5rem; border-bottom: 1px solid rgba(217, 179, 108, 0.1); display: flex; align-items: center; gap: 12px; }
-.logo-icon{ width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: rgba(217, 179, 108, 0.08); border-radius: var(--r-sm); border: 1px solid var(--border-subtle); }
-.logo-zh{ font-size: 20px; font-weight: 900; color: var(--gold-beige); letter-spacing: .1em; }
-.logo-en{ font-size: 9px; color: #FFFFFF; margin-top: 1px; letter-spacing: .08em; opacity: 0.7; font-weight: 400; }
-.nav-group{ flex: 1; overflow-y: auto; padding: 1rem 0; }
-.nav-group-label{ font-size: 11px; font-weight: 700; color: var(--gold-beige); padding: 0.75rem 1.5rem 0.5rem; letter-spacing: .12em; text-transform: uppercase; opacity: 0.6; }
-.nav-item{ display: flex; align-items: center; gap: 12px; padding: 12px 1.5rem; font-size: 14px; color: rgba(255, 255, 255, 0.8); cursor: pointer; transition: all 0.2s ease; border-left: 4px solid transparent; font-weight: 400; }
-.nav-item:hover{ background: rgba(217, 179, 108, 0.05); color: #FFFFFF; }
-.nav-item.active{ background: rgba(217, 179, 108, 0.08); color: var(--gold-beige); font-weight: 700; border-left-color: var(--gold-beige); }
-.nav-dot{ width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.25); flex-shrink: 0; transition: all 0.2s; }
-.nav-item.active .nav-dot{ background: var(--gold-beige); box-shadow: 0 0 8px var(--gold-beige); }
-.role-switcher{ padding: 1.5rem; border-top: 1px solid rgba(217, 179, 108, 0.1); background: var(--navy-dark); }
-.role-switcher label{ font-size: 11px; color: var(--gold-beige); display: block; margin-bottom: 10px; font-weight: 700; letter-spacing: 0.05em; }
-.role-pills{ display: flex; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 3px; gap: 2px; border: 1px solid rgba(217, 179, 108, 0.08); }
-.role-pill{ flex: 1; padding: 9px 0; font-size: 12px; text-align: center; border: none; background: none; cursor: pointer; border-radius: 8px; color: rgba(255,255,255,0.7); font-family: inherit; font-weight: 500; transition: all 0.2s ease; }
-.role-pill.active{ background: var(--gold-gradient); color: var(--navy-deep); font-weight: 700; box-shadow: 0 2px 8px rgba(217, 179, 108, 0.2); }
+.logo-block{ padding: 2rem 1.5rem; border-bottom: 1px solid rgba(217, 179, 108, 0.08); display: flex; align-items: center; gap: 14px; }
+.logo-icon{ width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: rgba(217, 179, 108, 0.06); border-radius: var(--r-md); border: 1px solid var(--border-subtle); }
+.logo-zh{ font-size: 22px; font-weight: 900; color: var(--gold-beige); letter-spacing: .15em; font-family: 'Noto Serif TC', serif; }
+.logo-en{ font-size: 9px; color: #FFFFFF; margin-top: 2px; letter-spacing: .1em; opacity: 0.6; font-weight: 400; }
+.nav-group{ flex: 1; overflow-y: auto; padding: 1.25rem 0; }
+.nav-group-label{ font-size: 11px; font-weight: 700; color: var(--gold-beige); padding: 0.75rem 1.5rem 0.5rem; letter-spacing: .15em; text-transform: uppercase; opacity: 0.5; }
+.nav-item{ display: flex; align-items: center; gap: 14px; padding: 14px 1.5rem; font-size: 14px; color: rgba(255, 255, 255, 0.75); cursor: pointer; transition: all 0.25s ease; border-left: 4px solid transparent; font-weight: 400; }
+.nav-item:hover{ background: rgba(217, 179, 108, 0.04); color: #FFFFFF; padding-left: 1.75rem; }
+.nav-item.active{ background: rgba(217, 179, 108, 0.07); color: var(--gold-beige); font-weight: 700; border-left-color: var(--gold-beige); }
+.nav-dot{ width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); flex-shrink: 0; transition: all 0.25s; }
+.nav-item.active .nav-dot{ background: var(--gold-beige); box-shadow: 0 0 10px var(--gold-beige); }
+.role-switcher{ padding: 1.5rem; border-top: 1px solid rgba(217, 179, 108, 0.08); background: var(--navy-dark); }
+.role-switcher label{ font-size: 11px; color: var(--gold-beige); display: block; margin-bottom: 12px; font-weight: 700; letter-spacing: 0.08em; }
+.role-pills{ display: flex; background: rgba(0,0,0,0.2); border-radius: var(--r-sm); padding: 3px; gap: 4px; border: 1px solid rgba(217, 179, 108, 0.1); }
+.role-pill{ flex: 1; padding: 10px 0; font-size: 12.5px; text-align: center; border: none; background: none; cursor: pointer; border-radius: 6px; color: rgba(255,255,255,0.6); font-family: inherit; font-weight: 500; transition: all 0.25s ease; }
+.role-pill.active{ background: var(--gold-gradient); color: var(--navy-deep); font-weight: 700; box-shadow: 0 4px 12px rgba(217, 179, 108, 0.25); }
 
-/* */
+/* 主舞台空間配置 */
 .main{ flex: 1; display: flex; flex-direction: column; min-height: 100vh; min-width: 0; }
-.topbar{ display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.5rem; border-bottom: 1px solid rgba(12, 46, 78, 0.05); background: #FFFFFF; position: sticky; top: 0; z-index: 90; box-shadow: 0 1px 10px rgba(0,0,0,0.02); }
-.menu-toggle{ display: none; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--navy-deep); width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
+.topbar{ display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 2rem; border-bottom: 1px solid rgba(12, 46, 78, 0.04); background: #FFFFFF; position: sticky; top: 0; z-index: 90; box-shadow: 0 4px 20px rgba(5,24,41,0.01); }
+.menu-toggle{ display: none; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--navy-deep); width: 42px; height: 42px; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
 .menu-toggle:hover{ background: rgba(0,0,0,0.03); }
-.topbar-title{ font-size: 18px; font-weight: 700; color: var(--navy-deep); display: flex; align-items: center; gap: 8px; letter-spacing: 0.03em; }
-.content{ flex: 1; padding: 1.5rem; max-width: 1400px; width: 100%; margin: 0 auto; }
-.page{ display: none; animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
-.page.active{display:block}
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.topbar-title{ font-size: 19px; font-weight: 700; color: var(--navy-deep); display: flex; align-items: center; gap: 8px; letter-spacing: 0.03em; font-family: 'Noto Serif TC', serif; }
+.content{ flex: 1; padding: 2rem; max-width: 1400px; width: 100%; margin: 0 auto; }
+.page{ display: none; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+.page.active{ display:block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-/* */
-.stat-grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 1.5rem; }
-.stat-card{ background: var(--card-bg); border-radius: var(--r-md); padding: 1.5rem; border: none; display: flex; justify-content: space-between; align-items: center; transition: transform 0.25s ease, box-shadow 0.25s ease; box-shadow: var(--shadow-subtle); }
-.stat-card:hover{ transform: translateY(-3px); box-shadow: var(--shadow-premium); }
+/* 頂級設計師卡片與網格 */
+.stat-grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 2rem; }
+.stat-card{ background: var(--card-bg); border-radius: var(--r-md); padding: 1.75rem; border: 1px solid rgba(12, 46, 78, 0.02); display: flex; justify-content: space-between; align-items: center; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: var(--shadow-subtle); }
+.stat-card:hover{ transform: translateY(-4px); box-shadow: var(--shadow-premium); border-color: rgba(217, 179, 108, 0.15); }
 .stat-info{ display: flex; flex-direction: column; }
-.stat-label{ font-size: 12px; color: #7F8C8D; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .05em; font-weight: 500; }
-.stat-value{ font-size: 24px; font-weight: 700; color: var(--navy-deep); line-height: 1.2; }
-.stat-accent{color: var(--red-palace)}
-.stat-icon{ width: 44px; height: 44px; border-radius: 50%; background: #FAF5EB; color: var(--navy-deep); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.stat-label{ font-size: 12px; color: #7F8C8D; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .08em; font-weight: 500; }
+.stat-value{ font-size: 26px; font-weight: 700; color: var(--navy-deep); line-height: 1.2; font-family: 'Noto Serif TC', serif; }
+.stat-accent{ color: var(--red-palace); }
+.stat-icon{ width: 48px; height: 48px; border-radius: 50%; background: #FAF6EE; color: var(--navy-deep); display: flex; align-items: center; justify-content: center; font-size: 22px; border: 1px solid rgba(217, 179, 108, 0.1); }
 
-.card{ background: var(--card-bg); border-radius: var(--r-md); border: none; margin-bottom: 1.5rem; overflow: hidden; box-shadow: var(--shadow-subtle); }
-.card-head{ display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.03); background: #FAF9F6; flex-wrap: wrap; gap: 12px; }
-.card-head-title{ font-size: 15px; font-weight: 700; color: var(--navy-deep); display: flex; align-items: center; gap: 8px; }
-.card-body{ padding: 1.25rem 1.5rem; }
+.card{ background: var(--card-bg); border-radius: var(--r-md); border: 1px solid rgba(12, 46, 78, 0.01); margin-bottom: 2rem; overflow: hidden; box-shadow: var(--shadow-subtle); }
+.card-head{ display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem; border-bottom: 1px solid rgba(12, 46, 78, 0.03); background: #FAF9F6; flex-wrap: wrap; gap: 14px; }
+.card-head-title{ font-size: 16px; font-weight: 700; color: var(--navy-deep); display: flex; align-items: center; gap: 8px; font-family: 'Noto Serif TC', serif; }
+.card-body{ padding: 1.5rem 2rem; }
 
-/* */
-.table-filter-bar{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; gap: 12px; flex-wrap: wrap; }
-.search-wrapper{ position: relative; flex: 1; max-width: 360px; min-width: 220px; }
-.search-wrapper input{ width: 100%; padding: 9px 12px 9px 38px; font-size: 13.5px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); outline: none; background: var(--card-bg); color: var(--ink); font-weight: 400; transition: all 0.2s; }
-.search-wrapper input:focus{ border-color: var(--navy-deep); box-shadow: 0 0 0 3px rgba(12, 46, 78, 0.05); }
-.search-icon-svg{ position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #7F8C8D; width: 16px; height: 16px; pointer-events: none; }
+/* 專業級過濾列與表格設計 */
+.table-filter-bar{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; gap: 14px; flex-wrap: wrap; }
+.search-wrapper{ position: relative; flex: 1; max-width: 380px; min-width: 240px; }
+.search-wrapper input{ width: 100%; padding: 11px 14px 11px 42px; font-size: 14px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); outline: none; background: var(--card-bg); color: var(--ink); font-weight: 400; transition: all 0.25s; }
+.search-wrapper input:focus{ border-color: var(--navy-deep); box-shadow: 0 0 0 4px rgba(12, 46, 78, 0.06); }
+.search-icon-svg{ position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #7F8C8D; width: 18px; height: 18px; pointer-events: none; opacity: 0.7; }
 
 .table-responsive{ width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--r-sm); }
-table{ width: 100%; border-collapse: collapse; font-size: 13.5px; text-align: left; }
-th{ padding: 12px 16px; color: var(--navy-deep); font-weight: 700; font-size: 12.5px; border-bottom: 1px solid rgba(0,0,0,0.04); text-transform: uppercase; letter-spacing: .05em; background: #FAF7F2; white-space: nowrap; }
-td{ padding: 14px 16px; color: var(--ink); font-weight: 400; border-bottom: 1px solid rgba(12, 46, 78, 0.03); vertical-align: middle; white-space: nowrap; }
-tr:last-child td{border-bottom: none}
-tr:hover td{background: rgba(217, 179, 108, 0.03)}
+table{ width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
+th{ padding: 14px 20px; color: var(--navy-deep); font-weight: 700; font-size: 13px; border-bottom: 1px solid rgba(12, 46, 78, 0.05); text-transform: uppercase; letter-spacing: .05em; background: #FAF8F4; white-space: nowrap; }
+td{ padding: 16px 20px; color: var(--ink); font-weight: 400; border-bottom: 1px solid rgba(12, 46, 78, 0.03); vertical-align: middle; white-space: nowrap; transition: background 0.2s; }
+tr:last-child td{ border-bottom: none; }
+tr:hover td{ background: rgba(217, 179, 108, 0.02); }
 
-.badge{ display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 99px; font-size: 11.5px; font-weight: 500; }
-.badge-ok{background:#E8F8F0;color:#1B5E20;}
-.badge-wait{background:#FFF9E6;color:#B7791F;}
-.badge-paid{background:#EEF2FF;color:#3730A3;}
-.badge-unpaid{background:#FFF1F1;color:#C53030;}
-.badge-gray{background:#F3F4F6;color:#4B5563;}
-.badge-owner{background:#FFF1F1;color:#9E2A2B;border: 1px solid rgba(158, 42, 43, 0.1); font-weight:700;}
-.badge-employee{background:#EEF2FF;color:#3730A3;border: 1px solid rgba(55, 48, 163, 0.1); font-weight:700;}
-.badge-contractor{background:#FAF7F2;color:#7A654A;border: 1px solid rgba(122, 101, 74, 0.1); font-weight:500;}
+/* 高階精緻徽章配飾 */
+.badge{ display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; border-radius: 99px; font-size: 12px; font-weight: 500; }
+.badge-ok{ background:#E8F8F0; color:#1B5E20; }
+.badge-wait { background:#FFF9E6; color:#B7791F; }
+.badge-paid { background:#EEF2FF; color:#3730A3; }
+.badge-unpaid { background:#FFF1F1; color:#C53030; }
+.badge-gray { background:#F3F4F6; color:#4B5563; }
+.badge-master { background:#F5F3FF; color:#6D28D9; border: 1px solid rgba(109, 40, 217, 0.15); font-weight:900; }
+.badge-owner { background:#FFF1F1; color:#9E2A2B; border: 1px solid rgba(158, 42, 43, 0.15); font-weight:700; }
+.badge-employee { background:#EEF2FF; color:#3730A3; border: 1px solid rgba(55, 48, 163, 0.15); font-weight:700; }
+.badge-contractor { background:#FAF6EE; color:#7A654A; border: 1px solid rgba(122, 101, 74, 0.15); font-weight:500; }
 
-.btn{ display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 16px; font-size: 13px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); background: var(--card-bg); cursor: pointer; color: var(--navy-deep); font-family: inherit; font-weight: 500; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); user-select: none; }
-.btn:hover{ background: #FAF8F5; border-color: var(--gold-beige); }
-.btn-primary{ background: var(--navy-gradient); color: var(--gold-beige) !important; border: none; box-shadow: 0 2px 10px rgba(12, 46, 78, 0.15); font-weight: 700; }
-.btn-primary:hover{ transform: translateY(-1px); box-shadow: 0 4px 15px rgba(12, 46, 78, 0.25); background: var(--navy-deep); }
-.btn-danger{ color: var(--red-palace) !important; border: 1px solid rgba(158, 42, 43, 0.12); background: #FFF5F5; }
-.btn-danger:hover{ background: #FFF1F1; }
-.btn-sm{ padding: 6px 12px; font-size: 12px; border-radius: 6px; }
-.btn-icon-only{ padding: 6px; border-radius: 6px; }
-.preview-box{ background: #FAF8F5; border-radius: var(--r-sm); padding: 12px; margin-bottom: 14px; font-size: 13.5px; color: var(--ink); border: 1px dashed var(--border-solid); }
-.avatar{ width: 30px; height: 30px; border-radius: 50%; background: #FAF7F2; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--navy-deep); flex-shrink: 0; border: 1px solid var(--border-solid); }
+/* 頂級微互動按鈕 */
+.btn{ display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 18px; font-size: 13.5px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); background: var(--card-bg); cursor: pointer; color: var(--navy-deep); font-family: inherit; font-weight: 500; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); user-select: none; }
+.btn:hover{ background: #FAF9F6; border-color: var(--gold-beige); transform: translateY(-1px); }
+.btn:active{ transform: translateY(1px); }
+.btn-primary{ background: var(--navy-gradient); color: var(--gold-beige) !important; border: none; box-shadow: 0 4px 12px rgba(12, 46, 78, 0.12); font-weight: 700; }
+.btn-primary:hover{ transform: translateY(-2px); box-shadow: 0 6px 20px rgba(12, 46, 78, 0.22); background: var(--navy-deep); }
+.btn-danger{ color: var(--red-palace) !important; border: 1px solid rgba(158, 42, 43, 0.15); background: #FFF6F6; }
+.btn-danger:hover{ background: #FFF1F1; border-color: var(--red-palace); }
+.btn-sm{ padding: 7px 14px; font-size: 12.5px; border-radius: 6px; }
+.btn-icon-only{ padding: 7px; border-radius: 6px; }
+.preview-box{ background: #FAF9F6; border-radius: var(--r-sm); padding: 14px; margin-bottom: 16px; font-size: 14px; color: var(--ink); border: 1px dashed var(--border-solid); }
+.avatar{ width: 32px; height: 32px; border-radius: 50%; background: #FAF6EE; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--navy-deep); flex-shrink: 0; border: 1px solid var(--border-solid); }
 
-/* */
+/* 排行榜與天榜風雲樣式 */
 .race-tabs, .lb-metric-bar {
   display: flex; gap: 4px; padding: 4px; background: rgba(0, 0, 0, 0.03); border-radius: 99px; width: fit-content; max-width: 100%;
   overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none;
 }
 .race-tabs::-webkit-scrollbar, .lb-metric-bar::-webkit-scrollbar { display: none; }
 .race-tab, .metric-tab {
-  padding: 6px 14px; font-size: 12.5px; border: none !important; border-radius: 99px !important;
-  background: transparent !important; cursor: pointer; color: var(--navy-deep) !important; font-weight: 500; transition: all 0.2s; flex-shrink: 0;
+  padding: 8px 18px; font-size: 13px; border: none !important; border-radius: 99px !important;
+  background: transparent !important; cursor: pointer; color: var(--navy-deep) !important; font-weight: 500; transition: all 0.25s; flex-shrink: 0;
 }
 .race-tab.active, .metric-tab.active {
-  background: #FFFFFF !important; color: var(--navy-deep) !important; font-weight: 700; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  background: #FFFFFF !important; color: var(--navy-deep) !important; font-weight: 700; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
 }
 .race-tabs.dim { opacity: .4; pointer-events: none; }
-.lb-metric-bar { margin: 1rem 0 0.5rem; background: rgba(0, 0, 0, 0.02); }
+.lb-metric-bar { margin: 1.25rem 0 0.75rem; background: rgba(0, 0, 0, 0.01); }
 
-/* */
 .champion {
-  display: flex; align-items: center; gap: 16px; margin: 1.25rem; padding: 1.25rem;
+  display: flex; align-items: center; gap: 20px; margin: 1.5rem; padding: 1.5rem 2rem;
   background: linear-gradient(135deg, #0C2E4E 0%, #051829 100%);
-  border: 1px solid rgba(217, 179, 108, 0.3); border-radius: var(--r-md); position: relative; overflow: hidden; box-shadow: var(--shadow-gold);
+  border: 1px solid rgba(217, 179, 108, 0.25); border-radius: var(--r-md); position: relative; overflow: hidden; box-shadow: var(--shadow-gold);
 }
-.champion-crown { font-size: 30px; animation: crownBob 3s ease-in-out infinite; }
-@keyframes crownBob { 0%, 100% { transform: translateY(0) scale(1) } 50% { transform: translateY(-3px) scale(1.03) } }
+.champion-crown { font-size: 32px; animation: crownBob 3s ease-in-out infinite; }
+@keyframes crownBob { 0%, 100% { transform: translateY(0) scale(1) } 50% { transform: translateY(-4px) scale(1.05) } }
 .champion-info { flex: 1; min-width: 0; }
-.champion-label { font-size: 11px; color: var(--gold-beige) !important; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; }
-.champion-name { font-size: 18px; font-weight: 700; color: #FFFFFF !important; margin-top: 2px; }
-.champion-score { font-size: 20px; font-weight: 700; color: var(--gold-beige) !important; white-space: nowrap; }
+.champion-label { font-size: 11px; color: var(--gold-beige) !important; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.champion-name { font-size: 20px; font-weight: 700; color: #FFFFFF !important; margin-top: 3px; font-family: 'Noto Serif TC', serif; }
+.champion-score { font-size: 22px; font-weight: 700; color: var(--gold-beige) !important; white-space: nowrap; font-family: 'Noto Serif TC', serif; }
 
-.race-wrap { padding: 1rem; background: #FAF9F6; display: flex; flex-direction: column; gap: 10px; }
+.race-wrap { padding: 1.25rem; background: #FAF9F6; display: flex; flex-direction: column; gap: 12px; }
 .race-row {
-  display: flex; flex-direction: column; gap: 8px; padding: 12px; background: #FFFFFF;
-  border: none; border-radius: var(--r-md); box-shadow: var(--shadow-subtle); transition: all 0.2s ease;
+  display: flex; flex-direction: column; gap: 10px; padding: 14px; background: #FFFFFF;
+  border: 1px solid rgba(12, 46, 78, 0.01); border-radius: var(--r-md); box-shadow: var(--shadow-subtle); transition: all 0.25s ease;
 }
-.race-row:hover { box-shadow: var(--shadow-premium); }
-.race-row.race-self { background: var(--gold-light) !important; border: 1px solid rgba(217, 179, 108, 0.25) !important; box-shadow: var(--shadow-gold) !important; }
-.race-header-wrapper { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 12px; }
-.race-rank-info { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+.race-row:hover { box-shadow: var(--shadow-premium); transform: translateX(2px); }
+.race-row.race-self { background: var(--gold-light) !important; border: 1px solid rgba(217, 179, 108, 0.3) !important; box-shadow: var(--shadow-gold) !important; }
+.race-header-wrapper { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 14px; }
+.race-rank-info { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
 .race-rank { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
-.rank-medal { width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; border: 1px solid rgba(217, 179, 108, 0.3); }
-.race-name { font-size: 14px; font-weight: 700; color: var(--ink); display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.rank-medal { width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; border: 1px solid rgba(217, 179, 108, 0.25); }
+.race-name { font-size: 14.5px; font-weight: 700; color: var(--ink); display: flex; flex-direction: column; min-width: 0; flex: 1; }
 .race-username { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.race-track { width: 100%; background: #071726; border-radius: 999px; height: 32px; position: relative; overflow: hidden; box-shadow: inset 0 2px 6px rgba(0,0,0,0.5); }
+.race-track { width: 100%; background: #061524; border-radius: 999px; height: 32px; position: relative; overflow: hidden; box-shadow: inset 0 3px 8px rgba(0,0,0,0.4); }
 .race-lane { height: 100%; border-radius: 999px; display: flex; align-items: center; position: relative; min-width: 50px; transition: width 1s cubic-bezier(0.1, 1, 0.1, 1); }
 .boat-anim { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); }
-.race-score { font-size: 14px; font-weight: 700; color: var(--navy-deep); text-align: right; flex-shrink: 0; font-family: monospace, sans-serif; }
+.race-score { font-size: 15px; font-weight: 700; color: var(--navy-deep); text-align: right; flex-shrink: 0; font-family: 'Noto Serif TC', serif; }
 
-/* */
+/* 洞府修為核心區 */
 .cult-hero {
-  position:relative; border-radius:var(--r-lg); padding:1.5rem; margin-bottom:1rem; overflow:hidden; color:#FFFFFF;
-  background: var(--navy-gradient); border: none; box-shadow: var(--shadow-premium);
+  position:relative; border-radius:var(--r-lg); padding: 2rem; margin-bottom:1.5rem; overflow:hidden; color:#FFFFFF;
+  background: var(--navy-gradient); border: 1px solid rgba(217, 179, 108, 0.15); box-shadow: var(--shadow-premium);
 }
-.cult-glow { position:absolute; inset:0; opacity:.15; background:radial-gradient(200px 150px at 90% -10%, var(--realm), transparent 80%); }
-.cult-spark { position:absolute; right:12px; bottom:8px; font-size:56px; opacity:.04; pointer-events:none; }
-.cult-top { display:flex; align-items:center; gap:12px; position:relative; }
-.cult-avatar { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700; color: #fff; border: 2px solid var(--gold-beige); background: var(--realm); box-shadow: 0 0 10px var(--realm); }
-.cult-name { font-size: 20px; font-weight: 700; color: #FFFFFF !important; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
-.cult-realm-badge { display:inline-flex; align-items:center; gap:4px; margin-top:4px; font-size:11.5px; font-weight: 700; color:#FFFFFF !important; background:var(--realm); border-radius:99px; padding:3px 10px; border: 1px solid rgba(255,255,255,0.25); }
-.cult-coin { position:relative; margin-top:1rem; display:flex; align-items:baseline; gap:4px; }
-.cult-coin-num { font-size: 32px; font-weight: 700; color: var(--gold-beige) !important; text-shadow: 0 0 6px rgba(217,179,108,0.4); }
-.cult-coin-lbl { font-size: 12px; color:rgba(255,255,255,0.7) !important; }
-.cult-prog-wrap { position:relative; margin-top:0.75rem; }
-.cult-prog { height: 8px; background:rgba(255,255,255,0.12); border-radius:99px; overflow:hidden; }
-.cult-prog-fill { height:100%; border-radius:99px; background:linear-gradient(90deg, var(--realm), #FFF); transition:width .8s cubic-bezier(0.1, 1, 0.1, 1); }
-.cult-prog-txt { font-size: 11.5px; color:rgba(255,255,255,0.8) !important; margin-top:6px; }
+.cult-glow { position:absolute; inset:0; opacity:.2; background:radial-gradient(300px 200px at 90% -10%, var(--realm), transparent 80%); }
+.cult-spark { position:absolute; right:16px; bottom:12px; font-size:64px; opacity:.04; pointer-events:none; }
+.cult-top { display:flex; align-items:center; gap:16px; position:relative; }
+.cult-avatar { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; color: #fff; border: 2px solid var(--gold-beige); background: var(--realm); box-shadow: 0 0 15px var(--realm); }
+.cult-name { font-size: 22px; font-weight: 700; color: #FFFFFF !important; text-shadow: 0 2px 6px rgba(0,0,0,0.4); font-family: 'Noto Serif TC', serif; }
+.cult-realm-badge { display:inline-flex; align-items:center; gap:4px; margin-top:6px; font-size:12px; font-weight: 700; color:#FFFFFF !important; background:var(--realm); border-radius:99px; padding:4px 14px; border: 1px solid rgba(255,255,255,0.2); }
+.cult-coin { position:relative; margin-top:1.25rem; display:flex; align-items:baseline; gap:6px; }
+.cult-coin-num { font-size: 36px; font-weight: 700; color: var(--gold-beige) !important; text-shadow: 0 0 10px rgba(217,179,108,0.3); font-family: 'Noto Serif TC', serif; }
+.cult-coin-lbl { font-size: 13px; color:rgba(255,255,255,0.65) !important; letter-spacing: 0.05em; }
+.cult-prog-wrap { position:relative; margin-top:1rem; }
+.cult-prog { height: 10px; background:rgba(255,255,255,0.1); border-radius:99px; overflow:hidden; border: 1px solid rgba(255,255,255,0.05); }
+.cult-prog-fill { height:100%; border-radius:99px; background:linear-gradient(90deg, var(--realm), #FFFDF5); transition:width .8s cubic-bezier(0.1, 1, 0.1, 1); }
+.cult-prog-txt { font-size: 12.5px; color:rgba(255,255,255,0.75) !important; margin-top:8px; letter-spacing: 0.02em; }
 .cult-prog-txt b { color:var(--gold-beige) !important; }
 
-/* */
-.worker-submit-layout { display: grid; grid-template-columns: 280px 1fr; gap: 20px; }
-.submit-scene { background: var(--navy-gradient); border-radius: var(--r-md); padding: 1.25rem; color: #F1EAD7; display: flex; flex-direction: column; justify-content: space-between; }
-.submit-scene-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--gold-light) }
-.submit-mini { background: rgba(255,255,255,0.06); border-radius: 8px; padding: 8px 12px; display:flex; flex-direction:column; gap:2px; }
-.submit-mini b { font-size: 18px; color: var(--gold-light); font-weight: 700; }
-.submit-mini span { font-size: 10.5px; color: #BDC3C7; }
+/* 申報專區排版 */
+.worker-submit-layout { display: grid; grid-template-columns: 300px 1fr; gap: 24px; }
+.submit-scene { background: var(--navy-gradient); border-radius: var(--r-md); padding: 1.5rem; color: #F1EAD7; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(217, 179, 108, 0.1); }
+.submit-scene-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--gold-light); font-family: 'Noto Serif TC', serif; }
+.submit-mini { background: rgba(255,255,255,0.05); border-radius: var(--r-sm); padding: 10px 14px; display:flex; flex-direction:column; gap:4px; flex: 1; text-align: center; border: 1px solid rgba(255,255,255,0.02); }
+.submit-mini b { font-size: 20px; color: var(--gold-light); font-weight: 700; }
+.submit-mini span { font-size: 11px; color: #BDC3C7; letter-spacing: 0.05em; }
 
-/* */
-#page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard,#page-w-submit{ position:relative; min-height:calc(100vh - 120px); padding:1.5rem; border-radius:var(--r-lg); background: #FFFFFF; border: none; box-shadow: var(--shadow-subtle); }
+/* 專屬：登入中心與破陣視覺 */
+#page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard,#page-w-submit{ position:relative; min-height:calc(100vh - 120px); padding:2rem; border-radius:var(--r-lg); background: #FFFFFF; border: 1px solid rgba(12, 46, 78, 0.01); box-shadow: var(--shadow-subtle); }
 .immortal-panel { background: #FFFFFF; border: none; border-radius: var(--r-lg); }
-.immortal-title { display: inline-flex; align-items: center; gap: 6px; color: var(--navy-deep); font-weight: 700; font-size: 13px; padding: 6px 14px; border-radius: 99px; background: #FAF7F2; }
-.worker-login.immortal-entry { min-height: 480px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: stretch; padding: 0; overflow: hidden; }
-.immortal-visual { padding: 2rem; background: var(--navy-gradient); color: #fff; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
-.immortal-orbit { width: 180px; height: 180px; border-radius: 50%; border: 1px dashed rgba(217, 179, 108, 0.2); position: absolute; left: 50%; top: 40%; transform: translate(-50%,-50%); animation: spin 45s linear infinite; }
+.immortal-title { display: inline-flex; align-items: center; gap: 6px; color: var(--navy-deep); font-weight: 700; font-size: 13.5px; padding: 6px 16px; border-radius: 99px; background: #FAF6EE; border: 1px solid rgba(217, 179, 108, 0.15); }
+.worker-login.immortal-entry { min-height: 520px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px; align-items: stretch; padding: 0; overflow: hidden; }
+.immortal-visual { padding: 2.5rem; background: var(--navy-gradient); color: #fff; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
+.immortal-orbit { width: 220px; height: 220px; border-radius: 50%; border: 1px dashed rgba(217, 179, 108, 0.2); position: absolute; left: 50%; top: 40%; transform: translate(-50%,-50%); animation: spin 45s linear infinite; }
 @keyframes spin { from {transform:translate(-50%,-50%) rotate(0deg)} to {transform:translate(-50%,-50%) rotate(360deg)} }
-.immortal-core { width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, #FFF 0%, var(--gold-beige) 60%, #0C2E4E 100%); position: absolute; left: 50%; top: 40%; transform: translate(-50%,-50%); display: flex; align-items: center; justify-content: center; }
-.immortal-core-glow { font-size: 32px; animation: breathe 3s ease-in-out infinite; }
-@keyframes breathe { 0%,100%{transform:scale(0.9);opacity:0.8} 50%{transform:scale(1.05);opacity:1} }
-.immortal-brand { font-size: 24px; font-weight: 900; color: #FFF; letter-spacing: 0.1em; }
-.immortal-brand small { display:block; font-size: 10px; color: var(--gold-light); letter-spacing:0.15em; margin-top:2px; font-weight: 500; }
-.immortal-form { padding: 2rem; display:flex; flex-direction: column; justify-content: center; }
-.btn-immortal { background: var(--gold-gradient); color: var(--navy-deep) !important; border: none; border-radius: 10px; font-weight: 700; padding: 12px 20px; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(217, 179, 108, 0.15); }
-.btn-immortal:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(217, 179, 108, 0.3); }
+.immortal-core { width: 110px; height: 110px; border-radius: 50%; background: radial-gradient(circle, #FFF 0%, var(--gold-beige) 60%, #0C2E4E 100%); position: absolute; left: 50%; top: 40%; transform: translate(-50%,-50%); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(217, 179, 108, 0.4); }
+.immortal-core-glow { font-size: 36px; animation: breathe 3s ease-in-out infinite; }
+@keyframes breathe { 0%,100%{transform:scale(0.92);opacity:0.8} 50%{transform:scale(1.06);opacity:1} }
+.immortal-brand { font-size: 26px; font-weight: 900; color: #FFF; letter-spacing: 0.15em; font-family: 'Noto Serif TC', serif; }
+.immortal-brand small { display:block; font-size: 10px; color: var(--gold-light); letter-spacing:0.18em; margin-top:4px; font-weight: 500; }
+.immortal-form { padding: 2.5rem; display:flex; flex-direction: column; justify-content: center; }
+.btn-immortal { background: var(--gold-gradient); color: var(--navy-deep) !important; border: none; border-radius: var(--r-sm); font-weight: 700; padding: 14px 24px; cursor: pointer; transition: all 0.25s; box-shadow: 0 6px 16px rgba(217, 179, 108, 0.2); font-size: 14.5px; letter-spacing: 0.05em; }
+.btn-immortal:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(217, 179, 108, 0.35); }
 
 #page-w-home .w-back, #page-w-records .w-back, #page-w-leaderboard .w-back, #page-w-submit .w-back {
-  display: inline-flex; align-items: center; gap: 6px; cursor:pointer; padding: 6px 14px; border-radius: 99px; border: 1px solid var(--border-solid); background: #FFFFFF; color: var(--navy-deep); font-size:12.5px; font-weight:500; margin-bottom:1rem; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 6px; cursor:pointer; padding: 7px 16px; border-radius: 99px; border: 1px solid var(--border-solid); background: #FFFFFF; color: var(--navy-deep); font-size:13px; font-weight:500; margin-bottom:1.25rem; transition: all 0.25s;
 }
-#page-w-home .w-back:hover, #page-w-records .w-back:hover, #page-w-leaderboard .w-back:hover, #page-w-submit .w-back:hover { background: #FAF7F2; }
+#page-w-home .w-back:hover, #page-w-records .w-back:hover, #page-w-leaderboard .w-back:hover, #page-w-submit .w-back:hover { background: #FAF6EE; border-color: var(--gold-beige); }
 
-#page-w-home #w-stats .w-stat { background: #FFFFFF; border: 1px solid rgba(217, 179, 108, 0.1); border-radius: var(--r-md); padding: 1.25rem; text-align: center; box-shadow: var(--shadow-subtle); }
-#page-w-home #w-stats .w-stat-label { color:#7F8C8D; font-size:11.5px; font-weight:500 }
-#page-w-home #w-stats .w-stat-value { color: var(--navy-deep); font-size: 20px; font-weight:700; margin-top:4px }
+#page-w-home #w-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+#page-w-home #w-stats .w-stat { background: #FFFFFF; border: 1px solid rgba(217, 179, 108, 0.12); border-radius: var(--r-md); padding: 1.5rem; text-align: center; box-shadow: var(--shadow-subtle); transition: all 0.25s; }
+#page-w-home #w-stats .w-stat:hover { box-shadow: var(--shadow-gold); border-color: rgba(217,179,108,0.3); }
+#page-w-home #w-stats .w-stat-label { color:#7F8C8D; font-size:12px; font-weight:500; letter-spacing: 0.02em; }
+#page-w-home #w-stats .w-stat-value { color: var(--navy-deep); font-size: 22px; font-weight:700; margin-top:6px; font-family: 'Noto Serif TC', serif; }
 
-/* */
+/* 功德資糧條（古典紙藝美學） */
 #page-slips{
   --slip-paper:#fdfbf7; --slip-paper-2:#f5ebd6; --slip-ink:#2C3E50; --slip-ink-soft:#7F8C8D;
   --slip-cinnabar:#0C2E4E;
@@ -243,107 +250,164 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
   --slip-brush: "LXGW WenKai TC", "Ma Shan Zheng", "Noto Serif TC", serif; 
   --slip-serif:"Noto Serif TC",serif; 
 }
-#page-slips .slip-toolbar{ display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center; margin-bottom:16px; }
-#page-slips .slip-controls{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-#page-slips .slip-actions{ display:flex; gap:8px; flex-wrap:wrap; }
-#page-slips .slip-ctl-label{ font-size:13px; font-weight:600; color:var(--navy-deep); }
-#page-slips #slip-month-picker{ padding:6px 10px; font-size:13px; border:1px solid var(--border-solid); border-radius:6px; background:#fff; color:#000; outline:none; }
-#page-slips .slip-count{ font-size:13px; color:#555; min-width:48px; text-align:center; font-weight:600; }
-#page-slips .slip-layout{ display:grid; grid-template-columns:240px 1fr; gap:16px; align-items:start; }
-#page-slips .slip-roster{ list-style:none; display:flex; flex-direction:column; gap:6px; max-height:600px; overflow-y:auto; padding:2px; }
-#page-slips .slip-roster li{ display:flex; align-items:center; gap:8px; background:#fff; border:1px solid rgba(217,179,108,0.12); border-radius:8px; padding:10px 12px; cursor:pointer; transition:.15s; }
-#page-slips .slip-roster li:hover{ background:#FCFAF7; }
+#page-slips .slip-toolbar{ display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; margin-bottom:20px; }
+#page-slips .slip-controls{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+#page-slips .slip-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+#page-slips .slip-ctl-label{ font-size:13.5px; font-weight:700; color:var(--navy-deep); }
+#page-slips #slip-month-picker{ padding:7px 12px; font-size:13.5px; border:1px solid var(--border-solid); border-radius:6px; background:#fff; outline:none; }
+#page-slips .slip-count{ font-size:14px; color:var(--navy-deep); font-weight:700; min-width:54px; text-align:center; }
+#page-slips .slip-layout{ display:grid; grid-template-columns:260px 1fr; gap:20px; align-items:start; }
+#page-slips .slip-roster{ list-style:none; display:flex; flex-direction:column; gap:8px; max-height:600px; overflow-y:auto; padding:2px; }
+#page-slips .slip-roster li{ display:flex; align-items:center; gap:10px; background:#fff; border:1px solid rgba(217,179,108,0.15); border-radius:10px; padding:12px 14px; cursor:pointer; transition:.2s cubic-bezier(0.16, 1, 0.3, 1); }
+#page-slips .slip-roster li:hover{ background:#FCFAF5; border-color: var(--gold-beige); }
 #page-slips .slip-roster li.active{ border-color:var(--gold-beige); background:var(--gold-light); box-shadow:var(--shadow-gold); }
-#page-slips .slip-roster .slip-nm{ flex:1; font-size:13.5px; color:var(--navy-deep); font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-#page-slips .slip-roster .slip-amt{ color:var(--red-palace); font-weight:700; font-size:13.5px; }
+#page-slips .slip-roster .slip-nm{ flex:1; font-size:14px; color:var(--navy-deep); font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#page-slips .slip-roster .slip-amt{ color:var(--red-palace); font-weight:700; font-size:14px; font-family: 'Noto Serif TC', serif; }
 
 #page-slips .slip {
-  position:relative; width:340px; max-width:100%;
+  position:relative; width:350px; max-width:100%;
   background:linear-gradient(180deg,#FDFBF7,var(--slip-paper-2));
-  border-radius:12px; padding:24px 24px 24px 38px; color:var(--slip-ink);
-  box-shadow: 0 15px 35px -10px rgba(12, 46, 78, 0.15), 0 0 0 1px rgba(217, 179, 108, 0.25) inset; overflow:hidden; font-family:var(--slip-serif);
+  border-radius:14px; padding:26px 26px 26px 42px; color:var(--slip-ink);
+  box-shadow: 0 20px 45px -10px rgba(12, 46, 78, 0.15), 0 0 0 1px rgba(217, 179, 108, 0.3) inset; overflow:hidden; font-family:var(--slip-serif);
 }
-#page-slips .slip__frame { position:relative; z-index:2; border:1px solid rgba(217, 179, 108, 0.4); border-radius:6px; padding:16px 14px; }
-#page-slips .slip__band { position:absolute; left:0; top:0; bottom:0; width:18px; z-index:3; background:linear-gradient(180deg,var(--slip-cinnabar),var(--slip-cinnabar-deep)); display:flex; align-items:center; justify-content:center; }
-#page-slips .slip__band span{ writing-mode:vertical-rl; color:var(--slip-gold-lt); font-size:9.5px; letter-spacing:.4em; font-weight:600; opacity:.9; }
-#page-slips .slip__wm{ position:absolute; z-index:1; right:-20px; top:46%; font-family:var(--slip-brush); font-size:160px; color:rgba(12, 46, 78, 0.04); line-height:1; transform:rotate(-6deg); pointer-events:none; }
+#page-slips .slip__frame { position:relative; z-index:2; border:1px solid rgba(217, 179, 108, 0.45); border-radius:8px; padding:18px 16px; }
+#page-slips .slip__band { position:absolute; left:0; top:0; bottom:0; width:20px; z-index:3; background:linear-gradient(180deg,var(--slip-cinnabar),var(--slip-cinnabar-deep)); display:flex; align-items:center; justify-content:center; }
+#page-slips .slip__band span{ writing-mode:vertical-rl; color:var(--slip-gold-lt); font-size:10px; letter-spacing:.45em; font-weight:600; opacity:.95; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+#page-slips .slip__wm{ position:absolute; z-index:1; right:-20px; top:46%; font-family:var(--slip-brush); font-size:165px; color:rgba(12, 46, 78, 0.04); line-height:1; transform:rotate(-6deg); pointer-events:none; }
 #page-slips .slip__head{ text-align:center; position:relative; z-index:2; }
-#page-slips .slip__mark{ width:36px; height:36px; margin:0 auto 6px; border-radius:50%; border:1px solid var(--slip-gold-dk); display:flex; align-items:center; justify-content:center; font-family:var(--slip-brush); font-size:18px; color:var(--slip-gold-dk); background:#FFF; }
-#page-slips .slip__title{ font-family:var(--slip-brush); font-size:26px; color:var(--slip-cinnabar-deep); letter-spacing:.12em; }
-#page-slips .slip__sub{ font-size:11px; color:var(--slip-ink-soft); letter-spacing:.25em; margin-top:3px; }
-#page-slips .slip__month{ display:inline-block; margin-top:6px; font-size:11px; letter-spacing:0.1em; color:#fff; background:var(--slip-cinnabar); padding:2px 10px; border-radius:99px; }
-#page-slips .slip .rule{ height:0; border:0; border-top:1px solid rgba(217, 179, 108, 0.3); margin:12px 0; position:relative; }
-#page-slips .slip .rule::after{ content:"❖"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:#FDFBF7; color:var(--slip-gold-dk); font-size:11px; padding:0 6px; }
+#page-slips .slip__mark{ width:38px; height:38px; margin:0 auto 8px; border-radius:50%; border:1px solid var(--slip-gold-dk); display:flex; align-items:center; justify-content:center; font-family:var(--slip-brush); font-size:20px; color:var(--slip-gold-dk); background:#FFF; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+#page-slips .slip__title{ font-family:var(--slip-brush); font-size:28px; color:var(--slip-cinnabar-deep); letter-spacing:.15em; }
+#page-slips .slip__sub{ font-size:11.5px; color:var(--slip-ink-soft); letter-spacing:.25em; margin-top:4px; font-weight: 500; }
+#page-slips .slip__month{ display:inline-block; margin-top:8px; font-size:11px; letter-spacing:0.12em; color:#fff; background:var(--slip-cinnabar); padding:3px 12px; border-radius:99px; font-weight: 600; }
+#page-slips .slip .rule{ height:0; border:0; border-top:1px solid rgba(217, 179, 108, 0.35); margin:14px 0; position:relative; }
+#page-slips .slip .rule::after{ content:"❖"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:#FDFBF7; color:var(--slip-gold-dk); font-size:11px; padding:0 8px; }
 #page-slips .slip__body{ position:relative; z-index:2; text-align:center; }
 #page-slips .slip .lbl{ font-size:10px; color:var(--slip-ink-soft); letter-spacing:.3em; }
-#page-slips .slip .daohao{ font-size:24px; font-weight:900; color:var(--slip-ink); line-height:1.2; margin-top:2px; font-family: var(--slip-brush); }
-#page-slips .slip .realm{ display:inline-block; margin-top:6px; font-size:11.5px; color:var(--slip-cinnabar-deep); border:1px solid rgba(217,179,108,0.4); border-radius:99px; padding:2px 10px; background:#FFFFFF; }
-#page-slips .slip .amount{ margin-top:16px; padding-top:12px; border-top:1px dashed rgba(217, 179, 108, 0.3); }
-#page-slips .slip .amount .cap{ font-size:10px; color:var(--slip-ink-soft); letter-spacing:.2em; }
-#page-slips .slip .amount .big{ font-weight:900; line-height:1; margin:4px 0; color: var(--slip-gold-dk); }
-#page-slips .slip .amount .big .num{ font-size:36px; }
+#page-slips .slip .daohao{ font-size:26px; font-weight:900; color:var(--slip-ink); line-height:1.2; margin-top:3px; font-family: var(--slip-brush); }
+#page-slips .slip .realm{ display:inline-block; margin-top:6px; font-size:12px; color:var(--slip-cinnabar-deep); border:1px solid rgba(217,179,108,0.45); border-radius:99px; padding:3px 12px; background:#FFFFFF; font-weight: 600; }
+#page-slips .slip .amount{ margin-top:18px; padding-top:14px; border-top:1px dashed rgba(217, 179, 108, 0.35); }
+#page-slips .slip .amount .cap{ font-size:10.5px; color:var(--slip-ink-soft); letter-spacing:.2em; }
+#page-slips .slip .amount .big{ font-weight:900; line-height:1; margin:6px 0; color: var(--slip-gold-dk); }
+#page-slips .slip .amount .big .num{ font-size:38px; }
 #page-slips .slip .amount .big .mei{ font-size:16px; margin-left:4px; }
-#page-slips .slip .amount .ntd{ font-size:12px; color:var(--slip-ink-soft); }
-#page-slips .slip__foot{ position:relative; z-index:2; margin-top:12px; display:flex; justify-content:space-between; align-items:flex-end; font-size:10px; color:var(--slip-ink-soft); }
+#page-slips .slip .amount .ntd{ font-size:12.5px; color:var(--slip-ink-soft); font-weight: 500; }
+#page-slips .slip__foot{ position:relative; z-index:2; margin-top:14px; display:flex; justify-content:space-between; align-items:flex-end; font-size:10.5px; color:var(--slip-ink-soft); font-weight: 500; }
 #page-slips .slip__foot .status{ color:var(--slip-cinnabar-deep); font-weight:700; }
-#page-slips .slip .seal{ position:absolute; z-index:4; right:12px; bottom:12px; width:64px; height:64px; transform:rotate(-9deg); }
-#page-slips .slip .seal .ring{ position:absolute; inset:0; border-radius:6px; border:2px solid var(--slip-cinnabar); opacity:.75; }
-#page-slips .slip .seal .chars{ position:absolute; inset:0; display:grid; grid-template-columns:1fr 1fr; place-items:center; font-family:var(--slip-brush); color:var(--slip-cinnabar); font-size:20px; line-height:1; opacity:.75; }
+#page-slips .slip .seal{ position:absolute; z-index:4; right:14px; bottom:14px; width:68px; height:68px; transform:rotate(-8deg); pointer-events: none; }
+#page-slips .slip .seal .ring{ position:absolute; inset:0; border-radius:8px; border:2px solid var(--slip-cinnabar); opacity:.8; }
+#page-slips .seal .chars{ position:absolute; inset:0; display:grid; grid-template-columns:1fr 1fr; place-items:center; font-family:var(--slip-brush); color:var(--slip-cinnabar); font-size:22px; line-height:1; opacity:.8; font-weight: 900; padding: 2px; }
 
-/* */
+/* ============================================================
+   補全與優化：專業設計師級別的模態彈出視窗、提示與排版樣式
+   ============================================================ */
+.modal-bg {
+  position: fixed; inset: 0;
+  background: rgba(5, 24, 41, 0.6);
+  backdrop-filter: blur(5px);
+  display: none; align-items: center; justify-content: center;
+  z-index: 1000; padding: 1.5rem;
+}
+.modal-bg.open { display: flex; }
+.modal {
+  background: var(--card-bg); width: 100%; max-width: 520px;
+  border-radius: var(--r-lg); border: 1px solid rgba(217, 179, 108, 0.3);
+  box-shadow: var(--shadow-premium);
+  animation: modalSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+@keyframes modalSlide {
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal-head {
+  padding: 1.5rem 2rem; border-bottom: 1px solid rgba(12, 46, 78, 0.04);
+  background: #FAF9F6; display: flex; justify-content: space-between; align-items: center;
+}
+.modal-title { font-size: 16px; font-weight: 700; color: var(--navy-deep); display: flex; align-items: center; gap: 8px; font-family: 'Noto Serif TC', serif; }
+.modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: #7F8C8D; transition: color 0.2s; }
+.modal-close:hover { color: var(--red-palace); }
+.modal-foot { padding: 1.25rem 2rem; border-top: 1px solid rgba(12, 46, 78, 0.03); display: flex; justify-content: flex-end; gap: 10px; background: #FAF9F6; }
+
+.form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+.form-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; text-align: left; margin-bottom: 12px; }
+.form-group label { font-size: 13px; font-weight: 700; color: var(--navy-deep); letter-spacing: 0.03em; }
+.form-group input, .form-group select, .form-group textarea {
+  padding: 11px 14px; font-size: 14px; border: 1px solid var(--border-solid);
+  border-radius: var(--r-sm); outline: none; background: #FFFFFF; transition: all 0.25s;
+  color: var(--ink); font-family: inherit;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--navy-deep); box-shadow: 0 0 0 4px rgba(12, 46, 78, 0.06);
+}
+.form-group input[readonly] { background: #F5F5F4; cursor: not-allowed; border-color: rgba(0,0,0,0.06); }
+
+.toast-el {
+  position: fixed; top: 24px; left: 50%; transform: translateX(-50%) translateY(-24px);
+  background: var(--navy-gradient); color: var(--gold-beige); border: 1px solid rgba(217, 179, 108, 0.4);
+  padding: 12px 28px; border-radius: 99px; font-size: 14px; font-weight: 700;
+  box-shadow: 0 12px 32px rgba(5, 24, 41, 0.25); opacity: 0; pointer-events: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1); z-index: 2000; letter-spacing: 0.05em;
+}
+.toast-el.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.coin-chip { display: inline-flex; align-items: center; background: #FAF5EB; color: #B7791F; padding: 3px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700; border: 1px solid rgba(217, 179, 108, 0.15); width: fit-content; margin-top: 4px; }
+.self-tag { background: #FFF1F1; color: var(--red-palace); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-left: 4px; }
+.delta { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-top: 4px; display: inline-block; white-space: nowrap; }
+.delta-up { color: #10B981; background: #E8F8F0; }
+.delta-down { color: var(--red-palace); background: #FFF1F1; }
+.delta-same { color: #7F8C8D; background: #F3F4F6; }
+.delta-new { color: #3730A3; background: #EEF2FF; }
+
+.empty-state, .immortal-empty { padding: 4rem 2rem; text-align: center; color: #7F8C8D; font-size: 14px; font-weight: 500; }
+.empty-icon { font-size: 40px; margin-bottom: 10px; opacity: 0.7; }
+.source-badge { font-size: 10.5px; font-weight: 700; padding: 2px 6px; border-radius: 4px; display: inline-block; }
+.source-worker { background: #FFF9E6; color: #B7791F; border: 1px solid rgba(217, 179, 108, 0.2); }
+.source-admin { background: #F3F4F6; color: #4B5563; }
+.lb-summary { display: flex; gap: 14px; margin: 0 1.5rem 1.25rem; }
+.lb-sum-item { flex: 1; background: #FAF9F5; border: 1px solid rgba(217,179,108,0.12); border-radius: var(--r-sm); padding: 14px; display: flex; flex-direction: column; align-items: center; }
+.lb-sum-num { font-size: 18px; font-weight: 700; color: var(--navy-deep); font-family: 'Noto Serif TC', serif; }
+.lb-sum-lbl { font-size: 11px; color: #7F8C8D; margin-top: 4px; font-weight: 500; }
+.w-lb-self { display: flex; align-items: center; gap: 10px; padding: 12px 20px; margin: 0 1.5rem 1rem; border-radius: var(--r-sm); font-size: 13.5px; color: var(--navy-deep); }
+
+/* 專屬：資糧條截圖聚焦模式優化 */
+body.slip-focus .sidebar, body.slip-focus .topbar, body.slip-focus .slip-toolbar, body.slip-focus .slip-roster, body.slip-focus .slip-hint, body.slip-focus #fb-status { display: none !important; }
+body.slip-focus .main { background: transparent; min-height: auto; }
+body.slip-focus .content { padding: 0 !important; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #EFECE6; }
+body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transform: scale(1.15); }
+
+/* RWD 斷點專業級微調 */
 @media (max-width: 992px) {
   .sidebar { position: fixed; left: 0; top: 0; bottom: 0; transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
   .menu-toggle { display: flex; }
-  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.2); z-index: 95; }
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(5,24,41,0.4); backdrop-filter: blur(3px); z-index: 95; }
   .sidebar-overlay.open { display: block; }
 }
-
 @media (max-width: 768px) {
   .worker-login.immortal-entry { grid-template-columns: 1fr; }
-  .immortal-visual { padding: 1.5rem; min-height: 180px; }
+  .immortal-visual { padding: 2rem; min-height: 200px; }
   .immortal-orbit, .immortal-core { top: 50%; }
   .worker-submit-layout { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   #page-slips .slip-layout{ grid-template-columns:1fr; }
-  #page-slips .slip-roster{ max-height:200px; }
+  #page-slips .slip-roster{ max-height:220px; }
 }
-
 @media (max-width: 640px) {
-  .content { padding: 1rem !important; }
-  .card-head { padding: 1rem !important; }
-  .card-body { padding: 1rem !important; }
-  
-  .stat-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-  .stat-card { padding: 1rem !important; border-radius: var(--r-sm) !important; flex-direction: column !important; align-items: flex-start !important; gap: 6px; }
-  .stat-icon { width: 32px !important; height: 32px !important; font-size: 15px !important; }
-  .stat-value { font-size: 18px !important; }
-  .stat-label { font-size: 10px !important; }
-
-  #w-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
-  #w-stats .w-stat { padding: 1rem !important; }
-  #w-stats .w-stat-value { font-size: 18px !important; }
-
-  .cult-hero { padding: 1.25rem 1rem !important; }
-  .cult-avatar { width: 44px !important; height: 44px !important; font-size: 18px !important; }
-  .cult-name { font-size: 18px !important; }
-  .cult-coin-num { font-size: 28px !important; }
-
-  .champion { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 8px !important; margin: 0.5rem 0 !important; }
+  .content { padding: 1.25rem !important; }
+  .card-head { padding: 1.25rem !important; }
+  .card-body { padding: 1.25rem !important; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+  .stat-card { padding: 1.25rem !important; border-radius: var(--r-sm) !important; flex-direction: column !important; align-items: flex-start !important; gap: 8px; }
+  .stat-icon { width: 36px !important; height: 36px !important; font-size: 16px !important; }
+  .stat-value { font-size: 20px !important; }
+  #w-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  #w-stats .w-stat { padding: 1.25rem !important; }
+  .champion { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 10px !important; margin: 0.75rem 0 !important; padding: 1.25rem !important; }
   .champion-info { display: flex !important; flex-direction: column !important; align-items: center !important; }
-  .champion-name { font-size: 16px !important; }
-  .champion-score { font-size: 18px !important; }
-
-  .lb-summary { gap: 6px !important; margin: 0.5rem 0 !important; }
-  .lb-sum-item { padding: 8px !important; border-radius: var(--r-sm) !important; }
-  .lb-sum-num { font-size: 13.5px !important; }
-  .lb-sum-lbl { font-size: 9px !important; }
-
-  .race-wrap { padding: 0.5rem 0 !important; background: transparent; }
-  .race-row { padding: 10px !important; border-radius: var(--r-sm) !important; }
-  .rank-medal { width: 24px !important; height: 24px !important; font-size: 11px !important; }
-  .race-name { font-size: 13px !important; }
-  .race-score { font-size: 13px !important; }
+  .lb-summary { gap: 8px !important; margin: 0.5rem 0 !important; }
+  .lb-sum-item { padding: 10px !important; }
+  .lb-sum-num { font-size: 15px !important; }
 }
 </style>
 </head>
@@ -352,11 +416,11 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar(false)"></div>
 
 <div class="app">
-  <!-- -->
+  <!-- 側邊法陣導覽軌 -->
   <div class="sidebar" id="app-sidebar">
     <div class="logo-block">
       <div class="logo-icon">
-        <svg viewBox="0 0 100 100" style="width: 32px; height: 32px;">
+        <svg viewBox="0 0 100 100" style="width: 34px; height: 34px;">
           <path d="M 10,75 C 22,68 35,82 48,74 C 60,66 72,82 85,74 C 92,70 95,78 95,78 C 95,86 5,86 5,78 Z" fill="#D9B36C" opacity="0.85"/>
           <path d="M 20,68 Q 50,80 80,68 Q 90,56 75,56 Q 60,56 55,40 L 58,22 L 52,22 L 48,40 L 32,56 Z" fill="#D9B36C"/>
           <path d="M 38,62 Q 22,46 12,52 Q 22,60 38,62" fill="#D9B36C"/>
@@ -369,6 +433,7 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
       </div>
     </div>
 
+    <!-- 管理者後台選單 -->
     <div class="nav-group" id="admin-nav" style="display:none">
       <div class="nav-group-label">管理者後台</div>
       <div class="nav-item" onclick="showPage('dashboard')"><div class="nav-dot"></div>系統總覽</div>
@@ -381,6 +446,7 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
       <div class="nav-item" onclick="showPage('leaderboard')"><div class="nav-dot"></div>業績排行榜</div>
     </div>
 
+    <!-- 求仙同道選單 -->
     <div class="nav-group" id="worker-nav">
       <div class="nav-group-label">求仙同道專區</div>
       <div class="nav-item active" onclick="showWorkerPage('w-home')"><div class="nav-dot"></div>洞府修為</div>
@@ -389,6 +455,7 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
       <div class="nav-item" onclick="showWorkerPage('w-leaderboard')"><div class="nav-dot"></div>天榜風雲</div>
     </div>
 
+    <!-- 身份切換鈕 -->
     <div class="role-switcher">
       <label>切換修仙身分</label>
       <div class="role-pills">
@@ -398,7 +465,7 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
     </div>
   </div>
 
-  <!-- -->
+  <!-- 右側主舞台 -->
   <div class="main">
     <div class="topbar">
       <div class="topbar-left" style="display: flex; align-items: center; gap: 8px;">
@@ -410,27 +477,27 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
 
     <div class="content">
 
-      <!-- -->
+      <!-- 管理者密碼驗證頁 -->
       <div class="page" id="page-admin-login">
-        <div class="worker-login immortal-panel" style="max-width: 440px; margin: 3rem auto; padding: 2rem; text-align: center; box-shadow: var(--shadow-premium);">
-          <div style="font-size: 40px; margin-bottom: 0.75rem;">🔐</div>
-          <div class="modal-title" style="font-size: 18px; justify-content: center; margin-bottom: 0.5rem; width: 100%;">管理者登入</div>
-          <p style="font-size: 13px; color: #7F8C8D; margin-bottom: 1.5rem; line-height: 1.5;">請輸入密碼以驗證仙司管理權限。</p>
-          <div style="display: flex; gap: 8px; flex-direction: column;">
-            <input id="admin-password-input" type="password" placeholder="請輸入密碼" onkeydown="if(event.key==='Enter')adminLogin()" style="padding: 11px 14px; font-size: 14px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); outline: none; text-align: center;">
-            <button class="btn btn-primary" onclick="adminLogin()" style="padding: 11px;">解鎖權限</button>
+        <div class="worker-login immortal-panel" style="max-width: 440px; margin: 3rem auto; padding: 2.5rem; text-align: center; box-shadow: var(--shadow-premium); border-radius: var(--r-lg); border: 1px solid var(--border-solid);">
+          <div style="font-size: 44px; margin-bottom: 0.75rem;">🔐</div>
+          <div class="modal-title" style="font-size: 19px; justify-content: center; margin-bottom: 0.5rem; width: 100%;">管理者登入</div>
+          <p style="font-size: 13.5px; color: #7F8C8D; margin-bottom: 1.75rem; line-height: 1.5;">請輸入密碼以驗證仙司管理權限。</p>
+          <div style="display: flex; gap: 12px; flex-direction: column;">
+            <input id="admin-password-input" type="password" placeholder="請輸入密碼" onkeydown="if(event.key==='Enter')adminLogin()" style="padding: 12px; font-size: 14.5px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); outline: none; text-align: center;">
+            <button class="btn btn-primary" onclick="adminLogin()" style="padding: 12px; font-size: 14.5px;">解鎖權限</button>
           </div>
-          <div id="admin-login-err" style="font-size:12.5px; color:var(--red-palace); display:none; margin-top:10px; font-weight: 500;">⚠️ 密碼錯誤，請重新輸入！</div>
+          <div id="admin-login-err" style="font-size:13px; color:var(--red-palace); display:none; margin-top:12px; font-weight: 700;">⚠️ 密碼錯誤，請重新輸入！</div>
         </div>
       </div>
 
-      <!-- -->
+      <!-- 系統總覽分頁 -->
       <div class="page" id="page-dashboard">
         <div class="stat-grid" id="dash-stats"></div>
         <div class="card">
           <div class="card-head">
             <span class="card-head-title">📋 近期交付驗收清冊</span>
-            <div style="display:flex; gap:6px;">
+            <div style="display:flex; gap:8px;">
               <button class="btn btn-sm" onclick="seedDemoData()">🌱 載入範例資料</button>
               <button class="btn btn-sm" onclick="showPage('records')">查看全部</button>
             </div>
@@ -446,7 +513,7 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
         </div>
       </div>
 
-      <!-- -->
+      <!-- 同道管理分頁 -->
       <div class="page" id="page-workers">
         <div class="table-filter-bar">
           <div class="search-wrapper">
@@ -467,7 +534,7 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
         </div>
       </div>
 
-      <!-- -->
+      <!-- 品項設定分頁 -->
       <div class="page" id="page-items">
         <div class="table-filter-bar">
           <div class="search-wrapper">
@@ -488,7 +555,7 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
         </div>
       </div>
 
-      <!-- -->
+      <!-- 交付管理分頁 -->
       <div class="page" id="page-records">
         <div class="table-filter-bar">
           <div class="search-wrapper">
@@ -509,13 +576,13 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
         </div>
       </div>
 
-      <!-- -->
+      <!-- 資糧結算分頁 -->
       <div class="page" id="page-settlement">
         <div class="card">
           <div class="card-head">
             <span class="card-head-title">💰 本期修行資糧結算（<span id="week-range" style="color: var(--red-palace);"></span>）</span>
             <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 4px;">
-              <input type="month" id="settlement-month-picker" value="2026-06" onchange="generateSettlement()" style="padding: 5px 10px; font-size: 13px; border: 1px solid var(--border-solid); border-radius: 6px; outline: none;">
+              <input type="month" id="settlement-month-picker" value="2026-06" onchange="generateSettlement()" style="padding: 6px 12px; font-size: 13.5px; border: 1px solid var(--border-solid); border-radius: 6px; outline: none;">
               <button class="btn btn-sm btn-primary" onclick="generateSettlement()">計算</button>
               <button class="btn btn-sm btn-primary" onclick="exportSettlementCSV()" style="background: #10B981;">📥 匯出薪資 Excel</button>
               <button class="btn btn-sm" onclick="openBackupModal()">💾 備份</button>
@@ -532,7 +599,7 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
         </div>
       </div>
 
-      <!-- -->
+      <!-- 資糧條核發分頁 -->
       <div class="page" id="page-slips">
         <div class="slip-toolbar">
           <div class="slip-controls">
@@ -575,7 +642,7 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
                 </div>
                 <div class="slip__foot">
                   <span class="status" id="slip-s-status">狀態：待領取</span>
-                  <span>永祿坊法制處・核發</span>
+                  <span>永祿坊功德司・核發</span>
                 </div>
               </div>
               <div class="seal" aria-hidden="true">
@@ -585,10 +652,10 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
             </article>
           </div>
         </div>
-        <p class="slip-hint" style="font-size:12px; color:#7F8C8D; text-align:center; margin-top:12px; line-height:1.6;">境界與金額皆自動帶入該月結算結果（金額為「實發總額」）。</p>
+        <p class="slip-hint" style="font-size:12.5px; color:#7F8C8D; text-align:center; margin-top:16px; line-height:1.6;">境界與金額皆自動帶入該月結算結果（金額為「實發總額」）。</p>
       </div>
 
-      <!-- -->
+      <!-- 後台業績排行榜 -->
       <div class="page" id="page-leaderboard">
         <div class="card">
           <div class="card-head">
@@ -608,58 +675,58 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
           <div id="lb-champion"></div>
           <div id="lb-summary"></div>
           <div class="race-wrap" id="lb-race"></div>
-          <div id="lb-note" class="lb-note" style="font-size:12px; color:#7F8C8D; padding:12px 1.5rem;"></div>
+          <div id="lb-note" class="lb-note" style="font-size:12.5px; color:#7F8C8D; padding:12px 1.5rem;"></div>
         </div>
       </div>
 
-      <!-- -->
+      <!-- 同道個人登入首頁 -->
       <div class="page active" id="page-w-login">
         <div class="worker-login immortal-entry">
           <div class="immortal-visual immortal-panel">
             <div class="immortal-brand">永祿尋仙錄<small>PORTAL FOR TAO-SEEKERS</small></div>
             <div class="immortal-orbit"></div>
             <div class="immortal-core"><span class="immortal-core-glow">⚗️</span></div>
-            <div class="immortal-visual-caption" style="color: #FFFFFF !important; font-size:12.5px; opacity:0.85; line-height:1.6;">報上名號，即可破開法陣結界、申報修行工單、查看功德與同道天榜。</div>
+            <div class="immortal-visual-caption" style="color: #FFFFFF !important; font-size:13px; opacity:0.85; line-height:1.6;">報上名號，即可破開法陣結界、申報修行工單、查看功德與同道天榜。</div>
           </div>
           <div class="immortal-form immortal-panel">
             <div id="w-login-box">
               <div class="immortal-title">⛩️ 登入求仙個人中心</div>
-              <div class="worker-login-title" style="font-size: 20px; font-weight: 700; color: var(--navy-deep); margin: 12px 0 6px;">契合靈樞，探查洞府</div>
-              <p style="font-size: 13px; color: #7F8C8D; margin-bottom: 20px; line-height: 1.6;">本介面專為求仙同道申報工件、自查功德資糧所設。</p>
-              <div class="search-wrapper" style="max-width:100%; margin-bottom: 12px;">
-                <input id="w-name-input" placeholder="請輸入真實姓名 / 道號" onkeydown="if(event.key==='Enter')workerLogin()" style="padding: 11px; font-size:14.5px; border: 1px solid var(--border-solid); border-radius: 8px; width: 100%;">
+              <div class="worker-login-title" style="font-size: 22px; font-weight: 700; color: var(--navy-deep); margin: 16px 0 8px; font-family: 'Noto Serif TC', serif;">契合靈樞，探查洞府</div>
+              <p style="font-size: 13.5px; color: #7F8C8D; margin-bottom: 24px; line-height: 1.6;">本介面專為求仙同道申報工件、自查功德資糧所設。</p>
+              <div class="search-wrapper" style="max-width:100%; margin-bottom: 16px;">
+                <input id="w-name-input" placeholder="請輸入真實姓名 / 道號" onkeydown="if(event.key==='Enter')workerLogin()" style="padding: 12px; font-size:15px; border: 1px solid var(--border-solid); border-radius: 8px; width: 100%;">
               </div>
               <button class="btn-immortal" style="width: 100%;" onclick="workerLogin()">登入洞府</button>
-              <div id="w-login-err" style="font-size:13px; color:var(--red-palace); display:none; margin-top:10px; font-weight: 500;">⚠️ 查無此同道名號，請重新輸入！</div>
-              <div style="text-align: center; margin-top: 18px; font-size: 13px; border-top: 1px dashed var(--border-solid); padding-top: 14px;">
+              <div id="w-login-err" style="font-size:13px; color:var(--red-palace); display:none; margin-top:12px; font-weight: 700;">⚠️ 查無此同道名號，請重新輸入！</div>
+              <div style="text-align: center; margin-top: 20px; font-size: 13.5px; border-top: 1px dashed var(--border-solid); padding-top: 16px;">
                 <span style="color:#7F8C8D;">尚未登記名冊？</span><br>
-                <a href="#" onclick="toggleWorkerReg(true); return false;" style="color: var(--navy-deep); font-weight: 700; text-decoration: underline; display: inline-block; margin-top: 4px;">🆕 點此自主登記入冊 (註冊)</a>
+                <a href="#" onclick="toggleWorkerReg(true); return false;" style="color: var(--navy-deep); font-weight: 700; text-decoration: underline; display: inline-block; margin-top: 6px;">🆕 點此自主登記入冊 (註冊)</a>
               </div>
             </div>
 
             <div id="w-reg-box" style="display: none;">
               <div class="immortal-title">⛩️ 自主登記入冊</div>
-              <div class="worker-login-title" style="font-size: 20px; font-weight: 700; color: var(--navy-deep); margin: 12px 0 6px;">締結契合，共修仙道</div>
-              <p style="font-size: 13px; color: #7F8C8D; margin-bottom: 15px; line-height: 1.5;">自主登記後即可開始進行報件、自查功德資糧。</p>
+              <div class="worker-login-title" style="font-size: 22px; font-weight: 700; color: var(--navy-deep); margin: 16px 0 8px; font-family: 'Noto Serif TC', serif;">締結契合，共修仙道</div>
+              <p style="font-size: 13.5px; color: #7F8C8D; margin-bottom: 20px; line-height: 1.5;">自主登記後即可開始進行報件、自查功德資糧。</p>
               
-              <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px;">
+              <div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 18px;">
                 <div class="form-group">
-                  <label style="font-size: 12px; font-weight: 700; color: var(--navy-deep);">真實姓名 <span style="color:var(--red-palace)">*</span></label>
-                  <input id="w-reg-name" placeholder="例如：阿美" style="padding: 10px; font-size: 14px; border: 1px solid var(--border-solid); border-radius: 8px;">
+                  <label>真實姓名 <span style="color:var(--red-palace)">*</span></label>
+                  <input id="w-reg-name" placeholder="例如：阿美">
                 </div>
                 <div class="form-group">
-                  <label style="font-size: 12px; font-weight: 700; color: var(--navy-deep);">排行榜道號 / 暱稱 <span style="font-weight:400; color:#7F8C8D;">(留空則同姓名)</span></label>
-                  <input id="w-reg-nick" placeholder="例如：阿美仙尊" style="padding: 10px; font-size: 14px; border: 1px solid var(--border-solid); border-radius: 8px;">
+                  <label>排行榜道號 / 暱稱 <span style="font-weight:400; color:#7F8C8D;">(留空則同姓名)</span></label>
+                  <input id="w-reg-nick" placeholder="例如：阿美仙尊">
                 </div>
                 <div class="form-group">
-                  <label style="font-size: 12px; font-weight: 700; color: var(--navy-deep);">修為備註 / 專長 <span style="font-weight:400; color:#7F8C8D;">(選填)</span></label>
-                  <input id="w-reg-note" placeholder="例如：精細折紙、擅長蓮花製作" style="padding: 10px; font-size: 14px; border: 1px solid var(--border-solid); border-radius: 8px;">
+                  <label>修為備註 / 專長 <span style="font-weight:400; color:#7F8C8D;">(選填)</span></label>
+                  <input id="w-reg-note" placeholder="例如：精細折紙、擅長蓮花製作">
                 </div>
               </div>
 
               <button class="btn-immortal" style="width: 100%;" onclick="workerRegister()">締結入冊 ⚡</button>
               
-              <div style="text-align: center; margin-top: 12px; font-size: 13px; border-top: 1px dashed var(--border-solid); padding-top: 10px;">
+              <div style="text-align: center; margin-top: 16px; font-size: 13.5px; border-top: 1px dashed var(--border-solid); padding-top: 12px;">
                 <a href="#" onclick="toggleWorkerReg(false); return false;" style="color: var(--navy-deep); font-weight: 700;">← 返回登入介面</a>
               </div>
             </div>
@@ -667,18 +734,18 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
         </div>
       </div>
 
-      <!-- -->
+      <!-- 同道洞府首頁 -->
       <div class="page" id="page-w-home">
         <div class="w-back" onclick="workerLogout()">← 重返登入頁</div>
         <div id="w-hero-box"></div>
         <div class="w-stat-grid" id="w-stats"></div>
-        <div class="card" style="margin-top: 1rem;">
-          <div class="card-head"><span class="card-head-title">⚙️ 待點化驗收的法製品（掌櫃核實中）</span></div>
+        <div class="card" style="margin-top: 1.5rem;">
+          <div class="card-head"><span class="card-head-title">⚙️ 待點化驗收的法製品（大掌櫃核實中）</span></div>
           <div class="card-body" id="w-pending" style="padding: 0;"></div>
         </div>
       </div>
 
-      <!-- -->
+      <!-- 修行紀錄明細分頁 -->
       <div class="page" id="page-w-records">
         <div class="w-back" onclick="workerLogout()">← 重返登入頁</div>
         <div class="card">
@@ -694,34 +761,34 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
         </div>
       </div>
 
-      <!-- -->
+      <!-- 靈工自主申報台分頁 -->
       <div class="page" id="page-w-submit">
         <div class="w-back" onclick="workerLogout()">← 重返登入頁</div>
         <div class="card">
           <div class="card-head"><span class="card-head-title">⚗️ 靈工自主申報台</span></div>
-          <div class="card-body" style="padding: 1rem;">
+          <div class="card-body" style="padding: 1.5rem;">
             <div class="worker-submit-layout">
               <div class="submit-scene">
                 <div>
                   <div class="badge badge-ok" style="background: rgba(255,255,255,0.12); color: #FFF; border: none;">工件自報通道</div>
-                  <div class="submit-scene-title" style="margin-top: 12px;">自主申報 · 減輕核驗</div>
-                  <p style="font-size: 12.5px; opacity: 0.85; line-height: 1.6; color: #FFFFFF !important;">求仙同道可以搶先在此處登記本次完工、交回的工件大概數量。送出後，管理者核對無誤一鍵驗收！</p>
+                  <div class="submit-scene-title" style="margin-top: 14px;">自主申報 · 減輕核驗</div>
+                  <p style="font-size: 13px; opacity: 0.9; line-height: 1.6; color: #FFFFFF !important;">求仙同道可以搶先在此處登記本次完工、交回的工件大概數量。送出後，掌櫃核對無誤一鍵驗收！</p>
                 </div>
-                <div style="display: flex; gap: 8px; margin-top: 1rem;">
+                <div style="display: flex; gap: 10px; margin-top: 1.5rem;">
                   <div class="submit-mini"><b id="w-submit-pending-count">0</b><span>審核中工單</span></div>
-                  <div class="submit-mini"><b id="w-submit-recent-count">0</b><span>近日上報次</span></div>
+                  <div class="submit-mini"><b id="w-submit-recent-count">0</b><span>近日上報次數</span></div>
                 </div>
               </div>
-              <div class="submit-form-panel" style="background: #FFFDF9; padding: 1.25rem; border-radius: var(--r-md); border: 1px solid var(--border-solid);">
+              <div class="submit-form-panel" style="background: #FFFDF9; padding: 1.5rem; border-radius: var(--r-md); border: 1px solid var(--border-solid);">
                 <div class="form-row">
                   <div class="form-group"><label>上報日期</label><input id="ws-date" type="date"></div>
-                  <div class="form-group"><label>申報品項</label><select id="ws-item" onchange="calcWorkerSubmitPreview()" style="font-size:13.5px; padding: 9px 12px;"></select></div>
+                  <div class="form-group"><label>申報品項</label><select id="ws-item" onchange="calcWorkerSubmitPreview()" style="font-size:13.5px; padding: 10px 12px;"></select></div>
                 </div>
-                <div class="form-row" style="margin-top:10px;">
+                <div class="form-row" style="margin-top:12px;">
                   <div class="form-group"><label>自填交回數量</label><input id="ws-qty" type="number" min="0" placeholder="例如: 300" oninput="calcWorkerSubmitPreview()"></div>
                   <div class="form-group"><label>備註說明 (選填)</label><input id="ws-note" placeholder="例如：共裝2箱"></div>
                 </div>
-                <div class="preview-box submit-preview-box" style="margin-top: 12px;">
+                <div class="preview-box submit-preview-box" style="margin-top: 14px;">
                   <span style="font-weight: 500; color: #7A654A;" id="ws-preview">請輸入數量以獲得預估金額</span>
                 </div>
                 <div style="display: flex; justify-content: flex-end;">
@@ -732,7 +799,7 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
           </div>
         </div>
 
-        <div class="card" style="margin-top: 1rem;">
+        <div class="card" style="margin-top: 1.5rem;">
           <div class="card-head"><span class="card-head-title">⏳ 我的近日自主申報歷史</span></div>
           <div class="table-responsive">
             <table>
@@ -745,22 +812,22 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
         </div>
       </div>
 
-      <!-- -->
+      <!-- 同道窺天榜風雲碑分頁 -->
       <div class="page" id="page-w-leaderboard">
-        <div id="w-lb-lock-panel" class="worker-login immortal-panel" style="max-width: 440px; margin: 3rem auto; padding: 2rem; text-align: center; box-shadow: var(--shadow-premium);">
-          <div style="font-size: 40px; margin-bottom: 0.75rem;">🔮</div>
-          <div class="modal-title" style="font-size: 18px; justify-content: center; margin-bottom: 0.5rem; width: 100%; color: var(--navy-deep);">🔮 窺天玄境法陣</div>
-          <p style="font-size: 13.5px; color: #2C3E50; margin-bottom: 1rem; line-height: 1.6;">
+        <div id="w-lb-lock-panel" class="worker-login immortal-panel" style="max-width: 440px; margin: 3rem auto; padding: 2.5rem; text-align: center; box-shadow: var(--shadow-premium); border-radius: var(--r-lg); border: 1px solid var(--border-solid);">
+          <div style="font-size: 44px; margin-bottom: 0.75rem;">🔮</div>
+          <div class="modal-title" style="font-size: 19px; justify-content: center; margin-bottom: 0.5rem; width: 100%; color: var(--navy-deep);">🔮 窺天玄境法陣</div>
+          <p style="font-size: 13.5px; color: #2C3E50; margin-bottom: 1.25rem; line-height: 1.6;">
             天榜乃修行機緣所在，設有護山幻陣。<br>請輸入<b>兩字接引密語</b>以破開法陣。
           </p>
-          <div style="background: #FAF8F5; border: 1px dashed var(--border-solid); padding: 10px 12px; border-radius: var(--r-sm); margin-bottom: 1.25rem; font-size: 12px; text-align: left; line-height: 1.5; color: #7A654A;">
+          <div style="background: #FAF8F5; border: 1px dashed var(--border-solid); padding: 12px; border-radius: var(--r-sm); margin-bottom: 1.5rem; font-size: 12.5px; text-align: left; line-height: 1.5; color: #7A654A;">
             「凡人求真，向天一問；修仙之路，始於足下。」<br>提示：探求天地奧秘、追尋真理的方向。
           </div>
-          <div style="display: flex; gap: 8px; flex-direction: column;">
-            <input id="w-whisper-input" type="text" placeholder="請輸入兩字解陣密語 (例: 問道)" onkeydown="if(event.key==='Enter')verifyWhisper()" style="padding: 11px 14px; font-size: 14.5px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); outline: none; text-align: center;">
+          <div style="display: flex; gap: 12px; flex-direction: column;">
+            <input id="w-whisper-input" type="text" placeholder="請輸入兩字解陣密語 (例: 問道)" onkeydown="if(event.key==='Enter')verifyWhisper()" style="padding: 12px; font-size: 14.5px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); outline: none; text-align: center;">
             <button class="btn btn-primary btn-immortal" onclick="verifyWhisper()">破陣窺天 ⚡</button>
           </div>
-          <div id="w-whisper-err" style="font-size:12.5px; color:var(--red-palace); display:none; margin-top:10px; font-weight: 500;">⚠️ 密語未能契合陣樞，幻陣未破！</div>
+          <div id="w-whisper-err" style="font-size:13px; color:var(--red-palace); display:none; margin-top:12px; font-weight: 700;">⚠️ 密語未能契合陣樞，幻陣未破！</div>
         </div>
 
         <div id="w-lb-content" style="display: none;">
@@ -780,9 +847,9 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
               <button class="metric-tab" onclick="switchWLbTab('coin',this)">🪙 靈幣功德榜</button>
             </div>
             <div id="w-lb-champion"></div>
-            <div id="w-lb-self" class="w-lb-self" style="border: 1px solid rgba(217, 179, 108, 0.2) !important; background: var(--gold-light);"></div>
+            <div id="w-lb-self" class="w-lb-self" style="border: 1px solid rgba(217, 179, 108, 0.25) !important; background: var(--gold-light);"></div>
             <div class="race-wrap" id="w-lb-race"></div>
-            <div id="w-lb-note" style="font-size:12px; color:#7F8C8D; padding:12px 1.5rem;"></div>
+            <div id="w-lb-note" style="font-size:12.5px; color:#7F8C8D; padding:12px 1.5rem;"></div>
           </div>
         </div>
       </div>
@@ -791,7 +858,6 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
   </div>
 </div>
 
-<!-- -->
 <!-- 對話框：新增/修改求仙同道 -->
 <div class="modal-bg" id="worker-modal">
   <div class="modal">
@@ -807,9 +873,10 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
       <div class="form-row" style="margin-top:10px;">
         <div class="form-group"><label>身分級別</label>
           <select id="wf-role">
-            <option value="contractor">一般代工</option>
-            <option value="employee">正職員工</option>
-            <option value="owner">坊主</option>
+            <option value="master">🔮 坊主尊者 (坊主本人)</option>
+            <option value="contractor">外門緣修 (靈工散修)</option>
+            <option value="employee">內門執事 (正職員工)</option>
+            <option value="owner">閣主仙東 (大掌櫃股東)</option>
           </select>
         </div>
         <div class="form-group"><label>帳號狀態</label>
@@ -971,7 +1038,7 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
       <button class="modal-close" onclick="closeConfirm()">✕</button>
     </div>
     <div class="card-body">
-      <div id="confirm-msg" style="font-size: 13.5px; color: var(--ink); line-height: 1.6; margin-bottom: 12px;"></div>
+      <div id="confirm-msg" style="font-size: 14px; color: var(--ink); line-height: 1.6; margin-bottom: 12px;"></div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-sm" onclick="closeConfirm()">取消</button>
@@ -983,14 +1050,13 @@ tr:hover td{background: rgba(217, 179, 108, 0.03)}
 <div class="toast-el" id="toast"></div>
 
 <!-- ============================================================
-     Firebase 雲端核心（保持原本同步與永久備份機制不變）
+     Firebase 雲端核心
      ============================================================ -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 
 <script>
-/* */
 const firebaseConfig = {
   apiKey: "AIzaSyCxXtkyg24yEO5oACvg0YOfAX1rwnu8NDU",
   authDomain: "yonglufang13149.firebaseapp.com",
@@ -1055,9 +1121,10 @@ const MEDAL_FG=['#0C2E4E','#3A3D40','#4F341A','#0C2E4E','#0C2E4E'];
 
 function roleBadge(r){
   const m = {
-    owner: '<span class="badge badge-owner">👑 坊主</span>',
-    employee: '<span class="badge badge-employee">💼 正職</span>',
-    contractor: '<span class="badge badge-contractor">🔨 代工</span>'
+    master: '<span class="badge badge-master">🔮 坊主尊者</span>',
+    owner: '<span class="badge badge-owner">👑 閣主仙東</span>',
+    employee: '<span class="badge badge-employee">⚔️ 內門執事</span>',
+    contractor: '<span class="badge badge-contractor">⚗️ 靈工散修</span>'
   };
   return m[r] || m['contractor'];
 }
@@ -1097,8 +1164,19 @@ function startBoatAnim(count, prefix){
 const QUALITY_MIN = 20;
 const COIN_RATE = 1;
 
+function gw(id){ 
+  if (id === null || id === undefined) return undefined;
+  return db.workers.find(w => String(w.id) === String(id)); 
+}
+function gi(id){ 
+  if (id === null || id === undefined) return undefined;
+  return db.items.find(i => String(i.id) === String(id)); 
+}
+function gwn(id){ const w = gw(id); return w ? w.name : '—'; }
+function gin(id){ const i = gi(id); return i ? i.name : '—'; }
+
 function cumulativeEarned(wid){
-  return db.records.filter(r => r.workerId === wid && r.status === 'verified').reduce((a, r) => a + r.amount, 0);
+  return db.records.filter(r => String(r.workerId) === String(wid) && r.status === 'verified').reduce((a, r) => a + r.amount, 0);
 }
 function coinsOf(amount){ return Math.floor((amount || 0) / COIN_RATE); }
 
@@ -1161,7 +1239,6 @@ function periodBounds(period){
   return {s, e, ps, pe, label: fmtRange(s, e)};
 }
 
-/* */
 function computeStandings(recs, metric){
   const agg = {};
   recs.forEach(r => {
@@ -1169,13 +1246,13 @@ function computeStandings(recs, metric){
     a.earn += r.amount; a.pass += r.pass; a.total += r.total;
   });
   let rows = Object.entries(agg).map(([wid, a]) => {
-    const w = gw(+wid);
+    const w = gw(wid);
     const passRate = a.total ? a.pass / a.total : 0;
     let score;
     if(metric === 'quality') score = passRate * 100;
     else if(metric === 'combined') score = Math.round(a.earn * (0.5 + 0.5 * passRate));
     else score = a.earn;
-    return { workerId: +wid, nick: w ? (w.nick || w.name) : '無名同道', score, earn: a.earn, passRate, total: a.total, pass: a.pass };
+    return { workerId: wid, nick: w ? (w.nick || w.name) : '無名同道', score, earn: a.earn, passRate, total: a.total, pass: a.pass };
   });
   if(metric === 'quality') rows = rows.filter(r => r.total >= QUALITY_MIN);
   rows.sort((a, b) => b.score - a.score || b.earn - a.earn);
@@ -1227,7 +1304,6 @@ function renderLbSummary(id, recs){
   </div>`;
 }
 
-/* */
 function renderRaceRanked(containerId, rows, metric, prevRank, selfId, emptyMsg, opts){
   opts = opts || {};
   const showDelta = opts.showDelta !== false && !!prevRank;
@@ -1241,7 +1317,7 @@ function renderRaceRanked(containerId, rows, metric, prevRank, selfId, emptyMsg,
   const bp = containerId + '-boat-';
   el.innerHTML = rows.map((r, i) => {
     const pct = Math.max(15, Math.min(95, Math.round(r.score / max * 85)));
-    const isSelf = selfId && r.workerId === selfId;
+    const isSelf = selfId && String(r.workerId) === String(selfId);
     const coin = showCoins ? `<span class="coin-chip">🪙 ${coinsOf(r.earn)}</span>` : '';
     return `<div class="race-row${isSelf ? ' race-self' : ''}">
       <div class="race-header-wrapper">
@@ -1309,7 +1385,6 @@ function renderLeaderboard(){
   else note.innerHTML = `＊ 產值榜：本期合格實收金額，反映本期貢獻與名次升降。`;
 }
 
-/* */
 let currentWLbTab='earn';
 let currentWLbPeriod='this';
 function switchWLbTab(t, btn){
@@ -1344,7 +1419,7 @@ function renderWorkerLeaderboard(){
   renderChampion('w-lb-champion', rows, currentWLbTab, label);
 
   const self = document.getElementById('w-lb-self');
-  const myIdx = rows.findIndex(r => r.workerId === currentWorkerId);
+  const myIdx = rows.findIndex(r => String(r.workerId) === String(currentWorkerId));
   if(self){
     if(myIdx >= 0){
       const me = rows[myIdx];
@@ -1413,7 +1488,6 @@ function showAdminLogin(){
   setTimeout(() => { const input = document.getElementById('admin-password-input'); if(input) input.focus(); }, 50);
 }
 
-/* */
 function adminLogin(){
   const input = document.getElementById('admin-password-input');
   const pw = (input?.value || '').trim();
@@ -1453,11 +1527,6 @@ function toast(msg){
   if(t) { t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2200); }
 }
 
-function gw(id){ return db.workers.find(w => w.id === id); }
-function gi(id){ return db.items.find(i => i.id === id); }
-function gwn(id){ const w = gw(id); return w ? w.name : '—'; }
-function gin(id){ const i = gi(id); return i ? i.name : '—'; }
-
 function statusBadge(s){
   const m = {
     verified: '<span class="badge badge-ok">✓ 已驗收</span>',
@@ -1492,7 +1561,6 @@ function openModal(id){
 
 function closeModal(id){ const el = document.getElementById(id); if(el) el.classList.remove('open'); }
 
-/* */
 function calcPreview(){
   const iid = +document.getElementById('rf-item').value;
   const pass = +document.getElementById('rf-pass').value || 0;
@@ -1586,7 +1654,6 @@ function saveItem(){
   editingItemId = null;
 }
 
-/* */
 function addRecord(){
   if(!requireAdmin()) return;
   const wid = +document.getElementById('rf-worker').value;
@@ -1614,7 +1681,7 @@ function calcEditPreview(){
 
 function openRecordEdit(id){
   if(!requireAdmin()) return;
-  const r = db.records.find(r => r.id === id); if(!r) return;
+  const r = db.records.find(r => String(r.id) === String(id)); if(!r) return;
   document.getElementById('ef-record-id').value = r.id;
   document.getElementById('ef-worker').innerHTML = db.workers.map(w => `<option value="${w.id}">${w.name}</option>`).join('');
   document.getElementById('ef-item').innerHTML = db.items.map(i => `<option value="${i.id}">${i.name} — ${i.unit} $${i.price}</option>`).join('');
@@ -1634,7 +1701,7 @@ function openRecordEdit(id){
 function saveRecordEdit(){
   if(!requireAdmin()) return;
   const id = +document.getElementById('ef-record-id').value;
-  const r = db.records.find(r => r.id === id); if(!r) return;
+  const r = db.records.find(r => String(r.id) === String(id)); if(!r) return;
   const wid = +document.getElementById('ef-worker').value;
   const iid = +document.getElementById('ef-item').value;
   const total = +document.getElementById('ef-total').value || 0;
@@ -1655,10 +1722,9 @@ function saveRecordEdit(){
   closeModal('record-edit-modal');
 }
 
-/* */
 function openSettlementEdit(wid, month){
   if(!requireAdmin()) return;
-  const s = db.settlements.find(item => item.workerId === wid && item.month === month);
+  const s = db.settlements.find(item => String(item.workerId) === String(wid) && item.month === month);
   if(!s) return toast('⚠️ 找不到該同道本月的結算，請先重新計算！');
   document.getElementById('sef-wid').value = wid;
   document.getElementById('sef-month').value = month;
@@ -1681,7 +1747,7 @@ function calcSettlementEditTotal(){
 function saveSettlementAdjustment(){
   const wid = +document.getElementById('sef-wid').value;
   const month = document.getElementById('sef-month').value;
-  const s = db.settlements.find(item => item.workerId === wid && item.month === month);
+  const s = db.settlements.find(item => String(item.workerId) === String(wid) && item.month === month);
   if(!s) return;
   const bonus = +document.getElementById('sef-bonus').value || 0;
   const deduct = +document.getElementById('sef-deduct').value || 0;
@@ -1690,7 +1756,6 @@ function saveSettlementAdjustment(){
   closeModal('settlement-edit-modal');
 }
 
-/* */
 function openBackupModal(){
   document.getElementById('backup-json-data').value = JSON.stringify(db, null, 2);
   openModal('backup-modal');
@@ -1740,7 +1805,6 @@ async function runImport(imp){
   } catch(e){ console.error(e); toast('❌ 還原失敗'); }
 }
 
-/* */
 function calcWorkerSubmitPreview(){
   const iid = +document.getElementById('ws-item').value;
   const raw = (document.getElementById('ws-qty').value || '').trim();
@@ -1765,10 +1829,10 @@ function renderWorkerSubmitPage(){
   if(dateInput && !dateInput.value) dateInput.value = new Date().toISOString().slice(0, 10);
   calcWorkerSubmitPreview();
 
-  const myReports = db.records.filter(r => r.workerId === currentWorkerId && (r.source === 'worker' || r.selfQty !== null || r.note))
+  const myReports = db.records.filter(r => String(r.workerId) === String(currentWorkerId) && (r.source === 'worker' || r.selfQty !== null || r.note))
                        .slice().sort((a,b) => b.date.localeCompare(a.date)).slice(0, 8);
 
-  document.getElementById('w-submit-pending-count').textContent = db.records.filter(r => r.workerId === currentWorkerId && r.status === 'pending').length;
+  document.getElementById('w-submit-pending-count').textContent = db.records.filter(r => String(r.workerId) === String(currentWorkerId) && r.status === 'pending').length;
   document.getElementById('w-submit-recent-count').textContent = myReports.length;
 
   const tbody = document.getElementById('w-submit-table');
@@ -1819,7 +1883,6 @@ function askConfirm(msg, onOk, okText){
 function closeConfirm(){ const el = document.getElementById('confirm-modal'); if(el) el.classList.remove('open'); _confirmCb = null; }
 function doConfirm(){ const cb = _confirmCb; closeConfirm(); if(cb) cb(); }
 
-/* */
 function renderAll(){
   try{ renderDashboard(); }catch(e){}
   try{ renderWorkers(); }catch(e){}
@@ -1844,21 +1907,21 @@ function refreshAfterDataChange(){ renderAll(); }
 function deleteWorker(id){
   if(!requireAdmin()) return;
   const w = gw(id); if(!w) return;
-  const recs = db.records.filter(r => r.workerId === id);
-  const setts = db.settlements.filter(s => s.workerId === id);
+  const recs = db.records.filter(r => String(r.workerId) === String(id));
+  const setts = db.settlements.filter(s => String(s.workerId) === String(id));
   const msg = `⚠️ 確定要將求仙同道「${w.name}」自名冊中除名嗎？<br>此操作將會清除其關聯的 ${recs.length} 筆交付與 ${setts.length} 筆結算。`;
   askConfirm(msg, () => {
     const batch = FS.batch();
     batch.delete(FS.ref('workers', id));
     recs.forEach(r => batch.delete(FS.ref('records', r.id)));
     setts.forEach(s => batch.delete(FS.ref('settlements', `${s.workerId}_${s.month}`)));
-    batch.commit().then(()=>{ if(currentWorkerId === id) currentWorkerId = null; toast('🗑️ 同道已除名'); }).catch(()=>toast('⚠️ 除名同步失敗'));
+    batch.commit().then(()=>{ if(String(currentWorkerId) === String(id)) currentWorkerId = null; toast('🗑️ 同道已除名'); }).catch(()=>toast('⚠️ 除名同步失敗'));
   }, '除名');
 }
 
 function deleteRecord(id){
   if(!requireAdmin()) return;
-  const r = db.records.find(r => r.id === id); if(!r) return;
+  const r = db.records.find(r => String(r.id) === String(id)); if(!r) return;
   askConfirm(`⚠️ 確定要刪除這筆交付紀錄嗎？`, () => {
     FS.del('records', id).then(()=>toast('🗑️ 紀錄已刪除')).catch(()=>toast('⚠️ 刪除失敗'));
   }, '確定刪除');
@@ -1886,7 +1949,6 @@ function unverifyRecord(id){
 
 function isThisMonth(dateStr, targetMonth){ return (dateStr || '').startsWith(targetMonth); }
 
-/* */
 function renderDashboard(){
   const active = db.workers.filter(w => w.status === 'active').length;
   const currentMonthStr = '2026-06';
@@ -1906,12 +1968,12 @@ function renderDashboard(){
   document.getElementById('dash-recent').innerHTML = recents.length ? recents.map(r => `
     <tr>
       <td><div style="display:flex; align-items:center; gap:8px"><div class="avatar">${(gwn(r.workerId) || '?').slice(0, 1)}</div>
-        <div><span style="font-size:13.5px; color:var(--navy-deep); font-weight: 700;">${gwn(r.workerId)}</span><div style="font-size:10px; color:#7F8C8D;">${gw(r.workerId)?.nick || ''}</div></div></div></td>
+        <div><span style="font-size:14px; color:var(--navy-deep); font-weight: 700;">${gwn(r.workerId)}</span><div style="font-size:11px; color:#7F8C8D;">${gw(r.workerId)?.nick || ''}</div></div></div></td>
       <td>${gin(r.itemId)}</td>
       <td>${r.pass.toLocaleString()}</td>
-      <td><span style="color:var(--red-palace); font-size:14px; font-weight: 700;">$${r.amount.toLocaleString()}</span></td>
+      <td><span style="color:var(--red-palace); font-size:14.5px; font-weight: 700;">$${r.amount.toLocaleString()}</span></td>
       <td><div style="display:flex; align-items:center; gap:6px;">${statusBadge(r.status)}
-        ${r.status === 'pending' ? `<button class="btn btn-sm btn-primary" onclick="verifyRecord(${r.id})">驗收</button>` : `<button class="btn btn-sm" onclick="unverifyRecord(${r.id})">撤回</button>`}</div></td>
+        ${r.status === 'pending' ? `<button class="btn btn-sm btn-primary" onclick="verifyRecord('${r.id}')">驗收</button>` : `<button class="btn btn-sm" onclick="unverifyRecord('${r.id}')">撤回</button>`}</div></td>
     </tr>
   `).join('') : '<tr><td colspan="5" class="empty-state">尚無近期申報交付</td></tr>';
 }
@@ -1924,16 +1986,16 @@ function renderWorkers(){
     w.name.toLowerCase().includes(kw) || (w.nick || '').toLowerCase().includes(kw) || (w.note || '').toLowerCase().includes(kw));
   document.getElementById('workers-table').innerHTML = filtered.length ? filtered.map(w => `
     <tr>
-      <td><div style="display:flex; align-items:center; gap:6px"><div class="avatar">${w.name.slice(0,1)}</div><span style="font-size:13.5px; font-weight: 700;">${w.name}</span></div></td>
+      <td><div style="display:flex; align-items:center; gap:8px"><div class="avatar">${w.name.slice(0,1)}</div><span style="font-size:14px; font-weight: 700;">${w.name}</span></div></td>
       <td>${roleBadge(w.role || 'contractor')}</td>
       <td><span style="font-weight: 700; color:var(--navy-deep);">${w.nick || '—'}</span></td>
       <td>${statusBadge(w.status)}</td>
       <td><span style="color:var(--red-palace); font-weight: 700;">$${(totals[w.id] || 0).toLocaleString()}</span></td>
       <td><span class="coin-chip">🪙 ${(totals[w.id] || 0).toLocaleString()} 枚</span></td>
       <td style="text-align: right;">
-        <button class="btn btn-sm" onclick="editWorker(${w.id})">✏️ 修改</button>
-        <button class="btn btn-sm" onclick="previewWorker(${w.id})" style="color:var(--navy-deep); border-color:var(--gold-beige);">預覽</button>
-        <button class="btn btn-sm btn-danger" onclick="deleteWorker(${w.id})">🗑️ 刪除</button>
+        <button class="btn btn-sm" onclick="editWorker('${w.id}')">✏️ 修改</button>
+        <button class="btn btn-sm" onclick="previewWorker('${w.id}')" style="color:var(--navy-deep); border-color:var(--gold-beige);">預覽</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteWorker('${w.id}')">🗑️ 刪除</button>
       </td>
     </tr>
   `).join('') : '<tr><td colspan="7" class="empty-state">無符合搜尋之人員</td></tr>';
@@ -1948,11 +2010,11 @@ function renderItems(){
       <td><span style="font-weight: 700;">${i.name}</span></td>
       <td><span class="badge badge-gray">${i.unit}</span></td>
       <td>${i.qty} 件</td>
-      <td><span style="color:var(--red-palace); font-size:14px; font-weight: 700;">$${i.price}</span></td>
-      <td style="color:#7F8C8D; font-size:12.5px; max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${i.note || '—'}</td>
+      <td><span style="color:var(--red-palace); font-size:14.5px; font-weight: 700;">$${i.price}</span></td>
+      <td style="color:#7F8C8D; font-size:13px; max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${i.note || '—'}</td>
       <td style="text-align: right;">
-        <button class="btn btn-sm" onclick="editItem(${i.id})">✏️ 修改</button>
-        <button class="btn btn-sm btn-danger" onclick="deleteItem(${i.id})">🗑️ 刪除</button>
+        <button class="btn btn-sm" onclick="editItem('${i.id}')">✏️ 修改</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteItem('${i.id}')">🗑️ 刪除</button>
       </td>
     </tr>
   `).join('') : '<tr><td colspan="6" class="empty-state">尚無品項資料</td></tr>';
@@ -1969,34 +2031,32 @@ function renderRecords(){
   document.getElementById('records-table').innerHTML = filtered.length ? filtered.map(r => `
     <tr>
       <td>${r.date}</td>
-      <td><div style="display:flex; align-items:center; gap:6px;"><div class="avatar" style="width:24px; height:24px; font-size:11px;">${gwn(r.workerId).slice(0,1)}</div><span style="font-weight: 700;">${gwn(r.workerId)}</span></div></td>
+      <td><div style="display:flex; align-items:center; gap:6px;"><div class="avatar" style="width:26px; height:26px; font-size:12px;">${gwn(r.workerId).slice(0,1)}</div><span style="font-weight: 700;">${gwn(r.workerId)}</span></div></td>
       <td>${gin(r.itemId)}</td>
       <td>${sourceBadge(r.source)}</td>
       <td>${r.selfQty == null ? '—' : `<span style="font-weight: 500; color: var(--navy-deep);">${r.selfQty.toLocaleString()}</span>`}</td>
       <td>${r.total.toLocaleString()}</td>
       <td><span style="color: var(--navy-deep); font-weight: 700;">${r.pass.toLocaleString()}</span></td>
-      <td><span style="color:var(--red-palace); font-size:13.5px; font-weight: 700;">$${r.amount.toLocaleString()}</span></td>
+      <td><span style="color:var(--red-palace); font-size:14px; font-weight: 700;">$${r.amount.toLocaleString()}</span></td>
       <td>${statusBadge(r.status)}</td>
       <td style="text-align: right;">
-        <button class="btn btn-sm" onclick="openRecordEdit(${r.id})">✏️ 修改</button>
-        ${r.status === 'pending' ? `<button class="btn btn-sm btn-primary" onclick="verifyRecord(${r.id})">✓ 驗收</button>` : `<button class="btn btn-sm" onclick="unverifyRecord(${r.id})">↩ 撤回</button>`}
-        <button class="btn btn-sm btn-danger btn-icon-only" onclick="deleteRecord(${r.id})">🗑️</button>
+        <button class="btn btn-sm" onclick="openRecordEdit('${r.id}')">✏️ 修改</button>
+        ${r.status === 'pending' ? `<button class="btn btn-sm btn-primary" onclick="verifyRecord('${r.id}')">✓ 驗收</button>` : `<button class="btn btn-sm" onclick="unverifyRecord('${r.id}')">↩ 撤回</button>`}
+        <button class="btn btn-sm btn-danger btn-icon-only" onclick="deleteRecord('${r.id}')">🗑️</button>
       </td>
     </tr>
   `).join('') : '<tr><td colspan="10" class="empty-state">尚無交付紀錄</td></tr>';
 }
 
-/* */
 function recomputeSettlement(month){
   const mRecs = db.records.filter(r => isThisMonth(r.date, month) && r.status === 'verified');
   const byW = {};
   mRecs.forEach(r => { byW[r.workerId] = (byW[r.workerId] || 0) + r.amount; });
-  db.settlements.filter(s => s.month === month && !(s.workerId in byW)).forEach(s => {
+  db.settlements.filter(s => s.month === month && !(String(s.workerId) in byW)).forEach(s => {
     FS.del('settlements', `${s.workerId}_${month}`).catch(()=>{});
   });
   Object.entries(byW).forEach(([wid, earned]) => {
-    wid = +wid;
-    const ex = db.settlements.find(s => s.workerId === wid && s.month === month);
+    const ex = db.settlements.find(s => String(s.workerId) === String(wid) && s.month === month);
     const bonus = ex ? (ex.bonus || 0) : 0;
     const deduct = ex ? (ex.deduct || 0) : 0;
     const status = ex ? (ex.status || 'unpaid') : 'unpaid';
@@ -2009,18 +2069,18 @@ function renderSettlementTable(month){
   month = month || (document.getElementById('settlement-month-picker')?.value) || '2026-06';
   const parts = month.split('-');
   const wr = document.getElementById('week-range'); if(wr) wr.textContent = `${parts[0]}年${parts[1]}月`;
-  const ws = db.settlements.filter(s => s.month === month).sort((a,b) => a.workerId - b.workerId);
+  const ws = db.settlements.filter(s => s.month === month).sort((a,b) => String(a.workerId).localeCompare(String(b.workerId)));
   document.getElementById('settlement-table').innerHTML = ws.length ? ws.map(s => `
     <tr>
       <td><span style="font-weight: 700;">${gwn(s.workerId)}</span></td>
       <td>$${s.earned.toLocaleString()}</td>
       <td><span style="color:var(--navy-deep); font-weight: 500;">+$${s.bonus || 0}</span></td>
       <td><span style="color:var(--red-palace); font-weight: 500;">-$${s.deduct || 0}</span></td>
-      <td><span style="color:var(--red-palace); font-size:14.5px; font-weight: 700;">$${s.amount.toLocaleString()}</span></td>
+      <td><span style="color:var(--red-palace); font-size:15px; font-weight: 700;">$${s.amount.toLocaleString()}</span></td>
       <td>${statusBadge(s.status)}</td>
       <td style="text-align: right;">
-        <button class="btn btn-sm" onclick="openSettlementEdit(${s.workerId},'${s.month}')">⚖️ 調整</button>
-        ${s.status === 'unpaid' ? `<button class="btn btn-sm btn-primary" onclick="markPaid(${s.workerId},'${s.month}')">✓ 支付</button>` : `<button class="btn btn-sm" onclick="markUnpaid(${s.workerId},'${s.month}')">↩ 撤回</button>`}
+        <button class="btn btn-sm" onclick="openSettlementEdit('${s.workerId}','${s.month}')">⚖️ 調整</button>
+        ${s.status === 'unpaid' ? `<button class="btn btn-sm btn-primary" onclick="markPaid('${s.workerId}','${s.month}')">✓ 支付</button>` : `<button class="btn btn-sm" onclick="markUnpaid('${s.workerId}','${s.month}')">↩ 撤回</button>`}
       </td>
     </tr>
   `).join('') : `<tr><td colspan="7" class="empty-state">當月尚無合格交付，請先驗收工單。</td></tr>`;
@@ -2033,7 +2093,6 @@ function generateSettlement(){
   renderSettlementTable(month);
 }
 
-/* */
 function exportSettlementCSV() {
   const monthPicker = document.getElementById('settlement-month-picker');
   const selectedMonth = monthPicker ? monthPicker.value : '2026-06';
@@ -2078,7 +2137,6 @@ function markUnpaid(wid, month){
   FS.update('settlements', `${wid}_${month}`, {status: 'unpaid'}).then(()=>toast('↩ 已撤回至待領取狀態')).catch(()=>toast('⚠️ 操作失敗'));
 }
 
-/* */
 function workerLogin(){
   const name = document.getElementById('w-name-input').value.trim();
   const w = db.workers.find(item => item.name === name || item.nick === name);
@@ -2151,12 +2209,11 @@ function previewWorker(id){
   showWorkerPage('w-home');
 }
 
-/* */
 function renderWorkerPages(wid){
   const w = gw(wid); if(!w) return;
-  const myRecs = db.records.filter(r => r.workerId === wid);
+  const myRecs = db.records.filter(r => String(r.workerId) === String(wid));
   const monthEarn = myRecs.filter(r => isThisMonth(r.date, '2026-06') && r.status === 'verified').reduce((a, r) => a + r.amount, 0);
-  const myS = db.settlements.filter(s => s.workerId === wid);
+  const myS = db.settlements.filter(s => String(s.workerId) === String(wid));
   const unpaid = myS.filter(s => s.status === 'unpaid').reduce((a, s) => a + s.amount, 0);
   const paid = myS.filter(s => s.status === 'paid').reduce((a, s) => a + s.amount, 0);
   const cum = cumulativeEarned(wid);
@@ -2213,7 +2270,6 @@ function renderWorkerPages(wid){
   renderWorkerSubmitPage();
 }
 
-/* */
 function showPage(name){
   if(!isAdminLoggedIn()){ showAdminLogin(); return; }
   toggleSidebar(false);
@@ -2284,7 +2340,6 @@ function switchRole(role){
   }
 }
 
-/* */
 function seedDemoData(){
   if(!requireAdmin()) return;
   if(!FS.fdb) return toast('⚠️ 尚未完成雲端設定');
@@ -2331,12 +2386,11 @@ function seedDemoData(){
   }, '載入範例');
 }
 
-/* */
 let slipMonth = '2026-06';
 let slipIdx = 0;
 
 function slipMonthLabel(m){ const p = (m || '2026-06').split('-'); return `${p[0]} 年 ${parseInt(p[1],10)} 月`; }
-function slipsForMonth(){ return db.settlements.filter(s => s.month === slipMonth).sort((a,b) => a.workerId - b.workerId); }
+function slipsForMonth(){ return db.settlements.filter(s => s.month === slipMonth).sort((a,b) => String(a.workerId).localeCompare(String(b.workerId))); }
 
 function renderSlips(){
   if(!isAdminLoggedIn()) return;
@@ -2352,12 +2406,12 @@ function renderSlips(){
       const w = gw(s.workerId);
       const nm = w ? (w.nick || w.name) : '—';
       const realNm = w ? w.name : '';
-      const dispName = w && w.nick && w.nick !== w.name ? `${w.nick} <small style="font-size:10px; opacity:0.6;">(${realNm})</small>` : nm;
+      const dispName = w && w.nick && w.nick !== w.name ? `${w.nick} <small style="font-size:11px; opacity:0.5;">(${realNm})</small>` : nm;
       return `<li class="${i === slipIdx ? 'active' : ''}" onclick="selectSlip(${i})">
         <span class="slip-nm">${dispName}</span>
         <span class="slip-amt">${(s.amount || 0).toLocaleString()} 枚</span>
       </li>`;
-    }).join('') : '<li class="slip-empty" style="font-size:12px; color:#7F8C8D; padding:15px; text-align:center;">當月無結算資料。請先至「資糧結算」計算！</li>';
+    }).join('') : '<li class="slip-empty" style="font-size:13px; color:#7F8C8D; padding:15px; text-align:center;">當月無結算資料。請先至「資糧結算」計算！</li>';
   }
   const cnt = document.getElementById('slip-count');
   if(cnt) cnt.textContent = list.length ? `${slipIdx + 1} / ${list.length}` : '0 / 0';
@@ -2417,12 +2471,11 @@ async function downloadSlipPNG(){
   finally{ if(btn){ btn.textContent = orig; btn.disabled = false; } }
 }
 
-/* */
 function buildStatusPill(){
   if(document.getElementById('fb-status')) return;
   const el = document.createElement('div');
   el.id = 'fb-status';
-  el.style.cssText = 'position:fixed;right:12px;bottom:12px;z-index:1500;font-size:11px;font-weight:700;padding:5px 12px;border-radius:99px;background:#0C2E4E;color:#D9B36C;border:1px solid #D9B36C;box-shadow:0 2px 10px rgba(0,0,0,.1);opacity:.95;';
+  el.style.cssText = 'position:fixed;right:16px;bottom:16px;z-index:1500;font-size:12px;font-weight:700;padding:6px 14px;border-radius:99px;background:#0C2E4E;color:#D9B36C;border:1px solid #D9B36C;box-shadow:0 4px 14px rgba(0,0,0,.15);opacity:.95;';
   el.textContent = '☁️ 雲端同步中...';
   document.body.appendChild(el);
 }
@@ -2460,7 +2513,6 @@ function startSync(){
 }
 function onSyncErr(e){ console.error(e); setStatus('⚠️ 同步中斷', false); }
 
-/* */
 function initFirebaseAndStart(){
   if(typeof firebase !== 'undefined' && configFilled()){
     try{
