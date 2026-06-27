@@ -6,6 +6,8 @@
 <title>永祿坊求仙結算系統（雲端同步版）</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -240,6 +242,87 @@ tr:hover td{background:#FAF5EC}
   .worker-submit-layout { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
 }
+/* ====================== 資糧條核發頁（敕令卡）====================== */
+#page-slips{
+  --slip-paper:#f3e8cf; --slip-paper-2:#ece0c2; --slip-ink:#2b2118; --slip-ink-soft:#7a654a;
+  --slip-cinnabar:#b53326; --slip-cinnabar-deep:#8c2316; --slip-gold:#c6a049; --slip-gold-lt:#ecca81;
+  --slip-gold-dk:#9a7728; --slip-brush:"Ma Shan Zheng","Noto Serif TC",serif; --slip-serif:"Noto Serif TC",serif;
+}
+#page-slips .slip-toolbar{ display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center; margin-bottom:16px; }
+#page-slips .slip-controls{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+#page-slips .slip-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+#page-slips .slip-ctl-label{ font-size:13px; font-weight:600; color:var(--navy-deep); }
+#page-slips #slip-month-picker{ padding:6px 10px; font-size:13px; border:1px solid var(--border-solid); border-radius:6px; background:#fff; color:#000; outline:none; }
+#page-slips .slip-count{ font-size:13px; color:#555; min-width:64px; text-align:center; font-weight:600; }
+#page-slips .slip-layout{ display:grid; grid-template-columns:260px 1fr; gap:18px; align-items:start; }
+#page-slips .slip-roster{ list-style:none; display:flex; flex-direction:column; gap:8px; max-height:640px; overflow-y:auto; padding:2px; }
+#page-slips .slip-roster li{ display:flex; align-items:center; gap:10px; background:#fff; border:1px solid var(--border-solid); border-radius:10px; padding:9px 12px; cursor:pointer; transition:.15s; }
+#page-slips .slip-roster li:hover{ border-color:var(--gold-beige); background:#FAF5EC; }
+#page-slips .slip-roster li.active{ border-color:var(--gold-beige); background:#FAF4E5; box-shadow:var(--shadow-gold); }
+#page-slips .slip-roster .slip-nm{ flex:1; font-size:14px; color:var(--navy-deep); font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#page-slips .slip-roster .slip-amt{ color:var(--red-palace); font-weight:700; font-size:14px; }
+#page-slips .slip-roster .slip-empty{ color:#7A8B99; font-size:13px; padding:1.5rem 1rem; text-align:center; border:1.5px dashed var(--border-solid); border-radius:10px; cursor:default; }
+#page-slips .slip-roster .slip-empty:hover{ background:transparent; border-color:var(--border-solid); }
+#page-slips .slip-stage{ display:flex; justify-content:center; padding:8px; }
+#page-slips .slip-hint{ font-size:12px; color:#5C6E7F; text-align:center; margin-top:14px; letter-spacing:.04em; line-height:1.7; }
+
+#page-slips .slip{
+  position:relative; width:400px; max-width:100%;
+  background:linear-gradient(180deg,#f5ecd6,var(--slip-paper) 30%,var(--slip-paper-2));
+  border-radius:8px; padding:30px 30px 28px 44px; color:var(--slip-ink);
+  box-shadow:0 30px 60px -28px #000, 0 0 0 1px #cbb585 inset; overflow:hidden; font-family:var(--slip-serif);
+}
+#page-slips .slip::before{
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.5;
+  background:repeating-linear-gradient(90deg,#00000005 0 2px,#0000 2px 5px),
+    repeating-linear-gradient(0deg,#00000004 0 2px,#0000 2px 6px),
+    radial-gradient(120% 80% at 80% 10%, #fff8 0%, #fff0 45%);
+  mix-blend-mode:multiply;
+}
+#page-slips .slip__frame{ position:relative; z-index:2; border:1px solid var(--slip-gold-dk); outline:3px solid #c6a04922; outline-offset:3px; border-radius:4px; padding:22px 18px 18px; }
+#page-slips .slip__band{ position:absolute; left:0; top:0; bottom:0; width:22px; z-index:3; background:linear-gradient(180deg,var(--slip-cinnabar),var(--slip-cinnabar-deep)); display:flex; align-items:center; justify-content:center; }
+#page-slips .slip__band span{ writing-mode:vertical-rl; color:#ffe6c6; font-size:11px; letter-spacing:.5em; font-weight:600; opacity:.92; }
+#page-slips .slip__wm{ position:absolute; z-index:1; right:-26px; top:46%; font-family:var(--slip-brush); font-size:200px; color:#b5332608; line-height:1; transform:rotate(-6deg); pointer-events:none; }
+#page-slips .slip__head{ text-align:center; position:relative; z-index:2; }
+#page-slips .slip__mark{ width:40px; height:40px; margin:0 auto 8px; border-radius:50%; border:1.5px solid var(--slip-gold-dk); display:flex; align-items:center; justify-content:center; font-family:var(--slip-brush); font-size:22px; color:var(--slip-gold-dk); background:radial-gradient(circle,#fff6e2,#f0e2c0); }
+#page-slips .slip__title{ font-family:var(--slip-brush); font-size:30px; color:var(--slip-cinnabar-deep); letter-spacing:.16em; }
+#page-slips .slip__sub{ font-size:12px; color:var(--slip-ink-soft); letter-spacing:.3em; margin-top:5px; }
+#page-slips .slip__month{ display:inline-block; margin-top:9px; font-size:12px; letter-spacing:.18em; color:#fff3df; background:linear-gradient(180deg,var(--slip-cinnabar),var(--slip-cinnabar-deep)); padding:3px 14px; border-radius:20px; }
+#page-slips .slip .rule{ height:0; border:0; border-top:1px solid var(--slip-gold-dk); opacity:.5; margin:16px 4px; position:relative; }
+#page-slips .slip .rule::after{ content:"❖"; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:var(--slip-paper); color:var(--slip-gold-dk); font-size:12px; padding:0 8px; }
+#page-slips .slip__body{ position:relative; z-index:2; text-align:center; }
+#page-slips .slip .lbl{ font-size:11px; color:var(--slip-ink-soft); letter-spacing:.4em; }
+#page-slips .slip .daohao{ font-size:clamp(26px,7vw,32px); font-weight:900; color:var(--slip-ink); letter-spacing:.04em; line-height:1.25; margin-top:4px; word-break:break-word; }
+#page-slips .slip .realm{ display:inline-block; margin-top:10px; font-size:13px; color:var(--slip-cinnabar-deep); border:1px solid #c79b5e; border-radius:20px; padding:3px 14px; letter-spacing:.16em; background:#fff7e7; }
+#page-slips .slip .realm:empty{ display:none; }
+#page-slips .slip .amount{ margin-top:22px; padding-top:18px; border-top:1px dashed #c9ab73; }
+#page-slips .slip .amount .cap{ font-size:12px; color:var(--slip-ink-soft); letter-spacing:.4em; }
+#page-slips .slip .amount .big{ font-family:var(--slip-serif); font-weight:900; line-height:1; margin:6px 0 2px; background:linear-gradient(180deg,var(--slip-gold-lt) 12%,#b98a2c 92%); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow:0 1px 0 #fff6; }
+#page-slips .slip .amount .big .num{ font-size:clamp(52px,15vw,68px); letter-spacing:.01em; }
+#page-slips .slip .amount .big .mei{ font-size:24px; margin-left:6px; font-weight:700; }
+#page-slips .slip .amount .ntd{ font-size:13px; color:var(--slip-ink-soft); letter-spacing:.1em; }
+#page-slips .slip__foot{ position:relative; z-index:2; margin-top:18px; display:flex; justify-content:space-between; align-items:flex-end; font-size:11px; color:var(--slip-ink-soft); letter-spacing:.08em; }
+#page-slips .slip__foot .status{ color:var(--slip-cinnabar-deep); font-weight:700; font-size:12px; }
+#page-slips .slip .seal{ position:absolute; z-index:4; right:18px; bottom:16px; width:84px; height:84px; transform:rotate(-9deg); }
+#page-slips .slip .seal .ring{ position:absolute; inset:0; border-radius:8px; border:3px solid var(--slip-cinnabar); box-shadow:0 0 0 1px var(--slip-cinnabar) inset; opacity:.9; }
+#page-slips .slip .seal .chars{ position:absolute; inset:0; display:grid; grid-template-columns:1fr 1fr; place-items:center; font-family:var(--slip-brush); color:var(--slip-cinnabar); font-size:28px; line-height:1; opacity:.9; padding:4px; }
+#page-slips .slip .seal::after{ content:""; position:absolute; inset:0; border-radius:8px; pointer-events:none; background:radial-gradient(circle at 30% 30%, #fff5 0 10%, #fff0 60%), repeating-linear-gradient(35deg,#fff2 0 1px,#0000 1px 4px); mix-blend-mode:screen; opacity:.5; }
+
+/* 截圖模式：隱藏側欄與工具，只留資糧條 */
+body.slip-focus .sidebar,
+body.slip-focus .sidebar-overlay,
+body.slip-focus .topbar,
+body.slip-focus #page-slips .slip-controls,
+body.slip-focus #page-slips .slip-roster,
+body.slip-focus #page-slips .slip-hint{ display:none !important; }
+body.slip-focus .content{ padding:0; max-width:100%; }
+body.slip-focus #page-slips .slip-toolbar{ justify-content:center; padding:12px; margin-bottom:8px; }
+body.slip-focus #page-slips .slip-layout{ grid-template-columns:1fr; }
+
+@media (max-width:768px){
+  #page-slips .slip-layout{ grid-template-columns:1fr; }
+  #page-slips .slip-roster{ max-height:240px; }
+}
 </style>
 </head>
 <body>
@@ -272,6 +355,7 @@ tr:hover td{background:#FAF5EC}
       <div class="nav-item" onclick="showPage('items')"><div class="nav-dot"></div>品項設定</div>
       <div class="nav-item" onclick="showPage('records')"><div class="nav-dot"></div>交付管理</div>
       <div class="nav-item" onclick="showPage('settlement')"><div class="nav-dot"></div>資糧結算</div>
+      <div class="nav-item" onclick="showPage('slips')"><div class="nav-dot"></div>資糧條核發</div>
       <div class="nav-group-label">數據統計</div>
       <div class="nav-item" onclick="showPage('leaderboard')"><div class="nav-dot"></div>業績排行榜</div>
     </div>
@@ -421,6 +505,59 @@ tr:hover td{background:#FAF5EC}
             </table>
           </div>
         </div>
+      </div>
+
+      <div class="page" id="page-slips">
+        <div class="slip-toolbar">
+          <div class="slip-controls">
+            <span class="slip-ctl-label">核發月份</span>
+            <input type="month" id="slip-month-picker" value="2026-06" onchange="slipIdx=0;renderSlips()">
+            <button class="btn btn-sm" onclick="slipPrev()">← 上一位</button>
+            <span class="slip-count" id="slip-count">0 / 0</span>
+            <button class="btn btn-sm" onclick="slipNext()">下一位 →</button>
+          </div>
+          <div class="slip-actions">
+            <button class="btn btn-sm" id="slip-focus-btn" onclick="toggleSlipFocus()">🔍 截圖模式</button>
+            <button class="btn btn-sm btn-primary" id="slip-dl-btn" onclick="downloadSlipPNG()">📥 下載此條 PNG</button>
+          </div>
+        </div>
+        <div class="slip-layout">
+          <ul class="slip-roster" id="slip-roster"></ul>
+          <div class="slip-stage">
+            <article class="slip" id="slip-card">
+              <div class="slip__band"><span>功 德 靈 幣 ・ 求 仙 資 糧</span></div>
+              <div class="slip__wm">祿</div>
+              <div class="slip__frame">
+                <div class="slip__head">
+                  <div class="slip__mark">永</div>
+                  <div class="slip__title">永祿坊</div>
+                  <div class="slip__sub">求 仙 資 糧 條</div>
+                  <div class="slip__month" id="slip-s-month">2026 年 6 月</div>
+                </div>
+                <hr class="rule">
+                <div class="slip__body">
+                  <div class="lbl">同 道 道 號</div>
+                  <div class="daohao" id="slip-s-dao">—</div>
+                  <div class="realm" id="slip-s-realm"></div>
+                  <div class="amount">
+                    <div class="cap">本 月 實 發 修 為 靈 幣</div>
+                    <div class="big">🪙 <span class="num" id="slip-s-amt">0</span><span class="mei">枚</span></div>
+                    <div class="ntd" id="slip-s-ntd">折合 NT$ 0 元</div>
+                  </div>
+                </div>
+                <div class="slip__foot">
+                  <span class="status" id="slip-s-status">狀態：待領取</span>
+                  <span>永祿坊法制處・核發</span>
+                </div>
+              </div>
+              <div class="seal" aria-hidden="true">
+                <div class="ring"></div>
+                <div class="chars"><span>永</span><span>祿</span><span>坊</span><span>印</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+        <p class="slip-hint">境界與金額皆自動帶入該月結算結果（金額為「實發總額」）。截圖模式會隱藏側欄與工具，只留資糧條方便直接截圖；也可按「下載此條 PNG」存成圖片私訊給同道。</p>
       </div>
 
       <div class="page" id="page-leaderboard">
@@ -1602,6 +1739,7 @@ function renderAll(){
   if(active){
     if(active.id === 'page-leaderboard'){ try{ renderLeaderboard(); }catch(e){} }
     if(active.id === 'page-settlement'){ try{ renderSettlementTable(); }catch(e){} }
+    if(active.id === 'page-slips'){ try{ renderSlips(); }catch(e){} }
     if(active.id === 'page-w-leaderboard' && sessionStorage.getItem(WHISPER_AUTH_KEY) === '1'){ try{ renderWorkerLeaderboard(); }catch(e){} }
   }
   if(currentWorkerId && gw(currentWorkerId)){
@@ -1987,11 +2125,11 @@ function showPage(name){
   if(!page) return;
   page.classList.add('active');
   document.querySelectorAll('#admin-nav .nav-item').forEach(n => n.classList.remove('active'));
-  const order = ['dashboard','workers','items','records','settlement','leaderboard'];
+  const order = ['dashboard','workers','items','records','settlement','slips','leaderboard'];
   const idx = order.indexOf(name);
   const navs = document.querySelectorAll('#admin-nav .nav-item');
   if(idx >= 0 && navs[idx]) navs[idx].classList.add('active');
-  const titles = { dashboard: '系統總覽', workers: '同道名冊', items: '品項設定', records: '交付管理', settlement: '資糧結算', leaderboard: '業績排行榜' };
+  const titles = { dashboard: '系統總覽', workers: '同道名冊', items: '品項設定', records: '交付管理', settlement: '資糧結算', slips: '資糧條核發', leaderboard: '業績排行榜' };
   document.getElementById('page-title').textContent = titles[name] || name;
   setAdminTopbar();
   if(name === 'dashboard') renderDashboard();
@@ -1999,6 +2137,7 @@ function showPage(name){
   if(name === 'items') renderItems();
   if(name === 'records') renderRecords();
   if(name === 'settlement') generateSettlement();
+  if(name === 'slips') renderSlips();
   if(name === 'leaderboard') renderLeaderboard();
 }
 
@@ -2092,6 +2231,88 @@ function seedDemoData(){
       toast('🌱 範例資料已載入雲端！');
     } catch(e){ console.error(e); toast('❌ 載入失敗，請檢查網路。'); }
   }, '載入範例');
+}
+
+/* ---------- 資糧條核發（敕令卡，資料來自雲端結算）---------- */
+let slipMonth = '2026-06';
+let slipIdx = 0;
+
+function slipMonthLabel(m){ const p = (m || '2026-06').split('-'); return `${p[0]} 年 ${parseInt(p[1],10)} 月`; }
+function slipsForMonth(){ return db.settlements.filter(s => s.month === slipMonth).sort((a,b) => a.workerId - b.workerId); }
+
+function renderSlips(){
+  if(!isAdminLoggedIn()) return;
+  const picker = document.getElementById('slip-month-picker');
+  slipMonth = (picker && picker.value) || slipMonth;
+  const list = slipsForMonth();
+  if(slipIdx >= list.length) slipIdx = Math.max(0, list.length - 1);
+  if(slipIdx < 0) slipIdx = 0;
+
+  const roster = document.getElementById('slip-roster');
+  if(roster){
+    roster.innerHTML = list.length ? list.map((s, i) => {
+      const w = gw(s.workerId);
+      const nm = w ? (w.nick || w.name) : '—';
+      return `<li class="${i === slipIdx ? 'active' : ''}" onclick="selectSlip(${i})">
+        <span class="slip-nm">${nm}</span>
+        <span class="slip-amt">${(s.amount || 0).toLocaleString()} 枚</span>
+      </li>`;
+    }).join('') : '<li class="slip-empty">本月尚無結算資料。<br>請先到「資糧結算」按「重新計算」產生本月結算。</li>';
+  }
+  const cnt = document.getElementById('slip-count');
+  if(cnt) cnt.textContent = list.length ? `${slipIdx + 1} / ${list.length}` : '0 / 0';
+  paintSlip();
+}
+
+function paintSlip(){
+  const list = slipsForMonth();
+  const card = document.getElementById('slip-card');
+  if(!card) return;
+  if(!list.length){ card.style.visibility = 'hidden'; return; }
+  card.style.visibility = 'visible';
+  const s = list[slipIdx];
+  const w = gw(s.workerId);
+  const dao = w ? (w.nick || w.name) : '—';
+  const coins = coinsOf(cumulativeEarned(s.workerId));
+  const c = cultivation(coins);
+  document.getElementById('slip-s-month').textContent = slipMonthLabel(slipMonth);
+  document.getElementById('slip-s-dao').textContent = dao;
+  document.getElementById('slip-s-realm').textContent = `${c.realm}・${c.layerLabel}`;
+  document.getElementById('slip-s-amt').textContent = (s.amount || 0).toLocaleString();
+  document.getElementById('slip-s-ntd').textContent = '折合 NT$ ' + (s.amount || 0).toLocaleString() + ' 元';
+  document.getElementById('slip-s-status').textContent = '狀態：' + (s.status === 'paid' ? '已發放' : '待領取');
+}
+
+function selectSlip(i){ slipIdx = i; renderSlips(); }
+function slipPrev(){ const list = slipsForMonth(); if(!list.length) return; slipIdx = (slipIdx - 1 + list.length) % list.length; renderSlips(); }
+function slipNext(){ const list = slipsForMonth(); if(!list.length) return; slipIdx = (slipIdx + 1) % list.length; renderSlips(); }
+
+function toggleSlipFocus(){
+  document.body.classList.toggle('slip-focus');
+  const b = document.getElementById('slip-focus-btn');
+  if(b) b.textContent = document.body.classList.contains('slip-focus') ? '↩ 離開截圖模式' : '🔍 截圖模式';
+}
+
+async function downloadSlipPNG(){
+  const list = slipsForMonth();
+  if(!list.length) return toast('⚠️ 本月沒有可下載的資糧條');
+  const card = document.getElementById('slip-card');
+  const btn = document.getElementById('slip-dl-btn');
+  if(typeof html2canvas === 'undefined') return toast('⚠️ 圖片元件尚未載入，請改用「截圖模式」直接截圖');
+  const orig = btn ? btn.textContent : '';
+  if(btn){ btn.textContent = '產生中…'; btn.disabled = true; }
+  try{
+    if(document.fonts && document.fonts.ready) await document.fonts.ready;
+    const canvas = await html2canvas(card, { scale: 3, backgroundColor: null, useCORS: true });
+    const s = list[slipIdx]; const w = gw(s.workerId);
+    const name = (w ? (w.nick || w.name) : '資糧條').replace(/[\\/:*?"<>|]/g, '');
+    const link = document.createElement('a');
+    link.download = `永祿坊資糧條_${name}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    toast('📥 已下載資糧條 PNG');
+  } catch(e){ console.error(e); toast('下載失敗，請改用「截圖模式」直接截圖'); }
+  finally{ if(btn){ btn.textContent = orig; btn.disabled = false; } }
 }
 
 /* ---------- 連線狀態小圓標 ---------- */
