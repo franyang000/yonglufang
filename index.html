@@ -33,6 +33,19 @@
   --shadow-subtle: 0 4px 20px -2px rgba(12, 46, 78, 0.03);
   --shadow-gold: 0 6px 24px rgba(217, 179, 108, 0.15);
   --shadow-premium: 0 16px 40px -10px rgba(5, 24, 41, 0.08);
+  /* 字級尺度（桌機基準） */
+  --fs-xs: 12.5px;
+  --fs-sm: 13.5px;
+  --fs-base: 15px;
+  --fs-md: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 22px;
+  --fs-2xl: 26px;
+  --lh-base: 1.65;
+  /* 間距尺度（桌機基準） */
+  --pad-content: 2.25rem;
+  --pad-card: 1.75rem 2rem;
+  --pad-card-head: 1.25rem 2rem;
 }
 body{
   font-family:'Noto Sans TC', -apple-system, sans-serif;
@@ -41,6 +54,8 @@ body{
   color: var(--ink);
   overflow-x: hidden;
   font-weight: 400;
+  font-size: var(--fs-base);
+  line-height: var(--lh-base);
   -webkit-font-smoothing: antialiased;
 }
 p, span, label, td, th, option, select, input, textarea { color: var(--ink); }
@@ -79,7 +94,7 @@ p, span, label, td, th, option, select, input, textarea { color: var(--ink); }
 .menu-toggle{ display: none; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--navy-deep); width: 42px; height: 42px; align-items: center; justify-content: center; border-radius: 50%; transition: background 0.2s; }
 .menu-toggle:hover{ background: rgba(0,0,0,0.03); }
 .topbar-title{ font-size: 19px; font-weight: 700; color: var(--navy-deep); display: flex; align-items: center; gap: 8px; letter-spacing: 0.03em; font-family: 'Noto Serif TC', serif; }
-.content{ flex: 1; padding: 2rem; max-width: 1400px; width: 100%; margin: 0 auto; }
+.content{ flex: 1; padding: var(--pad-content); max-width: 1400px; width: 100%; margin: 0 auto; }
 .page{ display: none; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
 .page.active{ display:block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -95,9 +110,9 @@ p, span, label, td, th, option, select, input, textarea { color: var(--ink); }
 .stat-icon{ width: 48px; height: 48px; border-radius: 50%; background: #FAF6EE; color: var(--navy-deep); display: flex; align-items: center; justify-content: center; font-size: 22px; border: 1px solid rgba(217, 179, 108, 0.1); }
 
 .card{ background: var(--card-bg); border-radius: var(--r-md); border: 1px solid rgba(12, 46, 78, 0.01); margin-bottom: 2rem; overflow: hidden; box-shadow: var(--shadow-subtle); }
-.card-head{ display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem; border-bottom: 1px solid rgba(12, 46, 78, 0.03); background: #FAF9F6; flex-wrap: wrap; gap: 14px; }
-.card-head-title{ font-size: 16px; font-weight: 700; color: var(--navy-deep); display: flex; align-items: center; gap: 8px; font-family: 'Noto Serif TC', serif; }
-.card-body{ padding: 1.5rem 2rem; }
+.card-head{ display: flex; align-items: center; justify-content: space-between; padding: var(--pad-card-head); border-bottom: 1px solid rgba(12, 46, 78, 0.03); background: #FAF9F6; flex-wrap: wrap; gap: 14px; }
+.card-head-title{ font-size: var(--fs-lg); font-weight: 700; color: var(--navy-deep); display: flex; align-items: center; gap: 8px; font-family: 'Noto Serif TC', serif; }
+.card-body{ padding: var(--pad-card); }
 
 /* 專業級過濾列與表格設計 */
 .table-filter-bar{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; gap: 14px; flex-wrap: wrap; }
@@ -107,8 +122,8 @@ p, span, label, td, th, option, select, input, textarea { color: var(--ink); }
 .search-icon-svg{ position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #7F8C8D; width: 18px; height: 18px; pointer-events: none; opacity: 0.7; }
 
 .table-responsive{ width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--r-sm); }
-table{ width: 100%; border-collapse: collapse; font-size: 14px; text-align: left; }
-th{ padding: 14px 20px; color: var(--navy-deep); font-weight: 700; font-size: 13px; border-bottom: 1px solid rgba(12, 46, 78, 0.05); text-transform: uppercase; letter-spacing: .05em; background: #FAF8F4; white-space: nowrap; }
+table{ width: 100%; border-collapse: collapse; font-size: var(--fs-base); text-align: left; }
+th{ padding: 15px 20px; color: var(--navy-deep); font-weight: 700; font-size: var(--fs-sm); border-bottom: 1px solid rgba(12, 46, 78, 0.05); text-transform: uppercase; letter-spacing: .05em; background: #FAF8F4; white-space: nowrap; }
 td{ padding: 16px 20px; color: var(--ink); font-weight: 400; border-bottom: 1px solid rgba(12, 46, 78, 0.03); vertical-align: middle; white-space: nowrap; transition: background 0.2s; }
 tr:last-child td{ border-bottom: none; }
 tr:hover td{ background: rgba(217, 179, 108, 0.02); }
@@ -126,7 +141,7 @@ tr:hover td{ background: rgba(217, 179, 108, 0.02); }
 .badge-contractor { background:#FAF6EE; color:#7A654A; border: 1px solid rgba(122, 101, 74, 0.15); font-weight:500; }
 
 /* 頂級微互動按鈕 */
-.btn{ display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 18px; font-size: 13.5px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); background: var(--card-bg); cursor: pointer; color: var(--navy-deep); font-family: inherit; font-weight: 500; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); user-select: none; }
+.btn{ display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 18px; font-size: var(--fs-sm); border: 1px solid var(--border-solid); border-radius: var(--r-sm); background: var(--card-bg); cursor: pointer; color: var(--navy-deep); font-family: inherit; font-weight: 500; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); user-select: none; }
 .btn:hover{ background: #FAF9F6; border-color: var(--gold-beige); transform: translateY(-1px); }
 .btn:active{ transform: translateY(1px); }
 .btn-primary{ background: var(--navy-gradient); color: var(--gold-beige) !important; border: none; box-shadow: 0 4px 12px rgba(12, 46, 78, 0.12); font-weight: 700; }
@@ -331,9 +346,9 @@ tr:hover td{ background: rgba(217, 179, 108, 0.02); }
 .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
 .form-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .form-group { display: flex; flex-direction: column; gap: 8px; text-align: left; margin-bottom: 12px; }
-.form-group label { font-size: 13px; font-weight: 700; color: var(--navy-deep); letter-spacing: 0.03em; }
+.form-group label { font-size: var(--fs-sm); font-weight: 700; color: var(--navy-deep); letter-spacing: 0.03em; }
 .form-group input, .form-group select, .form-group textarea {
-  padding: 11px 14px; font-size: 14px; border: 1px solid var(--border-solid);
+  padding: 12px 14px; font-size: var(--fs-base); border: 1px solid var(--border-solid);
   border-radius: var(--r-sm); outline: none; background: #FFFFFF; transition: all 0.25s;
   color: var(--ink); font-family: inherit;
 }
@@ -377,7 +392,14 @@ body.slip-focus .content { padding: 0 !important; display: flex; justify-content
 body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transform: scale(1.15); }
 
 /* RWD 斷點專業級微調 */
+/* 平板：容器與字級略收 */
 @media (max-width: 992px) {
+  :root{
+    --pad-content: 1.5rem;
+    --pad-card: 1.5rem 1.5rem;
+    --pad-card-head: 1.1rem 1.5rem;
+    --fs-base: 14.5px;
+  }
   .sidebar { position: fixed; left: 0; top: 0; bottom: 0; transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
   .menu-toggle { display: flex; }
@@ -386,23 +408,36 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
 }
 @media (max-width: 768px) {
   .worker-login.immortal-entry { grid-template-columns: 1fr; }
-  .immortal-visual { padding: 2rem; min-height: 200px; }
+  .immortal-visual { padding: 1.5rem; min-height: 180px; }
   .immortal-orbit, .immortal-core { top: 50%; }
   .worker-submit-layout { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   #page-slips .slip-layout{ grid-template-columns:1fr; }
   #page-slips .slip-roster{ max-height:220px; }
 }
+/* 手機：縮小邊框把畫面還給內容，字級維持可讀 */
 @media (max-width: 640px) {
-  .content { padding: 1.25rem !important; }
-  .card-head { padding: 1.25rem !important; }
-  .card-body { padding: 1.25rem !important; }
+  :root{
+    --pad-content: 0.75rem;
+    --pad-card: 1rem 1rem;
+    --pad-card-head: 0.9rem 1rem;
+    --fs-base: 15px;   /* 手機正文保持易讀 */
+    --fs-sm: 13.5px;
+    --fs-xs: 12.5px;
+    --fs-lg: 17px;
+  }
+  /* 同道洞府/報工等頁面的大 padding 也收窄，避免縮限畫面 */
+  #page-w-login,#page-w-home,#page-w-records,#page-w-leaderboard,#page-w-submit{ padding: 1rem !important; }
+  .card { margin-bottom: 1.25rem; }
+  th{ padding: 12px 12px; }
+  td{ padding: 13px 12px; }
+  .btn-sm{ padding: 8px 12px; }
   .stat-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
-  .stat-card { padding: 1.25rem !important; border-radius: var(--r-sm) !important; flex-direction: column !important; align-items: flex-start !important; gap: 8px; }
+  .stat-card { padding: 1rem !important; border-radius: var(--r-sm) !important; flex-direction: column !important; align-items: flex-start !important; gap: 8px; }
   .stat-icon { width: 36px !important; height: 36px !important; font-size: 16px !important; }
   .stat-value { font-size: 20px !important; }
   #w-stats { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-  #w-stats .w-stat { padding: 1.25rem !important; }
+  #w-stats .w-stat { padding: 1rem !important; }
   .champion { flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 10px !important; margin: 0.75rem 0 !important; padding: 1.25rem !important; }
   .champion-info { display: flex !important; flex-direction: column !important; align-items: center !important; }
   .lb-summary { gap: 8px !important; margin: 0.5rem 0 !important; }
@@ -447,6 +482,19 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
 .login-fleet .fleet-name{ color:#FDF9EE; font-size:13px; }
 .login-fleet .fleet-count{ color:rgba(253,249,238,0.7); }
 .login-fleet .fleet-bar{ background:rgba(255,255,255,0.12); }
+
+/* —— 報工台缺料急件 —— */
+.shortage-card{ border:1px solid rgba(158,42,43,0.2); }
+.shortage-grid{ display:flex; flex-wrap:wrap; gap:10px; }
+.shortage-chip{ display:flex; flex-direction:column; align-items:center; gap:2px; padding:10px 16px; border-radius:var(--r-md); background:linear-gradient(160deg,#FFF6F2 0%,#FDEBE3 100%); border:1px solid rgba(158,42,43,0.18); min-width:90px; }
+.shortage-name{ font-weight:700; color:var(--navy-deep); font-size:14px; }
+.shortage-num{ font-size:12px; color:var(--red-palace); font-weight:700; }
+
+/* —— 天榜坊務橫幅 —— */
+.lb-fleet-banner{ display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding:12px 16px; margin-bottom:16px; border-radius:var(--r-md); background:var(--navy-gradient); }
+.lb-fleet-label{ font-size:12.5px; font-weight:700; color:var(--gold-beige); }
+.lb-fleet-item{ font-size:12.5px; font-weight:600; color:#FDF9EE; padding:3px 12px; border-radius:99px; background:rgba(255,255,255,0.08); }
+.lb-fleet-item.fin{ background:rgba(16,185,129,0.25); color:#A7F3D0; }
 
 /* —— 天榜佩戴徽章 chip —— */
 .worn-chip{ display:inline-flex; align-items:center; gap:3px; padding:1px 8px 1px 6px; border-radius:99px; font-size:11px; font-weight:700; vertical-align:middle; margin-left:2px; }
@@ -615,7 +663,7 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
           <div class="table-responsive">
             <table>
               <thead>
-                <tr><th>坊務名稱</th><th>目前進度</th><th style="text-align:center;">快速更新</th><th style="text-align: right;">操作</th></tr>
+                <tr><th>坊務名稱</th><th>目前進度</th><th>零件缺口</th><th style="text-align:center;">快速更新</th><th style="text-align: right;">操作</th></tr>
               </thead>
               <tbody id="fleet-table"></tbody>
             </table>
@@ -836,6 +884,7 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
       <!-- 靈工自主申報台分頁 -->
       <div class="page" id="page-w-submit">
         <div class="w-back" onclick="workerLogout()">← 重返登入頁</div>
+        <div id="w-submit-shortage"></div>
         <div class="card">
           <div class="card-head"><span class="card-head-title">⚗️ 靈工自主申報台</span></div>
           <div class="card-body" style="padding: 1.5rem;">
@@ -901,6 +950,7 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
         </div>
 
         <div id="w-lb-content" style="display: none;">
+          <div id="w-lb-fleet-banner"></div>
           <div class="card">
             <div class="card-head">
               <span class="card-head-title">✨ 煉丹天榜風雲碑</span>
@@ -995,12 +1045,20 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
       <button class="modal-close" onclick="closeModal('fleet-modal')">✕</button>
     </div>
     <div class="card-body">
-      <div class="form-group"><label>坊務名稱</label><input id="ff-name" placeholder="例如：中元普渡船"></div>
+      <div class="form-group"><label>坊務名稱</label><input id="ff-name" placeholder="例如：中元普渡船（公版）"></div>
       <div class="form-row" style="margin-top:10px;">
-        <div class="form-group"><label>目標數量（艘）</label><input id="ff-target" type="number" placeholder="5" min="1"></div>
+        <div class="form-group"><label>目標數量（艘）</label><input id="ff-target" type="number" placeholder="5" min="1" oninput="renderRecipeRows()"></div>
         <div class="form-group"><label>已完成數量</label><input id="ff-done" type="number" placeholder="0" min="0"></div>
       </div>
-      <div class="form-group" style="margin-top:10px; margin-bottom:12px;"><label>單位（選填）</label><input id="ff-unit" placeholder="例如：艘 / 件"></div>
+      <div class="form-group" style="margin-top:10px;"><label>單位（選填）</label><input id="ff-unit" placeholder="例如：艘 / 件"></div>
+      <div class="form-group" style="margin-top:16px;">
+        <label style="display:flex; align-items:center; justify-content:space-between;">
+          <span>零件配方（一艘船需要的零件與數量）</span>
+          <button class="btn btn-sm btn-primary" type="button" onclick="addRecipeRow()">＋ 加零件</button>
+        </label>
+        <div id="ff-recipe-rows" style="display:flex; flex-direction:column; gap:8px; margin-top:8px;"></div>
+        <div id="ff-recipe-empty" style="font-size:12.5px; color:#9CA3AF; margin-top:6px;">尚未加入零件。公版船請把 ABCDE 各零件與每艘需求數加進來，系統會自動算缺料。</div>
+      </div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-sm" onclick="closeModal('fleet-modal')">取消</button>
@@ -1520,6 +1578,20 @@ function switchWLbPeriod(p, btn){
 }
 
 function renderWorkerLeaderboard(){
+  // 天榜頂部坊務進度橫幅（集體目標感）
+  const banner = document.getElementById('w-lb-fleet-banner');
+  if(banner){
+    const fleet = getFleet();
+    banner.innerHTML = fleet.length ? `
+      <div class="lb-fleet-banner">
+        <span class="lb-fleet-label">⛩️ 坊務目標</span>
+        ${fleet.map(f => {
+          const target = Number(f.target)||1, done = Number(f.done)||0;
+          const fin = done>=target;
+          return `<span class="lb-fleet-item${fin?' fin':''}">${fin?'🎉 ':''}${f.name} ${done}/${target}${f.unit||'艘'}</span>`;
+        }).join('')}
+      </div>` : '';
+  }
   const isCoin = currentWLbTab === 'coin';
   const periodTabs = document.getElementById('w-period-tabs');
   if(periodTabs) periodTabs.classList.toggle('dim', isCoin);
@@ -1930,6 +2002,25 @@ function calcWorkerSubmitPreview(){
 
 function renderWorkerSubmitPage(){
   if(!currentWorkerId) return;
+  // 坊務缺料提示：促進同道領件摺紙
+  const shortBox = document.getElementById('w-submit-shortage');
+  if(shortBox){
+    const shortages = allFleetShortages();
+    shortBox.innerHTML = shortages.length ? `
+      <div class="card shortage-card" style="margin-bottom:1.25rem;">
+        <div class="card-head"><span class="card-head-title">🔥 坊務缺料急件・搶先領件</span></div>
+        <div class="card-body">
+          <div style="font-size:12.5px; color:#7F8C8D; margin-bottom:12px;">以下零件坊務尚缺，領件摺製即可累積功德、助坊務完工：</div>
+          <div class="shortage-grid">
+            ${shortages.map(s => `
+              <div class="shortage-chip">
+                <span class="shortage-name">${s.name}</span>
+                <span class="shortage-num">還缺 ${s.short.toLocaleString()}</span>
+              </div>`).join('')}
+          </div>
+        </div>
+      </div>` : '';
+  }
   const itemSel = document.getElementById('ws-item');
   if(itemSel){
     const prev = itemSel.value;
@@ -2145,8 +2236,44 @@ function renderItems(){
   `).join('') : '<tr><td colspan="6" class="empty-state">尚無品項資料</td></tr>';
 }
 
-// ============ 坊務目標管理（名稱 + 目標數 + 已完成數，手動更新） ============
+// ============ 坊務目標管理（名稱 + 目標數 + 已完成數 + 零件配方） ============
 let editingFleetIdx = null;
+let _recipeDraft = []; // 編輯中的配方 [{itemId, perBoat}]
+
+function renderRecipeRows(){
+  const wrap = document.getElementById('ff-recipe-rows');
+  const empty = document.getElementById('ff-recipe-empty');
+  if(!wrap) return;
+  const target = +document.getElementById('ff-target').value || 0;
+  if(empty) empty.style.display = _recipeDraft.length ? 'none' : 'block';
+  wrap.innerHTML = _recipeDraft.map((rc, i) => {
+    const opts = db.items.map(it => `<option value="${it.id}" ${String(it.id)===String(rc.itemId)?'selected':''}>${it.name}</option>`).join('');
+    const need = (Number(rc.perBoat)||0) * target;
+    return `<div style="display:flex; align-items:center; gap:8px;">
+      <select onchange="updateRecipeRow(${i},'itemId',this.value)" style="flex:2;">${opts}</select>
+      <input type="number" min="0" value="${rc.perBoat}" oninput="updateRecipeRow(${i},'perBoat',this.value)" placeholder="每艘" style="flex:1; text-align:center;">
+      <span style="font-size:12px; color:#7F8C8D; white-space:nowrap; min-width:64px;">×${target||0}＝${need}</span>
+      <button class="btn btn-sm btn-danger" type="button" onclick="removeRecipeRow(${i})">✕</button>
+    </div>`;
+  }).join('');
+}
+function addRecipeRow(){
+  if(!db.items.length) return toast('⚠️ 請先在「品項設定」建立零件品項');
+  const used = new Set(_recipeDraft.map(r=>String(r.itemId)));
+  const firstFree = db.items.find(it => !used.has(String(it.id))) || db.items[0];
+  _recipeDraft.push({itemId: firstFree.id, perBoat: 1});
+  renderRecipeRows();
+}
+function updateRecipeRow(i, key, val){
+  if(!_recipeDraft[i]) return;
+  _recipeDraft[i][key] = key==='perBoat' ? (+val||0) : (+val);
+  if(key==='perBoat') renderRecipeRows(); // 更新換算顯示
+}
+function removeRecipeRow(i){
+  _recipeDraft.splice(i,1);
+  renderRecipeRows();
+}
+
 function renderFleetAdmin(){
   const fleet = getFleet();
   const tbody = document.getElementById('fleet-table');
@@ -2157,14 +2284,19 @@ function renderFleetAdmin(){
     const pct = Math.min(100, Math.round(done/target*100));
     const unit = f.unit || '艘';
     const finished = done >= target;
+    const shortList = fleetShortage(f).filter(s=>s.short>0);
+    const shortTxt = shortList.length
+      ? shortList.map(s=>`${s.name} ×${s.short}`).join('、')
+      : (f.recipe && f.recipe.length ? '<span style="color:#10B981;">零件已備齊</span>' : '<span style="color:#9CA3AF;">未設配方</span>');
     return `<tr>
       <td><span style="font-weight:700;">${finished ? '🎉 ' : ''}${f.name || '—'}</span></td>
-      <td style="min-width:180px;">
+      <td style="min-width:170px;">
         <div style="display:flex; align-items:center; gap:8px;">
           <div class="fleet-bar" style="flex:1; height:8px;"><div class="fleet-fill${finished?' fleet-done':''}" style="width:${pct}%"></div></div>
           <span style="font-size:12px; color:#7F8C8D; white-space:nowrap;">${done.toLocaleString()}/${target.toLocaleString()} ${unit}</span>
         </div>
       </td>
+      <td style="font-size:12.5px; color:var(--red-palace); max-width:220px;">${shortTxt}</td>
       <td style="text-align:center; white-space:nowrap;">
         <button class="btn btn-sm" onclick="bumpFleet(${idx},-1)" ${done<=0?'disabled':''}>－1</button>
         <button class="btn btn-sm btn-primary" onclick="bumpFleet(${idx},1)" ${done>=target?'disabled':''}>＋1</button>
@@ -2174,10 +2306,9 @@ function renderFleetAdmin(){
         <button class="btn btn-sm btn-danger" onclick="deleteFleetGoal(${idx})">🗑️ 刪除</button>
       </td>
     </tr>`;
-  }).join('') : '<tr><td colspan="4" class="empty-state">尚無坊務目標，點右上角新增。</td></tr>';
+  }).join('') : '<tr><td colspan="5" class="empty-state">尚無坊務目標，點右上角新增。</td></tr>';
 }
 
-// ＋1／−1 快速更新完成數
 function bumpFleet(idx, delta){
   if(!requireAdmin()) return;
   const list = getFleet().slice();
@@ -2194,11 +2325,13 @@ function bumpFleet(idx, delta){
 function openFleetModal(){
   if(!requireAdmin()) return;
   editingFleetIdx = null;
+  _recipeDraft = [];
   document.getElementById('fleet-modal-title').textContent = '新增坊務目標';
   document.getElementById('ff-name').value = '';
   document.getElementById('ff-target').value = '';
   document.getElementById('ff-done').value = '0';
   document.getElementById('ff-unit').value = '';
+  renderRecipeRows();
   openModal('fleet-modal');
 }
 
@@ -2206,11 +2339,13 @@ function editFleetGoal(idx){
   if(!requireAdmin()) return;
   const f = getFleet()[idx]; if(!f) return;
   editingFleetIdx = idx;
+  _recipeDraft = (f.recipe || []).map(rc => ({itemId: rc.itemId, perBoat: rc.perBoat}));
   document.getElementById('fleet-modal-title').textContent = '修改坊務目標';
   document.getElementById('ff-name').value = f.name || '';
   document.getElementById('ff-target').value = f.target || '';
   document.getElementById('ff-done').value = f.done || 0;
   document.getElementById('ff-unit').value = f.unit || '';
+  renderRecipeRows();
   openModal('fleet-modal');
 }
 
@@ -2223,8 +2358,15 @@ function saveFleetGoal(){
   if(!name) return toast('⚠️ 坊務名稱為必填！');
   if(!target || target <= 0) return toast('⚠️ 目標數量需大於 0！');
   done = Math.max(0, Math.min(target, done));
+  // 整理配方：去掉數量為 0 的、合併重複品項
+  const recipeMap = {};
+  _recipeDraft.forEach(rc => {
+    const per = Number(rc.perBoat) || 0;
+    if(per > 0 && rc.itemId) recipeMap[rc.itemId] = (recipeMap[rc.itemId] || 0) + per;
+  });
+  const recipe = Object.entries(recipeMap).map(([itemId, perBoat]) => ({itemId: +itemId, perBoat}));
   const list = getFleet().slice();
-  const obj = {name, target, done, unit};
+  const obj = {name, target, done, unit, recipe};
   if(editingFleetIdx != null) list[editingFleetIdx] = obj; else list.push(obj);
   saveFleet(list)
     .then(()=>toast(editingFleetIdx != null ? '✏️ 坊務目標已更新' : '🎏 坊務目標已張貼！'))
@@ -2434,6 +2576,41 @@ function previewWorker(id){
 // ============================================================
 //  當期坊務進度條 + 成就徽章系統（純前端推算，相容安全規則）
 // ============================================================
+
+// —— 坊務缺料計算：配方需求 × 目標艘數 − 全坊已驗收數 ——
+function passOfItem(itemId){
+  return db.records.filter(r => r.status==='verified' && String(r.itemId)===String(itemId))
+                   .reduce((a,r)=>a+r.pass, 0);
+}
+function fleetShortage(f){
+  const target = Number(f.target) || 1;
+  return (f.recipe || []).map(rc => {
+    const need = (Number(rc.perBoat) || 0) * target;
+    const have = passOfItem(rc.itemId);
+    const short = Math.max(0, need - have);
+    return {itemId: rc.itemId, name: gin(rc.itemId), need, have, short};
+  });
+}
+// 彙整全坊各坊務的缺料（給報工台用）
+// 修正：同一零件的已報數是「共用庫存」，需先加總所有坊務的需求，再一次扣庫存，
+// 避免每個坊務各自扣同一批庫存造成重複抵扣。
+function allFleetShortages(){
+  const needMap = {}; // itemId -> {name, need, from:[]}
+  getFleet().forEach(f => {
+    const target = Number(f.target) || 1;
+    (f.recipe || []).forEach(rc => {
+      const need = (Number(rc.perBoat)||0) * target;
+      if(need <= 0) return;
+      if(!needMap[rc.itemId]) needMap[rc.itemId] = {itemId: rc.itemId, name: gin(rc.itemId), need: 0, from: []};
+      needMap[rc.itemId].need += need;
+      if(!needMap[rc.itemId].from.includes(f.name)) needMap[rc.itemId].from.push(f.name);
+    });
+  });
+  return Object.values(needMap)
+    .map(n => ({...n, have: passOfItem(n.itemId), short: Math.max(0, n.need - passOfItem(n.itemId))}))
+    .filter(n => n.short > 0)
+    .sort((a,b)=>b.short-a.short);
+}
 
 // —— 坊務進度：讀管理者設定的目標與手動完成數（可指定容器，供登入頁與洞府頁共用） ——
 function fleetProgressHTML(){
