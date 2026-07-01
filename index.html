@@ -819,16 +819,14 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
           <div style="font-size: 44px; margin-bottom: 0.75rem;">🔮</div>
           <div class="modal-title" style="font-size: 19px; justify-content: center; margin-bottom: 0.5rem; width: 100%; color: var(--navy-deep);">🔮 窺天玄境法陣</div>
           <p style="font-size: 13.5px; color: #2C3E50; margin-bottom: 1.25rem; line-height: 1.6;">
-            天榜乃修行機緣所在，設有護山幻陣。<br>請輸入<b>兩字接引密語</b>以破開法陣。
+            天榜乃修行機緣所在，設有護山幻陣。<br>凝神叩問，即可破開法陣、一窺天榜風雲。
           </p>
           <div style="background: #FAF8F5; border: 1px dashed var(--border-solid); padding: 12px; border-radius: var(--r-sm); margin-bottom: 1.5rem; font-size: 12.5px; text-align: left; line-height: 1.5; color: #7A654A;">
-            「凡人求真，向天一問；修仙之路，始於足下。」<br>提示：探求天地奧秘、追尋真理的方向。
+            「凡人求真，向天一問；修仙之路，始於足下。」
           </div>
           <div style="display: flex; gap: 12px; flex-direction: column;">
-            <input id="w-whisper-input" type="text" placeholder="請輸入兩字解陣密語 (例: 問道)" onkeydown="if(event.key==='Enter')verifyWhisper()" style="padding: 12px; font-size: 14.5px; border: 1px solid var(--border-solid); border-radius: var(--r-sm); outline: none; text-align: center;">
             <button class="btn btn-primary btn-immortal" onclick="verifyWhisper()">破陣窺天 ⚡</button>
           </div>
-          <div id="w-whisper-err" style="font-size:13px; color:var(--red-palace); display:none; margin-top:12px; font-weight: 700;">⚠️ 密語未能契合陣樞，幻陣未破！</div>
         </div>
 
         <div id="w-lb-content" style="display: none;">
@@ -1105,10 +1103,16 @@ function normalizeRecord(r){
 
 function saveDB(){ /* no-op */ }
 
-const ADMIN_PASSWORD = '8888';
+// 密碼與密語改存 SHA-256 雜湊，原始碼不再出現明碼（防路人 F12 直接讀取）
+// 註：純前端無法真正防繞過，根本防護在 Firestore Security Rules（見下方說明）
+const ADMIN_PASSWORD_HASH = '2926a2731f4b312c08982cacf8061eb14bf65c1a87cc5d70e864e079c6220731';
 const ADMIN_AUTH_KEY = 'yonglufang_admin_auth';
-const CULT_WHISPER = '問道';
 const WHISPER_AUTH_KEY = 'yonglufang_whisper_auth';
+
+async function sha256Hex(str){
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
 const BOAT_COLORS=[
   ['#D9B36C','#FFEBAA'],
@@ -1148,19 +1152,39 @@ function boatSVG(ci, phase){
 }
 
 let animFrame=null;
+let _animState=null; // 記住目前動畫參數，切回分頁時可續播
 function startBoatAnim(count, prefix){
   cancelAnimationFrame(animFrame);
-  let t=0;
+  _animState = {count, prefix, t: 0};
   function tick(){
-    t += 0.08;
+    if(document.hidden){ return; } // 分頁在背景時暫停，省手機電力
+    _animState.t += 0.08;
     for(let i=0; i<count; i++){
       const el = document.getElementById(prefix + i);
-      if(el) el.innerHTML = boatSVG(i, t + (i * 0.8));
+      if(el) el.innerHTML = boatSVG(i, _animState.t + (i * 0.8));
     }
     animFrame = requestAnimationFrame(tick);
   }
   tick();
 }
+// 分頁重新可見時，若動畫曾在播放則接續
+document.addEventListener('visibilitychange', () => {
+  if(!document.hidden && _animState){
+    const {count, prefix} = _animState;
+    if(document.getElementById(prefix + '0')){
+      cancelAnimationFrame(animFrame);
+      (function resume(){
+        if(document.hidden) return;
+        _animState.t += 0.08;
+        for(let i=0; i<count; i++){
+          const el = document.getElementById(prefix + i);
+          if(el) el.innerHTML = boatSVG(i, _animState.t + (i * 0.8));
+        }
+        animFrame = requestAnimationFrame(resume);
+      })();
+    }
+  }
+});
 
 const QUALITY_MIN = 20;
 const COIN_RATE = 1;
@@ -1439,14 +1463,7 @@ function renderWorkerLeaderboard(){
 }
 
 function verifyWhisper(){
-  const input = document.getElementById('w-whisper-input');
-  const val = (input?.value || '').trim();
-  if(val !== CULT_WHISPER){
-    document.getElementById('w-whisper-err').style.display = 'block';
-    if(input) { input.value = ''; input.focus(); }
-    return;
-  }
-  document.getElementById('w-whisper-err').style.display = 'none';
+  // 朋友間流通，取消密語驗證：按「破陣窺天」直接進入天榜
   sessionStorage.setItem(WHISPER_AUTH_KEY, '1');
   toast('⚡ 陣法已破，天機契合！');
   checkLeaderboardUnlock();
@@ -1463,7 +1480,6 @@ function checkLeaderboardUnlock(){
   } else {
     if(lockPanel) lockPanel.style.display = 'block';
     if(contentPanel) contentPanel.style.display = 'none';
-    setTimeout(() => { const input = document.getElementById('w-whisper-input'); if(input) input.focus(); }, 50);
   }
 }
 
@@ -1489,10 +1505,10 @@ function showAdminLogin(){
   setTimeout(() => { const input = document.getElementById('admin-password-input'); if(input) input.focus(); }, 50);
 }
 
-function adminLogin(){
+async function adminLogin(){
   const input = document.getElementById('admin-password-input');
   const pw = (input?.value || '').trim();
-  if(pw !== ADMIN_PASSWORD){
+  if(await sha256Hex(pw) !== ADMIN_PASSWORD_HASH){
     document.getElementById('admin-login-err').style.display = 'block';
     if(input) { input.value = ''; input.focus(); }
     return;
@@ -1884,26 +1900,37 @@ function askConfirm(msg, onOk, okText){
 function closeConfirm(){ const el = document.getElementById('confirm-modal'); if(el) el.classList.remove('open'); _confirmCb = null; }
 function doConfirm(){ const cb = _confirmCb; closeConfirm(); if(cb) cb(); }
 
+// 保留「單一區塊出錯不拖垮整頁」的容錯，但把錯誤 log 出來方便除錯
+function safeRender(label, fn){
+  try{ fn(); }catch(e){ console.error(`[renderAll:${label}]`, e); }
+}
 function renderAll(){
-  try{ renderDashboard(); }catch(e){}
-  try{ renderWorkers(); }catch(e){}
-  try{ renderItems(); }catch(e){}
-  try{ renderRecords(); }catch(e){}
+  safeRender('dashboard', renderDashboard);
+  safeRender('workers', renderWorkers);
+  safeRender('items', renderItems);
+  safeRender('records', renderRecords);
   const active = document.querySelector('.page.active');
   if(active){
-    if(active.id === 'page-leaderboard'){ try{ renderLeaderboard(); }catch(e){} }
-    if(active.id === 'page-settlement'){ try{ renderSettlementTable(); }catch(e){} }
-    if(active.id === 'page-slips'){ try{ renderSlips(); }catch(e){} }
-    if(active.id === 'page-w-leaderboard' && sessionStorage.getItem(WHISPER_AUTH_KEY) === '1'){ try{ renderWorkerLeaderboard(); }catch(e){} }
+    if(active.id === 'page-leaderboard'){ safeRender('leaderboard', renderLeaderboard); }
+    if(active.id === 'page-settlement'){ safeRender('settlement', renderSettlementTable); }
+    if(active.id === 'page-slips'){ safeRender('slips', renderSlips); }
+    if(active.id === 'page-w-leaderboard' && sessionStorage.getItem(WHISPER_AUTH_KEY) === '1'){ safeRender('w-leaderboard', renderWorkerLeaderboard); }
   }
   if(currentWorkerId && gw(currentWorkerId)){
-    try{ renderWorkerPages(currentWorkerId); }catch(e){}
+    safeRender('w-pages', () => renderWorkerPages(currentWorkerId));
     if(active && active.id === 'page-w-login'){
-      try{ showWorkerPage('w-home'); }catch(e){}
+      safeRender('w-home', () => showWorkerPage('w-home'));
     }
   }
 }
-function refreshAfterDataChange(){ renderAll(); }
+function refreshAfterDataChange(){ scheduleRender(); }
+
+// 合併短時間內多次 snapshot 觸發的重繪，避免初次載入時 4 個 collection 各繪一次
+let _renderRAF = null;
+function scheduleRender(){
+  if(_renderRAF) return;
+  _renderRAF = requestAnimationFrame(() => { _renderRAF = null; renderAll(); });
+}
 
 function deleteWorker(id){
   if(!requireAdmin()) return;
@@ -2508,19 +2535,19 @@ function startSync(){
   f.collection('workers').onSnapshot(s => {
     db.workers = s.docs.map(d => d.data()).sort((a,b) => (a.id||0) - (b.id||0));
     setStatus(s.metadata.fromCache ? '📴 離線快取中' : '✅ 已連線雲端', !s.metadata.fromCache);
-    renderAll();
+    scheduleRender();
   }, onSyncErr);
   f.collection('items').onSnapshot(s => {
     db.items = s.docs.map(d => d.data()).sort((a,b) => (a.id||0) - (b.id||0));
-    renderAll();
+    scheduleRender();
   }, onSyncErr);
   f.collection('records').onSnapshot(s => {
     db.records = s.docs.map(d => normalizeRecord(d.data()));
-    renderAll();
+    scheduleRender();
   }, onSyncErr);
   f.collection('settlements').onSnapshot(s => {
     db.settlements = s.docs.map(d => d.data());
-    renderAll();
+    scheduleRender();
   }, onSyncErr);
 }
 function onSyncErr(e){ console.error(e); setStatus('⚠️ 同步中斷', false); }
