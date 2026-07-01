@@ -485,6 +485,15 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
 .worn-clear:hover{ color:var(--gold-beige); }
 .fleet-done{ background:linear-gradient(135deg,#34D399,#10B981) !important; }
 
+/* —— 洞府缺料召喚（可點跳報件台） —— */
+.fleet-cta{ display:flex; align-items:center; gap:10px; padding:14px 16px; border-radius:var(--r-md); cursor:pointer;
+  background:linear-gradient(135deg,#FFF4EC 0%,#FDE7DC 100%); border:1px solid rgba(158,42,43,0.2);
+  transition:all 0.2s; margin-top:4px; }
+.fleet-cta:hover{ box-shadow:0 6px 18px -6px rgba(158,42,43,0.4); transform:translateY(-1px); border-color:rgba(158,42,43,0.4); }
+.fleet-cta-icon{ font-size:20px; flex-shrink:0; }
+.fleet-cta-text{ flex:1; font-size:var(--fs-sm); font-weight:700; color:var(--navy-deep); line-height:1.5; min-width:0; }
+.fleet-cta-go{ flex-shrink:0; font-size:var(--fs-sm); font-weight:800; color:var(--red-palace); white-space:nowrap; }
+
 /* —— 登入頁坊務進度（深藍底） —— */
 .login-fleet{ margin-top:22px; }
 .login-fleet-title{ font-size:13px; font-weight:700; color:var(--gold-beige); margin-bottom:12px; letter-spacing:0.03em; }
@@ -514,6 +523,30 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
 .worn-chip.tier-jade{ background:#E5F5EF; color:#0E7A5F; }
 .worn-chip.tier-purple{ background:#F1E9FB; color:#7C3AED; }
 .worn-chip.tier-gold{ background:linear-gradient(135deg,#FFF3CE,#EFC96E); color:#7A5A12; box-shadow:0 1px 4px rgba(217,179,108,0.4); }
+
+/* —— 法器閣 —— */
+.artifact-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(84px,1fr)); gap:12px; }
+.arti{ position:relative; display:flex; flex-direction:column; align-items:center; gap:8px; padding:12px 4px; text-align:center; transition:all 0.2s; }
+.arti-on{ cursor:pointer; }
+.arti-on:hover{ transform:translateY(-3px); }
+.arti-on:hover .arti-icon{ box-shadow:var(--shadow-gold); }
+.arti-off{ opacity:0.45; }
+.arti-off .arti-icon{ background:#F0EEEA; border-color:#E0DDD7; }
+.arti-icon{ width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:27px; border:1.5px solid var(--border-subtle); transition:box-shadow 0.2s; }
+.arti-on.atier-1 .arti-icon{ background:#F0FBF6; border-color:#8FD3BC; }
+.arti-on.atier-2 .arti-icon{ background:#FAF6FE; border-color:#C4A6EF; }
+.arti-on.atier-3 .arti-icon{ background:linear-gradient(160deg,#FFFCF3 0%,#FBEFCF 100%); border-color:#E0BF6D; box-shadow:0 3px 14px rgba(217,179,108,0.3); }
+.arti-name{ font-size:11.5px; font-weight:700; color:var(--navy-deep); line-height:1.25; }
+.arti-off .arti-name{ color:#9CA3AF; }
+.arti-worn .arti-icon{ outline:2px solid var(--gold-beige); outline-offset:2px; }
+.arti-worn-tag{ position:absolute; top:-6px; left:50%; transform:translateX(-50%); font-size:9.5px; font-weight:700; color:#FFF; background:var(--red-palace); padding:1px 8px; border-radius:99px; white-space:nowrap; z-index:2; }
+
+/* —— 法器 chip（天榜/洞府名字旁） —— */
+.artifact-chip{ display:inline-flex; align-items:center; gap:3px; padding:1px 8px 1px 6px; border-radius:99px; font-size:11px; font-weight:700; vertical-align:middle; margin-left:2px; }
+.artifact-chip-icon{ font-size:13px; line-height:1; }
+.artifact-chip.atier-1{ background:#E5F5EF; color:#0E7A5F; }
+.artifact-chip.atier-2{ background:#F1E9FB; color:#7C3AED; }
+.artifact-chip.atier-3{ background:linear-gradient(135deg,#FFF3CE,#EFC96E); color:#7A5A12; box-shadow:0 1px 4px rgba(217,179,108,0.4); }
 </style>
 </head>
 <body>
@@ -861,6 +894,7 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
         <div class="w-stat-grid" id="w-stats"></div>
         <div id="w-fleet-box"></div>
         <div id="w-badges-box"></div>
+        <div id="w-artifacts-box"></div>
         <div class="card" style="margin-top: 1.5rem;">
           <div class="card-head"><span class="card-head-title">⚙️ 待點化驗收的法製品（大掌櫃核實中）</span></div>
           <div class="card-body" id="w-pending" style="padding: 0;"></div>
@@ -1507,6 +1541,7 @@ function renderRaceRanked(containerId, rows, metric, prevRank, selfId, emptyMsg,
           <div class="race-name">
             <span class="race-username">${r.nick}</span>
             ${badgeChipHTML(wornBadgeOf(r.workerId))}
+            ${artifactChipHTML(wornArtifactOf(r.workerId))}
             ${isSelf ? '<span class="self-tag" style="font-size:10px; color:var(--red-palace); font-weight:700;">[閣下]</span>' : ''}
             ${coin}
           </div>
@@ -2640,9 +2675,16 @@ function renderFleetProgress(){
   // 洞府修為頁
   const box = document.getElementById('w-fleet-box');
   if(box){
+    const shortages = allFleetShortages();
+    const shortCall = shortages.length ? `
+      <div class="fleet-cta" onclick="showWorkerPage('w-submit')">
+        <span class="fleet-cta-icon">🔥</span>
+        <span class="fleet-cta-text">本坊尚缺 ${shortages.slice(0,4).map(s=>`${s.name}×${s.short}`).join('、')}${shortages.length>4?' 等':''}，速至報件台領件！</span>
+        <span class="fleet-cta-go">前往領件 ›</span>
+      </div>` : '';
     box.innerHTML = `<div class="card" style="margin-top:1.5rem;">
       <div class="card-head"><span class="card-head-title">⛩️ 坊務目標進度</span></div>
-      <div class="card-body" style="display:flex; flex-direction:column; gap:16px;">${fleetProgressHTML()}</div>
+      <div class="card-body" style="display:flex; flex-direction:column; gap:16px;">${fleetProgressHTML()}${shortCall}</div>
     </div>`;
   }
   // 同道登入頁（登入前也看得到）
@@ -2793,6 +2835,115 @@ function badgeSVG(tier){
   </svg>`;
 }
 
+// ============================================================
+//  法器系統：28 件綁境界，修到對應境界即解鎖，可佩戴顯示於天榜/洞府
+// ============================================================
+// tier: 1初階 2中階 3高階；realmIdx: 達到第幾境界(0-9)解鎖
+function buildArtifactDefs(){
+  return [
+    // 初階 8 件 → 練氣(0)/築基(1)/金丹(2)
+    {id:'ling_mu_jian', name:'靈木劍',   icon:'🗡️', tier:1, realmIdx:0},
+    {id:'qing_yu_pei',  name:'青玉佩',   icon:'🟢', tier:1, realmIdx:0},
+    {id:'ju_ling_zhu',  name:'聚靈珠',   icon:'🔵', tier:1, realmIdx:0},
+    {id:'hu_xin_jing',  name:'護心鏡',   icon:'🪞', tier:1, realmIdx:1},
+    {id:'feng_lei_ling',name:'風雷鈴',   icon:'🔔', tier:1, realmIdx:1},
+    {id:'qing_xin_deng',name:'清心燈',   icon:'🏮', tier:1, realmIdx:1},
+    {id:'yun_wen_ling', name:'雲紋令',   icon:'📜', tier:1, realmIdx:2},
+    {id:'ling_hu_lu',   name:'靈葫蘆',   icon:'🍶', tier:1, realmIdx:2},
+    // 中階 10 件 → 元嬰(3)/化神(4)/練虛(5)
+    {id:'fu_mo_yin',    name:'伏魔印',   icon:'🔱', tier:2, realmIdx:3},
+    {id:'qian_kun_chi', name:'乾坤尺',   icon:'📏', tier:2, realmIdx:3},
+    {id:'jiu_gong_pan', name:'九宮盤',   icon:'🧭', tier:2, realmIdx:3},
+    {id:'tai_xu_jing',  name:'太虛鏡',   icon:'🔮', tier:2, realmIdx:4},
+    {id:'shan_he_ding', name:'山河鼎',   icon:'⚱️', tier:2, realmIdx:4},
+    {id:'tian_ji_pan',  name:'天機盤',   icon:'☸️', tier:2, realmIdx:4},
+    {id:'zi_xiao_jian', name:'紫霄劍',   icon:'⚔️', tier:2, realmIdx:5},
+    {id:'xing_chen_pan',name:'星辰盤',   icon:'🌌', tier:2, realmIdx:5},
+    {id:'zhen_hun_zhong',name:'鎮魂鐘',  icon:'🛎️', tier:2, realmIdx:5},
+    {id:'ru_yi_fan',    name:'如意幡',   icon:'🎏', tier:2, realmIdx:5},
+    // 高階 10 件 → 合體(6)/大乘(7)/渡劫(8)/飛昇(9)
+    {id:'zhu_xian_jian',name:'誅仙劍',   icon:'🗡️', tier:3, realmIdx:6},
+    {id:'hun_yuan_zhu', name:'混元珠',   icon:'⚪', tier:3, realmIdx:6},
+    {id:'hao_tian_jing',name:'昊天鏡',   icon:'🪩', tier:3, realmIdx:7},
+    {id:'shan_he_tu',   name:'山河社稷圖',icon:'🗺️', tier:3, realmIdx:7},
+    {id:'he_tu_luo_shu',name:'河圖洛書', icon:'📖', tier:3, realmIdx:8},
+    {id:'jiu_long_ding',name:'九龍神鼎', icon:'🐉', tier:3, realmIdx:8},
+    {id:'ba_gua_pan',   name:'八卦乾坤盤',icon:'☯️', tier:3, realmIdx:8},
+    {id:'wan_xiang_lun',name:'萬象天輪', icon:'🎡', tier:3, realmIdx:9},
+    {id:'hun_dun_lian', name:'混沌青蓮', icon:'🪷', tier:3, realmIdx:9},
+    {id:'hong_meng_xi', name:'鴻蒙玉璽', icon:'🏵️', tier:3, realmIdx:9},
+  ];
+}
+const ARTIFACT_TIER_META = {
+  1: {cls:'atier-1', label:'初階法器'},
+  2: {cls:'atier-2', label:'中階法器'},
+  3: {cls:'atier-3', label:'高階法器'}
+};
+
+// 取得某同道目前的境界索引
+function realmIdxOf(wid){
+  const coins = coinsOf(cumulativeEarned(wid));
+  let idx = 0;
+  for(let i=0;i<REALMS.length;i++){ if(coins >= REALMS[i].min) idx = i; }
+  return idx;
+}
+// 佩戴中且已解鎖的法器（給天榜/洞府用）
+function wornArtifactOf(wid){
+  const w = gw(wid);
+  const aid = w && w.wornArtifact;
+  if(!aid) return null;
+  const def = buildArtifactDefs().find(d => d.id === aid);
+  if(!def) return null;
+  if(realmIdxOf(wid) < def.realmIdx) return null; // 境界不足不顯示
+  return def;
+}
+function artifactChipHTML(def){
+  if(!def) return '';
+  const meta = ARTIFACT_TIER_META[def.tier] || ARTIFACT_TIER_META[1];
+  return `<span class="artifact-chip ${meta.cls}" title="${def.name}（${meta.label}）"><span class="artifact-chip-icon">${def.icon}</span><span class="artifact-chip-name">${def.name}</span></span>`;
+}
+function wearArtifact(wid, artifactId){
+  const w = gw(wid); if(!w) return;
+  const next = (w.wornArtifact === artifactId) ? '' : artifactId;
+  FS.update('workers', wid, {wornArtifact: next})
+    .then(()=>{ toast(next ? '⚜️ 已佩戴法器' : '已收起法器'); })
+    .catch(()=>toast('⚠️ 佩戴失敗，請稍後再試'));
+}
+function renderArtifacts(wid){
+  const box = document.getElementById('w-artifacts-box');
+  if(!box) return;
+  const defs = buildArtifactDefs();
+  const myIdx = realmIdxOf(wid);
+  const state = defs.map(d => ({...d, unlocked: myIdx >= d.realmIdx}));
+  const unlockedCount = state.filter(s => s.unlocked).length;
+  const w = gw(wid);
+  const wornId = (w && w.wornArtifact) || '';
+  const tierName = {1:'初階', 2:'中階', 3:'高階'};
+
+  box.innerHTML = `<div class="card" style="margin-top:1.5rem;">
+    <div class="card-head">
+      <span class="card-head-title">⚔️ 法器閣</span>
+      <span style="font-size:var(--fs-xs); color:#7F8C8D;">已得 ${unlockedCount} / ${defs.length} 件</span>
+    </div>
+    <div class="card-body">
+      <div class="artifact-grid">
+        ${state.map(s => {
+          const meta = ARTIFACT_TIER_META[s.tier] || ARTIFACT_TIER_META[1];
+          const worn = s.id === wornId;
+          return `<div class="arti ${s.unlocked ? 'arti-on '+meta.cls : 'arti-off'} ${worn ? 'arti-worn' : ''}"
+               title="${s.unlocked ? s.name+'（'+meta.label+'）' : '需修至「'+REALMS[s.realmIdx].name+'」解鎖'}"
+               ${s.unlocked ? `onclick="wearArtifact('${wid}','${s.id}')"` : ''}>
+            ${worn ? '<div class="arti-worn-tag">佩戴中</div>' : ''}
+            <div class="arti-icon">${s.unlocked ? s.icon : '🔒'}</div>
+            <div class="arti-name">${s.unlocked ? s.name : REALMS[s.realmIdx].name}</div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="badge-hint">修為每突破境界即解鎖對應法器 · 點擊已得法器可佩戴，顯示於天榜與洞府</div>
+    </div>
+  </div>`;
+}
+
 function renderBadges(wid){
   const box = document.getElementById('w-badges-box');
   if(!box) return;
@@ -2859,7 +3010,7 @@ function renderWorkerPages(wid){
     <div class="cult-spark">⚗️</div>
     <div class="cult-top">
       <div class="cult-avatar">${daoInitial}</div>
-      <div><div class="cult-name">${daoHao}</div>
+      <div><div class="cult-name">${daoHao} ${artifactChipHTML(wornArtifactOf(wid))}</div>
         <div class="cult-realm-badge" style="background:${c.color}; color:#FFF;">當前境界：${c.realm} · ${c.layerLabel}</div></div>
     </div>
     <div class="cult-coin"><span class="cult-coin-num">🪙 ${coins.toLocaleString()}</span><span class="cult-coin-lbl">累積修為靈幣</span></div>
@@ -2902,6 +3053,7 @@ function renderWorkerPages(wid){
   renderWorkerSubmitPage();
   renderFleetProgress();
   renderBadges(wid);
+  renderArtifacts(wid);
 }
 
 function showPage(name){
