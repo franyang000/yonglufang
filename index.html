@@ -417,20 +417,41 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
 .fleet-fill{ height:100%; border-radius:99px; background:var(--gold-gradient); box-shadow:0 0 8px rgba(217,179,108,0.4); transition:width 0.8s cubic-bezier(0.16,1,0.3,1); }
 
 /* —— 功德徽記牆 —— */
-.badge-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(88px,1fr)); gap:14px; }
-.ach{ display:flex; flex-direction:column; align-items:center; gap:8px; padding:14px 8px; border-radius:var(--r-md); border:1px solid var(--border-subtle); text-align:center; transition:all 0.25s; }
-.ach-on{ background:#FFFDF8; cursor:pointer; }
-.ach-on:hover{ box-shadow:var(--shadow-gold); border-color:var(--gold-beige); transform:translateY(-2px); }
-.ach-off{ background:#F7F6F3; opacity:0.55; }
-.ach-rare.ach-on{ background:linear-gradient(160deg,#FFF9F2 0%,#FDF2E6 100%); border-color:rgba(158,42,43,0.25); }
-.ach-icon{ width:40px; height:40px; display:flex; align-items:center; justify-content:center; font-size:28px; }
-.ach-name{ font-size:12px; font-weight:700; color:var(--navy-deep); line-height:1.3; }
+.tier-legend{ display:flex; align-items:center; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+.tl{ font-size:11px; font-weight:700; padding:2px 10px; border-radius:99px; }
+.tier-silver{ background:#EEF1F4; color:#5B6B7B; border:1px solid #CDD6DF; }
+.tier-jade{ background:#E5F5EF; color:#0E7A5F; border:1px solid #9FDBC7; }
+.tier-purple{ background:#F1E9FB; color:#7C3AED; border:1px solid #C9AEF0; }
+.tier-gold{ background:linear-gradient(135deg,#FFF3CE,#F0CE7A); color:#7A5A12; border:1px solid #D9B36C; }
+.badge-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(84px,1fr)); gap:12px; }
+.ach{ position:relative; display:flex; flex-direction:column; align-items:center; gap:7px; padding:14px 6px; border-radius:var(--r-md); border:1px solid var(--border-subtle); text-align:center; transition:all 0.2s; }
+.ach-on{ cursor:pointer; }
+.ach-on:hover{ box-shadow:var(--shadow-gold); transform:translateY(-2px); }
+.ach-off{ background:#F7F6F3; opacity:0.5; }
+.ach-on.tier-silver{ background:#FAFBFC; border-color:#D3DBE3; }
+.ach-on.tier-jade{ background:#F5FCF9; border-color:#B4E3D2; }
+.ach-on.tier-purple{ background:#FAF6FE; border-color:#D3BCF3; }
+.ach-on.tier-gold{ background:linear-gradient(160deg,#FFFCF3 0%,#FCF3DD 100%); border-color:#E4C983; box-shadow:0 3px 14px rgba(217,179,108,0.25); }
+.ach-worn{ outline:2px solid var(--gold-beige); outline-offset:1px; }
+.ach-worn-tag{ position:absolute; top:-8px; left:50%; transform:translateX(-50%); font-size:9.5px; font-weight:700; color:#FFF; background:var(--red-palace); padding:1px 8px; border-radius:99px; white-space:nowrap; }
+.ach-icon{ width:38px; height:38px; display:flex; align-items:center; justify-content:center; font-size:26px; }
+.ach-name{ font-size:11.5px; font-weight:700; color:var(--navy-deep); line-height:1.25; }
 .ach-off .ach-name{ color:#9CA3AF; }
 .badge-hint{ margin-top:14px; font-size:11.5px; color:#9CA3AF; text-align:center; line-height:1.5; }
 .worn-title-bar{ margin-bottom:16px; padding:10px 14px; border-radius:var(--r-sm); background:var(--navy-gradient); color:var(--gold-light); font-size:13px; display:flex; align-items:center; gap:8px; }
 .worn-title-bar b{ color:var(--gold-beige); }
 .worn-clear{ margin-left:auto; font-size:11.5px; color:rgba(253,249,238,0.6); cursor:pointer; text-decoration:underline; }
 .worn-clear:hover{ color:var(--gold-beige); }
+.fleet-done{ background:linear-gradient(135deg,#34D399,#10B981) !important; }
+
+/* —— 天榜佩戴徽章 chip —— */
+.worn-chip{ display:inline-flex; align-items:center; gap:4px; padding:1px 8px 1px 4px; border-radius:99px; font-size:11px; font-weight:700; vertical-align:middle; margin-left:2px; }
+.worn-chip svg{ width:16px; height:16px; }
+.worn-chip-name{ font-size:11px; }
+.worn-chip.tier-silver{ background:#EEF1F4; color:#5B6B7B; }
+.worn-chip.tier-jade{ background:#E5F5EF; color:#0E7A5F; }
+.worn-chip.tier-purple{ background:#F1E9FB; color:#7C3AED; }
+.worn-chip.tier-gold{ background:linear-gradient(135deg,#FFF3CE,#EFC96E); color:#7A5A12; box-shadow:0 1px 4px rgba(217,179,108,0.4); }
 </style>
 </head>
 <body>
@@ -461,6 +482,7 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
       <div class="nav-item" onclick="showPage('dashboard')"><div class="nav-dot"></div>系統總覽</div>
       <div class="nav-item" onclick="showPage('workers')"><div class="nav-dot"></div>同道管理</div>
       <div class="nav-item" onclick="showPage('items')"><div class="nav-dot"></div>品項設定</div>
+      <div class="nav-item" onclick="showPage('fleet')"><div class="nav-dot"></div>坊務目標</div>
       <div class="nav-item" onclick="showPage('records')"><div class="nav-dot"></div>交付管理</div>
       <div class="nav-item" onclick="showPage('settlement')"><div class="nav-dot"></div>資糧結算</div>
       <div class="nav-item" onclick="showPage('slips')"><div class="nav-dot"></div>資糧條核發</div>
@@ -572,6 +594,26 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
                 <tr><th>品項名稱</th><th>單位</th><th>基準數量</th><th>單價 (元)</th><th>備註說明</th><th style="text-align: right;">操作</th></tr>
               </thead>
               <tbody id="items-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 坊務目標分頁 -->
+      <div class="page" id="page-fleet">
+        <div class="table-filter-bar">
+          <div style="font-size:13px; color:#7F8C8D; line-height:1.6; max-width:640px;">
+            在此張貼本坊接下的船隻／訂單目標。同道在「洞府修為」頁會看到進度條，知道自己在為哪批坊務努力。進度＝該品項全坊已驗收合格數 ÷ 目標數。
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openFleetModal()">＋ 新增坊務目標</button>
+        </div>
+        <div class="card">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr><th>坊務名稱</th><th>對應品項</th><th>目標數量</th><th>單位</th><th>目前進度</th><th style="text-align: right;">操作</th></tr>
+              </thead>
+              <tbody id="fleet-table"></tbody>
             </table>
           </div>
         </div>
@@ -940,6 +982,28 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
   </div>
 </div>
 
+<!-- 對話框：坊務目標 -->
+<div class="modal-bg" id="fleet-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title" id="fleet-modal-title">新增坊務目標</span>
+      <button class="modal-close" onclick="closeModal('fleet-modal')">✕</button>
+    </div>
+    <div class="card-body">
+      <div class="form-group"><label>坊務名稱</label><input id="ff-name" placeholder="例如：中元普渡船"></div>
+      <div class="form-row" style="margin-top:10px;">
+        <div class="form-group"><label>對應品項（進度來源）</label><select id="ff-item"></select></div>
+        <div class="form-group"><label>目標數量</label><input id="ff-target" type="number" placeholder="150" min="1"></div>
+      </div>
+      <div class="form-group" style="margin-top:10px; margin-bottom:12px;"><label>單位（選填）</label><input id="ff-unit" placeholder="例如：艘 / 件"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-sm" onclick="closeModal('fleet-modal')">取消</button>
+      <button class="btn btn-sm btn-primary" onclick="saveFleetGoal()">儲存</button>
+    </div>
+  </div>
+</div>
+
 <!-- 對話框：登記交件驗收 -->
 <div class="modal-bg" id="record-modal">
   <div class="modal">
@@ -1090,7 +1154,7 @@ const firebaseConfig = {
   measurementId: "G-16D081ZSKN"
 };
 
-let db = { workers: [], items: [], records: [], settlements: [] };
+let db = { workers: [], items: [], records: [], settlements: [], fleet: [] };
 
 const FS = {
   fdb: null,
@@ -1377,6 +1441,7 @@ function renderRaceRanked(containerId, rows, metric, prevRank, selfId, emptyMsg,
           </div>
           <div class="race-name">
             <span class="race-username">${r.nick}</span>
+            ${badgeChipHTML(wornBadgeOf(r.workerId))}
             ${isSelf ? '<span class="self-tag" style="font-size:10px; color:var(--red-palace); font-weight:700;">[閣下]</span>' : ''}
             ${coin}
           </div>
@@ -1937,6 +2002,7 @@ function renderAll(){
   const active = document.querySelector('.page.active');
   if(active){
     if(active.id === 'page-leaderboard'){ safeRender('leaderboard', renderLeaderboard); }
+    if(active.id === 'page-fleet'){ safeRender('fleet', renderFleetAdmin); }
     if(active.id === 'page-settlement'){ safeRender('settlement', renderSettlementTable); }
     if(active.id === 'page-slips'){ safeRender('slips', renderSlips); }
     if(active.id === 'page-w-leaderboard' && sessionStorage.getItem(WHISPER_AUTH_KEY) === '1'){ safeRender('w-leaderboard', renderWorkerLeaderboard); }
@@ -2071,6 +2137,97 @@ function renderItems(){
       </td>
     </tr>
   `).join('') : '<tr><td colspan="6" class="empty-state">尚無品項資料</td></tr>';
+}
+
+// ============ 坊務目標管理 ============
+let editingFleetIdx = null;
+function renderFleetAdmin(){
+  const fleet = getFleet();
+  // 各品項全坊已驗收合格數
+  const passByItem = {};
+  db.records.forEach(r => { if(r.status==='verified') passByItem[r.itemId]=(passByItem[r.itemId]||0)+r.pass; });
+  const tbody = document.getElementById('fleet-table');
+  if(!tbody) return;
+  tbody.innerHTML = fleet.length ? fleet.map((f, idx) => {
+    const it = gi(f.itemId);
+    const done = passByItem[f.itemId] || 0;
+    const target = Number(f.target) || 1;
+    const pct = Math.min(100, Math.round(done/target*100));
+    return `<tr>
+      <td><span style="font-weight:700;">${f.name || '—'}</span></td>
+      <td>${it ? it.name : '<span style="color:var(--red-palace)">品項已刪除</span>'}</td>
+      <td>${target.toLocaleString()}</td>
+      <td><span class="badge badge-gray">${f.unit || (it ? it.unit : '—')}</span></td>
+      <td style="min-width:140px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div class="fleet-bar" style="flex:1; height:8px;"><div class="fleet-fill${done>=target?' fleet-done':''}" style="width:${pct}%"></div></div>
+          <span style="font-size:12px; color:#7F8C8D; white-space:nowrap;">${done.toLocaleString()}/${target.toLocaleString()}</span>
+        </div>
+      </td>
+      <td style="text-align:right;">
+        <button class="btn btn-sm" onclick="editFleetGoal(${idx})">✏️ 修改</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteFleetGoal(${idx})">🗑️ 刪除</button>
+      </td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="6" class="empty-state">尚無坊務目標，點右上角新增。</td></tr>';
+}
+
+function fillFleetItemOptions(selId){
+  const sel = document.getElementById('ff-item');
+  sel.innerHTML = db.items.map(i => `<option value="${i.id}">${i.name}（${i.unit || '—'}）</option>`).join('');
+  if(selId != null) sel.value = String(selId);
+}
+
+function openFleetModal(){
+  if(!requireAdmin()) return;
+  if(!db.items.length) return toast('⚠️ 請先在「品項設定」新增至少一個品項');
+  editingFleetIdx = null;
+  document.getElementById('fleet-modal-title').textContent = '新增坊務目標';
+  document.getElementById('ff-name').value = '';
+  document.getElementById('ff-target').value = '';
+  document.getElementById('ff-unit').value = '';
+  fillFleetItemOptions();
+  openModal('fleet-modal');
+}
+
+function editFleetGoal(idx){
+  if(!requireAdmin()) return;
+  const f = getFleet()[idx]; if(!f) return;
+  editingFleetIdx = idx;
+  document.getElementById('fleet-modal-title').textContent = '修改坊務目標';
+  document.getElementById('ff-name').value = f.name || '';
+  document.getElementById('ff-target').value = f.target || '';
+  document.getElementById('ff-unit').value = f.unit || '';
+  fillFleetItemOptions(f.itemId);
+  openModal('fleet-modal');
+}
+
+function saveFleetGoal(){
+  if(!requireAdmin()) return;
+  const name = document.getElementById('ff-name').value.trim();
+  const itemId = +document.getElementById('ff-item').value;
+  const target = +document.getElementById('ff-target').value;
+  const unit = document.getElementById('ff-unit').value.trim();
+  if(!name) return toast('⚠️ 坊務名稱為必填！');
+  if(!itemId) return toast('⚠️ 請選擇對應品項！');
+  if(!target || target <= 0) return toast('⚠️ 目標數量需大於 0！');
+  const list = getFleet().slice();
+  const obj = {name, itemId, target, unit};
+  if(editingFleetIdx != null) list[editingFleetIdx] = obj; else list.push(obj);
+  saveFleet(list)
+    .then(()=>toast(editingFleetIdx != null ? '✏️ 坊務目標已更新' : '🎏 坊務目標已張貼！'))
+    .catch(()=>toast('⚠️ 儲存失敗'));
+  closeModal('fleet-modal');
+  editingFleetIdx = null;
+}
+
+function deleteFleetGoal(idx){
+  if(!requireAdmin()) return;
+  askConfirm('確定要撤下這項坊務目標嗎？', () => {
+    const list = getFleet().slice();
+    list.splice(idx, 1);
+    saveFleet(list).then(()=>toast('已撤下坊務目標')).catch(()=>toast('⚠️ 刪除失敗'));
+  });
 }
 
 function renderRecords(){
@@ -2263,108 +2420,126 @@ function previewWorker(id){
 }
 
 // ============================================================
-//  當期坊務進度條 + 成就徽章系統（純前端推算，零寫入，相容安全規則）
+//  當期坊務進度條 + 成就徽章系統（純前端推算，相容安全規則）
 // ============================================================
-const CUR_MONTH = '2026-06';
-const TITLE_KEY = 'yonglufang_worn_title'; // 佩戴的稱號存本機
 
-// —— 當期坊務進度：以「本月各品項已驗收數 vs 基準數量」自動生成 ——
+// —— 當期坊務進度：讀取管理者設定的「坊務目標」（可多筆） ——
 function renderFleetProgress(){
   const box = document.getElementById('w-fleet-box');
   if(!box) return;
-  const items = db.items || [];
-  // 統計本月每個品項的已驗收合格數
-  const passByItem = {};
-  db.records.forEach(r => {
-    if(r.status === 'verified' && isThisMonth(r.date, CUR_MONTH)){
-      passByItem[r.itemId] = (passByItem[r.itemId] || 0) + r.pass;
-    }
-  });
-  const rows = items.map(it => {
-    const done = passByItem[it.id] || 0;
-    const target = Number(it.qty) || 1;
-    const pct = Math.min(100, Math.round(done / target * 100));
-    return {name: it.name, unit: it.unit || '', done, target, pct};
-  }).filter(r => r.done > 0); // 只顯示本月有進度的品項
+  const fleet = getFleet();
 
-  if(!rows.length){
+  if(!fleet.length){
     box.innerHTML = `<div class="card" style="margin-top:1.5rem;">
-      <div class="card-head"><span class="card-head-title">⛩️ 本月坊務進度</span></div>
-      <div class="card-body"><div class="immortal-empty">本月坊務尚未起爐，靜待第一件法製品交付。</div></div>
+      <div class="card-head"><span class="card-head-title">⛩️ 坊務目標進度</span></div>
+      <div class="card-body"><div class="immortal-empty">坊主尚未張貼坊務目標，靜待接單。</div></div>
     </div>`;
     return;
   }
-  const totalDone = rows.reduce((a,r)=>a+r.done,0);
+  // 每個目標：以該品項「全坊已驗收合格數」對比目標數
+  const passByItem = {};
+  db.records.forEach(r => {
+    if(r.status === 'verified'){
+      passByItem[r.itemId] = (passByItem[r.itemId] || 0) + r.pass;
+    }
+  });
+  const rows = fleet.map(f => {
+    const done = passByItem[f.itemId] || 0;
+    const target = Number(f.target) || 1;
+    const pct = Math.min(100, Math.round(done / target * 100));
+    const it = gi(f.itemId);
+    return {name: f.name || (it ? it.name : '未命名坊務'), unit: f.unit || (it ? it.unit : ''), done, target, pct, finished: done>=target};
+  });
+
   box.innerHTML = `<div class="card" style="margin-top:1.5rem;">
-    <div class="card-head">
-      <span class="card-head-title">⛩️ 本月坊務進度</span>
-      <span style="font-size:12px; color:#7F8C8D;">本月全坊已成 ${totalDone.toLocaleString()} 件</span>
-    </div>
-    <div class="card-body" style="display:flex; flex-direction:column; gap:14px;">
+    <div class="card-head"><span class="card-head-title">⛩️ 坊務目標進度</span></div>
+    <div class="card-body" style="display:flex; flex-direction:column; gap:16px;">
       ${rows.map(r => `
         <div class="fleet-row">
           <div class="fleet-row-top">
-            <span class="fleet-name">${r.name}</span>
-            <span class="fleet-count">${r.done.toLocaleString()} / ${r.target.toLocaleString()} ${r.unit}</span>
+            <span class="fleet-name">${r.finished ? '🎉 ' : ''}${r.name}</span>
+            <span class="fleet-count">${r.done.toLocaleString()} / ${r.target.toLocaleString()} ${r.unit || ''}</span>
           </div>
-          <div class="fleet-bar"><div class="fleet-fill" style="width:${r.pct}%"></div></div>
+          <div class="fleet-bar"><div class="fleet-fill${r.finished ? ' fleet-done' : ''}" style="width:${r.pct}%"></div></div>
         </div>`).join('')}
     </div>
   </div>`;
 }
 
-// —— 成就徽章定義 —— 每個徽章給一個 check(ctx) 判斷是否解鎖
-// rare:true 者用手繪 SVG 印章風，其餘用 emoji + 金框
-function badgeSVG(){
-  return `<svg viewBox="0 0 48 48" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
-    <rect x="4" y="4" width="40" height="40" rx="7" fill="none" stroke="#9E2A2B" stroke-width="2.5"/>
-    <rect x="9" y="9" width="30" height="30" rx="4" fill="none" stroke="#9E2A2B" stroke-width="1"/>
-    <text x="24" y="30" text-anchor="middle" font-family="'Ma Shan Zheng','Noto Serif TC',serif" font-size="18" fill="#9E2A2B" font-weight="700">璽</text>
-  </svg>`;
-}
-
+// —— 成就徽章定義 —— 50 枚，四色稀有度
+// tier: 1=白銀(常見) 2=青玉(進階) 3=紫金(稀有) 4=純金(傳說)
 function buildBadgeDefs(){
   return [
-    // —— 里程碑類 ——
-    {id:'first', icon:'🌱', name:'初入坊門', desc:'完成第一件法製交付', rare:false,
-      check:c => c.verifiedCount >= 1},
-    {id:'coin100', icon:'🪙', name:'小有資糧', desc:'累計靈幣達 100 枚', rare:false,
-      check:c => c.coins >= 100},
-    {id:'coin1000', icon:'💰', name:'千枚功德', desc:'累計靈幣達 1,000 枚', rare:false,
-      check:c => c.coins >= 1000},
-    {id:'coin10000', icon:'👑', name:'萬貫修為', desc:'累計靈幣達 10,000 枚', rare:true,
-      check:c => c.coins >= 10000},
-    // —— 產量類 ——
-    {id:'made100', icon:'⚙️', name:'百件成器', desc:'累計合格產出達 100 件', rare:false,
-      check:c => c.totalPass >= 100},
-    {id:'made1000', icon:'🏯', name:'千件宗師', desc:'累計合格產出達 1,000 件', rare:true,
-      check:c => c.totalPass >= 1000},
-    // —— 境界類 ——
-    {id:'realm_jindan', icon:'⚗️', name:'金丹之姿', desc:'修為突破金丹期', rare:false,
-      check:c => c.realmIdx >= 2},
-    {id:'realm_yuanying', icon:'🔮', name:'元嬰出竅', desc:'修為突破元嬰期', rare:true,
-      check:c => c.realmIdx >= 3},
-    {id:'realm_huashen', icon:'✨', name:'化神登峰', desc:'修為突破化神期', rare:true,
-      check:c => c.realmIdx >= 4},
-    // —— 品質類 ——
-    {id:'quality95', icon:'💎', name:'百鍊成鋼', desc:'交付滿 20 件且合格率 ≥ 95%', rare:true,
-      check:c => c.totalMade >= 20 && c.passRate >= 0.95},
-    {id:'perfect', icon:'🎯', name:'一絲不苟', desc:'單筆交付 100% 合格且 ≥ 30 件', rare:false,
-      check:c => c.hasPerfectBatch},
-    // —— 勤修類 ——
-    {id:'diligent', icon:'📅', name:'勤修不輟', desc:'累計交付達 10 個不同日子', rare:false,
-      check:c => c.activeDays >= 10},
-    {id:'busy_month', icon:'🔥', name:'閉關苦修', desc:'單月交付達 15 筆', rare:false,
-      check:c => c.maxMonthRecords >= 15},
-    // —— 隱藏彩蛋類 ——
-    {id:'lucky88', icon:'🀄', name:'發發發', desc:'單筆合格數正好 88 件', rare:true, hidden:true,
-      check:c => c.has88},
-    {id:'midnight', icon:'🌙', name:'子時煉丹', desc:'在深夜 0–5 點自主報件', rare:true, hidden:true,
-      check:c => c.hasMidnight},
+    // 里程碑・靈幣
+    {id:'first',icon:'🌱',name:'初入坊門',desc:'完成第一件法製交付',tier:1,check:c=>c.verifiedCount>=1},
+    {id:'coin100',icon:'🪙',name:'小有資糧',desc:'累計靈幣達 100 枚',tier:1,check:c=>c.coins>=100},
+    {id:'coin500',icon:'💵',name:'資糧初盈',desc:'累計靈幣達 500 枚',tier:1,check:c=>c.coins>=500},
+    {id:'coin1000',icon:'💰',name:'千枚功德',desc:'累計靈幣達 1,000 枚',tier:2,check:c=>c.coins>=1000},
+    {id:'coin3000',icon:'🏦',name:'資糧豐足',desc:'累計靈幣達 3,000 枚',tier:2,check:c=>c.coins>=3000},
+    {id:'coin8000',icon:'💎',name:'富甲一坊',desc:'累計靈幣達 8,000 枚',tier:3,check:c=>c.coins>=8000},
+    {id:'coin20000',icon:'👑',name:'萬貫修為',desc:'累計靈幣達 20,000 枚',tier:3,check:c=>c.coins>=20000},
+    {id:'coin50000',icon:'🏆',name:'富可敵國',desc:'累計靈幣達 50,000 枚',tier:4,check:c=>c.coins>=50000},
+    // 產量
+    {id:'made10',icon:'🔧',name:'小試身手',desc:'累計合格產出達 10 件',tier:1,check:c=>c.totalPass>=10},
+    {id:'made50',icon:'🔩',name:'漸入佳境',desc:'累計合格產出達 50 件',tier:1,check:c=>c.totalPass>=50},
+    {id:'made100',icon:'⚙️',name:'百件成器',desc:'累計合格產出達 100 件',tier:2,check:c=>c.totalPass>=100},
+    {id:'made300',icon:'🏭',name:'匠心獨運',desc:'累計合格產出達 300 件',tier:2,check:c=>c.totalPass>=300},
+    {id:'made500',icon:'🎖️',name:'巧奪天工',desc:'累計合格產出達 500 件',tier:3,check:c=>c.totalPass>=500},
+    {id:'made1000',icon:'🏯',name:'千件宗師',desc:'累計合格產出達 1,000 件',tier:4,check:c=>c.totalPass>=1000},
+    {id:'made3000',icon:'🗿',name:'鬼斧神工',desc:'累計合格產出達 3,000 件',tier:4,check:c=>c.totalPass>=3000},
+    // 境界
+    {id:'realm_zhuji',icon:'🍃',name:'築基有成',desc:'修為突破築基期',tier:1,check:c=>c.realmIdx>=1},
+    {id:'realm_jindan',icon:'⚗️',name:'金丹之姿',desc:'修為突破金丹期',tier:2,check:c=>c.realmIdx>=2},
+    {id:'realm_yuanying',icon:'🔮',name:'元嬰出竅',desc:'修為突破元嬰期',tier:2,check:c=>c.realmIdx>=3},
+    {id:'realm_huashen',icon:'✨',name:'化神登峰',desc:'修為突破化神期',tier:3,check:c=>c.realmIdx>=4},
+    {id:'realm_lianxu',icon:'🌫️',name:'練虛御空',desc:'修為突破練虛期',tier:3,check:c=>c.realmIdx>=5},
+    {id:'realm_heti',icon:'☯️',name:'合體同塵',desc:'修為突破合體期',tier:4,check:c=>c.realmIdx>=6},
+    {id:'realm_dacheng',icon:'🌟',name:'大乘圓明',desc:'修為突破大乘期',tier:4,check:c=>c.realmIdx>=7},
+    {id:'realm_dujie',icon:'⚡',name:'渡劫飛升',desc:'修為突破渡劫期',tier:4,check:c=>c.realmIdx>=8},
+    {id:'realm_feisheng',icon:'🕊️',name:'白日飛昇',desc:'臻至飛昇之境',tier:4,check:c=>c.realmIdx>=9},
+    // 品質
+    {id:'quality80',icon:'✔️',name:'穩紮穩打',desc:'交付滿 20 件且合格率 ≥ 80%',tier:1,check:c=>c.totalMade>=20&&c.passRate>=0.80},
+    {id:'quality90',icon:'🎯',name:'精工細作',desc:'交付滿 30 件且合格率 ≥ 90%',tier:2,check:c=>c.totalMade>=30&&c.passRate>=0.90},
+    {id:'quality95',icon:'💠',name:'百鍊成鋼',desc:'交付滿 50 件且合格率 ≥ 95%',tier:3,check:c=>c.totalMade>=50&&c.passRate>=0.95},
+    {id:'quality99',icon:'🏅',name:'完美無瑕',desc:'交付滿 100 件且合格率 ≥ 99%',tier:4,check:c=>c.totalMade>=100&&c.passRate>=0.99},
+    {id:'perfect1',icon:'⭐',name:'一絲不苟',desc:'單筆 100% 合格且 ≥ 30 件',tier:2,check:c=>c.hasPerfectBatch},
+    {id:'perfect5',icon:'🌠',name:'五全其美',desc:'累計 5 筆完美批次（100% 合格）',tier:3,check:c=>c.perfectBatchCount>=5},
+    // 勤修・活躍
+    {id:'diligent5',icon:'📆',name:'初心不改',desc:'累計交付達 5 個不同日子',tier:1,check:c=>c.activeDays>=5},
+    {id:'diligent10',icon:'📅',name:'勤修不輟',desc:'累計交付達 10 個不同日子',tier:2,check:c=>c.activeDays>=10},
+    {id:'diligent30',icon:'🗓️',name:'寒暑不歇',desc:'累計交付達 30 個不同日子',tier:3,check:c=>c.activeDays>=30},
+    {id:'busy10',icon:'🔆',name:'勤勉有加',desc:'單月交付達 10 筆',tier:1,check:c=>c.maxMonthRecords>=10},
+    {id:'busy15',icon:'🔥',name:'閉關苦修',desc:'單月交付達 15 筆',tier:2,check:c=>c.maxMonthRecords>=15},
+    {id:'busy30',icon:'🌋',name:'走火入魔',desc:'單月交付達 30 筆',tier:3,check:c=>c.maxMonthRecords>=30},
+    {id:'months3',icon:'🍂',name:'四季如一',desc:'橫跨 3 個不同月份交付',tier:2,check:c=>c.monthSpan>=3},
+    {id:'months6',icon:'🎐',name:'半載精修',desc:'橫跨 6 個不同月份交付',tier:3,check:c=>c.monthSpan>=6},
+    {id:'variety3',icon:'🎨',name:'一專多能',desc:'交付過 3 種不同品項',tier:1,check:c=>c.itemVariety>=3},
+    {id:'variety5',icon:'🃏',name:'十八般武藝',desc:'交付過 5 種不同品項',tier:2,check:c=>c.itemVariety>=5},
+    // 單筆爆發
+    {id:'big100',icon:'💪',name:'力能扛鼎',desc:'單筆合格數達 100 件',tier:2,check:c=>c.maxSingle>=100},
+    {id:'big300',icon:'🐉',name:'一鳴驚人',desc:'單筆合格數達 300 件',tier:3,check:c=>c.maxSingle>=300},
+    {id:'big500',icon:'🌪️',name:'天崩地裂',desc:'單筆合格數達 500 件',tier:4,check:c=>c.maxSingle>=500},
+    // 坊務貢獻
+    {id:'fleet1',icon:'⛩️',name:'共襄盛舉',desc:'曾為坊務目標貢獻產出',tier:1,check:c=>c.fleetContrib>=1},
+    {id:'fleet_finish',icon:'🎏',name:'畢其功於一役',desc:'參與完成一項坊務目標',tier:3,check:c=>c.fleetFinished>=1},
+    // 隱藏彩蛋
+    {id:'lucky88',icon:'🀄',name:'發發發',desc:'單筆合格數正好 88 件',tier:3,hidden:true,check:c=>c.has88},
+    {id:'lucky66',icon:'😎',name:'六六大順',desc:'單筆合格數正好 66 件',tier:2,hidden:true,check:c=>c.has66},
+    {id:'midnight',icon:'🌙',name:'子時煉丹',desc:'在深夜 0–5 點自主報件',tier:3,hidden:true,check:c=>c.hasMidnight},
+    {id:'dawn',icon:'🌅',name:'聞雞起舞',desc:'在清晨 5–7 點自主報件',tier:2,hidden:true,check:c=>c.hasDawn},
+    {id:'newyear',icon:'🧧',name:'新春開工',desc:'在農曆春節前後（1–2 月）交付',tier:3,hidden:true,check:c=>c.hasNewYear},
   ];
 }
 
-// 從 records 推算某同道的成就上下文
+// 稀有度樣式對照
+const TIER_META = {
+  1: {cls:'tier-silver', label:'白銀'},
+  2: {cls:'tier-jade',   label:'青玉'},
+  3: {cls:'tier-purple', label:'紫金'},
+  4: {cls:'tier-gold',   label:'純金'}
+};
+
+// 從 records + 坊務目標推算某同道的成就上下文
 function buildBadgeContext(wid){
   const recs = db.records.filter(r => String(r.workerId) === String(wid));
   const verified = recs.filter(r => r.status === 'verified');
@@ -2376,19 +2551,62 @@ function buildBadgeContext(wid){
   const totalMade = verified.reduce((a,r)=>a+r.total,0);
   const passRate = totalMade ? totalPass/totalMade : 0;
   const activeDays = new Set(verified.map(r=>r.date)).size;
-  // 每月筆數最大值
   const byMonth = {};
   recs.forEach(r => { const m=(r.date||'').slice(0,7); byMonth[m]=(byMonth[m]||0)+1; });
   const maxMonthRecords = Object.values(byMonth).reduce((a,b)=>Math.max(a,b),0);
-  const hasPerfectBatch = verified.some(r => r.total >= 30 && r.pass === r.total);
-  const has88 = verified.some(r => r.pass === 88);
-  const hasMidnight = recs.some(r => {
-    if(r.source !== 'worker' || !r.createdAt) return false;
-    const h = new Date(r.createdAt).getHours();
-    return h >= 0 && h < 5;
+  const monthSpan = new Set(verified.map(r=>(r.date||'').slice(0,7))).size;
+  const itemVariety = new Set(verified.map(r=>r.itemId)).size;
+  const maxSingle = verified.reduce((a,r)=>Math.max(a,r.pass),0);
+  const perfectBatches = verified.filter(r => r.total>=30 && r.pass===r.total);
+  const hasPerfectBatch = perfectBatches.length>=1;
+  const perfectBatchCount = perfectBatches.length;
+  const has88 = verified.some(r => r.pass===88);
+  const has66 = verified.some(r => r.pass===66);
+  const hasMidnight = recs.some(r => { if(r.source!=='worker'||!r.createdAt) return false; const h=new Date(r.createdAt).getHours(); return h>=0&&h<5; });
+  const hasDawn = recs.some(r => { if(r.source!=='worker'||!r.createdAt) return false; const h=new Date(r.createdAt).getHours(); return h>=5&&h<7; });
+  const hasNewYear = verified.some(r => { const mo=+((r.date||'').slice(5,7)); return mo===1||mo===2; });
+  // 坊務貢獻
+  const fleet = getFleet();
+  const fleetItemIds = new Set(fleet.map(f=>String(f.itemId)));
+  const fleetContrib = verified.filter(r=>fleetItemIds.has(String(r.itemId))).length;
+  let fleetFinished = 0;
+  fleet.forEach(f => {
+    const done = db.records.filter(r=>r.status==='verified'&&String(r.itemId)===String(f.itemId)).reduce((a,r)=>a+r.pass,0);
+    if(done>=Number(f.target) && verified.some(r=>String(r.itemId)===String(f.itemId))) fleetFinished++;
   });
   return {verifiedCount: verified.length, coins, realmIdx, totalPass, totalMade,
-    passRate, activeDays, maxMonthRecords, hasPerfectBatch, has88, hasMidnight};
+    passRate, activeDays, maxMonthRecords, monthSpan, itemVariety, maxSingle,
+    hasPerfectBatch, perfectBatchCount, has88, has66, hasMidnight, hasDawn, hasNewYear,
+    fleetContrib, fleetFinished};
+}
+
+// 取得某同道「目前解鎖且佩戴」的徽章物件（給天榜用）
+function wornBadgeOf(wid){
+  const w = gw(wid);
+  const bid = w && w.wornBadge;
+  if(!bid) return null;
+  const def = buildBadgeDefs().find(d => d.id === bid);
+  if(!def) return null;
+  // 驗證此人確實已解鎖，避免佩戴後條件反悔仍顯示
+  const ctx = buildBadgeContext(wid);
+  if(!def.check(ctx)) return null;
+  return def;
+}
+function badgeChipHTML(def){
+  if(!def) return '';
+  const meta = TIER_META[def.tier] || TIER_META[1];
+  const inner = def.tier>=3 ? badgeSVG(def.tier) : def.icon;
+  return `<span class="worn-chip ${meta.cls}" title="${def.name}：${def.desc}">${inner}<span class="worn-chip-name">${def.name}</span></span>`;
+}
+
+// 稀有徽章的朱印 SVG，依 tier 換色（紫金=紫、純金=金）
+function badgeSVG(tier){
+  const col = tier>=4 ? '#B8860B' : (tier>=3 ? '#7C3AED' : '#9E2A2B');
+  return `<svg viewBox="0 0 48 48" width="30" height="30" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="4" width="40" height="40" rx="7" fill="none" stroke="${col}" stroke-width="2.5"/>
+    <rect x="9" y="9" width="30" height="30" rx="4" fill="none" stroke="${col}" stroke-width="1"/>
+    <text x="24" y="30" text-anchor="middle" font-family="'Ma Shan Zheng','Noto Serif TC',serif" font-size="18" fill="${col}" font-weight="700">璽</text>
+  </svg>`;
 }
 
 function renderBadges(wid){
@@ -2397,11 +2615,10 @@ function renderBadges(wid){
   const defs = buildBadgeDefs();
   const ctx = buildBadgeContext(wid);
   const state = defs.map(d => ({...d, unlocked: !!d.check(ctx)}));
-  const unlockedList = state.filter(s => s.unlocked);
-  const unlockedCount = unlockedList.length;
-  // 隱藏徽章未解鎖前不顯示
+  const unlockedCount = state.filter(s => s.unlocked).length;
   const visible = state.filter(s => !s.hidden || s.unlocked);
-  const worn = localStorage.getItem(TITLE_KEY) || '';
+  const w = gw(wid);
+  const wornId = (w && w.wornBadge) || '';
 
   box.innerHTML = `<div class="card" style="margin-top:1.5rem;">
     <div class="card-head">
@@ -2409,31 +2626,41 @@ function renderBadges(wid){
       <span style="font-size:12px; color:#7F8C8D;">已集齊 ${unlockedCount} / ${defs.length}</span>
     </div>
     <div class="card-body">
-      ${worn ? `<div class="worn-title-bar">目前佩戴稱號：<b>${worn}</b> <span class="worn-clear" onclick="clearTitle('${wid}')">卸下</span></div>` : ''}
-      <div class="badge-grid">
-        ${visible.map(s => `
-          <div class="ach ${s.unlocked ? 'ach-on' : 'ach-off'} ${s.rare ? 'ach-rare' : ''}"
-               title="${s.desc}"
-               ${s.unlocked ? `onclick="wearTitle('${wid}','${s.name}')"` : ''}>
-            <div class="ach-icon">${s.unlocked ? (s.rare ? badgeSVG() : s.icon) : '🔒'}</div>
-            <div class="ach-name">${s.unlocked ? s.name : '？？？'}</div>
-          </div>`).join('')}
+      <div class="tier-legend">
+        <span class="tl tier-silver">白銀</span>
+        <span class="tl tier-jade">青玉</span>
+        <span class="tl tier-purple">紫金</span>
+        <span class="tl tier-gold">純金</span>
+        <span style="color:#9CA3AF; font-size:11px; margin-left:4px;">越高級越接近金色</span>
       </div>
-      <div class="badge-hint">點擊已解鎖的徽記可佩戴為稱號 · 稀有徽記以朱印呈現</div>
+      <div class="badge-grid">
+        ${visible.map(s => {
+          const meta = TIER_META[s.tier] || TIER_META[1];
+          const worn = s.id === wornId;
+          const inner = s.unlocked ? (s.tier>=3 ? badgeSVG(s.tier) : s.icon) : '🔒';
+          return `<div class="ach ${s.unlocked ? 'ach-on '+meta.cls : 'ach-off'} ${worn ? 'ach-worn' : ''}"
+               title="${s.desc}"
+               ${s.unlocked ? `onclick="wearTitle('${wid}','${s.id}')"` : ''}>
+            ${worn ? '<div class="ach-worn-tag">佩戴中</div>' : ''}
+            <div class="ach-icon">${inner}</div>
+            <div class="ach-name">${s.unlocked ? s.name : '？？？'}</div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="badge-hint">點擊已解鎖的徽記可佩戴（會顯示在天榜你的名字旁）· 紫金／純金以朱印呈現</div>
     </div>
   </div>`;
 }
 
-function wearTitle(wid, title){
-  localStorage.setItem(TITLE_KEY, title);
-  toast(`⚜️ 已佩戴稱號「${title}」`);
-  renderBadges(wid);
+// 佩戴徽章：寫入 workers 文件的 wornBadge 欄位，讓天榜跨裝置可見
+function wearTitle(wid, badgeId){
+  const w = gw(wid); if(!w) return;
+  const next = (w.wornBadge === badgeId) ? '' : badgeId; // 再點一次= 卸下
+  FS.update('workers', wid, {wornBadge: next})
+    .then(()=>{ toast(next ? '⚜️ 已佩戴徽記' : '已卸下徽記'); })
+    .catch(()=>toast('⚠️ 佩戴失敗，請稍後再試'));
 }
-function clearTitle(wid){
-  localStorage.removeItem(TITLE_KEY);
-  toast('已卸下稱號');
-  renderBadges(wid);
-}
+function clearTitle(wid){ wearTitle(wid, (gw(wid)||{}).wornBadge || ''); }
 
 function renderWorkerPages(wid){
   const w = gw(wid); if(!w) return;
@@ -2507,16 +2734,17 @@ function showPage(name){
   if(!page) return;
   page.classList.add('active');
   document.querySelectorAll('#admin-nav .nav-item').forEach(n => n.classList.remove('active'));
-  const order = ['dashboard','workers','items','records','settlement','slips','leaderboard'];
+  const order = ['dashboard','workers','items','fleet','records','settlement','slips','leaderboard'];
   const idx = order.indexOf(name);
   const navs = document.querySelectorAll('#admin-nav .nav-item');
   if(idx >= 0 && navs[idx]) navs[idx].classList.add('active');
-  const titles = { dashboard: '系統總覽', workers: '同道名冊', items: '品項設定', records: '交付管理', settlement: '資糧結算', slips: '資糧條核發', leaderboard: '業績排行榜' };
+  const titles = { dashboard: '系統總覽', workers: '同道名冊', items: '品項設定', fleet: '坊務目標', records: '交付管理', settlement: '資糧結算', slips: '資糧條核發', leaderboard: '業績排行榜' };
   document.getElementById('page-title').textContent = titles[name] || name;
   setAdminTopbar();
   if(name === 'dashboard') renderDashboard();
   if(name === 'workers') renderWorkers();
   if(name === 'items') renderItems();
+  if(name === 'fleet') renderFleetAdmin();
   if(name === 'records') renderRecords();
   if(name === 'settlement') generateSettlement();
   if(name === 'slips') renderSlips();
@@ -2749,6 +2977,16 @@ function startSync(){
     db.settlements = s.docs.map(d => d.data());
     scheduleRender();
   }, onSyncErr);
+  // 坊務目標存於 settings/fleet 單一文件
+  f.collection('settings').doc('fleet').onSnapshot(d => {
+    const data = d.exists ? d.data() : null;
+    db.fleet = (data && Array.isArray(data.list)) ? data.list : [];
+    scheduleRender();
+  }, onSyncErr);
+}
+function getFleet(){ return db.fleet || []; }
+function saveFleet(list){
+  return FS.set('settings', 'fleet', {list});
 }
 function onSyncErr(e){ console.error(e); setStatus('⚠️ 同步中斷', false); }
 
