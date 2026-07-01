@@ -417,24 +417,20 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
 .fleet-fill{ height:100%; border-radius:99px; background:var(--gold-gradient); box-shadow:0 0 8px rgba(217,179,108,0.4); transition:width 0.8s cubic-bezier(0.16,1,0.3,1); }
 
 /* —— 功德徽記牆 —— */
-.tier-legend{ display:flex; align-items:center; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
-.tl{ font-size:11px; font-weight:700; padding:2px 10px; border-radius:99px; }
-.tier-silver{ background:#EEF1F4; color:#5B6B7B; border:1px solid #CDD6DF; }
-.tier-jade{ background:#E5F5EF; color:#0E7A5F; border:1px solid #9FDBC7; }
-.tier-purple{ background:#F1E9FB; color:#7C3AED; border:1px solid #C9AEF0; }
-.tier-gold{ background:linear-gradient(135deg,#FFF3CE,#F0CE7A); color:#7A5A12; border:1px solid #D9B36C; }
 .badge-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(84px,1fr)); gap:12px; }
-.ach{ position:relative; display:flex; flex-direction:column; align-items:center; gap:7px; padding:14px 6px; border-radius:var(--r-md); border:1px solid var(--border-subtle); text-align:center; transition:all 0.2s; }
+.ach{ position:relative; display:flex; flex-direction:column; align-items:center; gap:8px; padding:12px 4px; text-align:center; transition:all 0.2s; background:transparent !important; border:none !important; }
 .ach-on{ cursor:pointer; }
-.ach-on:hover{ box-shadow:var(--shadow-gold); transform:translateY(-2px); }
-.ach-off{ background:#F7F6F3; opacity:0.5; }
-.ach-on.tier-silver{ background:#FAFBFC; border-color:#D3DBE3; }
-.ach-on.tier-jade{ background:#F5FCF9; border-color:#B4E3D2; }
-.ach-on.tier-purple{ background:#FAF6FE; border-color:#D3BCF3; }
-.ach-on.tier-gold{ background:linear-gradient(160deg,#FFFCF3 0%,#FCF3DD 100%); border-color:#E4C983; box-shadow:0 3px 14px rgba(217,179,108,0.25); }
-.ach-worn{ outline:2px solid var(--gold-beige); outline-offset:1px; }
-.ach-worn-tag{ position:absolute; top:-8px; left:50%; transform:translateX(-50%); font-size:9.5px; font-weight:700; color:#FFF; background:var(--red-palace); padding:1px 8px; border-radius:99px; white-space:nowrap; }
-.ach-icon{ width:38px; height:38px; display:flex; align-items:center; justify-content:center; font-size:26px; }
+.ach-on:hover{ transform:translateY(-3px); }
+.ach-on:hover .ach-icon{ box-shadow:var(--shadow-gold); }
+.ach-off{ opacity:0.5; }
+.ach-off .ach-icon{ background:#F0EEEA; border-color:#E0DDD7; }
+.ach-on.tier-silver .ach-icon{ background:#FAFBFC; border-color:#C3CDD7; }
+.ach-on.tier-jade .ach-icon{ background:#F0FBF6; border-color:#8FD3BC; }
+.ach-on.tier-purple .ach-icon{ background:#FAF6FE; border-color:#C4A6EF; }
+.ach-on.tier-gold .ach-icon{ background:linear-gradient(160deg,#FFFCF3 0%,#FBEFCF 100%); border-color:#E0BF6D; box-shadow:0 3px 14px rgba(217,179,108,0.3); }
+.ach-worn .ach-icon{ outline:2px solid var(--gold-beige); outline-offset:2px; }
+.ach-worn-tag{ position:absolute; top:-6px; left:50%; transform:translateX(-50%); font-size:9.5px; font-weight:700; color:#FFF; background:var(--red-palace); padding:1px 8px; border-radius:99px; white-space:nowrap; z-index:2; }
+.ach-icon{ width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; border:1.5px solid var(--border-subtle); transition:box-shadow 0.2s; }
 .ach-name{ font-size:11.5px; font-weight:700; color:var(--navy-deep); line-height:1.25; }
 .ach-off .ach-name{ color:#9CA3AF; }
 .badge-hint{ margin-top:14px; font-size:11.5px; color:#9CA3AF; text-align:center; line-height:1.5; }
@@ -445,8 +441,8 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
 .fleet-done{ background:linear-gradient(135deg,#34D399,#10B981) !important; }
 
 /* —— 天榜佩戴徽章 chip —— */
-.worn-chip{ display:inline-flex; align-items:center; gap:4px; padding:1px 8px 1px 4px; border-radius:99px; font-size:11px; font-weight:700; vertical-align:middle; margin-left:2px; }
-.worn-chip svg{ width:16px; height:16px; }
+.worn-chip{ display:inline-flex; align-items:center; gap:3px; padding:1px 8px 1px 6px; border-radius:99px; font-size:11px; font-weight:700; vertical-align:middle; margin-left:2px; }
+.worn-chip-icon{ font-size:13px; line-height:1; }
 .worn-chip-name{ font-size:11px; }
 .worn-chip.tier-silver{ background:#EEF1F4; color:#5B6B7B; }
 .worn-chip.tier-jade{ background:#E5F5EF; color:#0E7A5F; }
@@ -2595,8 +2591,7 @@ function wornBadgeOf(wid){
 function badgeChipHTML(def){
   if(!def) return '';
   const meta = TIER_META[def.tier] || TIER_META[1];
-  const inner = def.tier>=3 ? badgeSVG(def.tier) : def.icon;
-  return `<span class="worn-chip ${meta.cls}" title="${def.name}：${def.desc}">${inner}<span class="worn-chip-name">${def.name}</span></span>`;
+  return `<span class="worn-chip ${meta.cls}" title="${def.name}：${def.desc}"><span class="worn-chip-icon">${def.icon}</span><span class="worn-chip-name">${def.name}</span></span>`;
 }
 
 // 稀有徽章的朱印 SVG，依 tier 換色（紫金=紫、純金=金）
@@ -2626,18 +2621,11 @@ function renderBadges(wid){
       <span style="font-size:12px; color:#7F8C8D;">已集齊 ${unlockedCount} / ${defs.length}</span>
     </div>
     <div class="card-body">
-      <div class="tier-legend">
-        <span class="tl tier-silver">白銀</span>
-        <span class="tl tier-jade">青玉</span>
-        <span class="tl tier-purple">紫金</span>
-        <span class="tl tier-gold">純金</span>
-        <span style="color:#9CA3AF; font-size:11px; margin-left:4px;">越高級越接近金色</span>
-      </div>
       <div class="badge-grid">
         ${visible.map(s => {
           const meta = TIER_META[s.tier] || TIER_META[1];
           const worn = s.id === wornId;
-          const inner = s.unlocked ? (s.tier>=3 ? badgeSVG(s.tier) : s.icon) : '🔒';
+          const inner = s.unlocked ? s.icon : '🔒';
           return `<div class="ach ${s.unlocked ? 'ach-on '+meta.cls : 'ach-off'} ${worn ? 'ach-worn' : ''}"
                title="${s.desc}"
                ${s.unlocked ? `onclick="wearTitle('${wid}','${s.id}')"` : ''}>
