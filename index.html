@@ -440,6 +440,14 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
 .worn-clear:hover{ color:var(--gold-beige); }
 .fleet-done{ background:linear-gradient(135deg,#34D399,#10B981) !important; }
 
+/* —— 登入頁坊務進度（深藍底） —— */
+.login-fleet{ margin-top:22px; }
+.login-fleet-title{ font-size:13px; font-weight:700; color:var(--gold-beige); margin-bottom:12px; letter-spacing:0.03em; }
+.login-fleet-list{ display:flex; flex-direction:column; gap:14px; }
+.login-fleet .fleet-name{ color:#FDF9EE; font-size:13px; }
+.login-fleet .fleet-count{ color:rgba(253,249,238,0.7); }
+.login-fleet .fleet-bar{ background:rgba(255,255,255,0.12); }
+
 /* —— 天榜佩戴徽章 chip —— */
 .worn-chip{ display:inline-flex; align-items:center; gap:3px; padding:1px 8px 1px 6px; border-radius:99px; font-size:11px; font-weight:700; vertical-align:middle; margin-left:2px; }
 .worn-chip-icon{ font-size:13px; line-height:1; }
@@ -599,7 +607,7 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
       <div class="page" id="page-fleet">
         <div class="table-filter-bar">
           <div style="font-size:13px; color:#7F8C8D; line-height:1.6; max-width:640px;">
-            在此張貼本坊接下的船隻／訂單目標。同道在「洞府修為」頁會看到進度條，知道自己在為哪批坊務努力。進度＝該品項全坊已驗收合格數 ÷ 目標數。
+            在此張貼本坊接下的船隻／訂單目標。同道在登入頁與「洞府修為」頁都會看到進度。做好一艘就按「＋1」，進度自動更新。
           </div>
           <button class="btn btn-primary btn-sm" onclick="openFleetModal()">＋ 新增坊務目標</button>
         </div>
@@ -607,7 +615,7 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
           <div class="table-responsive">
             <table>
               <thead>
-                <tr><th>坊務名稱</th><th>對應品項</th><th>目標數量</th><th>單位</th><th>目前進度</th><th style="text-align: right;">操作</th></tr>
+                <tr><th>坊務名稱</th><th>目前進度</th><th style="text-align:center;">快速更新</th><th style="text-align: right;">操作</th></tr>
               </thead>
               <tbody id="fleet-table"></tbody>
             </table>
@@ -748,6 +756,7 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
             <div class="immortal-orbit"></div>
             <div class="immortal-core"><span class="immortal-core-glow">⚗️</span></div>
             <div class="immortal-visual-caption" style="color: #FFFFFF !important; font-size:13px; opacity:0.85; line-height:1.6;">報上名號，即可破開法陣結界、申報修行工單、查看功德與同道天榜。</div>
+            <div id="w-login-fleet" class="login-fleet"></div>
           </div>
           <div class="immortal-form immortal-panel">
             <div id="w-login-box">
@@ -988,8 +997,8 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
     <div class="card-body">
       <div class="form-group"><label>坊務名稱</label><input id="ff-name" placeholder="例如：中元普渡船"></div>
       <div class="form-row" style="margin-top:10px;">
-        <div class="form-group"><label>對應品項（進度來源）</label><select id="ff-item"></select></div>
-        <div class="form-group"><label>目標數量</label><input id="ff-target" type="number" placeholder="150" min="1"></div>
+        <div class="form-group"><label>目標數量（艘）</label><input id="ff-target" type="number" placeholder="5" min="1"></div>
+        <div class="form-group"><label>已完成數量</label><input id="ff-done" type="number" placeholder="0" min="0"></div>
       </div>
       <div class="form-group" style="margin-top:10px; margin-bottom:12px;"><label>單位（選填）</label><input id="ff-unit" placeholder="例如：艘 / 件"></div>
     </div>
@@ -1995,6 +2004,7 @@ function renderAll(){
   safeRender('workers', renderWorkers);
   safeRender('items', renderItems);
   safeRender('records', renderRecords);
+  safeRender('fleet-progress', renderFleetProgress);
   const active = document.querySelector('.page.active');
   if(active){
     if(active.id === 'page-leaderboard'){ safeRender('leaderboard', renderLeaderboard); }
@@ -2135,54 +2145,60 @@ function renderItems(){
   `).join('') : '<tr><td colspan="6" class="empty-state">尚無品項資料</td></tr>';
 }
 
-// ============ 坊務目標管理 ============
+// ============ 坊務目標管理（名稱 + 目標數 + 已完成數，手動更新） ============
 let editingFleetIdx = null;
 function renderFleetAdmin(){
   const fleet = getFleet();
-  // 各品項全坊已驗收合格數
-  const passByItem = {};
-  db.records.forEach(r => { if(r.status==='verified') passByItem[r.itemId]=(passByItem[r.itemId]||0)+r.pass; });
   const tbody = document.getElementById('fleet-table');
   if(!tbody) return;
   tbody.innerHTML = fleet.length ? fleet.map((f, idx) => {
-    const it = gi(f.itemId);
-    const done = passByItem[f.itemId] || 0;
     const target = Number(f.target) || 1;
+    const done = Number(f.done) || 0;
     const pct = Math.min(100, Math.round(done/target*100));
+    const unit = f.unit || '艘';
+    const finished = done >= target;
     return `<tr>
-      <td><span style="font-weight:700;">${f.name || '—'}</span></td>
-      <td>${it ? it.name : '<span style="color:var(--red-palace)">品項已刪除</span>'}</td>
-      <td>${target.toLocaleString()}</td>
-      <td><span class="badge badge-gray">${f.unit || (it ? it.unit : '—')}</span></td>
-      <td style="min-width:140px;">
+      <td><span style="font-weight:700;">${finished ? '🎉 ' : ''}${f.name || '—'}</span></td>
+      <td style="min-width:180px;">
         <div style="display:flex; align-items:center; gap:8px;">
-          <div class="fleet-bar" style="flex:1; height:8px;"><div class="fleet-fill${done>=target?' fleet-done':''}" style="width:${pct}%"></div></div>
-          <span style="font-size:12px; color:#7F8C8D; white-space:nowrap;">${done.toLocaleString()}/${target.toLocaleString()}</span>
+          <div class="fleet-bar" style="flex:1; height:8px;"><div class="fleet-fill${finished?' fleet-done':''}" style="width:${pct}%"></div></div>
+          <span style="font-size:12px; color:#7F8C8D; white-space:nowrap;">${done.toLocaleString()}/${target.toLocaleString()} ${unit}</span>
         </div>
+      </td>
+      <td style="text-align:center; white-space:nowrap;">
+        <button class="btn btn-sm" onclick="bumpFleet(${idx},-1)" ${done<=0?'disabled':''}>－1</button>
+        <button class="btn btn-sm btn-primary" onclick="bumpFleet(${idx},1)" ${done>=target?'disabled':''}>＋1</button>
       </td>
       <td style="text-align:right;">
         <button class="btn btn-sm" onclick="editFleetGoal(${idx})">✏️ 修改</button>
         <button class="btn btn-sm btn-danger" onclick="deleteFleetGoal(${idx})">🗑️ 刪除</button>
       </td>
     </tr>`;
-  }).join('') : '<tr><td colspan="6" class="empty-state">尚無坊務目標，點右上角新增。</td></tr>';
+  }).join('') : '<tr><td colspan="4" class="empty-state">尚無坊務目標，點右上角新增。</td></tr>';
 }
 
-function fillFleetItemOptions(selId){
-  const sel = document.getElementById('ff-item');
-  sel.innerHTML = db.items.map(i => `<option value="${i.id}">${i.name}（${i.unit || '—'}）</option>`).join('');
-  if(selId != null) sel.value = String(selId);
+// ＋1／−1 快速更新完成數
+function bumpFleet(idx, delta){
+  if(!requireAdmin()) return;
+  const list = getFleet().slice();
+  const f = list[idx]; if(!f) return;
+  const target = Number(f.target) || 1;
+  let done = (Number(f.done) || 0) + delta;
+  done = Math.max(0, Math.min(target, done));
+  list[idx] = {...f, done};
+  saveFleet(list)
+    .then(()=>{ if(done>=target && delta>0) toast(`🎉 「${f.name}」已全數完工！`); })
+    .catch(()=>toast('⚠️ 更新失敗'));
 }
 
 function openFleetModal(){
   if(!requireAdmin()) return;
-  if(!db.items.length) return toast('⚠️ 請先在「品項設定」新增至少一個品項');
   editingFleetIdx = null;
   document.getElementById('fleet-modal-title').textContent = '新增坊務目標';
   document.getElementById('ff-name').value = '';
   document.getElementById('ff-target').value = '';
+  document.getElementById('ff-done').value = '0';
   document.getElementById('ff-unit').value = '';
-  fillFleetItemOptions();
   openModal('fleet-modal');
 }
 
@@ -2193,22 +2209,22 @@ function editFleetGoal(idx){
   document.getElementById('fleet-modal-title').textContent = '修改坊務目標';
   document.getElementById('ff-name').value = f.name || '';
   document.getElementById('ff-target').value = f.target || '';
+  document.getElementById('ff-done').value = f.done || 0;
   document.getElementById('ff-unit').value = f.unit || '';
-  fillFleetItemOptions(f.itemId);
   openModal('fleet-modal');
 }
 
 function saveFleetGoal(){
   if(!requireAdmin()) return;
   const name = document.getElementById('ff-name').value.trim();
-  const itemId = +document.getElementById('ff-item').value;
   const target = +document.getElementById('ff-target').value;
+  let done = +document.getElementById('ff-done').value || 0;
   const unit = document.getElementById('ff-unit').value.trim();
   if(!name) return toast('⚠️ 坊務名稱為必填！');
-  if(!itemId) return toast('⚠️ 請選擇對應品項！');
   if(!target || target <= 0) return toast('⚠️ 目標數量需大於 0！');
+  done = Math.max(0, Math.min(target, done));
   const list = getFleet().slice();
-  const obj = {name, itemId, target, unit};
+  const obj = {name, target, done, unit};
   if(editingFleetIdx != null) list[editingFleetIdx] = obj; else list.push(obj);
   saveFleet(list)
     .then(()=>toast(editingFleetIdx != null ? '✏️ 坊務目標已更新' : '🎏 坊務目標已張貼！'))
@@ -2419,47 +2435,45 @@ function previewWorker(id){
 //  當期坊務進度條 + 成就徽章系統（純前端推算，相容安全規則）
 // ============================================================
 
-// —— 當期坊務進度：讀取管理者設定的「坊務目標」（可多筆） ——
-function renderFleetProgress(){
-  const box = document.getElementById('w-fleet-box');
-  if(!box) return;
+// —— 坊務進度：讀管理者設定的目標與手動完成數（可指定容器，供登入頁與洞府頁共用） ——
+function fleetProgressHTML(){
   const fleet = getFleet();
-
   if(!fleet.length){
+    return `<div class="immortal-empty">坊主尚未張貼坊務目標，靜待接單。</div>`;
+  }
+  const rows = fleet.map(f => {
+    const target = Number(f.target) || 1;
+    const done = Number(f.done) || 0;
+    const pct = Math.min(100, Math.round(done/target*100));
+    return {name: f.name || '未命名坊務', unit: f.unit || '艘', done, target, pct, finished: done>=target};
+  });
+  return rows.map(r => `
+    <div class="fleet-row">
+      <div class="fleet-row-top">
+        <span class="fleet-name">${r.finished ? '🎉 ' : ''}${r.name}</span>
+        <span class="fleet-count">${r.done.toLocaleString()} / ${r.target.toLocaleString()} ${r.unit}</span>
+      </div>
+      <div class="fleet-bar"><div class="fleet-fill${r.finished ? ' fleet-done' : ''}" style="width:${r.pct}%"></div></div>
+    </div>`).join('');
+}
+
+function renderFleetProgress(){
+  // 洞府修為頁
+  const box = document.getElementById('w-fleet-box');
+  if(box){
     box.innerHTML = `<div class="card" style="margin-top:1.5rem;">
       <div class="card-head"><span class="card-head-title">⛩️ 坊務目標進度</span></div>
-      <div class="card-body"><div class="immortal-empty">坊主尚未張貼坊務目標，靜待接單。</div></div>
+      <div class="card-body" style="display:flex; flex-direction:column; gap:16px;">${fleetProgressHTML()}</div>
     </div>`;
-    return;
   }
-  // 每個目標：以該品項「全坊已驗收合格數」對比目標數
-  const passByItem = {};
-  db.records.forEach(r => {
-    if(r.status === 'verified'){
-      passByItem[r.itemId] = (passByItem[r.itemId] || 0) + r.pass;
-    }
-  });
-  const rows = fleet.map(f => {
-    const done = passByItem[f.itemId] || 0;
-    const target = Number(f.target) || 1;
-    const pct = Math.min(100, Math.round(done / target * 100));
-    const it = gi(f.itemId);
-    return {name: f.name || (it ? it.name : '未命名坊務'), unit: f.unit || (it ? it.unit : ''), done, target, pct, finished: done>=target};
-  });
-
-  box.innerHTML = `<div class="card" style="margin-top:1.5rem;">
-    <div class="card-head"><span class="card-head-title">⛩️ 坊務目標進度</span></div>
-    <div class="card-body" style="display:flex; flex-direction:column; gap:16px;">
-      ${rows.map(r => `
-        <div class="fleet-row">
-          <div class="fleet-row-top">
-            <span class="fleet-name">${r.finished ? '🎉 ' : ''}${r.name}</span>
-            <span class="fleet-count">${r.done.toLocaleString()} / ${r.target.toLocaleString()} ${r.unit || ''}</span>
-          </div>
-          <div class="fleet-bar"><div class="fleet-fill${r.finished ? ' fleet-done' : ''}" style="width:${r.pct}%"></div></div>
-        </div>`).join('')}
-    </div>
-  </div>`;
+  // 同道登入頁（登入前也看得到）
+  const loginBox = document.getElementById('w-login-fleet');
+  if(loginBox){
+    const fleet = getFleet();
+    loginBox.innerHTML = fleet.length ? `
+      <div class="login-fleet-title">⛩️ 本坊坊務進度</div>
+      <div class="login-fleet-list">${fleetProgressHTML()}</div>` : '';
+  }
 }
 
 // —— 成就徽章定義 —— 50 枚，四色稀有度
@@ -2561,15 +2575,11 @@ function buildBadgeContext(wid){
   const hasMidnight = recs.some(r => { if(r.source!=='worker'||!r.createdAt) return false; const h=new Date(r.createdAt).getHours(); return h>=0&&h<5; });
   const hasDawn = recs.some(r => { if(r.source!=='worker'||!r.createdAt) return false; const h=new Date(r.createdAt).getHours(); return h>=5&&h<7; });
   const hasNewYear = verified.some(r => { const mo=+((r.date||'').slice(5,7)); return mo===1||mo===2; });
-  // 坊務貢獻
+  // 坊務貢獻（坊務已不綁元件；有交付紀錄者即視為共同出力）
   const fleet = getFleet();
-  const fleetItemIds = new Set(fleet.map(f=>String(f.itemId)));
-  const fleetContrib = verified.filter(r=>fleetItemIds.has(String(r.itemId))).length;
-  let fleetFinished = 0;
-  fleet.forEach(f => {
-    const done = db.records.filter(r=>r.status==='verified'&&String(r.itemId)===String(f.itemId)).reduce((a,r)=>a+r.pass,0);
-    if(done>=Number(f.target) && verified.some(r=>String(r.itemId)===String(f.itemId))) fleetFinished++;
-  });
+  const hasAnyDelivery = verified.length >= 1;
+  const fleetContrib = (fleet.length >= 1 && hasAnyDelivery) ? 1 : 0;
+  const fleetFinished = (fleet.some(f => (Number(f.done)||0) >= (Number(f.target)||1)) && hasAnyDelivery) ? 1 : 0;
   return {verifiedCount: verified.length, coins, realmIdx, totalPass, totalMade,
     passRate, activeDays, maxMonthRecords, monthSpan, itemVariety, maxSingle,
     hasPerfectBatch, perfectBatchCount, has88, has66, hasMidnight, hasDawn, hasNewYear,
