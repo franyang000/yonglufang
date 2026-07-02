@@ -3027,7 +3027,8 @@ const PET_TIER_META = { 1:{cls:'ptier-1',label:'凡獸'}, 2:{cls:'ptier-2',label
 
 // 靈石餘額：即時算的收入 − 存下的支出（最難竄改）
 function balanceOf(wid){
-  return coinsOf(cumulativeEarned(wid)) - ((gw(wid)||{}).petsSpent || 0);
+  // 餘額最低為 0：撤回驗收會讓可用靈石變少甚至歸零，但不會變負債，已購靈獸永久保留
+  return Math.max(0, coinsOf(cumulativeEarned(wid)) - ((gw(wid)||{}).petsSpent || 0));
 }
 // 出戰中且已擁有的靈獸（給天榜/洞府用）
 function wornPetOf(wid){
@@ -3058,8 +3059,8 @@ function buyPet(wid, petId){
   askConfirm(`確定花費 ${pet.price.toLocaleString()} 靈石收服「${pet.icon} ${pet.name}」嗎？`, () => {
     FS.update('workers', wid, {
       petsPurchased: [...owned, petId],
-      petsSpent: (w.petsSpent || 0) + pet.price,
-      wornPet: w.wornPet || petId   // 第一隻自動出戰
+      petsSpent: (w.petsSpent || 0) + pet.price
+      // 買完僅「擁有」，不自動出戰；由使用者手動按「令其出戰」
     }).then(()=>toast(`🎉 成功收服「${pet.name}」！`))
       .catch(()=>toast('⚠️ 收服失敗，請稍後再試'));
   });
@@ -3103,7 +3104,7 @@ function renderPets(wid){
           let btn;
           if(has){
             btn = worn
-              ? `<button class="pet-btn pet-btn-worn" onclick="wearPet('${wid}','${p.id}')">出戰中</button>`
+              ? `<button class="pet-btn pet-btn-worn" onclick="wearPet('${wid}','${p.id}')">✓ 出戰中・點擊收回</button>`
               : `<button class="pet-btn pet-btn-own" onclick="wearPet('${wid}','${p.id}')">令其出戰</button>`;
           } else if(!realmOK){
             btn = `<button class="pet-btn pet-btn-no" disabled>需 ${REALMS[p.realmReq].name}</button>`;
