@@ -550,6 +550,45 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
 .artifact-chip.atier-1{ background:#E5F5EF; color:#0E7A5F; }
 .artifact-chip.atier-2{ background:#F1E9FB; color:#7C3AED; }
 .artifact-chip.atier-3{ background:linear-gradient(135deg,#FFF3CE,#EFC96E); color:#7A5A12; box-shadow:0 1px 4px rgba(217,179,108,0.4); }
+
+/* —— 靈獸閣 —— */
+.pet-balance{ font-size:var(--fs-sm); color:#7F8C8D; }
+.pet-balance b{ color:var(--gold-dark); font-size:var(--fs-base); }
+.pet-note{ font-size:var(--fs-xs); color:#9CA3AF; margin-bottom:16px; }
+.pet-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:14px; }
+.pet-card{ position:relative; display:flex; flex-direction:column; align-items:center; gap:6px; padding:18px 12px; border-radius:var(--r-md); border:1px solid var(--border-subtle); background:#FFFDF9; text-align:center; transition:all 0.2s; }
+.pet-card.ptier-1{ border-color:#CDD6DF; }
+.pet-card.ptier-2{ border-color:#B4E3D2; background:linear-gradient(160deg,#FFFFFF,#F5FCF9); }
+.pet-card.ptier-3{ border-color:#E0BF6D; background:linear-gradient(160deg,#FFFCF3,#FBEFCF); }
+.pet-card.pet-owned{ box-shadow:var(--shadow-gold); }
+.pet-icon{ font-size:44px; line-height:1; }
+.pet-name{ font-size:var(--fs-base); font-weight:800; color:var(--navy-deep); display:flex; align-items:center; gap:6px; }
+.pet-tier{ font-size:10px; font-weight:700; padding:1px 7px; border-radius:99px; background:rgba(12,46,78,0.06); color:#7F8C8D; }
+.pet-desc{ font-size:var(--fs-xs); color:#9CA3AF; line-height:1.4; min-height:2.4em; }
+.pet-req{ font-size:11px; font-weight:700; color:var(--red-palace); background:rgba(158,42,43,0.07); border-radius:99px; padding:2px 10px; margin-top:2px; }
+.pet-req-ok{ color:#0E7A5F; background:rgba(16,185,129,0.1); }
+.pet-worn-tag{ position:absolute; top:-8px; left:50%; transform:translateX(-50%); font-size:10px; font-weight:700; color:#FFF; background:var(--red-palace); padding:2px 10px; border-radius:99px; white-space:nowrap; }
+.pet-btn{ margin-top:6px; width:100%; padding:9px; border-radius:var(--r-sm); border:none; font-family:inherit; font-weight:700; font-size:var(--fs-sm); cursor:pointer; transition:all 0.2s; }
+.pet-btn-buy{ background:var(--gold-gradient); color:var(--navy-deep); }
+.pet-btn-buy:hover{ box-shadow:var(--shadow-gold); }
+.pet-btn-no{ background:#EEECE8; color:#B0AAA0; cursor:not-allowed; }
+.pet-btn-own{ background:rgba(12,46,78,0.06); color:var(--navy-deep); }
+.pet-btn-worn{ background:var(--navy-gradient); color:var(--gold-light); }
+.pet-soon-title{ margin-top:24px; margin-bottom:12px; font-size:var(--fs-sm); font-weight:700; color:var(--gold-dark); }
+.pet-soon-row{ display:flex; flex-wrap:wrap; gap:12px; }
+.pet-soon{ display:flex; flex-direction:column; align-items:center; gap:4px; padding:12px 14px; border-radius:var(--r-md); background:#F4F2EE; border:1px dashed var(--border-solid); min-width:72px; }
+.pet-soon-icon{ font-size:30px; filter:grayscale(1) brightness(0.4) opacity(0.55); }
+.pet-soon-name{ font-size:11px; color:#B0AAA0; font-weight:700; letter-spacing:0.1em; }
+.pet-locked-title{ margin-top:22px; margin-bottom:12px; font-size:var(--fs-sm); font-weight:700; color:#9CA3AF; }
+.pet-locked-row{ display:flex; flex-wrap:wrap; gap:10px; }
+.pet-locked{ width:52px; height:52px; display:flex; align-items:center; justify-content:center; font-size:20px; border-radius:var(--r-sm); background:#F1EFEB; border:1px solid var(--border-subtle); color:#C4BEB4; }
+
+/* —— 靈獸 chip（天榜/洞府名字旁） —— */
+.pet-chip{ display:inline-flex; align-items:center; gap:3px; padding:1px 8px 1px 6px; border-radius:99px; font-size:11px; font-weight:700; vertical-align:middle; margin-left:2px; }
+.pet-chip-icon{ font-size:13px; line-height:1; }
+.pet-chip.ptier-1{ background:#EEF1F4; color:#5B6B7B; }
+.pet-chip.ptier-2{ background:#E5F5EF; color:#0E7A5F; }
+.pet-chip.ptier-3{ background:linear-gradient(135deg,#FFF3CE,#EFC96E); color:#7A5A12; box-shadow:0 1px 4px rgba(217,179,108,0.4); }
 </style>
 </head>
 <body>
@@ -898,6 +937,7 @@ body.slip-focus #slip-card { box-shadow: 0 25px 60px rgba(5,24,41,0.15); transfo
         <div id="w-fleet-box"></div>
         <div id="w-badges-box"></div>
         <div id="w-artifacts-box"></div>
+        <div id="w-pets-box"></div>
         <div class="card" style="margin-top: 1.5rem;">
           <div class="card-head"><span class="card-head-title">⚙️ 待點化驗收的法製品（大掌櫃核實中）</span></div>
           <div class="card-body" id="w-pending" style="padding: 0;"></div>
@@ -1543,7 +1583,7 @@ function renderRaceRanked(containerId, rows, metric, prevRank, selfId, emptyMsg,
           </div>
           <div class="race-name">
             <span class="race-username">${r.nick}${isSelf ? ' <span class="self-tag" style="font-size:10px; color:var(--red-palace); font-weight:700;">[閣下]</span>' : ''}</span>
-            ${(wornBadgeOf(r.workerId) || wornArtifactOf(r.workerId)) ? `<span class="race-chips">${badgeChipHTML(wornBadgeOf(r.workerId))}${artifactChipHTML(wornArtifactOf(r.workerId))}</span>` : ''}
+            ${(wornBadgeOf(r.workerId) || wornArtifactOf(r.workerId) || wornPetOf(r.workerId)) ? `<span class="race-chips">${badgeChipHTML(wornBadgeOf(r.workerId))}${artifactChipHTML(wornArtifactOf(r.workerId))}${petChipHTML(wornPetOf(r.workerId))}</span>` : ''}
             ${coin}
           </div>
         </div>
@@ -2945,6 +2985,158 @@ function renderArtifacts(wid){
   </div>`;
 }
 
+// ============================================================
+//  靈獸系統：花「靈石」召喚（靈石＝摺紙賺得的可花用餘額，不動修為靈幣）
+//  餘額 = 累計已驗收靈幣 − 已花費（petsSpent），買靈獸不影響境界/法器
+// ============================================================
+// tier: 1凡獸 2靈獸 3仙獸。status: 'open'/'soon'/'locked'。realmReq: 需達第幾境界(索引)才能購買
+function buildPetDefs(){
+  return [
+    // ── 凡獸 tier1（練氣~築基即可）──
+    {id:'fox',     name:'靈狐',   icon:'🦊', tier:1, price:500,    realmReq:0, desc:'九尾之姿，通曉人性', status:'open'},
+    {id:'snake',   name:'青蛇',   icon:'🐍', tier:1, price:800,    realmReq:0, desc:'吐納天地靈氣',       status:'open'},
+    {id:'turtle',  name:'玄龜',   icon:'🐢', tier:2, price:3000,   realmReq:2, desc:'負山之壽，守護之靈', status:'open'},
+    {id:'crane',   name:'仙鶴',   icon:'🐦', tier:2, price:9000,   realmReq:3, desc:'雲中隱士，延年益壽', status:'soon'},
+    {id:'tiger',   name:'白虎',   icon:'🐯', tier:2, price:13000,  realmReq:3, desc:'西方戰神，鎮煞辟邪', status:'soon'},
+    {id:'leopard', name:'風豹',   icon:'🐆', tier:2, price:18000,  realmReq:4, desc:'追風逐電，疾行如影', status:'soon'},
+    {id:'wolf',    name:'蒼狼',   icon:'🐺', tier:2, price:24000,  realmReq:4, desc:'月下長嘯，群靈之首', status:'soon'},
+    {id:'eagle',   name:'金翅鵰', icon:'🦅', tier:2, price:32000,  realmReq:5, desc:'搏擊九天，目及千里', status:'soon'},
+    // ── 其餘鎖定（未來陸續開放）──
+    {id:'rabbit',  name:'玉兔',   icon:'🐰', tier:1, price:1200,   realmReq:0, desc:'月宮搗藥，靈慧乖巧', status:'locked'},
+    {id:'cat',     name:'狸奴',   icon:'🐱', tier:1, price:1600,   realmReq:1, desc:'踏雪尋梅，招財納福', status:'locked'},
+    {id:'toad',    name:'金蟾',   icon:'🐸', tier:1, price:2200,   realmReq:1, desc:'口銜金錢，聚寶生財', status:'locked'},
+    {id:'owl',     name:'夜梟',   icon:'🦉', tier:1, price:4000,   realmReq:2, desc:'洞察幽冥，守夜通靈', status:'locked'},
+    {id:'deer',    name:'靈鹿',   icon:'🦌', tier:1, price:5000,   realmReq:2, desc:'銜芝獻瑞，祥和之獸', status:'locked'},
+    {id:'boar',    name:'山君',   icon:'🐗', tier:2, price:42000,  realmReq:5, desc:'撼山破石，蠻力無雙', status:'locked'},
+    {id:'dragon',  name:'應龍',   icon:'🐉', tier:3, price:60000,  realmReq:6, desc:'翼龍之尊，行雲布雨', status:'locked'},
+    {id:'phoenix', name:'朱雀',   icon:'🔥', tier:3, price:90000,  realmReq:6, desc:'浴火重生，南方之神', status:'locked'},
+    {id:'qilin',   name:'麒麟',   icon:'🦄', tier:3, price:130000, realmReq:7, desc:'仁獸之王，祥瑞天成', status:'locked'},
+    {id:'peng',    name:'鯤鵬',   icon:'🪽', tier:3, price:200000, realmReq:7, desc:'扶搖直上九萬里',     status:'locked'},
+    {id:'baize',   name:'白澤',   icon:'🦁', tier:3, price:320000, realmReq:8, desc:'通曉萬物，知天下鬼神', status:'locked'},
+    {id:'zulong',  name:'祖龍',   icon:'🐲', tier:3, price:500000, realmReq:9, desc:'龍族之祖，鴻蒙一氣', status:'locked'},
+  ];
+}
+// 取得同道目前境界索引
+function petRealmIdx(wid){
+  const coins = coinsOf(cumulativeEarned(wid));
+  let idx = 0;
+  for(let i=0;i<REALMS.length;i++){ if(coins >= REALMS[i].min) idx = i; }
+  return idx;
+}
+const PET_TIER_META = { 1:{cls:'ptier-1',label:'凡獸'}, 2:{cls:'ptier-2',label:'靈獸'}, 3:{cls:'ptier-3',label:'仙獸'} };
+
+// 靈石餘額：即時算的收入 − 存下的支出（最難竄改）
+function balanceOf(wid){
+  return coinsOf(cumulativeEarned(wid)) - ((gw(wid)||{}).petsSpent || 0);
+}
+// 出戰中且已擁有的靈獸（給天榜/洞府用）
+function wornPetOf(wid){
+  const w = gw(wid);
+  const pid = w && w.wornPet;
+  if(!pid) return null;
+  const def = buildPetDefs().find(d => d.id === pid);
+  if(!def) return null;
+  if(!(w.petsPurchased || []).includes(pid)) return null; // 未擁有不顯示
+  return def;
+}
+function petChipHTML(def){
+  if(!def) return '';
+  const meta = PET_TIER_META[def.tier] || PET_TIER_META[1];
+  return `<span class="pet-chip ${meta.cls}" title="${def.name}（${meta.label}）"><span class="pet-chip-icon">${def.icon}</span><span class="pet-chip-name">${def.name}</span></span>`;
+}
+
+// 購買靈獸
+function buyPet(wid, petId){
+  const pet = buildPetDefs().find(p => p.id === petId);
+  if(!pet || pet.status !== 'open') return;
+  const w = gw(wid); if(!w) return;
+  const owned = w.petsPurchased || [];
+  if(owned.includes(petId)) return toast('⚜️ 已收服此靈獸');
+  if(petRealmIdx(wid) < (pet.realmReq || 0)) return toast(`⚠️ 修為未足，需臻至「${REALMS[pet.realmReq].name}」方可收服`);
+  const balance = balanceOf(wid);
+  if(balance < pet.price) return toast(`⚠️ 靈石不足，尚缺 ${(pet.price - balance).toLocaleString()} 枚`);
+  askConfirm(`確定花費 ${pet.price.toLocaleString()} 靈石收服「${pet.icon} ${pet.name}」嗎？`, () => {
+    FS.update('workers', wid, {
+      petsPurchased: [...owned, petId],
+      petsSpent: (w.petsSpent || 0) + pet.price,
+      wornPet: w.wornPet || petId   // 第一隻自動出戰
+    }).then(()=>toast(`🎉 成功收服「${pet.name}」！`))
+      .catch(()=>toast('⚠️ 收服失敗，請稍後再試'));
+  });
+}
+// 出戰/收回靈獸
+function wearPet(wid, petId){
+  const w = gw(wid); if(!w) return;
+  if(!(w.petsPurchased||[]).includes(petId)) return;
+  const next = (w.wornPet === petId) ? '' : petId;
+  FS.update('workers', wid, {wornPet: next})
+    .then(()=>toast(next ? '⚜️ 靈獸已出戰' : '已收回靈獸'))
+    .catch(()=>toast('⚠️ 操作失敗'));
+}
+
+function renderPets(wid){
+  const box = document.getElementById('w-pets-box');
+  if(!box) return;
+  const defs = buildPetDefs();
+  const w = gw(wid);
+  const owned = (w && w.petsPurchased) || [];
+  const wornId = (w && w.wornPet) || '';
+  const balance = balanceOf(wid);
+  const buyable = defs.filter(d => d.status === 'open');
+  const soon = defs.filter(d => d.status === 'soon');
+  const locked = defs.filter(d => d.status === 'locked');
+
+  box.innerHTML = `<div class="card" style="margin-top:1.5rem;">
+    <div class="card-head">
+      <span class="card-head-title">🐾 靈獸閣</span>
+      <span class="pet-balance">🪙 可用靈石 <b>${balance.toLocaleString()}</b></span>
+    </div>
+    <div class="card-body">
+      <div class="pet-note">靈石隨摺製功德累積，可召喚靈獸相伴左右（收服不影響修為與境界）</div>
+      <div class="pet-grid">
+        ${buyable.map(p => {
+          const meta = PET_TIER_META[p.tier] || PET_TIER_META[1];
+          const has = owned.includes(p.id);
+          const worn = p.id === wornId;
+          const afford = balance >= p.price;
+          const realmOK = petRealmIdx(wid) >= (p.realmReq || 0);
+          let btn;
+          if(has){
+            btn = worn
+              ? `<button class="pet-btn pet-btn-worn" onclick="wearPet('${wid}','${p.id}')">出戰中</button>`
+              : `<button class="pet-btn pet-btn-own" onclick="wearPet('${wid}','${p.id}')">令其出戰</button>`;
+          } else if(!realmOK){
+            btn = `<button class="pet-btn pet-btn-no" disabled>需 ${REALMS[p.realmReq].name}</button>`;
+          } else if(!afford){
+            btn = `<button class="pet-btn pet-btn-no" disabled>🪙 ${p.price.toLocaleString()}</button>`;
+          } else {
+            btn = `<button class="pet-btn pet-btn-buy" onclick="buyPet('${wid}','${p.id}')">🪙 ${p.price.toLocaleString()}</button>`;
+          }
+          const reqTag = (!has && p.realmReq > 0) ? `<div class="pet-req ${realmOK?'pet-req-ok':''}">境界門檻：${REALMS[p.realmReq].name}</div>` : '';
+          return `<div class="pet-card ${meta.cls} ${has?'pet-owned':''}">
+            ${worn ? '<div class="pet-worn-tag">出戰中</div>' : ''}
+            <div class="pet-icon">${p.icon}</div>
+            <div class="pet-name">${p.name}<span class="pet-tier">${meta.label}</span></div>
+            <div class="pet-desc">${p.desc}</div>
+            ${reqTag}
+            ${btn}
+          </div>`;
+        }).join('')}
+      </div>
+      ${soon.length ? `
+      <div class="pet-soon-title">⚡ 靈獸榜・即將開啟</div>
+      <div class="pet-soon-row">
+        ${soon.map(p => `<div class="pet-soon" title="${p.name} · 敬請期待"><div class="pet-soon-icon">${p.icon}</div><div class="pet-soon-name">即將登場</div></div>`).join('')}
+      </div>` : ''}
+      ${locked.length ? `
+      <div class="pet-locked-title">🔒 尚未現世（${locked.length} 靈獸待緣）</div>
+      <div class="pet-locked-row">
+        ${locked.map(()=>`<div class="pet-locked">🔒</div>`).join('')}
+      </div>` : ''}
+    </div>
+  </div>`;
+}
+
 function renderBadges(wid){
   const box = document.getElementById('w-badges-box');
   if(!box) return;
@@ -3011,7 +3203,7 @@ function renderWorkerPages(wid){
     <div class="cult-spark">⚗️</div>
     <div class="cult-top">
       <div class="cult-avatar">${daoInitial}</div>
-      <div><div class="cult-name">${daoHao} ${artifactChipHTML(wornArtifactOf(wid))}</div>
+      <div><div class="cult-name">${daoHao} ${artifactChipHTML(wornArtifactOf(wid))}${petChipHTML(wornPetOf(wid))}</div>
         <div class="cult-realm-badge" style="background:${c.color}; color:#FFF;">當前境界：${c.realm} · ${c.layerLabel}</div></div>
     </div>
     <div class="cult-coin"><span class="cult-coin-num">🪙 ${coins.toLocaleString()}</span><span class="cult-coin-lbl">累積修為靈幣</span></div>
@@ -3055,6 +3247,7 @@ function renderWorkerPages(wid){
   renderFleetProgress();
   renderBadges(wid);
   renderArtifacts(wid);
+  renderPets(wid);
 }
 
 function showPage(name){
