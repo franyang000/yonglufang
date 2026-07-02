@@ -200,6 +200,58 @@ tr:hover td{ background: rgba(217, 179, 108, 0.02); }
 .boat-anim { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); }
 .race-score { font-size: 15px; font-weight: 700; color: var(--navy-deep); text-align: right; flex-shrink: 0; font-family: 'Noto Serif TC', serif; }
 
+/* ═══════ 天榜大幅遊戲化：前三名榮耀特效 ═══════ */
+.self-tag { display:inline-flex; align-items:center; font-size:10px; color:#FFF; background:var(--red-palace); font-weight:700; padding:1px 8px; border-radius:99px; margin-left:4px; vertical-align:middle; }
+
+/* chip 立體化：加細邊與微陰影 */
+.worn-chip, .artifact-chip, .pet-chip { border:1px solid rgba(255,255,255,0.5); box-shadow:0 1px 3px rgba(12,46,78,0.12); }
+
+/* 冠冕獎牌：前三名放大、發光、浮動 */
+.rank-1 .rank-medal, .rank-2 .rank-medal, .rank-3 .rank-medal {
+  width:40px; height:40px; font-size:24px; border:none; background:transparent !important;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2)); animation:medalFloat 2.6s ease-in-out infinite;
+}
+.rank-1 .rank-medal { animation-delay:0s; }
+.rank-2 .rank-medal { animation-delay:0.3s; }
+.rank-3 .rank-medal { animation-delay:0.6s; }
+@keyframes medalFloat { 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-4px) } }
+
+/* 第一名：王座感——金色漸層底、流光邊框、道號放大變金 */
+.race-row.rank-1 {
+  background:linear-gradient(120deg,#FFFDF6 0%,#FDF3D9 55%,#FFF8E8 100%) !important;
+  border:1.5px solid transparent !important;
+  background-clip:padding-box;
+  box-shadow:0 8px 28px -6px rgba(217,179,108,0.5), inset 0 0 0 1px rgba(217,179,108,0.35) !important;
+  position:relative; overflow:hidden;
+}
+.race-row.rank-1::before {
+  content:''; position:absolute; top:0; left:-60%; width:40%; height:100%;
+  background:linear-gradient(105deg, transparent, rgba(255,255,255,0.6), transparent);
+  animation:throneSheen 4.5s ease-in-out infinite; pointer-events:none;
+}
+@keyframes throneSheen { 0%{ left:-60% } 40%,100%{ left:130% } }
+.race-row.rank-1 .race-username { font-size:16.5px; font-weight:900;
+  background:linear-gradient(90deg,#B8860B,#D9B36C,#8A6A1E); -webkit-background-clip:text;
+  background-clip:text; -webkit-text-fill-color:transparent; }
+.race-row.rank-1 .race-score { font-size:18px; color:var(--gold-dark); }
+
+/* 第二名：銀輝 */
+.race-row.rank-2 {
+  background:linear-gradient(120deg,#FFFFFF,#F2F4F7) !important;
+  box-shadow:0 5px 18px -6px rgba(150,160,175,0.45), inset 0 0 0 1px rgba(160,170,185,0.3) !important;
+}
+.race-row.rank-2 .race-username { font-size:15.5px; font-weight:800; color:#5B6B7B; }
+
+/* 第三名：銅光 */
+.race-row.rank-3 {
+  background:linear-gradient(120deg,#FFFDFB,#F8EFE5) !important;
+  box-shadow:0 5px 18px -6px rgba(190,140,90,0.4), inset 0 0 0 1px rgba(200,150,100,0.28) !important;
+}
+.race-row.rank-3 .race-username { font-size:15px; font-weight:800; color:#9C6B34; }
+
+/* 自己那列（非前三）維持金色高亮，但若同時是前三則讓榮耀特效優先 */
+.race-row.race-self:not(.rank-1):not(.rank-2):not(.rank-3) .race-username { color:var(--navy-deep); }
+
 /* 洞府修為核心區 */
 .cult-hero {
   position:relative; border-radius:var(--r-lg); padding: 2rem; margin-bottom:1.5rem; overflow:hidden; color:#FFFFFF;
@@ -1574,15 +1626,18 @@ function renderRaceRanked(containerId, rows, metric, prevRank, selfId, emptyMsg,
     const pct = Math.max(15, Math.min(95, Math.round(r.score / max * 85)));
     const isSelf = selfId && String(r.workerId) === String(selfId);
     const coin = showCoins ? `<span class="coin-chip">🪙 ${coinsOf(r.earn)}</span>` : '';
-    return `<div class="race-row${isSelf ? ' race-self' : ''}">
+    const rankCls = i < 3 ? ` rank-${i+1}` : '';
+    const crown = ['👑','🥈','🥉'][i] || '';
+    const medalInner = i < 3 ? crown : (i+1);
+    return `<div class="race-row${isSelf ? ' race-self' : ''}${rankCls}">
       <div class="race-header-wrapper">
         <div class="race-rank-info">
           <div class="race-rank">
-            <span class="rank-medal" style="background:${MEDAL_BG[i] || '#FFFFFF'};color:${MEDAL_FG[i] || '#0C2E4E'}">${i+1}</span>
+            <span class="rank-medal" style="${i>=3 ? `background:${MEDAL_BG[i] || '#FFFFFF'};color:${MEDAL_FG[i] || '#0C2E4E'}` : ''}">${medalInner}</span>
             ${showDelta ? deltaBadge(prevRank, r.workerId, i+1) : ''}
           </div>
           <div class="race-name">
-            <span class="race-username">${r.nick}${isSelf ? ' <span class="self-tag" style="font-size:10px; color:var(--red-palace); font-weight:700;">[閣下]</span>' : ''}</span>
+            <span class="race-username">${r.nick}${isSelf ? ' <span class="self-tag">閣下</span>' : ''}</span>
             ${(wornBadgeOf(r.workerId) || wornArtifactOf(r.workerId) || wornPetOf(r.workerId)) ? `<span class="race-chips">${badgeChipHTML(wornBadgeOf(r.workerId))}${artifactChipHTML(wornArtifactOf(r.workerId))}${petChipHTML(wornPetOf(r.workerId))}</span>` : ''}
             ${coin}
           </div>
